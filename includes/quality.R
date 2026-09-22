@@ -340,7 +340,7 @@ for (j in 1:n.lc) {		# START landCover loop
 				stop("ERROR: parameter 'beta.algorithm' not valid! Check global params file")
 			}		# END distn=="Bet"
 		} else if ( distn=='NBin' || distn=='gamma') {
-			p.diff <- means.test.perm( f, b, iterations=perm.reps ) 
+			p.diff <- means.test.perm( f, b, iterations=perm.reps, seed=seed ) 
 			
 			if ( all(f==0) && all(b==0) ) {
 			  # Special handling of case where both vectors are all zeros, and therefore identical

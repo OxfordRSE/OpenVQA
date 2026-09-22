@@ -4535,7 +4535,7 @@ means.test.boot <- function( x, y, boot.reps=NULL ) {
 	return( p.h0	)
 }
 
-means.test.perm <- function( x, y, iterations=NULL ) {
+means.test.perm <- function( x, y, iterations=NULL, seed=NULL ) {
 	###################################################
 	# Performs non-parametric permutation test of null hypothesis that
 	# the means of two groups are the same
@@ -4544,6 +4544,8 @@ means.test.perm <- function( x, y, iterations=NULL ) {
 	# Returns: 		p-value of test
 	# Source: 		https://tinyurl.com/klzcjy4
 	###################################################
+
+	if (!is.null(seed)) set.seed(seed)
 
 	# Set iterations if not supplied
 	if ( is.null(iterations) ) iterations <- 1000
@@ -6554,4 +6556,3 @@ transform_column <- function(column, mapping_vector) {
   
   return(column)
 }
-
