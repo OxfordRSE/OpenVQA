@@ -7,17 +7,14 @@ data/*
 !data/vqa-demo2-min/
 !data/vqa-demo2-min/**
 
-bak/
-includes/bak/
-under_construction/
-Rplots.pdf
-custom_scripts/
-manual_validations/
-
 CHANGELOG_ps.md
 
 # R project files
+## rv
 rv/
+rv.lock
+
+## R
 .Rprofile
 .Rhistory
 .Rapp.history
