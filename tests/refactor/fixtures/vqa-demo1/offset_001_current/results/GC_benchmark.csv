@@ -1,0 +1,25 @@
+"EI","vegClass","stratum","n","EI.mean","EI.sd","EI.med","EI.max","EI.min"
+"GC","BF/BS Forest, Early-Mid","SubstrateBedrock",11,0,0,0,0,0
+"GC","BF/BS Forest, Mature","SubstrateBedrock",7,0,0,0,0,0
+"GC","BF/BS Forest, Old","SubstrateBedrock",10,0,0,0,0,0
+"GC","Wetland","SubstrateBedrock",25,0.002,0.01,0,0.05,0
+"GC","BF/BS Forest, Early-Mid","SubstrateDecWood",11,0.0963636363636364,0.0585273828686585,0.08,0.2,0.01
+"GC","BF/BS Forest, Mature","SubstrateDecWood",7,0.07,0.09,0.01,0.25,0.01
+"GC","BF/BS Forest, Old","SubstrateDecWood",10,0.07,0.0377123616632825,0.065,0.15,0.01
+"GC","Wetland","SubstrateDecWood",25,0.02648,0.0465574197452279,0.005,0.2,0
+"GC","BF/BS Forest, Early-Mid","SubstrateMineralSoil",11,0.0181818181818182,0.0337099931231621,0,0.1,0
+"GC","BF/BS Forest, Mature","SubstrateMineralSoil",7,0,0,0,0,0
+"GC","BF/BS Forest, Old","SubstrateMineralSoil",10,0,0,0,0,0
+"GC","Wetland","SubstrateMineralSoil",25,0.022,0.0630476010645925,0,0.3,0
+"GC","BF/BS Forest, Early-Mid","SubstrateOrganicMatter",11,0.380909090909091,0.458027391003083,0.1,0.99,0
+"GC","BF/BS Forest, Mature","SubstrateOrganicMatter",7,0.601142857142857,0.488080399309864,0.988,0.99,0
+"GC","BF/BS Forest, Old","SubstrateOrganicMatter",10,0.9295,0.0378923914966228,0.935,0.99,0.85
+"GC","Wetland","SubstrateOrganicMatter",25,0.44432,0.462815902924694,0.3,0.999,0
+"GC","BF/BS Forest, Early-Mid","SubstrateRocks",11,0.00909090909090909,0.0301511344577764,0,0.1,0
+"GC","BF/BS Forest, Mature","SubstrateRocks",7,0.000285714285714286,0.000755928946018454,0,0.002,0
+"GC","BF/BS Forest, Old","SubstrateRocks",10,0,0,0,0,0
+"GC","Wetland","SubstrateRocks",25,0.006,0.016583123951777,0,0.05,0
+"GC","BF/BS Forest, Early-Mid","SubstrateWater",11,0,0,0,0,0
+"GC","BF/BS Forest, Mature","SubstrateWater",7,0,0,0,0,0
+"GC","BF/BS Forest, Old","SubstrateWater",10,5e-04,0.00158113883008419,0,0.005,0
+"GC","Wetland","SubstrateWater",25,0.0096,0.0185921130231791,0,0.05,0

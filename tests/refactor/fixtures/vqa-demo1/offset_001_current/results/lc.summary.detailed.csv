@@ -1,0 +1,5 @@
+"Land cover class","Benchmark vegetation","all.n.OK","n.f.plots","n.b.plots","n.f.SR","n.b.SR","n.f.TD","n.b.TD","n.f.PCESS","n.b.PCESS","n.f.PCGF","n.b.PCGF","n.f.GC","n.b.GC"
+"BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",TRUE,13,11,13,11,13,11,13,11,13,11,13,11
+"BF/BS Forest, Mature","BF/BS Forest, Mature",TRUE,6,7,6,7,6,7,6,7,6,7,6,7
+"BF/BS Forest, Old","BF/BS Forest, Old",TRUE,7,10,7,10,7,10,7,10,7,10,7,10
+"Wetland","Wetland",TRUE,9,25,9,25,9,25,9,25,9,25,9,25

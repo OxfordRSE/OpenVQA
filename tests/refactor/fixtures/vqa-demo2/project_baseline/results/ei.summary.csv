@@ -1,0 +1,7 @@
+"ei","ei.name","distn","q.method","test.tail","bm.val"
+"SR","Species Richness","NBin","empirical","both",NA
+"TS","Taxonomic Similarity","Bet","empirical","lower",NA
+"PCES","Percent Cover Exotic Species","Bet","fixed","upper","0"
+"PCGF","Percent Cover by Growth Form","Bet","empirical","both",NA
+"BA","Basal Area (m2/ha)","gamma","empirical","both",NA
+"ASC","Abundance by Size Class","gamma","empirical","both",NA

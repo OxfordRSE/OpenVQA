@@ -1,0 +1,89 @@
+"plotCode","focalOrBenchmark","landCover","vegClass","stratum","EI","EI.tr"
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",20,20
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",29,29
+"BB_S_Oc","b","Wetland","Wetland","nostrata",15,15
+"BB_V8","b","Wetland","Wetland","nostrata",21,21
+"BB_WL_7","b","Wetland","Wetland","nostrata",20,20
+"BB_WL1","b","Wetland","Wetland","nostrata",20,20
+"BB_WL10","b","Wetland","Wetland","nostrata",16,16
+"BBS6REV","b","Wetland","Wetland","nostrata",17,17
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",11,11
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",11,11
+"BBWL4","b","Wetland","Wetland","nostrata",12,12
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",18,18
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",16,16
+"BL2402","f","Wetland","Wetland","nostrata",21,21
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",25,25
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",32,32
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",20,20
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",24,24
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",29,29
+"BL2409","f","Wetland","Wetland","nostrata",31,31
+"BL2411","f","Wetland","Wetland","nostrata",27,27
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",24,24
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",26,26
+"BL2415","f","Wetland","Wetland","nostrata",18,18
+"BL2419","f","Wetland","Wetland","nostrata",25,25
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",23,23
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",33,33
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",18,18
+"BL2428","f","Wetland","Wetland","nostrata",22,22
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",31,31
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",32,32
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",37,37
+"BL2433","f","Wetland","Wetland","nostrata",28,28
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",14,14
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",14,14
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",16,16
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",13,13
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",36,36
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",22,22
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",30,30
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",16,16
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","nostrata",22,22
+"BL2446A","f","Wetland","Wetland","nostrata",25,25
+"BL2447","f","Wetland","Wetland","nostrata",17,17
+"DP23-10","b","Wetland","Wetland","nostrata",19,19
+"DP23-11","b","Wetland","Wetland","nostrata",12,12
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",14,14
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",10,10
+"DP23-2","b","Wetland","Wetland","nostrata",17,17
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",10,10
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",15,15
+"DP23-24","b","Wetland","Wetland","nostrata",3,3
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",14,14
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",13,13
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",8,8
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",10,10
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","nostrata",9,9
+"DP23-38","b","Wetland","Wetland","nostrata",22,22
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",13,13
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",12,12
+"DP23-52","b","Wetland","Wetland","nostrata",16,16
+"DP23-54","b","Wetland","Wetland","nostrata",15,15
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","nostrata",9,9
+"DP23-57","b","Wetland","Wetland","nostrata",16,16
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",14,14
+"DP23-64","b","Wetland","Wetland","nostrata",15,15
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",13,13
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",15,15
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","nostrata",9,9
+"DP23-69","b","Wetland","Wetland","nostrata",17,17
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",14,14
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",12,12
+"T_S11","b","Wetland","Wetland","nostrata",12,12
+"T_S13","b","Wetland","Wetland","nostrata",17,17
+"T_S2","b","Wetland","Wetland","nostrata",11,11
+"T_S8","b","Wetland","Wetland","nostrata",11,11
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",9,9
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",10,10
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",13,13
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",10,10
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",16,16
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","nostrata",9,9
+"T_WL2","b","Wetland","Wetland","nostrata",26,26
+"T_WL3","b","Wetland","Wetland","nostrata",21,21
+"T_WL4","b","Wetland","Wetland","nostrata",18,18
+"T_WL6","b","Wetland","Wetland","nostrata",10,10
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",11,11
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","nostrata",10,10

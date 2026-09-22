@@ -1,0 +1,13 @@
+"EI","bm.vegetation","landcover","stratum","dist","test.tail","q.method","bm.val","f.n","f.mean","f.sd","f.med","f.max","f.min","b.n","b.mean","b.sd","b.med","b.max","b.min","diff","q.diff.raw","p.diff","q.diff","ol","ol.lcl","ol.ucl","ol.w","q.raw","q","q.lcl","q.ucl","q.diff.method","q.wt.method"
+"PCESS","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid [Disturbed/Logged]","Herb","Bet","upper","fixed",0,13,0,0,0,0,0,11,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid [Disturbed/Logged]","Shrub","Bet","upper","fixed",0,13,0,0,0,0,0,11,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid [Disturbed/Logged]","Tree","Bet","upper","fixed",0,13,0,0,0,0,0,11,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb","Bet","upper","fixed",0,6,0,0,0,0,0,7,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub","Bet","upper","fixed",0,6,0,0,0,0,0,7,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree","Bet","upper","fixed",0,6,0,0,0,0,0,7,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Old","BF/BS Forest, Old","Herb","Bet","upper","fixed",0,7,0,0,0,0,0,10,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Old","BF/BS Forest, Old","Shrub","Bet","upper","fixed",0,7,0,0,0,0,0,10,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","BF/BS Forest, Old","BF/BS Forest, Old","Tree","Bet","upper","fixed",0,7,0,0,0,0,0,10,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","Wetland","Wetland","Herb","Bet","upper","fixed",0,9,0,0,0,0,0,25,0.0128,0.0599666574022598,0,0.3,0,-0.0128,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","Wetland","Wetland","Shrub","Bet","upper","fixed",0,9,0,0,0,0,0,25,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
+"PCESS","Wetland","Wetland","Tree","Bet","upper","fixed",0,9,0,0,0,0,0,25,0,0,0,0,0,0,1,1,1,NA,NA,NA,0,1,1,1,1,NA,NA
