@@ -1,0 +1,305 @@
+﻿"plotCode","focalOrBenchmark","landCover","vegClass","stratum","cover"
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.009999999999999998
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.09799999999999999
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.8219999999999998
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.55
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.018000000000000006
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.16399999999999998
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.639
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.55
+"BB_S_Oc","b","Wetland","Wetland","Bryophyte",0.3
+"BB_S_Oc","b","Wetland","Wetland","Herb",0.89
+"BB_S_Oc","b","Wetland","Wetland","Shrub",0.23
+"BB_S_Oc","b","Wetland","Wetland","Tree",0.62
+"BB_V8","b","Wetland","Wetland","Bryophyte",0.6
+"BB_V8","b","Wetland","Wetland","Herb",0.59
+"BB_V8","b","Wetland","Wetland","Shrub",0.46
+"BB_V8","b","Wetland","Wetland","Tree",0.4
+"BB_WL_7","b","Wetland","Wetland","Bryophyte",0.95
+"BB_WL_7","b","Wetland","Wetland","Herb",0.68
+"BB_WL_7","b","Wetland","Wetland","Shrub",0.59
+"BB_WL1","b","Wetland","Wetland","Bryophyte",1
+"BB_WL1","b","Wetland","Wetland","Herb",0.76
+"BB_WL1","b","Wetland","Wetland","Shrub",0.6
+"BB_WL10","b","Wetland","Wetland","Bryophyte",1
+"BB_WL10","b","Wetland","Wetland","Herb",0.43
+"BB_WL10","b","Wetland","Wetland","Shrub",0.44
+"BBS6REV","b","Wetland","Wetland","Bryophyte",0.97
+"BBS6REV","b","Wetland","Wetland","Herb",0.22
+"BBS6REV","b","Wetland","Wetland","Shrub",0.69
+"BBS6REV","b","Wetland","Wetland","Tree",0.45
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",1
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.37
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.35
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.45
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",1
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.3
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.05
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",1
+"BBWL4","b","Wetland","Wetland","Bryophyte",1
+"BBWL4","b","Wetland","Wetland","Herb",0.13
+"BBWL4","b","Wetland","Wetland","Shrub",0.35
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.011
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.153
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.71
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.18
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.14
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.135
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.16
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.75
+"BL2402","f","Wetland","Wetland","Bryophyte",0.16399999999999998
+"BL2402","f","Wetland","Wetland","Herb",0.457
+"BL2402","f","Wetland","Wetland","Shrub",0.6459999999999999
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.042
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.13699999999999998
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.051
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.85
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.671999999999999
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.631
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.192
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.7
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.905
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.6100000000000001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.626
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.2
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",1
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.1
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.366
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.75
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.17600000000000002
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.276
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.35
+"BL2409","f","Wetland","Wetland","Bryophyte",0.006
+"BL2409","f","Wetland","Wetland","Herb",0.2770000000000001
+"BL2409","f","Wetland","Wetland","Shrub",0.214
+"BL2411","f","Wetland","Wetland","Bryophyte",0.004
+"BL2411","f","Wetland","Wetland","Herb",0.13399999999999998
+"BL2411","f","Wetland","Wetland","Shrub",0.345
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.015000000000000003
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.088
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.425
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.54
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.018000000000000006
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.157
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.82
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.35
+"BL2415","f","Wetland","Wetland","Bryophyte",0.004
+"BL2415","f","Wetland","Wetland","Herb",0.039
+"BL2415","f","Wetland","Wetland","Shrub",0.737
+"BL2419","f","Wetland","Wetland","Bryophyte",0.055999999999999994
+"BL2419","f","Wetland","Wetland","Herb",0.11899999999999998
+"BL2419","f","Wetland","Wetland","Shrub",0.675
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.018000000000000006
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.147
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.35600000000000004
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.5
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.02600000000000001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.17800000000000005
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.537
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.25
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.012
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.16399999999999998
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.285
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.4
+"BL2428","f","Wetland","Wetland","Bryophyte",0.086
+"BL2428","f","Wetland","Wetland","Herb",0.012
+"BL2428","f","Wetland","Wetland","Shrub",0.983
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.78
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.633
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.136
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.8
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.13499999999999995
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.7369999999999999
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.311
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.8
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.452
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.32800000000000007
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.8
+"BL2433","f","Wetland","Wetland","Bryophyte",0.10499999999999998
+"BL2433","f","Wetland","Wetland","Herb",0.205
+"BL2433","f","Wetland","Wetland","Shrub",0.65
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.9299999999999997
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.105
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.17
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.7
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.17700000000000002
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.7
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",1
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.061
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.261
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.65
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.4910000000000001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.07
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.026000000000000002
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.6
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.6030000000000001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Herb",0.452
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.393
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.2
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.004
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.28700000000000003
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.745
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.08
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.009999999999999998
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.403
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.687
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.2
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",1
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.025
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.035
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.9
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bryophyte",0.8169999999999997
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Herb",0.005
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Shrub",0.102
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tree",0.85
+"BL2446A","f","Wetland","Wetland","Bryophyte",0.0030000000000000005
+"BL2446A","f","Wetland","Wetland","Herb",0.12300000000000001
+"BL2446A","f","Wetland","Wetland","Shrub",0.5720000000000001
+"BL2447","f","Wetland","Wetland","Bryophyte",0.11299999999999999
+"BL2447","f","Wetland","Wetland","Herb",0.21200000000000002
+"BL2447","f","Wetland","Wetland","Shrub",0.142
+"DP23-10","b","Wetland","Wetland","Bryophyte",0.66
+"DP23-10","b","Wetland","Wetland","Shrub",1
+"DP23-10","b","Wetland","Wetland","Tree",0.5
+"DP23-11","b","Wetland","Wetland","Bryophyte",0.66
+"DP23-11","b","Wetland","Wetland","Shrub",0.875
+"DP23-11","b","Wetland","Wetland","Tree",0.47
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",1
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.433
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",1
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.855
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.113
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.82
+"DP23-2","b","Wetland","Wetland","Bryophyte",0.03
+"DP23-2","b","Wetland","Wetland","Shrub",1
+"DP23-2","b","Wetland","Wetland","Tree",0.1
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.85
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.17
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.72
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.268
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",1
+"DP23-24","b","Wetland","Wetland","Bryophyte",0.05
+"DP23-24","b","Wetland","Wetland","Shrub",0.17
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.095
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.85
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.9
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.39
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.67
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.96
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.215
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.7
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.9
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.154
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.7
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Bryophyte",0.8
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Shrub",0.059000000000000004
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Tree",0.93
+"DP23-38","b","Wetland","Wetland","Bryophyte",0.45
+"DP23-38","b","Wetland","Wetland","Shrub",0.77
+"DP23-38","b","Wetland","Wetland","Tree",0.37
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.4590000000000001
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.6
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.805
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.6890000000000001
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.59
+"DP23-52","b","Wetland","Wetland","Bryophyte",0.9
+"DP23-52","b","Wetland","Wetland","Shrub",0.7269999999999999
+"DP23-52","b","Wetland","Wetland","Tree",0.54
+"DP23-54","b","Wetland","Wetland","Bryophyte",0.07
+"DP23-54","b","Wetland","Wetland","Shrub",0.93
+"DP23-54","b","Wetland","Wetland","Tree",0.82
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Bryophyte",0.9
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Shrub",0.08
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Tree",0.87
+"DP23-57","b","Wetland","Wetland","Bryophyte",1
+"DP23-57","b","Wetland","Wetland","Shrub",0.7909999999999999
+"DP23-57","b","Wetland","Wetland","Tree",0.1
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.431
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.8
+"DP23-64","b","Wetland","Wetland","Bryophyte",0.91
+"DP23-64","b","Wetland","Wetland","Shrub",0.755
+"DP23-64","b","Wetland","Wetland","Tree",0.37
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.6
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.23800000000000002
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.71
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",1
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.187
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.73
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Bryophyte",0.855
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Shrub",0.183
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Tree",0.68
+"DP23-69","b","Wetland","Wetland","Bryophyte",0.9
+"DP23-69","b","Wetland","Wetland","Shrub",1
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.88
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.302
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.78
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.87
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.511
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.6
+"T_S11","b","Wetland","Wetland","Bryophyte",0.9
+"T_S11","b","Wetland","Wetland","Herb",0.09
+"T_S11","b","Wetland","Wetland","Shrub",0.49
+"T_S11","b","Wetland","Wetland","Tree",0.25
+"T_S13","b","Wetland","Wetland","Bryophyte",0.3
+"T_S13","b","Wetland","Wetland","Herb",0.38
+"T_S13","b","Wetland","Wetland","Shrub",1
+"T_S13","b","Wetland","Wetland","Tree",0.05
+"T_S2","b","Wetland","Wetland","Herb",0.38
+"T_S2","b","Wetland","Wetland","Shrub",0.14
+"T_S2","b","Wetland","Wetland","Tree",0.6
+"T_S8","b","Wetland","Wetland","Bryophyte",0.25
+"T_S8","b","Wetland","Wetland","Herb",0.23
+"T_S8","b","Wetland","Wetland","Shrub",0.05
+"T_S8","b","Wetland","Wetland","Tree",0.45
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",1
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.2
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.12
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.62
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.3
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.17
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.02
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.57
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",1
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.16
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.14
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.56
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",0.97
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.09
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.67
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",1
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.44
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.25
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.4
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Bryophyte",1
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Herb",0.16
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Shrub",0.1
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Tree",0.7
+"T_WL2","b","Wetland","Wetland","Bryophyte",0.85
+"T_WL2","b","Wetland","Wetland","Herb",0.84
+"T_WL2","b","Wetland","Wetland","Shrub",0.97
+"T_WL3","b","Wetland","Wetland","Bryophyte",0.8
+"T_WL3","b","Wetland","Wetland","Herb",0.61
+"T_WL3","b","Wetland","Wetland","Shrub",0.96
+"T_WL3","b","Wetland","Wetland","Tree",0.1
+"T_WL4","b","Wetland","Wetland","Bryophyte",0.8
+"T_WL4","b","Wetland","Wetland","Herb",0.8
+"T_WL4","b","Wetland","Wetland","Shrub",0.54
+"T_WL4","b","Wetland","Wetland","Tree",0.1
+"T_WL6","b","Wetland","Wetland","Bryophyte",1
+"T_WL6","b","Wetland","Wetland","Herb",0.09
+"T_WL6","b","Wetland","Wetland","Shrub",0.62
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.9
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.25
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.15
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.77
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Bryophyte",0.6
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Herb",0.35
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Shrub",0.07
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Tree",0.55

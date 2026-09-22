@@ -1,0 +1,497 @@
+﻿"plotCode","focalOrBenchmark","landCover","vegClass","stratum","cover"
+"Plot1","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.20667613636363635
+"Plot10","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.53125
+"Plot100","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.2839488636363636
+"Plot101","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.20696022727272725
+"Plot101","f","Stratum-W11-2","W11","Shrubs",0.011363636363636364
+"Plot102","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.23522727272727273
+"Plot102","f","Stratum-W11-2","W11","Shrubs",0.011363636363636364
+"Plot103","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.12215909090909091
+"Plot103","f","Stratum-W11-2","W11","Shrubs",0.024147727272727272
+"Plot104","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.06988636363636364
+"Plot104","f","Stratum-W11-2","W11","Shrubs",0.10653409090909091
+"Plot105","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.05340909090909091
+"Plot105","f","Stratum-W11-2","W11","Shrubs",0.008522727272727272
+"Plot106","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.026988636363636364
+"Plot107","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.2125
+"Plot107","f","Stratum-W11-2","W11","Shrubs",0.005681818181818182
+"Plot108","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.0953125
+"Plot108","f","Stratum-W11-2","W11","Shrubs",0.011363636363636364
+"Plot11","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.22585227272727273
+"Plot12","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.5383522727272727
+"Plot121","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.3181818181818182
+"Plot121","f","Stratum-W10-1","W10","Shrubs",0.15198863636363635
+"Plot122","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.2869318181818182
+"Plot122","f","Stratum-W10-1","W10","Shrubs",0.296875
+"Plot123","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.171875
+"Plot123","f","Stratum-W10-1","W10","Shrubs",0.15482954545454544
+"Plot124","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.19545454545454544
+"Plot125","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.34375
+"Plot125","f","Stratum-W10-1","W10","Shrubs",0.024147727272727272
+"Plot126","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.3039772727272727
+"Plot126","f","Stratum-W10-1","W10","Shrubs",0.052556818181818184
+"Plot127","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.2046875
+"Plot127","f","Stratum-W10-1","W10","Shrubs",0.10653409090909091
+"Plot128","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.3873579545454545
+"Plot128","f","Stratum-W10-1","W10","Shrubs",0.10653409090909091
+"Plot129","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.25426136363636365
+"Plot129","f","Stratum-W10-1","W10","Shrubs",0.11221590909090909
+"Plot130","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.3850852272727273
+"Plot130","f","Stratum-W10-1","W10","Shrubs",0.11789772727272728
+"Plot131","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.40482954545454547
+"Plot131","f","Stratum-W10-1","W10","Shrubs",0.022727272727272728
+"Plot132","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.48792613636363635
+"Plot132","f","Stratum-W10-1","W10","Shrubs",0.048295454545454544
+"Plot145","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.3430397727272727
+"Plot146","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.171875
+"Plot147","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.6860795454545454
+"Plot148","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.4580965909090909
+"Plot149","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.6565340909090909
+"Plot150","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.1455965909090909
+"Plot150","f","Stratum-W17-1","W17","Shrubs",0.10653409090909091
+"Plot151","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.7776988636363636
+"Plot152","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.5589488636363636
+"Plot153","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.03480113636363636
+"Plot154","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.5852272727272727
+"Plot155","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.11505681818181818
+"Plot156","f","Stratum-W17-1","W17","Herbs & Subshrubs",0.08806818181818182
+"Plot169","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.18053977272727273
+"Plot169","f","Stratum-W21-1","W21","Shrubs",0.11221590909090909
+"Plot170","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.24375
+"Plot170","f","Stratum-W21-1","W21","Shrubs",0.18607954545454544
+"Plot171","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.15085227272727272
+"Plot171","f","Stratum-W21-1","W21","Shrubs",0.011363636363636364
+"Plot172","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.22585227272727273
+"Plot172","f","Stratum-W21-1","W21","Shrubs",0.0014204545454545455
+"Plot173","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.22301136363636365
+"Plot173","f","Stratum-W21-1","W21","Shrubs",0.20454545454545456
+"Plot174","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.23366477272727273
+"Plot174","f","Stratum-W21-1","W21","Shrubs",0.4303977272727273
+"Plot175","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.515625
+"Plot175","f","Stratum-W21-1","W21","Shrubs",0.06534090909090909
+"Plot176","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.3673295454545455
+"Plot177","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.22045454545454543
+"Plot177","f","Stratum-W21-1","W21","Shrubs",0.13920454545454544
+"Plot178","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.1471590909090909
+"Plot178","f","Stratum-W21-1","W21","Shrubs",0.2002840909090909
+"Plot179","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.2440340909090909
+"Plot179","f","Stratum-W21-1","W21","Shrubs",0.005681818181818182
+"Plot180","f","Stratum-W21-1","W21","Herbs & Subshrubs",0.18835227272727273
+"Plot180","f","Stratum-W21-1","W21","Shrubs",0.1690340909090909
+"Plot193","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.3098011363636364
+"Plot193","f","Stratum-W2-1","W2","Shrubs",0.10653409090909091
+"Plot194","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.3835227272727273
+"Plot195","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.4663352272727272
+"Plot195","f","Stratum-W2-1","W2","Shrubs",0.1590909090909091
+"Plot196","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.4112215909090909
+"Plot196","f","Stratum-W2-1","W2","Shrubs",0.1590909090909091
+"Plot197","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.34517045454545453
+"Plot197","f","Stratum-W2-1","W2","Shrubs",0.21306818181818182
+"Plot198","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.5
+"Plot198","f","Stratum-W2-1","W2","Shrubs",0.05823863636363636
+"Plot199","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.4090909090909091
+"Plot2","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.5076704545454546
+"Plot200","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.47457386363636367
+"Plot200","f","Stratum-W2-1","W2","Shrubs",0.011363636363636364
+"Plot201","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.46875
+"Plot201","f","Stratum-W2-1","W2","Shrubs",0.16051136363636365
+"Plot202","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.49019886363636367
+"Plot202","f","Stratum-W2-1","W2","Shrubs",0.024147727272727272
+"Plot203","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.5589488636363636
+"Plot203","f","Stratum-W2-1","W2","Shrubs",0.022727272727272728
+"Plot204","f","Stratum-W2-1","W2","Herbs & Subshrubs",0.4268465909090909
+"Plot204","f","Stratum-W2-1","W2","Shrubs",0.01278409090909091
+"Plot217","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.06321022727272728
+"Plot217","f","Stratum-U17-1","U17","Shrubs",0.10511363636363637
+"Plot218","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.04971590909090909
+"Plot218","f","Stratum-U17-1","U17","Shrubs",0.20738636363636365
+"Plot219","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.165625
+"Plot220","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.1458806818181818
+"Plot221","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.2125
+"Plot222","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.1416193181818182
+"Plot222","f","Stratum-U17-1","U17","Shrubs",0.048295454545454544
+"Plot223","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.037500000000000006
+"Plot223","f","Stratum-U17-1","U17","Shrubs",0.048295454545454544
+"Plot224","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.053267045454545456
+"Plot224","f","Stratum-U17-1","U17","Shrubs",0.10085227272727272
+"Plot225","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.019886363636363636
+"Plot225","f","Stratum-U17-1","U17","Shrubs",0.032670454545454544
+"Plot226","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.018323863636363635
+"Plot226","f","Stratum-U17-1","U17","Shrubs",0.041193181818181816
+"Plot227","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.04346590909090909
+"Plot227","f","Stratum-U17-1","U17","Shrubs",0.017045454545454544
+"Plot228","f","Stratum-U17-1","U17","Herbs & Subshrubs",0.4041193181818182
+"Plot229","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.3650568181818182
+"Plot229","f","Stratum-U16-1","U16","Shrubs",0.048295454545454544
+"Plot230","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.23224431818181818
+"Plot230","f","Stratum-U16-1","U16","Shrubs",0.10511363636363637
+"Plot231","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.06818181818181818
+"Plot232","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.3644886363636364
+"Plot233","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.08522727272727272
+"Plot233","f","Stratum-U16-1","U16","Shrubs",0.07670454545454546
+"Plot234","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.09318181818181817
+"Plot234","f","Stratum-U16-1","U16","Shrubs",0.37926136363636365
+"Plot235","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.11178977272727274
+"Plot235","f","Stratum-U16-1","U16","Shrubs",0.10511363636363637
+"Plot236","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.26420454545454547
+"Plot236","f","Stratum-U16-1","U16","Shrubs",0.10511363636363637
+"Plot237","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.05823863636363636
+"Plot237","f","Stratum-U16-1","U16","Shrubs",0.02556818181818182
+"Plot238","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.28267045454545453
+"Plot238","f","Stratum-U16-1","U16","Shrubs",0.265625
+"Plot239","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.10866477272727272
+"Plot239","f","Stratum-U16-1","U16","Shrubs",0.10511363636363637
+"Plot240","f","Stratum-U16-1","U16","Herbs & Subshrubs",0.005113636363636364
+"Plot240","f","Stratum-U16-1","U16","Shrubs",0.048295454545454544
+"Plot25","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.25468749999999996
+"Plot26","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.25909090909090904
+"Plot265","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.2840909090909091
+"Plot265","f","Stratum-U16-2","U16","Shrubs",0.10511363636363637
+"Plot266","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.17542613636363635
+"Plot266","f","Stratum-U16-2","U16","Shrubs",0.07670454545454546
+"Plot267","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.13920454545454544
+"Plot267","f","Stratum-U16-2","U16","Shrubs",0.10511363636363637
+"Plot268","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.46732954545454547
+"Plot268","f","Stratum-U16-2","U16","Shrubs",0.052556818181818184
+"Plot269","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.19389204545454544
+"Plot269","f","Stratum-U16-2","U16","Shrubs",0.05397727272727273
+"Plot27","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.17428977272727272
+"Plot270","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.5646306818181818
+"Plot270","f","Stratum-U16-2","U16","Shrubs",0.10085227272727272
+"Plot271","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.3018465909090909
+"Plot271","f","Stratum-U16-2","U16","Shrubs",0.052556818181818184
+"Plot272","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.10724431818181818
+"Plot272","f","Stratum-U16-2","U16","Shrubs",0.4971590909090909
+"Plot273","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.6029829545454546
+"Plot273","f","Stratum-U16-2","U16","Shrubs",0.10511363636363637
+"Plot274","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.10866477272727272
+"Plot274","f","Stratum-U16-2","U16","Shrubs",0.11505681818181818
+"Plot275","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.30823863636363635
+"Plot275","f","Stratum-U16-2","U16","Shrubs",0.10653409090909091
+"Plot276","f","Stratum-U16-2","U16","Herbs & Subshrubs",0.4403409090909091
+"Plot276","f","Stratum-U16-2","U16","Shrubs",0.048295454545454544
+"Plot28","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.39204545454545453
+"Plot289","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.5284090909090909
+"Plot29","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.4083806818181818
+"Plot290","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.6017045454545454
+"Plot291","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.38139204545454547
+"Plot292","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.6200284090909091
+"Plot293","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.5035511363636364
+"Plot294","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.37144886363636365
+"Plot295","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.4659090909090909
+"Plot296","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.546875
+"Plot297","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.32173295454545453
+"Plot298","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.31392045454545453
+"Plot299","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.4275568181818182
+"Plot3","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.38948863636363634
+"Plot30","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.2636363636363636
+"Plot300","f","Stratum-M24-1","M24","Herbs & Subshrubs",0.4659090909090909
+"Plot31","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.7024147727272727
+"Plot313","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.41548295454545453
+"Plot313","f","Stratum-W12-1","W12","Shrubs",0.16477272727272727
+"Plot314","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.15696022727272727
+"Plot314","f","Stratum-W12-1","W12","Shrubs",0.011363636363636364
+"Plot315","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.05823863636363636
+"Plot315","f","Stratum-W12-1","W12","Shrubs",0.052556818181818184
+"Plot316","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.09232954545454546
+"Plot316","f","Stratum-W12-1","W12","Shrubs",0.005681818181818182
+"Plot317","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.1615056818181818
+"Plot318","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.061079545454545456
+"Plot318","f","Stratum-W12-1","W12","Shrubs",0.052556818181818184
+"Plot319","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.02997159090909091
+"Plot319","f","Stratum-W12-1","W12","Shrubs",0.052556818181818184
+"Plot32","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.5795454545454546
+"Plot320","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.055681818181818186
+"Plot320","f","Stratum-W12-1","W12","Shrubs",0.052556818181818184
+"Plot321","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.056818181818181816
+"Plot322","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.044744318181818184
+"Plot322","f","Stratum-W12-1","W12","Shrubs",0.10653409090909091
+"Plot323","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.04701704545454546
+"Plot323","f","Stratum-W12-1","W12","Shrubs",0.07670454545454546
+"Plot324","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.023579545454545457
+"Plot33","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.47343749999999996
+"Plot337","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.09261363636363637
+"Plot337","f","Stratum-W18-1","W18","Shrubs",0.017329545454545455
+"Plot338","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.0809659090909091
+"Plot338","f","Stratum-W18-1","W18","Shrubs",0.10085227272727272
+"Plot339","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.09971590909090908
+"Plot34","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.3196022727272727
+"Plot340","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.03210227272727273
+"Plot340","f","Stratum-W18-1","W18","Shrubs",0.03409090909090909
+"Plot341","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.07741477272727272
+"Plot341","f","Stratum-W18-1","W18","Shrubs",0.02556818181818182
+"Plot342","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.06548295454545455
+"Plot342","f","Stratum-W18-1","W18","Shrubs",0.011363636363636364
+"Plot343","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.0859375
+"Plot343","f","Stratum-W18-1","W18","Shrubs",0.09943181818181818
+"Plot344","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.19176136363636365
+"Plot344","f","Stratum-W18-1","W18","Shrubs",0.06392045454545454
+"Plot345","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.08821022727272727
+"Plot345","f","Stratum-W18-1","W18","Shrubs",0.03551136363636364
+"Plot346","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.006392045454545455
+"Plot346","f","Stratum-W18-1","W18","Shrubs",0.13068181818181818
+"Plot347","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.1578125
+"Plot347","f","Stratum-W18-1","W18","Shrubs",0.18892045454545456
+"Plot348","f","Stratum-W18-1","W18","Herbs & Subshrubs",0.21661931818181818
+"Plot348","f","Stratum-W18-1","W18","Shrubs",0.052556818181818184
+"Plot35","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.3927556818181818
+"Plot36","f","Stratum-U4-2","U4","Herbs & Subshrubs",0.29161931818181813
+"Plot361","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.28281249999999997
+"Plot361","f","Stratum-W16-1","W16","Shrubs",0.052556818181818184
+"Plot362","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.07017045454545455
+"Plot362","f","Stratum-W16-1","W16","Shrubs",0.11221590909090909
+"Plot363","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.1480113636363636
+"Plot363","f","Stratum-W16-1","W16","Shrubs",0.011363636363636364
+"Plot364","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.05085227272727273
+"Plot364","f","Stratum-W16-1","W16","Shrubs",0.028409090909090908
+"Plot365","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.1617897727272727
+"Plot365","f","Stratum-W16-1","W16","Shrubs",0.03409090909090909
+"Plot366","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.16576704545454543
+"Plot367","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.3242897727272727
+"Plot367","f","Stratum-W16-1","W16","Shrubs",0.005681818181818182
+"Plot368","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.2684659090909091
+"Plot369","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.1870738636363636
+"Plot370","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.4647727272727273
+"Plot370","f","Stratum-W16-1","W16","Shrubs",0.011363636363636364
+"Plot371","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.5163352272727273
+"Plot372","f","Stratum-W16-1","W16","Herbs & Subshrubs",0.26377840909090905
+"Plot372","f","Stratum-W16-1","W16","Shrubs",0.06392045454545454
+"Plot4","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.29786931818181817
+"Plot49","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.44644886363636366
+"Plot5","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.2629261363636364
+"Plot50","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.4839488636363637
+"Plot51","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.44673295454545453
+"Plot52","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.4872159090909091
+"Plot53","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.4190340909090909
+"Plot54","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.4744318181818182
+"Plot55","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.5170454545454546
+"Plot56","f","Stratum-W12-1","W12","Herbs & Subshrubs",0.5213068181818182
+"Plot57","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.375
+"Plot58","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.2421875
+"Plot59","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.3565340909090909
+"Plot6","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.24446022727272726
+"Plot60","f","Stratum-W10-1","W10","Herbs & Subshrubs",0.4133522727272727
+"Plot7","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.3747159090909091
+"Plot73","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.0911931818181818
+"Plot73","f","Stratum-W11-1","W11","Shrubs",0.11789772727272728
+"Plot74","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.21931818181818177
+"Plot74","f","Stratum-W11-1","W11","Shrubs",0.2528409090909091
+"Plot75","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.12357954545454546
+"Plot75","f","Stratum-W11-1","W11","Shrubs",0.06392045454545454
+"Plot76","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.11079545454545454
+"Plot76","f","Stratum-W11-1","W11","Shrubs",0.03551136363636364
+"Plot77","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.11505681818181818
+"Plot77","f","Stratum-W11-1","W11","Shrubs",0.05965909090909091
+"Plot78","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.24147727272727273
+"Plot78","f","Stratum-W11-1","W11","Shrubs",0.022727272727272728
+"Plot79","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.15696022727272727
+"Plot79","f","Stratum-W11-1","W11","Shrubs",0.017045454545454544
+"Plot8","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.3203125
+"Plot80","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.21164772727272727
+"Plot81","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.2080965909090909
+"Plot81","f","Stratum-W11-1","W11","Shrubs",0.09375
+"Plot82","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.375
+"Plot82","f","Stratum-W11-1","W11","Shrubs",0.06534090909090909
+"Plot83","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.15838068181818182
+"Plot84","f","Stratum-W11-1","W11","Herbs & Subshrubs",0.12215909090909091
+"Plot84","f","Stratum-W11-1","W11","Shrubs",0.08806818181818182
+"Plot9","f","Stratum-U4-1","U4","Herbs & Subshrubs",0.27357954545454544
+"Plot97","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.2890625
+"Plot97","f","Stratum-W11-2","W11","Shrubs",0.1590909090909091
+"Plot98","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.3210227272727273
+"Plot99","f","Stratum-W11-2","W11","Herbs & Subshrubs",0.4460227272727273
+"Plot99","f","Stratum-W11-2","W11","Shrubs",0.011647727272727271
+"PlotBm1","b","W21","W21","Herbs & Subshrubs",0.6605113636363636
+"PlotBm10","b","W21","W21","Herbs & Subshrubs",0.6477272727272727
+"PlotBm100","b","W17","W17","Herbs & Subshrubs",0.7741477272727273
+"PlotBm101","b","W17","W17","Herbs & Subshrubs",0.6910511363636364
+"PlotBm101","b","W17","W17","Shrubs",0.06960227272727272
+"PlotBm102","b","W17","W17","Herbs & Subshrubs",0.6754261363636364
+"PlotBm103","b","W17","W17","Herbs & Subshrubs",0.5838068181818182
+"PlotBm104","b","W17","W17","Herbs & Subshrubs",0.7848011363636364
+"PlotBm105","b","W17","W17","Herbs & Subshrubs",0.5568181818181818
+"PlotBm106","b","W17","W17","Herbs & Subshrubs",0.6654829545454546
+"PlotBm107","b","W17","W17","Herbs & Subshrubs",0.7713068181818182
+"PlotBm108","b","W17","W17","Herbs & Subshrubs",0.6377840909090909
+"PlotBm109","b","W11","W11","Herbs & Subshrubs",0.040482954545454544
+"PlotBm11","b","W21","W21","Herbs & Subshrubs",0.5362215909090909
+"PlotBm110","b","W11","W11","Herbs & Subshrubs",0.3600852272727273
+"PlotBm111","b","W11","W11","Herbs & Subshrubs",0.2677556818181818
+"PlotBm112","b","W11","W11","Herbs & Subshrubs",0.22088068181818182
+"PlotBm112","b","W11","W11","Shrubs",0.0014204545454545455
+"PlotBm113","b","W11","W11","Herbs & Subshrubs",0.10227272727272728
+"PlotBm114","b","W11","W11","Herbs & Subshrubs",0.11292613636363637
+"PlotBm114","b","W11","W11","Shrubs",0.0014204545454545455
+"PlotBm115","b","W11","W11","Herbs & Subshrubs",0.06321022727272728
+"PlotBm116","b","W11","W11","Herbs & Subshrubs",0.1171875
+"PlotBm116","b","W11","W11","Shrubs",0.024147727272727272
+"PlotBm117","b","W11","W11","Herbs & Subshrubs",0.029829545454545456
+"PlotBm117","b","W11","W11","Shrubs",0.008522727272727272
+"PlotBm118","b","W11","W11","Herbs & Subshrubs",0.028409090909090908
+"PlotBm119","b","W11","W11","Herbs & Subshrubs",0.03480113636363636
+"PlotBm12","b","W21","W21","Herbs & Subshrubs",0.4822443181818182
+"PlotBm120","b","W11","W11","Herbs & Subshrubs",0.08167613636363637
+"PlotBm121","b","W10","W10","Herbs & Subshrubs",0.12855113636363635
+"PlotBm121","b","W10","W10","Shrubs",0.0014204545454545455
+"PlotBm122","b","W10","W10","Herbs & Subshrubs",0.07741477272727272
+"PlotBm123","b","W10","W10","Herbs & Subshrubs",0.14701704545454544
+"PlotBm124","b","W10","W10","Herbs & Subshrubs",0.06818181818181818
+"PlotBm125","b","W10","W10","Herbs & Subshrubs",0.18039772727272727
+"PlotBm126","b","W10","W10","Herbs & Subshrubs",0.15198863636363635
+"PlotBm126","b","W10","W10","Shrubs",0.008522727272727272
+"PlotBm127","b","W10","W10","Herbs & Subshrubs",0.07741477272727272
+"PlotBm127","b","W10","W10","Shrubs",0.0014204545454545455
+"PlotBm128","b","W10","W10","Herbs & Subshrubs",0.4680397727272727
+"PlotBm128","b","W10","W10","Shrubs",0.08806818181818182
+"PlotBm129","b","W10","W10","Herbs & Subshrubs",0.3210227272727273
+"PlotBm129","b","W10","W10","Shrubs",0.07670454545454546
+"PlotBm13","b","W2","W2","Herbs & Subshrubs",0.07102272727272728
+"PlotBm13","b","W2","W2","Shrubs",0.024147727272727272
+"PlotBm130","b","W10","W10","Herbs & Subshrubs",0.2578125
+"PlotBm130","b","W10","W10","Shrubs",0.028409090909090908
+"PlotBm131","b","W10","W10","Herbs & Subshrubs",0.3487215909090909
+"PlotBm131","b","W10","W10","Shrubs",0.048295454545454544
+"PlotBm132","b","W10","W10","Herbs & Subshrubs",0.4794034090909091
+"PlotBm132","b","W10","W10","Shrubs",0.14204545454545456
+"PlotBm133","b","W10","W10","Herbs & Subshrubs",0.6150568181818182
+"PlotBm134","b","W16","W16","Herbs & Subshrubs",0.31107954545454547
+"PlotBm134","b","W16","W16","Shrubs",0.052556818181818184
+"PlotBm135","b","W16","W16","Herbs & Subshrubs",0.5681818181818182
+"PlotBm135","b","W16","W16","Shrubs",0.024147727272727272
+"PlotBm136","b","W16","W16","Herbs & Subshrubs",0.3174715909090909
+"PlotBm136","b","W16","W16","Shrubs",0.17045454545454544
+"PlotBm137","b","W16","W16","Herbs & Subshrubs",0.17897727272727273
+"PlotBm137","b","W16","W16","Shrubs",0.03409090909090909
+"PlotBm138","b","W16","W16","Herbs & Subshrubs",0.1015625
+"PlotBm138","b","W16","W16","Shrubs",0.011363636363636364
+"PlotBm139","b","W16","W16","Herbs & Subshrubs",0.04332386363636364
+"PlotBm139","b","W16","W16","Shrubs",0.017045454545454544
+"PlotBm14","b","W2","W2","Herbs & Subshrubs",0.31605113636363635
+"PlotBm14","b","W2","W2","Shrubs",0.10511363636363637
+"PlotBm140","b","W16","W16","Herbs & Subshrubs",0.20454545454545456
+"PlotBm140","b","W16","W16","Shrubs",0.022727272727272728
+"PlotBm141","b","W16","W16","Herbs & Subshrubs",0.2684659090909091
+"PlotBm142","b","W16","W16","Herbs & Subshrubs",0.20667613636363635
+"PlotBm143","b","W16","W16","Herbs & Subshrubs",0.24431818181818182
+"PlotBm143","b","W16","W16","Shrubs",0.052556818181818184
+"PlotBm144","b","W16","W16","Herbs & Subshrubs",0.25355113636363635
+"PlotBm144","b","W16","W16","Shrubs",0.048295454545454544
+"PlotBm145","b","W16","W16","Herbs & Subshrubs",0.3309659090909091
+"PlotBm145","b","W16","W16","Shrubs",0.11789772727272728
+"PlotBm15","b","W2","W2","Herbs & Subshrubs",0.40482954545454547
+"PlotBm15","b","W2","W2","Shrubs",0.10653409090909091
+"PlotBm16","b","W2","W2","Herbs & Subshrubs",0.35582386363636365
+"PlotBm16","b","W2","W2","Shrubs",0.10653409090909091
+"PlotBm17","b","W2","W2","Herbs & Subshrubs",0.4453125
+"PlotBm18","b","W2","W2","Herbs & Subshrubs",0.5525568181818182
+"PlotBm18","b","W2","W2","Shrubs",0.10653409090909091
+"PlotBm19","b","W2","W2","Herbs & Subshrubs",0.6051136363636364
+"PlotBm19","b","W2","W2","Shrubs",0.2372159090909091
+"PlotBm2","b","W21","W21","Herbs & Subshrubs",0.6129261363636364
+"PlotBm20","b","W2","W2","Herbs & Subshrubs",0.3977272727272727
+"PlotBm20","b","W2","W2","Shrubs",0.052556818181818184
+"PlotBm21","b","W2","W2","Herbs & Subshrubs",0.2890625
+"PlotBm21","b","W2","W2","Shrubs",0.17755681818181818
+"PlotBm22","b","W2","W2","Herbs & Subshrubs",0.2627840909090909
+"PlotBm22","b","W2","W2","Shrubs",0.28267045454545453
+"PlotBm23","b","W2","W2","Herbs & Subshrubs",0.45454545454545453
+"PlotBm23","b","W2","W2","Shrubs",0.19318181818181818
+"PlotBm24","b","W2","W2","Herbs & Subshrubs",0.6711647727272727
+"PlotBm24","b","W2","W2","Shrubs",0.05823863636363636
+"PlotBm25","b","M24","M24","Herbs & Subshrubs",0.49573863636363635
+"PlotBm26","b","M24","M24","Herbs & Subshrubs",0.37073863636363635
+"PlotBm27","b","M24","M24","Herbs & Subshrubs",0.43892045454545453
+"PlotBm28","b","M24","M24","Herbs & Subshrubs",0.3615056818181818
+"PlotBm29","b","M24","M24","Herbs & Subshrubs",0.5404829545454546
+"PlotBm3","b","W21","W21","Herbs & Subshrubs",0.5625
+"PlotBm30","b","M24","M24","Herbs & Subshrubs",0.41051136363636365
+"PlotBm31","b","M24","M24","Herbs & Subshrubs",0.45454545454545453
+"PlotBm32","b","M24","M24","Herbs & Subshrubs",0.5078125
+"PlotBm33","b","M24","M24","Herbs & Subshrubs",0.3835227272727273
+"PlotBm34","b","M24","M24","Herbs & Subshrubs",0.4822443181818182
+"PlotBm35","b","M24","M24","Herbs & Subshrubs",0.4147727272727273
+"PlotBm36","b","M24","M24","Herbs & Subshrubs",0.35795454545454547
+"PlotBm37","b","W12","W12","Herbs & Subshrubs",0.10795454545454546
+"PlotBm38","b","W12","W12","Herbs & Subshrubs",0.03622159090909091
+"PlotBm39","b","W12","W12","Herbs & Subshrubs",0.05752840909090909
+"PlotBm4","b","W21","W21","Herbs & Subshrubs",0.5248579545454546
+"PlotBm40","b","W12","W12","Herbs & Subshrubs",0.013920454545454547
+"PlotBm41","b","W12","W12","Herbs & Subshrubs",0.06818181818181818
+"PlotBm42","b","W12","W12","Herbs & Subshrubs",0.020596590909090908
+"PlotBm43","b","W12","W12","Herbs & Subshrubs",0.13068181818181818
+"PlotBm44","b","W12","W12","Herbs & Subshrubs",0.03977272727272727
+"PlotBm45","b","W12","W12","Herbs & Subshrubs",0.0390625
+"PlotBm46","b","W12","W12","Herbs & Subshrubs",0.011647727272727271
+"PlotBm47","b","W12","W12","Herbs & Subshrubs",0.007102272727272727
+"PlotBm48","b","W12","W12","Herbs & Subshrubs",0.007102272727272727
+"PlotBm49","b","W18","W18","Herbs & Subshrubs",0.2840909090909091
+"PlotBm5","b","W21","W21","Herbs & Subshrubs",0.5767045454545454
+"PlotBm50","b","W18","W18","Herbs & Subshrubs",0.12144886363636363
+"PlotBm51","b","W18","W18","Herbs & Subshrubs",0.2833806818181818
+"PlotBm51","b","W18","W18","Shrubs",0.10653409090909091
+"PlotBm52","b","W18","W18","Herbs & Subshrubs",0.1747159090909091
+"PlotBm52","b","W18","W18","Shrubs",0.011363636363636364
+"PlotBm53","b","W18","W18","Herbs & Subshrubs",0.21164772727272727
+"PlotBm54","b","W18","W18","Herbs & Subshrubs",0.3146306818181818
+"PlotBm55","b","W18","W18","Herbs & Subshrubs",0.12073863636363637
+"PlotBm56","b","W18","W18","Herbs & Subshrubs",0.1558238636363636
+"PlotBm57","b","W18","W18","Herbs & Subshrubs",0.10369318181818182
+"PlotBm57","b","W18","W18","Shrubs",0.07670454545454546
+"PlotBm58","b","W18","W18","Herbs & Subshrubs",0.011363636363636364
+"PlotBm59","b","W18","W18","Herbs & Subshrubs",0.32457386363636365
+"PlotBm6","b","W21","W21","Herbs & Subshrubs",0.4921875
+"PlotBm60","b","W18","W18","Herbs & Subshrubs",0.3046875
+"PlotBm61","b","U17","U17","Herbs & Subshrubs",0.3487215909090909
+"PlotBm61","b","U17","U17","Shrubs",0.2599431818181818
+"PlotBm62","b","U17","U17","Herbs & Subshrubs",0.4034090909090909
+"PlotBm62","b","U17","U17","Shrubs",0.2897727272727273
+"PlotBm63","b","U17","U17","Herbs & Subshrubs",0.3955965909090909
+"PlotBm63","b","U17","U17","Shrubs",0.22443181818181818
+"PlotBm64","b","U17","U17","Herbs & Subshrubs",0.5191761363636364
+"PlotBm64","b","U17","U17","Shrubs",0.10653409090909091
+"PlotBm65","b","U17","U17","Herbs & Subshrubs",0.5944602272727273
+"PlotBm65","b","U17","U17","Shrubs",0.15767045454545456
+"PlotBm66","b","U17","U17","Herbs & Subshrubs",0.5461647727272727
+"PlotBm66","b","U17","U17","Shrubs",0.26420454545454547
+"PlotBm67","b","U16","U16","Herbs & Subshrubs",0.6143465909090909
+"PlotBm67","b","U16","U16","Shrubs",0.17755681818181818
+"PlotBm68","b","U16","U16","Herbs & Subshrubs",0.3678977272727273
+"PlotBm69","b","U16","U16","Herbs & Subshrubs",0.32670454545454547
+"PlotBm7","b","W21","W21","Herbs & Subshrubs",0.5454545454545454
+"PlotBm70","b","U16","U16","Herbs & Subshrubs",0.22088068181818182
+"PlotBm70","b","U16","U16","Shrubs",0.24857954545454544
+"PlotBm71","b","U16","U16","Herbs & Subshrubs",0.30610795454545453
+"PlotBm72","b","U16","U16","Herbs & Subshrubs",0.11079545454545454
+"PlotBm73","b","U17","U17","Herbs & Subshrubs",0.3252840909090909
+"PlotBm74","b","U17","U17","Herbs & Subshrubs",0.24076704545454544
+"PlotBm75","b","U17","U17","Herbs & Subshrubs",0.29545454545454547
+"PlotBm76","b","U17","U17","Herbs & Subshrubs",0.3174715909090909
+"PlotBm77","b","U17","U17","Herbs & Subshrubs",0.40625
+"PlotBm78","b","U17","U17","Herbs & Subshrubs",0.6001420454545454
+"PlotBm79","b","U16","U16","Herbs & Subshrubs",0.3380681818181818
+"PlotBm79","b","U16","U16","Shrubs",0.052556818181818184
+"PlotBm8","b","W21","W21","Herbs & Subshrubs",0.3899147727272727
+"PlotBm80","b","U16","U16","Herbs & Subshrubs",0.5809659090909091
+"PlotBm80","b","U16","U16","Shrubs",0.052556818181818184
+"PlotBm81","b","U16","U16","Herbs & Subshrubs",0.5106534090909091
+"PlotBm82","b","U16","U16","Herbs & Subshrubs",0.7294034090909091
+"PlotBm83","b","U16","U16","Herbs & Subshrubs",0.5646306818181818
+"PlotBm83","b","U16","U16","Shrubs",0.052556818181818184
+"PlotBm84","b","U16","U16","Herbs & Subshrubs",0.5475852272727273
+"PlotBm85","b","U4","U4","Herbs & Subshrubs",0.6086647727272727
+"PlotBm86","b","U4","U4","Herbs & Subshrubs",0.6647727272727273
+"PlotBm87","b","U4","U4","Herbs & Subshrubs",0.6740056818181818
+"PlotBm88","b","U4","U4","Herbs & Subshrubs",0.4140625
+"PlotBm89","b","U4","U4","Herbs & Subshrubs",0.3430397727272727
+"PlotBm9","b","W21","W21","Herbs & Subshrubs",0.3934659090909091
+"PlotBm90","b","U4","U4","Herbs & Subshrubs",0.28125
+"PlotBm91","b","U4","U4","Herbs & Subshrubs",0.26988636363636365
+"PlotBm92","b","U4","U4","Herbs & Subshrubs",0.19673295454545456
+"PlotBm93","b","U4","U4","Herbs & Subshrubs",0.14488636363636365
+"PlotBm94","b","U4","U4","Herbs & Subshrubs",0.29261363636363635
+"PlotBm95","b","U4","U4","Herbs & Subshrubs",0.3799715909090909
+"PlotBm96","b","U4","U4","Herbs & Subshrubs",0.16164772727272728
+"PlotBm97","b","W17","W17","Herbs & Subshrubs",0.6178977272727273
+"PlotBm98","b","W17","W17","Herbs & Subshrubs",0.7109375
+"PlotBm99","b","W17","W17","Herbs & Subshrubs",0.8345170454545454
+"PlotBm99","b","W17","W17","Shrubs",0.10653409090909091

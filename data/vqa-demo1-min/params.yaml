@@ -1,0 +1,11 @@
+project: vqa-demo1-min
+legacy_summary_area_ha: 100
+
+# Validation-only manifest for now.
+# This will eventually replace the old params R file for file-presence checks.
+active_indicators:
+  - SR
+  - TD
+  - PCGF
+  - GC
+  - PCESS
