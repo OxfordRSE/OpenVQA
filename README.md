@@ -80,6 +80,22 @@ You can read more about VQA in detail in this open access [publication](https://
 * R >= 4.4.3   
 * Multiple R packages (see script `libraries.R` for details)  
 
+## Developer Setup
+
+If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
+
+1. Install the R project dependencies.
+   - If you are using `rv`, run `rv sync` from the repository root.
+2. Install `pre-commit` itself if it is not already available on your machine.
+   - `pipx install pre-commit`
+   - or `python -m pip install --user pre-commit`
+3. Install the Git hook into your clone.
+   - `pre-commit install`
+4. If you want to check only the currently staged files before committing, run:
+   - `pre-commit run --files $(git diff --cached --name-only --diff-filter=ACM)`
+
+The local hooks run `styler` first and `lintr` second on staged `.R` and `.Rmd` files.
+
 <a name="naming-conventions"></a>
 ## Naming conventions
 * Pay special attention to the following naming conventions for files and directories
