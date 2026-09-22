@@ -1,0 +1,1 @@
+linters: linters_with_defaults(defaults = list(line_length_linter = line_length_linter(100)))

@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: styler
+        name: styler
+        entry: Rscript --vanilla .pre-commit/hooks.R style
+        language: system
+        files: \.(R|Rmd)$
+        pass_filenames: true
+      - id: lintr
+        name: lintr
+        entry: Rscript --vanilla .pre-commit/hooks.R lint
+        language: system
+        files: \.(R|Rmd)$
+        pass_filenames: true
