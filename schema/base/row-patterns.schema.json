@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/vqa2/schema/base/row-patterns.schema.json",
+  "title": "VQA2 Shared Row Patterns",
+  "description": "Reusable row schemas for input CSV files.",
+  "$defs": {
+    "plotMetadataRow": {
+      "type": "object",
+      "required": [
+        "plotCode",
+        "focalOrBenchmark",
+        "vegClass",
+        "landCover"
+      ],
+      "properties": {
+        "plotCode": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "focalOrBenchmark": {
+          "$ref": "./common.defs.schema.json#/$defs/focalOrBenchmark"
+        },
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "landCover": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        }
+      },
+      "additionalProperties": false
+    },
+    "coverIndicatorRow": {
+      "type": "object",
+      "required": [
+        "plotCode",
+        "focalOrBenchmark",
+        "landCover",
+        "vegClass",
+        "stratum",
+        "cover"
+      ],
+      "properties": {
+        "plotCode": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "focalOrBenchmark": {
+          "$ref": "./common.defs.schema.json#/$defs/focalOrBenchmark"
+        },
+        "landCover": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "stratum": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "cover": {
+          "$ref": "./common.defs.schema.json#/$defs/proportionValue"
+        }
+      },
+      "additionalProperties": false
+    },
+    "speciesCoverRow": {
+      "type": "object",
+      "required": [
+        "plotCode",
+        "focalOrBenchmark",
+        "landCover",
+        "vegClass",
+        "species",
+        "cover"
+      ],
+      "properties": {
+        "plotCode": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "focalOrBenchmark": {
+          "$ref": "./common.defs.schema.json#/$defs/focalOrBenchmark"
+        },
+        "landCover": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "species": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyStringOrNull"
+        },
+        "cover": {
+          "$ref": "./common.defs.schema.json#/$defs/proportionValue"
+        }
+      },
+      "additionalProperties": false
+    },
+    "speciesStemsRow": {
+      "type": "object",
+      "required": [
+        "stem_id",
+        "plotCode",
+        "focalOrBenchmark",
+        "landCover",
+        "vegClass",
+        "subplot",
+        "ind",
+        "ind_id",
+        "stratum",
+        "species",
+        "dbh_cm",
+        "ba_m2"
+      ],
+      "properties": {
+        "stem_id": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeIntegerValue"
+        },
+        "plotCode": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "focalOrBenchmark": {
+          "$ref": "./common.defs.schema.json#/$defs/focalOrBenchmark"
+        },
+        "landCover": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "subplot": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeIntegerValue"
+        },
+        "ind": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeIntegerValue"
+        },
+        "ind_id": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "stratum": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "species": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "dbh_cm": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeNumberValue"
+        },
+        "ba_m2": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeNumberValue"
+        }
+      },
+      "additionalProperties": true
+    },
+    "landCoverRow": {
+      "type": "object",
+      "required": [
+        "landCover",
+        "lc.type",
+        "vegClass",
+        "area_ha",
+        "focal_plots",
+        "bm_plots",
+        "all.n.OK"
+      ],
+      "properties": {
+        "landCover": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "lc.type": {
+          "$ref": "./common.defs.schema.json#/$defs/lcType"
+        },
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "area_ha": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeNumberValue"
+        },
+        "focal_plots": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeIntegerValue"
+        },
+        "bm_plots": {
+          "$ref": "./common.defs.schema.json#/$defs/nonNegativeIntegerValue"
+        },
+        "all.n.OK": {
+          "$ref": "./common.defs.schema.json#/$defs/booleanLike"
+        }
+      },
+      "additionalProperties": false
+    },
+    "speciesRow": {
+      "type": "object",
+      "required": [
+        "genus",
+        "species",
+        "is_exotic"
+      ],
+      "properties": {
+        "genus": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "species": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "is_exotic": {
+          "$ref": "./common.defs.schema.json#/$defs/binary01"
+        }
+      },
+      "additionalProperties": true
+    },
+    "vegetationRow": {
+      "type": "object",
+      "required": [
+        "vegClass",
+        "lc.type",
+        "vegName"
+      ],
+      "properties": {
+        "vegClass": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "lc.type": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "vegName": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        }
+      },
+      "additionalProperties": false
+    },
+    "eiStratumIncludeRow": {
+      "type": "object",
+      "required": [
+        "EI",
+        "stratum",
+        "f.group",
+        "include",
+        "edit.notes"
+      ],
+      "properties": {
+        "EI": {
+          "$ref": "./common.defs.schema.json#/$defs/eiCode"
+        },
+        "stratum": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "f.group": {
+          "$ref": "./common.defs.schema.json#/$defs/functionGroup"
+        },
+        "include": {
+          "$ref": "./common.defs.schema.json#/$defs/includeFlag"
+        },
+        "edit.notes": {
+          "$ref": "./common.defs.schema.json#/$defs/optionalText"
+        }
+      },
+      "additionalProperties": false
+    },
+    "eiStratumVegIncludeRow": {
+      "type": "object",
+      "required": [
+        "EI",
+        "stratum",
+        "bm.vegetation",
+        "include",
+        "edit.notes"
+      ],
+      "properties": {
+        "EI": {
+          "$ref": "./common.defs.schema.json#/$defs/eiCode"
+        },
+        "stratum": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "bm.vegetation": {
+          "$ref": "./common.defs.schema.json#/$defs/nonEmptyString"
+        },
+        "include": {
+          "$ref": "./common.defs.schema.json#/$defs/includeFlag"
+        },
+        "edit.notes": {
+          "$ref": "./common.defs.schema.json#/$defs/optionalText"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

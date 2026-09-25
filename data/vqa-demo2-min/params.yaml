@@ -1,0 +1,21 @@
+project: vqa-demo2-min
+
+# Validation-only manifest for now.
+# This is a declarative subset of params/params.vqa-demo2.R.
+data_type: mixed
+qh_method: empirical
+td_only: false
+include_plots_nodata: true
+
+active_indicators:
+  - SR
+  - TS
+  - PCES
+  - PCGF
+  - BA
+  - ASC
+
+assessments:
+  offset_baseline:
+    active_indicators: []
+    qh_method: assume.0

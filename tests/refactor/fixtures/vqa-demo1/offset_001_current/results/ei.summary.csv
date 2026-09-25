@@ -1,0 +1,6 @@
+"ei","ei.name","distn","q.method","test.tail","bm.val"
+"SR","Species Richness","NBin","empirical","lower",NA
+"TD","Taxonomic distance","gamma","empirical","both",NA
+"PCGF","Percent Cover by Growth Form","Bet","empirical","both",NA
+"GC","Ground Cover","Bet","empirical","both",NA
+"PCESS","Percent Cover Exotic Species","Bet","fixed","upper","0"

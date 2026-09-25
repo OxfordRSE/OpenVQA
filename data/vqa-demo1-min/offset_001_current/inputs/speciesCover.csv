@@ -1,0 +1,1560 @@
+﻿"plotCode","focalOrBenchmark","landCover","vegClass","species","cover"
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Acer spicatum",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Alnus alnobetula subsp. crispa",0.05
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.05
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Calamagrostis canadensis",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Clintonia borealis",0.01
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.05
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.03
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.2
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.005
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Orthilia secunda",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.55
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Prunus virginiana",0.01
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rubus pubescens",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum capillifolium",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium caespitosum",0.001
+" BL2418","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Viburnum cassinoides",0.01
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Anaphalis margaritacea",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Barbilophozia sp.",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bazzania trilobata",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.1
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Blepharostoma trichophyllum",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Calamagrostis canadensis",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Chamerion angustifolium",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.005
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.07
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.01
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Fragaria virginiana",0.01
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.01
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.03
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Orthilia secunda",0.005
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.6
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Prunus virginiana",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhytidiadelphus triquetrus",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.02
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Vaccinium caespitosum",0.005
+" BL2420","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.01
+"BB_S_Oc","b","Wetland","Wetland","Abies balsamea",0.02
+"BB_S_Oc","b","Wetland","Wetland","Alnus rugosa",0.55
+"BB_S_Oc","b","Wetland","Wetland","Amelanchier sp.",0.02
+"BB_S_Oc","b","Wetland","Wetland","Betula papyrifera",0.02
+"BB_S_Oc","b","Wetland","Wetland","Cornus canadensis",0.1
+"BB_S_Oc","b","Wetland","Wetland","Lycopodium annotinum",0.15
+"BB_S_Oc","b","Wetland","Wetland","Picea mariana",0.05
+"BB_S_Oc","b","Wetland","Wetland","Pleurozium schreberi",0.25
+"BB_S_Oc","b","Wetland","Wetland","Ribes lacustre",0.02
+"BB_S_Oc","b","Wetland","Wetland","Rubus pubescens",0.1
+"BB_S_Oc","b","Wetland","Wetland","Solidago rugosa",0.6
+"BB_S_Oc","b","Wetland","Wetland","Unidentified Grass",0.02
+"BB_S_Oc","b","Wetland","Wetland","Viburnum cassinoides",0.05
+"BB_S_Oc","b","Wetland","Wetland","Viburnum edule",0.02
+"BB_S_Oc","b","Wetland","Wetland","Viola sp.",0.02
+"BB_V8","b","Wetland","Wetland","Alnus rugosa",0.2
+"BB_V8","b","Wetland","Wetland","Aster nemoralis",0.02
+"BB_V8","b","Wetland","Wetland","Carex trisperma",0.1
+"BB_V8","b","Wetland","Wetland","Chamaedaphne calyculata",0.02
+"BB_V8","b","Wetland","Wetland","Cornus canadensis",0.05
+"BB_V8","b","Wetland","Wetland","Dasiphora fruticosa",0.05
+"BB_V8","b","Wetland","Wetland","Gaultheria hispidula",0.1
+"BB_V8","b","Wetland","Wetland","Glyceria canadensis",0.1
+"BB_V8","b","Wetland","Wetland","Kalmia angustifolia",0.05
+"BB_V8","b","Wetland","Wetland","Larix laricina",0.1
+"BB_V8","b","Wetland","Wetland",NA,0.02
+"BB_V8","b","Wetland","Wetland","Nemopanthus mucronata",0.02
+"BB_V8","b","Wetland","Wetland","Picea mariana",0.3
+"BB_V8","b","Wetland","Wetland","Pleurozium schreberi",0.1
+"BB_V8","b","Wetland","Wetland","Rosa nitida",0.05
+"BB_V8","b","Wetland","Wetland","Rubus idaeus",0.05
+"BB_V8","b","Wetland","Wetland","Sanguisorba canadensis",0.05
+"BB_V8","b","Wetland","Wetland","Sphagnum sp.",0.5
+"BB_V8","b","Wetland","Wetland","Typha latifolia",0.02
+"BB_V8","b","Wetland","Wetland","Unidentified Grass",0.1
+"BB_V8","b","Wetland","Wetland","Unidentified Rush",0.05
+"BB_WL_7","b","Wetland","Wetland","Andromeda glaucophylla",0.02
+"BB_WL_7","b","Wetland","Wetland","Aronia prunifolia",0.05
+"BB_WL_7","b","Wetland","Wetland","Aster nemoralis",0.02
+"BB_WL_7","b","Wetland","Wetland","Betula michauxii",0.1
+"BB_WL_7","b","Wetland","Wetland","Betula pumila",0.02
+"BB_WL_7","b","Wetland","Wetland","Carex oligosperma",0.6
+"BB_WL_7","b","Wetland","Wetland","Chamaedaphne calyculata",0.1
+"BB_WL_7","b","Wetland","Wetland","Juniperus communis",0.02
+"BB_WL_7","b","Wetland","Wetland","Kalmia polifolia",0.02
+"BB_WL_7","b","Wetland","Wetland","Larix laricina",0.05
+"BB_WL_7","b","Wetland","Wetland","Lonicera villosa",0.02
+"BB_WL_7","b","Wetland","Wetland","Myrica gale",0.1
+"BB_WL_7","b","Wetland","Wetland",NA,0.02
+"BB_WL_7","b","Wetland","Wetland","Picea mariana",0.05
+"BB_WL_7","b","Wetland","Wetland","Pleurozium schreberi",0.05
+"BB_WL_7","b","Wetland","Wetland","Rosa nitida",0.02
+"BB_WL_7","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"BB_WL_7","b","Wetland","Wetland","Sarracenia purpurea",0.02
+"BB_WL_7","b","Wetland","Wetland","Sphagnum sp.",0.9
+"BB_WL_7","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"BB_WL1","b","Wetland","Wetland","Agrostis capillaris",0.3
+"BB_WL1","b","Wetland","Wetland","Andromeda glaucophylla",0.02
+"BB_WL1","b","Wetland","Wetland","Aronia prunifolia",0.02
+"BB_WL1","b","Wetland","Wetland","Aster nemoralis",0.05
+"BB_WL1","b","Wetland","Wetland","Betula michauxii",0.15
+"BB_WL1","b","Wetland","Wetland","Carex oligosperma",0.3
+"BB_WL1","b","Wetland","Wetland","Chamaedaphne calyculata",0.1
+"BB_WL1","b","Wetland","Wetland","Cladonia raniferina",0.02
+"BB_WL1","b","Wetland","Wetland","Juniperus communis",0.05
+"BB_WL1","b","Wetland","Wetland","Kalmia polifolia",0.02
+"BB_WL1","b","Wetland","Wetland","Larix laricina",0.05
+"BB_WL1","b","Wetland","Wetland","Myrica gale",0.1
+"BB_WL1","b","Wetland","Wetland",NA,0.02
+"BB_WL1","b","Wetland","Wetland","Picea mariana",0.05
+"BB_WL1","b","Wetland","Wetland","Polytrichum strictum",0.05
+"BB_WL1","b","Wetland","Wetland","Rosa nitida",0.02
+"BB_WL1","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"BB_WL1","b","Wetland","Wetland","Sarracenia purpurea",0.02
+"BB_WL1","b","Wetland","Wetland","Sphagnum sp.",0.95
+"BB_WL1","b","Wetland","Wetland","Unidentified Sedge",0.05
+"BB_WL1","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"BB_WL10","b","Wetland","Wetland","Andromeda glaucophylla",0.02
+"BB_WL10","b","Wetland","Wetland","Chamaedaphne calyculata",0.15
+"BB_WL10","b","Wetland","Wetland","Cladonia raniferina",0.3
+"BB_WL10","b","Wetland","Wetland","Empetrum spp.",0.05
+"BB_WL10","b","Wetland","Wetland","Eriophorum angustifolium",0.02
+"BB_WL10","b","Wetland","Wetland","Kalmia angustifolia",0.05
+"BB_WL10","b","Wetland","Wetland","Kalmia polifolia",0.05
+"BB_WL10","b","Wetland","Wetland","Larix laricina",0.05
+"BB_WL10","b","Wetland","Wetland",NA,0.02
+"BB_WL10","b","Wetland","Wetland","Picea mariana",0.1
+"BB_WL10","b","Wetland","Wetland","Rubus chamaemorus",0.05
+"BB_WL10","b","Wetland","Wetland","Sarracenia purpurea",0.02
+"BB_WL10","b","Wetland","Wetland","Sphagnum sp.",0.7
+"BB_WL10","b","Wetland","Wetland","Unidentified Rush",0.25
+"BB_WL10","b","Wetland","Wetland","Vaccinium macrocarpon",0.02
+"BB_WL10","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"BBS6REV","b","Wetland","Wetland","Chamaedaphne calyculata",0.1
+"BBS6REV","b","Wetland","Wetland","Cladonia raniferina",0.02
+"BBS6REV","b","Wetland","Wetland","Coptis trifolia",0.02
+"BBS6REV","b","Wetland","Wetland","Cornus canadensis",0.05
+"BBS6REV","b","Wetland","Wetland","Eriophorum angustifolium",0.02
+"BBS6REV","b","Wetland","Wetland","Gaultheria hispidula",0.05
+"BBS6REV","b","Wetland","Wetland","Kalmia angustifolia",0.2
+"BBS6REV","b","Wetland","Wetland","Kalmia polifolia",0.02
+"BBS6REV","b","Wetland","Wetland","Lycopodium annotinum",0.02
+"BBS6REV","b","Wetland","Wetland","Maianthemum canadense",0.02
+"BBS6REV","b","Wetland","Wetland","Myrica gale",0.05
+"BBS6REV","b","Wetland","Wetland",NA,0.1
+"BBS6REV","b","Wetland","Wetland","Picea mariana",0.45
+"BBS6REV","b","Wetland","Wetland","Sphagnum sp.",0.95
+"BBS6REV","b","Wetland","Wetland","Vaccinium angustifolium",0.02
+"BBS6REV","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"BBS6REV","b","Wetland","Wetland","Vaccinium vitis-idaea",0.02
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.2
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.1
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.2
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Goodyera repens",0.02
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.21
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.1
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.25
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.54
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum sp.",0.1
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium angustifolium",0.1
+"BBV10","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium vitis-idaea",0.05
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.4
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Clintonia borealis",0.05
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.1
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.1
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Hylocomium splendens",0.2
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis",0.05
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.85
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.2
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.25
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.2
+"BBV2REV","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Vaccinium angustifolium",0.05
+"BBWL4","b","Wetland","Wetland","Chamaedaphne calyculata",0.1
+"BBWL4","b","Wetland","Wetland","Cladonia raniferina",0.3
+"BBWL4","b","Wetland","Wetland","Eleocharis tenuis",0.05
+"BBWL4","b","Wetland","Wetland","Eriophorum virginicum",0.02
+"BBWL4","b","Wetland","Wetland","Kalmia angustifolia",0.05
+"BBWL4","b","Wetland","Wetland","Kalmia polifolia",0.05
+"BBWL4","b","Wetland","Wetland",NA,0.05
+"BBWL4","b","Wetland","Wetland","Picea mariana",0.1
+"BBWL4","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"BBWL4","b","Wetland","Wetland","Sarracenia purpurea",0.02
+"BBWL4","b","Wetland","Wetland","Sphagnum sp.",0.95
+"BBWL4","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.5
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.03
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.12
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum scoparium",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Fragaria virginiana",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.03
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.03
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.15
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rhododendron groenlandicum",0.03
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Trientalis borealis",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Unknown",0.001
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium caespitosum",0.04
+"BL2313","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium vitis-idaea",0.005
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.005
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Bazzania trilobata",0.001
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.005
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum viride",0.001
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.01
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.005
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.1
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Maianthemum trifolium",0.07
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.75
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.07
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.03
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus chamaemorus",0.05
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum angustifolium",0.001
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum magellanicum",0.001
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum russowii",0.001
+"BL2401","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.005
+"BL2402","f","Wetland","Wetland","Carex sp.",0.25
+"BL2402","f","Wetland","Wetland","Chamaedaphne calyculata",0.15
+"BL2402","f","Wetland","Wetland","Cladonia sp.",0.15
+"BL2402","f","Wetland","Wetland","Dicranum elongatum",0.001
+"BL2402","f","Wetland","Wetland","Drosera rotundifolia",0.001
+"BL2402","f","Wetland","Wetland","Eriophorum sp.",0.05
+"BL2402","f","Wetland","Wetland","Kalmia angustifolia",0.2
+"BL2402","f","Wetland","Wetland","Kalmia polifolia",0.03
+"BL2402","f","Wetland","Wetland","Larix laricina",0.001
+"BL2402","f","Wetland","Wetland",NA,0.01
+"BL2402","f","Wetland","Wetland","Picea mariana",0.15
+"BL2402","f","Wetland","Wetland","Pleurozium schreberi",0.01
+"BL2402","f","Wetland","Wetland","Rhododendron canadense",0.05
+"BL2402","f","Wetland","Wetland","Rhododendron groenlandicum",0.05
+"BL2402","f","Wetland","Wetland","Rubus chamaemorus",0.1
+"BL2402","f","Wetland","Wetland","Sarracenia purpurea",0.005
+"BL2402","f","Wetland","Wetland","Scheuchzeria palustris",0.001
+"BL2402","f","Wetland","Wetland","Sphagnum angustifolium",0.001
+"BL2402","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2402","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2402","f","Wetland","Wetland","Vaccinium oxycoccos",0.005
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.65
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bazzania trilobata",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.05
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.02
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.03
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris cristata",0.01
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.01
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hypnum pallescens",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.05
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Lophozia sp.",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Maianthemum sp.",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Orthilia secunda",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.15
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Plagiothecium cavifolium",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.01
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Polytrichastrum longisetum",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.02
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sanionia uncinata",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tetraphis pellucida",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.005
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ulota crispa",0.001
+"BL2404","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum edule",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.5
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Acer spicatum",0.05
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Alnus alnobetula subsp. crispa",0.03
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Athyrium filix-femina var. angustum",0.01
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.07
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Blepharostoma trichophyllum",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Clintonia borealis",0.02
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.25
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum scoparium",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dryopteris cristata",0.05
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Endotropis alnifolia",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Fragaria virginiana",0.005
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Geum macrophyllum",0.02
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gymnocarpium dryopteris",0.005
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.07
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Lophocolea heterophylla",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Lophozia sp.",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.11
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.65
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Populus tremuloides",0.02
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rhizomnium gracile",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rhytidiadelphus triquetrus",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ribes lacustre",0.005
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rubus pubescens",0.2
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sanionia uncinata",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sciuro-hypnum curtum",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Trientalis borealis",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ulota crispa",0.001
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Viburnum cassinoides",0.02
+"BL2405","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Viburnum edule",0.005
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.2
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.005
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Actaea rubra",0.001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.1
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Chamerion angustifolium",0.001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.07
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.2
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris cristata",0.01
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Equisetum pratense",0.001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Geum macrophyllum",0.02
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.15
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Maianthemum trifolium",0.001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Monotropa uniflora",0.001
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.3
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.75
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.15
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.005
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","unknown moss",0.15
+"BL2406","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum edule",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.6
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.05
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.05
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.03
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.05
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gymnocarpium dryopteris",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.45
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.05
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Monotropa uniflora",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.005
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Orthilia secunda",0.005
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.1
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.3
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.15
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pylaisia selwynii",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.005
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sorbus decora",0.01
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.001
+"BL2407","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum edule",0.005
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.08
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.1
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Anastrophyllum hellerianum",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.05
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.07
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum fuscescens",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Dryopteris carthusiana",0.005
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Dryopteris cristata",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.04
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Gymnocarpium dryopteris",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.1
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.01
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Larix laricina",0.05
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.03
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Maianthemum canadense",0.01
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Monotropa uniflora",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Mylia anomala",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old",NA,0.07
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.1
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.4
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Populus tremuloides",0.07
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.1
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus pubescens",0.01
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Trientalis borealis",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium caespitosum",0.001
+"BL2408","f","BF/BS Forest, Old","BF/BS Forest, Old","Viburnum cassinoides",0.005
+"BL2409","f","Wetland","Wetland","Alnus alnobetula subsp. crispa",0.01
+"BL2409","f","Wetland","Wetland","Aulacomnium palustre",0.001
+"BL2409","f","Wetland","Wetland","Betula minor",0.005
+"BL2409","f","Wetland","Wetland","Carex sp.",0.05
+"BL2409","f","Wetland","Wetland","Chamaedaphne calyculata",0.005
+"BL2409","f","Wetland","Wetland","Coptis trifolia",0.001
+"BL2409","f","Wetland","Wetland","Dasiphora fruticosa",0.01
+"BL2409","f","Wetland","Wetland","Dicranum undulatum",0.001
+"BL2409","f","Wetland","Wetland","Drosera rotundifolia",0.001
+"BL2409","f","Wetland","Wetland","Eriophorum sp.",0.1
+"BL2409","f","Wetland","Wetland","Juniperus horizontalis",0.03
+"BL2409","f","Wetland","Wetland","Kalmia polifolia",0.001
+"BL2409","f","Wetland","Wetland","Larix laricina",0.02
+"BL2409","f","Wetland","Wetland","Lonicera villosa",0.001
+"BL2409","f","Wetland","Wetland","Maianthemum canadense",0.001
+"BL2409","f","Wetland","Wetland",NA,0.02
+"BL2409","f","Wetland","Wetland","Picea mariana",0.08
+"BL2409","f","Wetland","Wetland","Platanthera clavellata",0.001
+"BL2409","f","Wetland","Wetland","Platanthera dilatata",0.001
+"BL2409","f","Wetland","Wetland","Pleurozium schreberi",0.001
+"BL2409","f","Wetland","Wetland","Pyrola americana",0.001
+"BL2409","f","Wetland","Wetland","Rhododendron groenlandicum",0.02
+"BL2409","f","Wetland","Wetland","Rosa nitida",0.001
+"BL2409","f","Wetland","Wetland","Sanguisorba canadensis",0.03
+"BL2409","f","Wetland","Wetland","Solidago uliginosa",0.02
+"BL2409","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2409","f","Wetland","Wetland","Sphagnum compactum",0.001
+"BL2409","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2409","f","Wetland","Wetland","Thalictrum pubescens",0.001
+"BL2409","f","Wetland","Wetland","Vaccinium oxycoccos",0.005
+"BL2409","f","Wetland","Wetland","Viburnum cassinoides",0.005
+"BL2411","f","Wetland","Wetland","Aulacomnium palustre",0.001
+"BL2411","f","Wetland","Wetland","Carex sp.",0.05
+"BL2411","f","Wetland","Wetland","Chamaedaphne calyculata",0.02
+"BL2411","f","Wetland","Wetland","Coptis trifolia",0.001
+"BL2411","f","Wetland","Wetland","Dasiphora fruticosa",0.1
+"BL2411","f","Wetland","Wetland","Gaultheria hispidula",0.001
+"BL2411","f","Wetland","Wetland","Juniperus horizontalis",0.01
+"BL2411","f","Wetland","Wetland","Larix laricina",0.05
+"BL2411","f","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.001
+"BL2411","f","Wetland","Wetland","Lobelia dortmanna",0.005
+"BL2411","f","Wetland","Wetland","Lonicera villosa",0.005
+"BL2411","f","Wetland","Wetland","Maianthemum canadense",0.01
+"BL2411","f","Wetland","Wetland","Myrica gale",0.07
+"BL2411","f","Wetland","Wetland",NA,0.02
+"BL2411","f","Wetland","Wetland","Picea mariana",0.02
+"BL2411","f","Wetland","Wetland","Platanthera clavellata",0.005
+"BL2411","f","Wetland","Wetland","Platanthera dilatata",0.001
+"BL2411","f","Wetland","Wetland","Rhododendron groenlandicum",0.05
+"BL2411","f","Wetland","Wetland","Sanguisorba canadensis",0.02
+"BL2411","f","Wetland","Wetland","Sarracenia purpurea",0.005
+"BL2411","f","Wetland","Wetland","Solidago uliginosa",0.005
+"BL2411","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2411","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2411","f","Wetland","Wetland","Thalictrum pubescens",0.005
+"BL2411","f","Wetland","Wetland","Utricularia cornuta",0.005
+"BL2411","f","Wetland","Wetland","Vaccinium oxycoccos",0.005
+"BL2411","f","Wetland","Wetland","Warnstorfia fluitans",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.03
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.1
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.04
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Brachytheciastrum velutinum",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.08
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.1
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Larix laricina",0.07
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.005
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Monotropa uniflora",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.4
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Prunus virginiana",0.01
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilidium pulcherrimum",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Salix bebbiana",0.005
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sorbus americana",0.005
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum centrale",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum russowii",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Unknown",0.001
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Vaccinium caespitosum",0.01
+"BL2412","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.005
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.05
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Alnus alnobetula subsp. crispa",0.03
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.07
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.14
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.005
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.07
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.01
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Monotropa uniflora",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature",NA,0.03
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.55
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilidium pulcherrimum",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rhododendron groenlandicum",0.01
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Rhytidiadelphus triquetrus",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Salix bebbiana",0.005
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Salix spp.",0.02
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum capillifolium",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Trientalis borealis",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Unknown",0.001
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium caespitosum",0.02
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Viburnum cassinoides",0.03
+"BL2414","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Viburnum edule",0.005
+"BL2415","f","Wetland","Wetland","Aulacomnium palustre",0.001
+"BL2415","f","Wetland","Wetland","Betula minor",0.07
+"BL2415","f","Wetland","Wetland","Chamaedaphne calyculata",0.01
+"BL2415","f","Wetland","Wetland","Dasiphora fruticosa",0.15
+"BL2415","f","Wetland","Wetland","Drosera rotundifolia",0.001
+"BL2415","f","Wetland","Wetland","Larix laricina",0.05
+"BL2415","f","Wetland","Wetland","Myrica gale",0.45
+"BL2415","f","Wetland","Wetland",NA,0.005
+"BL2415","f","Wetland","Wetland","Platanthera dilatata",0.001
+"BL2415","f","Wetland","Wetland","Rhododendron groenlandicum",0.005
+"BL2415","f","Wetland","Wetland","Rosa nitida",0.001
+"BL2415","f","Wetland","Wetland","Sanguisorba canadensis",0.02
+"BL2415","f","Wetland","Wetland","Sarracenia purpurea",0.001
+"BL2415","f","Wetland","Wetland","Solidago uliginosa",0.01
+"BL2415","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2415","f","Wetland","Wetland","Sphagnum warnstorfii",0.001
+"BL2415","f","Wetland","Wetland","Thalictrum pubescens",0.001
+"BL2415","f","Wetland","Wetland","Tomentypnum nitens",0.001
+"BL2419","f","Wetland","Wetland","Betula minor",0.07
+"BL2419","f","Wetland","Wetland","Carex sp.",0.01
+"BL2419","f","Wetland","Wetland","Chamaedaphne calyculata",0.03
+"BL2419","f","Wetland","Wetland","Cladonia sp.",0.05
+"BL2419","f","Wetland","Wetland","Dasiphora fruticosa",0.03
+"BL2419","f","Wetland","Wetland","Dicranum polysetum",0.001
+"BL2419","f","Wetland","Wetland","Drosera rotundifolia",0.001
+"BL2419","f","Wetland","Wetland","Eriophorum sp.",0.05
+"BL2419","f","Wetland","Wetland","Gaylussacia bigeloviana",0.03
+"BL2419","f","Wetland","Wetland","Kalmia polifolia",0.2
+"BL2419","f","Wetland","Wetland","Larix laricina",0.05
+"BL2419","f","Wetland","Wetland","Mylia anomala",0.001
+"BL2419","f","Wetland","Wetland","Myrica gale",0.15
+"BL2419","f","Wetland","Wetland",NA,0.02
+"BL2419","f","Wetland","Wetland","Picea mariana",0.05
+"BL2419","f","Wetland","Wetland","Platanthera dilatata",0.001
+"BL2419","f","Wetland","Wetland","Pleurozium schreberi",0.001
+"BL2419","f","Wetland","Wetland","Polytrichum strictum",0.001
+"BL2419","f","Wetland","Wetland","Rhododendron groenlandicum",0.02
+"BL2419","f","Wetland","Wetland","Rosa nitida",0.005
+"BL2419","f","Wetland","Wetland","Solidago uliginosa",0.005
+"BL2419","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2419","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2419","f","Wetland","Wetland","Thalictrum pubescens",0.001
+"BL2419","f","Wetland","Wetland","Viburnum cassinoides",0.02
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.1
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Barbilophozia sp.",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.15
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Chamerion angustifolium",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.01
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.05
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dendrolycopodium dendroideum",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.03
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gymnocarpium dryopteris",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.005
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Lepidozia reptans",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.04
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Orthilia secunda",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.25
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilidium pulcherrimum",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ribes lacustre",0.001
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.01
+"BL2423","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.45
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.005
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Aralia nudicaulis",0.02
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Carex sp.",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Chamerion angustifolium",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.01
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.05
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.05
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Fragaria virginiana",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gymnocarpium dryopteris",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hypnum curvifolium",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.01
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Lepidozia reptans",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.03
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Mitella nuda",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.02
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.18
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Plagiothecium laetum",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pteridium aquilinum subsp. latiusculum",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pylaisia polyantha",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhytidiadelphus triquetrus",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ribes lacustre",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ribes triste",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sciuro-hypnum curtum",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Tetraphis pellucida",0.001
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.01
+"BL2424","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ulota crispa",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.15
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.05
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gymnocarpium dryopteris",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.01
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Maianthemum sp.",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.4
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Prunus virginiana",0.01
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilidium pulcherrimum",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhytidiadelphus triquetrus",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.1
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sanguisorba canadensis",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sanionia uncinata",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2427","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.005
+"BL2428","f","Wetland","Wetland","Aulacomnium palustre",0.001
+"BL2428","f","Wetland","Wetland","Chamaedaphne calyculata",0.15
+"BL2428","f","Wetland","Wetland","Cornus canadensis",0.001
+"BL2428","f","Wetland","Wetland","Dicranum polysetum",0.001
+"BL2428","f","Wetland","Wetland","Equisetum palustre",0.001
+"BL2428","f","Wetland","Wetland","Kalmia angustifolia",0.2
+"BL2428","f","Wetland","Wetland","Larix laricina",0.02
+"BL2428","f","Wetland","Wetland","Maianthemum canadense",0.01
+"BL2428","f","Wetland","Wetland","Myrica gale",0.25
+"BL2428","f","Wetland","Wetland",NA,0.05
+"BL2428","f","Wetland","Wetland","Picea mariana",0.2
+"BL2428","f","Wetland","Wetland","Pleurozium schreberi",0.03
+"BL2428","f","Wetland","Wetland","Pohlia nutans",0.001
+"BL2428","f","Wetland","Wetland","Prunus pensylvanica",0.001
+"BL2428","f","Wetland","Wetland","Ptilium crista-castrensis",0.01
+"BL2428","f","Wetland","Wetland","Rhododendron groenlandicum",0.1
+"BL2428","f","Wetland","Wetland","Sphagnum angustifolium",0.001
+"BL2428","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2428","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2428","f","Wetland","Wetland","Sphagnum russowii",0.001
+"BL2428","f","Wetland","Wetland","Vaccinium oxycoccos",0.001
+"BL2428","f","Wetland","Wetland","Viburnum cassinoides",0.01
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.002
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.05
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.01
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.02
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.3
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris campyloptera",0.02
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.1
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris cristata",0.07
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.35
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.005
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Larix laricina",0.1
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.07
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.005
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.7
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Plagiothecium laetum",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.35
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.05
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhytidiadelphus triquetrus",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ribes lacustre",0.005
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus idaeus subsp. strigosus",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.05
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Salix bebbiana",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Solidago rugosa",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Vaccinium caespitosum",0.005
+"BL2429","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Acer spicatum",0.1
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.05
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.6
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Carex sp.",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.01
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.3
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum fuscescens",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum scoparium",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Dryopteris carthusiana",0.2
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Equisetum pratense",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Fragaria virginiana",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Gymnocarpium dryopteris",0.05
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.03
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.05
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Monotropa uniflora",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old",NA,0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.15
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.03
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Populus tremuloides",0.05
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilidium pulcherrimum",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.03
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Ribes lacustre",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus pubescens",0.1
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Sanionia uncinata",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Sciuro-hypnum curtum",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Solidago rugosa",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Trientalis borealis",0.005
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Ulota crispa",0.001
+"BL2431","f","BF/BS Forest, Old","BF/BS Forest, Old","Viburnum cassinoides",0.03
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Acer spicatum",0.01
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.1
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Bazzania trilobata",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.1
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.01
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.17
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum fuscescens",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Endotropis alnifolia",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Equisetum pratense",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Galium triflorum",0.005
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.01
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Gymnocarpium dryopteris",0.02
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.2
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.03
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.03
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Lonicera villosa",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Mitella nuda",0.005
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old",NA,0.02
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Phegopteris connectilis",0.01
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.7
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.65
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Prunus virginiana",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Rhododendron groenlandicum",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Rhytidiadelphus triquetrus",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Rosa nitida",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus idaeus subsp. strigosus",0.01
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus pubescens",0.13
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Sanguisorba canadensis",0.03
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Symphyotrichum puniceum",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Thalictrum pubescens",0.005
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Trientalis borealis",0.005
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium caespitosum",0.001
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Viburnum cassinoides",0.05
+"BL2432","f","BF/BS Forest, Old","BF/BS Forest, Old","Viburnum edule",0.001
+"BL2433","f","Wetland","Wetland","Aulacomnium palustre",0.001
+"BL2433","f","Wetland","Wetland","Betula minor",0.07
+"BL2433","f","Wetland","Wetland","Carex sp.",0.02
+"BL2433","f","Wetland","Wetland","Chamaedaphne calyculata",0.2
+"BL2433","f","Wetland","Wetland","Coptis trifolia",0.001
+"BL2433","f","Wetland","Wetland","Cornus canadensis",0.001
+"BL2433","f","Wetland","Wetland","Eriophorum sp.",0.03
+"BL2433","f","Wetland","Wetland","Eurybia radula",0.005
+"BL2433","f","Wetland","Wetland","Gaultheria hispidula",0.001
+"BL2433","f","Wetland","Wetland","Kalmia angustifolia",0.07
+"BL2433","f","Wetland","Wetland","Larix laricina",0.02
+"BL2433","f","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.001
+"BL2433","f","Wetland","Wetland","Lonicera villosa",0.01
+"BL2433","f","Wetland","Wetland","Maianthemum trifolium",0.03
+"BL2433","f","Wetland","Wetland","Mylia anomala",0.001
+"BL2433","f","Wetland","Wetland",NA,0.001
+"BL2433","f","Wetland","Wetland","Picea mariana",0.2
+"BL2433","f","Wetland","Wetland","Platanthera dilatata",0.01
+"BL2433","f","Wetland","Wetland","Pleurozium schreberi",0.1
+"BL2433","f","Wetland","Wetland","Rhododendron groenlandicum",0.07
+"BL2433","f","Wetland","Wetland","Rubus chamaemorus",0.005
+"BL2433","f","Wetland","Wetland","Sanguisorba canadensis",0.05
+"BL2433","f","Wetland","Wetland","Solidago uliginosa",0.02
+"BL2433","f","Wetland","Wetland","Sphagnum fallax",0.001
+"BL2433","f","Wetland","Wetland","Sphagnum fuscum",0.001
+"BL2433","f","Wetland","Wetland","Sphagnum magellanicum",0.001
+"BL2433","f","Wetland","Wetland","Vaccinium oxycoccos",0.005
+"BL2433","f","Wetland","Wetland","Viburnum cassinoides",0.005
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Bazzania trilobata",0.001
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.005
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.001
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum scoparium",0.001
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.1
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.15
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.1
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.7
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.75
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.02
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum capillifolium",0.001
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium caespitosum",0.01
+"BL2434","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium vitis-idaea",0.01
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.02
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum fuscescens",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria procumbens",0.05
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.42
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.08
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Larix laricina",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Lepidozia reptans",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.7
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.45
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilidium pulcherrimum",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.005
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium caespitosum",0.001
+"BL2436","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.005
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.01
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.02
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Clintonia borealis",0.01
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.02
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum fuscescens",0.001
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Equisetum pratense",0.001
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.03
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.4
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Hypnum pallescens",0.001
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.15
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.63
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.4
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilidium pulcherrimum",0.001
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.02
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum capillifolium",0.001
+"BL2437","f","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium caespitosum",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum fuscescens",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.07
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.46
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.6
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.01
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Rhododendron groenlandicum",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum warnstorfii",0.001
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium caespitosum",0.005
+"BL2438","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.004
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Acer spicatum",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Actaea rubra",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.15
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Anaphalis margaritacea",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.01
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Carex sp.",0.05
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.2
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum scoparium",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Doellingeria umbellata",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Fragaria virginiana",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Galium triflorum",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.02
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Gymnocarpium dryopteris",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.05
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Larix laricina",0.05
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.03
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Lonicera villosa",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old",NA,0.01
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.15
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.6
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Poa sp.",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Prunus virginiana",0.03
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Pteridium aquilinum subsp. latiusculum",0.05
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Rosa nitida",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus idaeus subsp. strigosus",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Rubus pubescens",0.02
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Salix bebbiana",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Sorbus decora",0.005
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Thalictrum pubescens",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Trientalis borealis",0.001
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium caespitosum",0.02
+"BL2439","f","BF/BS Forest, Old","BF/BS Forest, Old","Viburnum cassinoides",0.05
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.25
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.03
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Chamerion angustifolium",0.005
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum scoparium",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Equisetum pratense",0.01
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Fragaria virginiana",0.005
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.05
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Larix laricina",0.02
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.15
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Prunus virginiana",0.05
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pteridium aquilinum subsp. latiusculum",0.25
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhododendron groenlandicum",0.005
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rosa nitida",0.01
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus idaeus subsp. strigosus",0.01
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.005
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sanguisorba canadensis",0.01
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum magellanicum",0.001
+"BL2440","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.2
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.05
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.15
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Carex sp.",0.03
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Climacium dendroides",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Clintonia borealis",0.02
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.07
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum flagellare",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum scoparium",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.01
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Fragaria virginiana",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Gymnocarpium dryopteris",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hypnum cupressiforme",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.1
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.02
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Populus tremuloides",0.35
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pteridium aquilinum subsp. latiusculum",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rhytidiadelphus triquetrus",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ribes lacustre",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rosa nitida",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus idaeus subsp. strigosus",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.15
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Solidago rugosa",0.005
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Trientalis borealis",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.05
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viburnum edule",0.001
+"BL2441","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Viola sp.",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.6
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Bazzania trilobata",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.05
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Brachytheciastrum velutinum",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.02
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum polysetum",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.15
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Lepidozia sp.",0.001
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.005
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.2
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.3
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Populus tremuloides",0.05
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.15
+"BL2442","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Abies balsamea",0.63
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Acer spicatum",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Betula papyrifera",0.07
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Cornus canadensis",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Dicranum fuscescens",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Eurhynchiastrum pulchellum",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hylocomium splendens",0.45
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Hypnum fauriei",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.02
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Lepidozia reptans",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid",NA,0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Orthilia secunda",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Picea mariana",0.15
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.29
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Pohlia nutans",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.05
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Rubus pubescens",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sciuro-hypnum curtum",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Sciuro-hypnum reflexum",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Syzygiella autumnalis",0.001
+"BL2443","f","BF/BS Forest, Early-Mid [Disturbed/Logged]","BF/BS Forest, Early-Mid","Ulota crispa",0.001
+"BL2446A","f","Wetland","Wetland","Betula cordifolia",0.005
+"BL2446A","f","Wetland","Wetland","Betula minor",0.03
+"BL2446A","f","Wetland","Wetland","Campylium stellatum",0.001
+"BL2446A","f","Wetland","Wetland","Chamaedaphne calyculata",0.05
+"BL2446A","f","Wetland","Wetland","Chelone glabra",0.001
+"BL2446A","f","Wetland","Wetland","Dasiphora fruticosa",0.2
+"BL2446A","f","Wetland","Wetland","Eriophorum sp.",0.01
+"BL2446A","f","Wetland","Wetland","Gaultheria hispidula",0.001
+"BL2446A","f","Wetland","Wetland","Larix laricina",0.02
+"BL2446A","f","Wetland","Wetland","Maianthemum trifolium",0.005
+"BL2446A","f","Wetland","Wetland","Myrica gale",0.2
+"BL2446A","f","Wetland","Wetland",NA,0.005
+"BL2446A","f","Wetland","Wetland","Picea mariana",0.05
+"BL2446A","f","Wetland","Wetland","Platanthera dilatata",0.005
+"BL2446A","f","Wetland","Wetland","Pleurozium schreberi",0.001
+"BL2446A","f","Wetland","Wetland","Rhododendron groenlandicum",0.005
+"BL2446A","f","Wetland","Wetland","Rosa nitida",0.001
+"BL2446A","f","Wetland","Wetland","Sanguisorba canadensis",0.02
+"BL2446A","f","Wetland","Wetland","Solidago uliginosa",0.01
+"BL2446A","f","Wetland","Wetland","Sphagnum russowii",0.001
+"BL2446A","f","Wetland","Wetland","Symphyotrichum puniceum",0.001
+"BL2446A","f","Wetland","Wetland","Thalictrum pubescens",0.03
+"BL2446A","f","Wetland","Wetland","Typha latifolia",0.03
+"BL2446A","f","Wetland","Wetland","Vaccinium caespitosum",0.001
+"BL2446A","f","Wetland","Wetland","Viburnum cassinoides",0.005
+"BL2447","f","Wetland","Wetland","Carex sp.",0.1
+"BL2447","f","Wetland","Wetland","Chamaedaphne calyculata",0.02
+"BL2447","f","Wetland","Wetland","Cladonia sp.",0.1
+"BL2447","f","Wetland","Wetland","Dicranum elongatum",0.001
+"BL2447","f","Wetland","Wetland","Kalmia angustifolia",0.03
+"BL2447","f","Wetland","Wetland","Kalmia polifolia",0.005
+"BL2447","f","Wetland","Wetland","Larix laricina",0.001
+"BL2447","f","Wetland","Wetland",NA,0.001
+"BL2447","f","Wetland","Wetland","Picea mariana",0.07
+"BL2447","f","Wetland","Wetland","Pleurozium schreberi",0.01
+"BL2447","f","Wetland","Wetland","Rhododendron groenlandicum",0.01
+"BL2447","f","Wetland","Wetland","Rubus chamaemorus",0.01
+"BL2447","f","Wetland","Wetland","Sarracenia purpurea",0.001
+"BL2447","f","Wetland","Wetland","Sphagnum capillifolium",0.001
+"BL2447","f","Wetland","Wetland","Sphagnum tenellum",0.001
+"BL2447","f","Wetland","Wetland","Utricularia cornuta",0.001
+"BL2447","f","Wetland","Wetland","Vaccinium oxycoccos",0.005
+"DP23-10","b","Wetland","Wetland","Abies balsamea",0.15
+"DP23-10","b","Wetland","Wetland","Carex limosa",0.01
+"DP23-10","b","Wetland","Wetland","Clintonia borealis",0.001
+"DP23-10","b","Wetland","Wetland","Coptis trifolia",0.01
+"DP23-10","b","Wetland","Wetland","Cornus canadensis",0.07
+"DP23-10","b","Wetland","Wetland","Gaultheria hispidula",0.005
+"DP23-10","b","Wetland","Wetland","Kalmia angustifolia",0.1
+"DP23-10","b","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.005
+"DP23-10","b","Wetland","Wetland","Lycopodium spp.",0.1
+"DP23-10","b","Wetland","Wetland","Maianthemum trifolium",0.02
+"DP23-10","b","Wetland","Wetland",NA,0.25
+"DP23-10","b","Wetland","Wetland","Picea mariana",0.2
+"DP23-10","b","Wetland","Wetland","Pleurozium schreberi",0.01
+"DP23-10","b","Wetland","Wetland","Rhododendron groenlandicum",0.1
+"DP23-10","b","Wetland","Wetland","Rubus chamaemorus",0.01
+"DP23-10","b","Wetland","Wetland","Rubus pubescens",0.01
+"DP23-10","b","Wetland","Wetland","Scirpus cyperinus",0.01
+"DP23-10","b","Wetland","Wetland","Sphagnum capillifolium",0.65
+"DP23-10","b","Wetland","Wetland","Vaccinium angustifolium",0.07
+"DP23-11","b","Wetland","Wetland","Cornus canadensis",0.05
+"DP23-11","b","Wetland","Wetland","Dicranum polysetum",0.005
+"DP23-11","b","Wetland","Wetland","Gaultheria hispidula",0.02
+"DP23-11","b","Wetland","Wetland","Hylocomium splendens",0.005
+"DP23-11","b","Wetland","Wetland","Kalmia angustifolia",0.5
+"DP23-11","b","Wetland","Wetland","Larix laricina",0.12
+"DP23-11","b","Wetland","Wetland","Picea mariana",0.3
+"DP23-11","b","Wetland","Wetland","Pleurozium schreberi",0.5
+"DP23-11","b","Wetland","Wetland","Ptilium crista-castrensis",0.1
+"DP23-11","b","Wetland","Wetland","Sphagnum capillifolium",0.05
+"DP23-11","b","Wetland","Wetland","Vaccinium angustifolium",0.2
+"DP23-11","b","Wetland","Wetland","Vaccinium vitis-idaea",0.005
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.4
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.03
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum polysetum",0.02
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.02
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.4
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.01
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.01
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.2
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.4
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.25
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum capillifolium",0.01
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Unknown",0.01
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium angustifolium",0.002
+"DP23-16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium vitis-idaea",0.001
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.65
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus alnobetula subsp. crispa",0.02
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.03
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Hylocomium splendens",0.1
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid",NA,0.01
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.2
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.005
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Rubus pubescens",0.003
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum capillifolium",0.2
+"DP23-18","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum riparium",0.15
+"DP23-2","b","Wetland","Wetland","Carex echinata",0.1
+"DP23-2","b","Wetland","Wetland","Carex michauxiana",0.15
+"DP23-2","b","Wetland","Wetland","Eriophorum vaginatum subsp. spissum",0.1
+"DP23-2","b","Wetland","Wetland","Euthamia graminifolia",0.01
+"DP23-2","b","Wetland","Wetland","Eutrochium maculatum",0.02
+"DP23-2","b","Wetland","Wetland","Hypericum canadense",0.03
+"DP23-2","b","Wetland","Wetland","Menyanthes trifoliata",0.01
+"DP23-2","b","Wetland","Wetland","Myrica gale",0.2
+"DP23-2","b","Wetland","Wetland",NA,0.3
+"DP23-2","b","Wetland","Wetland","Sanguisorba canadensis",0.03
+"DP23-2","b","Wetland","Wetland","Sphagnum compactum",0.01
+"DP23-2","b","Wetland","Wetland","Sphagnum sp.",0.01
+"DP23-2","b","Wetland","Wetland","Sphagnum teres",0.01
+"DP23-2","b","Wetland","Wetland","Spiraea alba var. latifolia",0.05
+"DP23-2","b","Wetland","Wetland","Thalictrum pubescens",0.05
+"DP23-2","b","Wetland","Wetland","Typha latifolia",0.01
+"DP23-2","b","Wetland","Wetland","Unknown",0.08
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.4
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.03
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.08
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Dicranum polysetum",0.03
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Hylocomium splendens",0.6
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.05
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.02
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.2
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.2
+"DP23-20","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.02
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.1
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.04
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.02
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.003
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.02
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.02
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.01
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.5
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.03
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.005
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.45
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.2
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.03
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.03
+"DP23-22","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum squarrosum",0.01
+"DP23-24","b","Wetland","Wetland","Chamaedaphne calyculata",0.15
+"DP23-24","b","Wetland","Wetland","Pleurozium schreberi",0.05
+"DP23-24","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.4
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Alnus alnobetula subsp. crispa",0.005
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.08
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Dicranum polysetum",0.002
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.005
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.3
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.25
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.6
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.01
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum angustifolium",0.01
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.01
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum sp.",0.02
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Unknown",0.01
+"DP23-3","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium angustifolium",0.005
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.05
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex trisperma",0.04
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.05
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.12
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.02
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.5
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.03
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.03
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.02
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.55
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.1
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.1
+"DP23-30","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.2
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.35
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.005
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.01
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.6
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.35
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.25
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.05
+"DP23-32","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.01
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.08
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex trisperma",0.01
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.04
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.5
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.002
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.55
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.18
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.18
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.04
+"DP23-33","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.002
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Abies balsamea",0.45
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Cornus canadensis",0.005
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Gaultheria hispidula",0.002
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Hylocomium splendens",0.5
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Larix laricina",0.03
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Linnaea borealis subsp. longiflora",0.002
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Picea mariana",0.22
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Pleurozium schreberi",0.25
+"DP23-37","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Ptilium crista-castrensis",0.05
+"DP23-38","b","Wetland","Wetland","Carex echinata",0.03
+"DP23-38","b","Wetland","Wetland","Carex oligosperma",0.1
+"DP23-38","b","Wetland","Wetland","Chamaedaphne calyculata",0.02
+"DP23-38","b","Wetland","Wetland","Cladium mariscoides",0.03
+"DP23-38","b","Wetland","Wetland","Clintonia borealis",0.005
+"DP23-38","b","Wetland","Wetland","Cornus canadensis",0.005
+"DP23-38","b","Wetland","Wetland","Eurybia radula",0.005
+"DP23-38","b","Wetland","Wetland","Larix laricina",0.07
+"DP23-38","b","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.005
+"DP23-38","b","Wetland","Wetland","Lonicera villosa",0.002
+"DP23-38","b","Wetland","Wetland","Maianthemum trifolium",0.02
+"DP23-38","b","Wetland","Wetland",NA,0.15
+"DP23-38","b","Wetland","Wetland","Picea mariana",0.3
+"DP23-38","b","Wetland","Wetland","Pleurozium schreberi",0.05
+"DP23-38","b","Wetland","Wetland","Rhododendron groenlandicum",0.03
+"DP23-38","b","Wetland","Wetland","Rosa nitida",0.01
+"DP23-38","b","Wetland","Wetland","Rubus pubescens",0.01
+"DP23-38","b","Wetland","Wetland","Sanguisorba canadensis",0.15
+"DP23-38","b","Wetland","Wetland","Sphagnum angustifolium",0.25
+"DP23-38","b","Wetland","Wetland","Sphagnum magellanicum",0.05
+"DP23-38","b","Wetland","Wetland","Sphagnum warnstorfii",0.1
+"DP23-38","b","Wetland","Wetland","Vaccinium oxycoccos",0.003
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.1
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.002
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex trisperma",0.005
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.03
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.08
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.04
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.65
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.001
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.4
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.2
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.005
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.05
+"DP23-39","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.001
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.4
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.07
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.3
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Dryopteris carthusiana",0.002
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.02
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.6
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Linnaea borealis subsp. longiflora",0.005
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.1
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.2
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.005
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium angustifolium",0.002
+"DP23-40","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.01
+"DP23-52","b","Wetland","Wetland","Abies balsamea",0.003
+"DP23-52","b","Wetland","Wetland","Carex limosa",0.001
+"DP23-52","b","Wetland","Wetland","Carex trisperma",0.002
+"DP23-52","b","Wetland","Wetland","Coptis trifolia",0.003
+"DP23-52","b","Wetland","Wetland","Cornus canadensis",0.01
+"DP23-52","b","Wetland","Wetland","Gaultheria hispidula",0.08
+"DP23-52","b","Wetland","Wetland","Hylocomium splendens",0.02
+"DP23-52","b","Wetland","Wetland","Kalmia angustifolia",0.2
+"DP23-52","b","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.003
+"DP23-52","b","Wetland","Wetland","Maianthemum trifolium",0.002
+"DP23-52","b","Wetland","Wetland",NA,0.02
+"DP23-52","b","Wetland","Wetland","Picea mariana",0.5
+"DP23-52","b","Wetland","Wetland","Pleurozium schreberi",0.18
+"DP23-52","b","Wetland","Wetland","Rhododendron groenlandicum",0.1
+"DP23-52","b","Wetland","Wetland","Sphagnum capillifolium",0.35
+"DP23-52","b","Wetland","Wetland","Sphagnum magellanicum",0.35
+"DP23-54","b","Wetland","Wetland","Alnus alnobetula subsp. crispa",0.8
+"DP23-54","b","Wetland","Wetland","Betula papyrifera",0.02
+"DP23-54","b","Wetland","Wetland","Carex trisperma",0.005
+"DP23-54","b","Wetland","Wetland","Cornus canadensis",0.05
+"DP23-54","b","Wetland","Wetland","Dryopteris carthusiana",0.2
+"DP23-54","b","Wetland","Wetland","Galium triflorum",0.005
+"DP23-54","b","Wetland","Wetland","Linnaea borealis subsp. longiflora",0.01
+"DP23-54","b","Wetland","Wetland",NA,0.3
+"DP23-54","b","Wetland","Wetland","Pleurozium schreberi",0.01
+"DP23-54","b","Wetland","Wetland","Rubus idaeus subsp. strigosus",0.01
+"DP23-54","b","Wetland","Wetland","Rubus pubescens",0.2
+"DP23-54","b","Wetland","Wetland","Sphagnum girgensohnii",0.01
+"DP23-54","b","Wetland","Wetland","Sphagnum magellanicum",0.01
+"DP23-54","b","Wetland","Wetland","Sphagnum squarrosum",0.04
+"DP23-54","b","Wetland","Wetland","Unknown",0.05
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Abies balsamea",0.55
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Clintonia borealis",0.02
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Cornus canadensis",0.02
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Gaultheria hispidula",0.01
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Hylocomium splendens",0.6
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Kalmia angustifolia",0.01
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Picea mariana",0.2
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Pleurozium schreberi",0.1
+"DP23-56","b","BF/BS Forest, Mature [Disturbed/Logged]","BF/BS Forest, Mature","Ptilium crista-castrensis",0.2
+"DP23-57","b","Wetland","Wetland","Chamaedaphne calyculata",0.01
+"DP23-57","b","Wetland","Wetland","Cladonia sp.",0.3
+"DP23-57","b","Wetland","Wetland","Coptis trifolia",0.001
+"DP23-57","b","Wetland","Wetland","Cornus canadensis",0.01
+"DP23-57","b","Wetland","Wetland","Empetrum nigrum",0.01
+"DP23-57","b","Wetland","Wetland","Gaultheria hispidula",0.005
+"DP23-57","b","Wetland","Wetland","Kalmia angustifolia",0.55
+"DP23-57","b","Wetland","Wetland","Larix laricina",0.001
+"DP23-57","b","Wetland","Wetland","Myrica gale",0.001
+"DP23-57","b","Wetland","Wetland","Picea mariana",0.1
+"DP23-57","b","Wetland","Wetland","Pleurozium schreberi",0.6
+"DP23-57","b","Wetland","Wetland","Rhododendron canadense",0.05
+"DP23-57","b","Wetland","Wetland","Rhododendron groenlandicum",0.05
+"DP23-57","b","Wetland","Wetland","Sphagnum capillifolium",0.05
+"DP23-57","b","Wetland","Wetland","Vaccinium angustifolium",0.002
+"DP23-57","b","Wetland","Wetland","Vaccinium oxycoccos",0.001
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.05
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex trisperma",0.03
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.03
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.05
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.03
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.4
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.07
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.005
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.65
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.15
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.25
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.2
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium angustifolium",0.001
+"DP23-60","b","BF/BS Forest, Old","BF/BS Forest, Old","Vaccinium vitis-idaea",0.01
+"DP23-64","b","Wetland","Wetland","Clintonia borealis",0.02
+"DP23-64","b","Wetland","Wetland","Cornus canadensis",0.05
+"DP23-64","b","Wetland","Wetland","Gaultheria hispidula",0.1
+"DP23-64","b","Wetland","Wetland","Hylocomium splendens",0.15
+"DP23-64","b","Wetland","Wetland","Kalmia angustifolia",0.3
+"DP23-64","b","Wetland","Wetland","Maianthemum trifolium",0.005
+"DP23-64","b","Wetland","Wetland","Picea mariana",0.3
+"DP23-64","b","Wetland","Wetland","Pleurozium schreberi",0.05
+"DP23-64","b","Wetland","Wetland","Ptilium crista-castrensis",0.01
+"DP23-64","b","Wetland","Wetland","Rhododendron groenlandicum",0.04
+"DP23-64","b","Wetland","Wetland","Rubus chamaemorus",0.01
+"DP23-64","b","Wetland","Wetland","Rubus pubescens",0.01
+"DP23-64","b","Wetland","Wetland","Sphagnum capillifolium",0.7
+"DP23-64","b","Wetland","Wetland","Vaccinium angustifolium",0.01
+"DP23-64","b","Wetland","Wetland","Vaccinium vitis-idaea",0.01
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.05
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Clintonia borealis",0.001
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.04
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Dryopteris carthusiana",0.02
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.005
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Hylocomium splendens",0.35
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis subsp. longiflora",0.003
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid",NA,0.002
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.6
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.15
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.1
+"DP23-66","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Spinulum annotinum subsp. alpestre",0.002
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.45
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex echinata",0.01
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Carex trisperma",0.01
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Clintonia borealis",0.005
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.01
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.04
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.8
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Kalmia angustifolia",0.03
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.002
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.25
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.15
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.01
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum angustifolium",0.2
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum capillifolium",0.01
+"DP23-67","b","BF/BS Forest, Old","BF/BS Forest, Old","Sphagnum magellanicum",0.2
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Abies balsamea",0.3
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Betula papyrifera",0.03
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Cornus canadensis",0.003
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Gaultheria hispidula",0.07
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Hylocomium splendens",0.6
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Orthilia secunda",0.01
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Picea mariana",0.3
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Pleurozium schreberi",0.25
+"DP23-68","b","BF/BS Forest, Old","BF/BS Forest, Old","Ptilium crista-castrensis",0.005
+"DP23-69","b","Wetland","Wetland","Betula michauxii",0.001
+"DP23-69","b","Wetland","Wetland","Betula minor",0.003
+"DP23-69","b","Wetland","Wetland","Betula pumila",0.002
+"DP23-69","b","Wetland","Wetland","Carex oligosperma",0.01
+"DP23-69","b","Wetland","Wetland","Cladium mariscoides",0.5
+"DP23-69","b","Wetland","Wetland","Equisetum fluviatile",0.02
+"DP23-69","b","Wetland","Wetland","Eurybia radula",0.002
+"DP23-69","b","Wetland","Wetland","Larix laricina",0.03
+"DP23-69","b","Wetland","Wetland","Myrica gale",0.01
+"DP23-69","b","Wetland","Wetland",NA,0.003
+"DP23-69","b","Wetland","Wetland","Picea mariana",0.005
+"DP23-69","b","Wetland","Wetland","Rhododendron groenlandicum",0.002
+"DP23-69","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"DP23-69","b","Wetland","Wetland","Sarracenia purpurea",0.005
+"DP23-69","b","Wetland","Wetland","Solidago uliginosa",0.02
+"DP23-69","b","Wetland","Wetland","Unknown",0.9
+"DP23-69","b","Wetland","Wetland","Vaccinium oxycoccos",0.003
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.05
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Alnus alnobetula subsp. crispa",0.03
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Carex trisperma",0.02
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Clintonia borealis",0.001
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.005
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.005
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.1
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.02
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.65
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.6
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.03
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum angustifolium",0.08
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum warnstorfii",0.07
+"DP23-71","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium angustifolium",0.001
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.1
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cladonia sp.",0.01
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.07
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Dicranum polysetum",0.01
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.04
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Hylocomium splendens",0.05
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.05
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.45
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.7
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.1
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Vaccinium angustifolium",0.05
+"DP23-9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Vaccinium vitis-idaea",0.001
+"T_S11","b","Wetland","Wetland","Chamaedaphne calyculata",0.05
+"T_S11","b","Wetland","Wetland","Cladonia raniferina",0.3
+"T_S11","b","Wetland","Wetland","Cornus canadensis",0.02
+"T_S11","b","Wetland","Wetland","Gaultheria hispidula",0.05
+"T_S11","b","Wetland","Wetland","Kalmia angustifolia",0.35
+"T_S11","b","Wetland","Wetland",NA,0.05
+"T_S11","b","Wetland","Wetland","Picea mariana",0.25
+"T_S11","b","Wetland","Wetland","Pleurozium schreberi",0.2
+"T_S11","b","Wetland","Wetland","Sphagnum sp.",0.4
+"T_S11","b","Wetland","Wetland","Vaccinium angustifolium",0.02
+"T_S11","b","Wetland","Wetland","Vaccinium vitis-idaea",0.02
+"T_S11","b","Wetland","Wetland","Viburnum cassinoides",0.02
+"T_S13","b","Wetland","Wetland","Alnus rugosa",0.02
+"T_S13","b","Wetland","Wetland","Chamaedaphne calyculata",0.2
+"T_S13","b","Wetland","Wetland","Cladonia raniferina",0.1
+"T_S13","b","Wetland","Wetland","Coptis trifolia",0.15
+"T_S13","b","Wetland","Wetland","Cornus canadensis",0.02
+"T_S13","b","Wetland","Wetland","Gaultheria hispidula",0.1
+"T_S13","b","Wetland","Wetland","Kalmia angustifolia",0.4
+"T_S13","b","Wetland","Wetland","Kalmia polifolia",0.1
+"T_S13","b","Wetland","Wetland","Larix laricina",0.05
+"T_S13","b","Wetland","Wetland","Linnaea borealis",0.02
+"T_S13","b","Wetland","Wetland","Lycopodium annotinum",0.05
+"T_S13","b","Wetland","Wetland",NA,0.05
+"T_S13","b","Wetland","Wetland","Picea mariana",0.35
+"T_S13","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"T_S13","b","Wetland","Wetland","Sphagnum sp.",0.2
+"T_S13","b","Wetland","Wetland","Vaccinium angustifolium",0.02
+"T_S13","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"T_S2","b","Wetland","Wetland","Abies balsamea",0.02
+"T_S2","b","Wetland","Wetland","Alnus rugosa",0.6
+"T_S2","b","Wetland","Wetland","Aster umbellatus",0.02
+"T_S2","b","Wetland","Wetland","Equisetum arvense",0.02
+"T_S2","b","Wetland","Wetland","Lycopus americanus",0.02
+"T_S2","b","Wetland","Wetland","Ribes glandulosum",0.02
+"T_S2","b","Wetland","Wetland","Rubus idaeus",0.1
+"T_S2","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"T_S2","b","Wetland","Wetland","Solidago rugosa",0.2
+"T_S2","b","Wetland","Wetland","Thalictrum polygamum",0.05
+"T_S2","b","Wetland","Wetland","Unidentified Grass",0.05
+"T_S8","b","Wetland","Wetland","Alnus rugosa",0.4
+"T_S8","b","Wetland","Wetland","Cornus canadensis",0.02
+"T_S8","b","Wetland","Wetland","Dryopteris spinulosa",0.05
+"T_S8","b","Wetland","Wetland","Linnaea borealis",0.02
+"T_S8","b","Wetland","Wetland","Lycopodium annotinum",0.1
+"T_S8","b","Wetland","Wetland","Picea mariana",0.05
+"T_S8","b","Wetland","Wetland","Pleurozium schreberi",0.15
+"T_S8","b","Wetland","Wetland","Polytrichum strictum",0.05
+"T_S8","b","Wetland","Wetland","Rubus pubescens",0.05
+"T_S8","b","Wetland","Wetland","Trientalis borealis",0.02
+"T_S8","b","Wetland","Wetland","Viola sp.",0.02
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.05
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus rugosa",0.02
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.15
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis",0.05
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.6
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.2
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.6
+"T_V1","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.2
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.5
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus rugosa",0.02
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.05
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Dryopteris cristata",0.05
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.05
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.05
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.15
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.15
+"T_V10","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Unidentified Grass",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.5
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus rugosa",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.05
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Lycopodium annotinum",0.05
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.35
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Polytrichum strictum",0.1
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.4
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pyrola minor",0.02
+"T_V5","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.02
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.3
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus rugosa",0.1
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Betula papyrifera",0.02
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.02
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.05
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Lycopodium annotinum",0.02
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.2
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.7
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.2
+"T_V6","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.02
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Alnus rugosa",0.3
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cladonia cristatella",0.02
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cladonia raniferina",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Clintonia borealis",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.2
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Equisetum arvense",0.02
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Kalmia angustifolia",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis",0.1
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.7
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Polytrichum strictum",0.1
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Rubus idaeus",0.05
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.1
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Trientalis borealis",0.02
+"T_V7","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Viburnum cassinoides",0.15
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Abies balsamea",0.2
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Cornus canadensis",0.1
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Gaultheria hispidula",0.02
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Linnaea borealis",0.02
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Picea mariana",0.4
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Pleurozium schreberi",0.8
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Ptilium crista-castrensis",0.1
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Sphagnum sp.",0.1
+"T_V9","b","BF/BS Forest, Early-Mid","BF/BS Forest, Early-Mid","Trientalis borealis",0.02
+"T_WL2","b","Wetland","Wetland","Agrostis sp.",0.02
+"T_WL2","b","Wetland","Wetland","Andromeda glaucophylla",0.02
+"T_WL2","b","Wetland","Wetland","Aster nemoralis",0.02
+"T_WL2","b","Wetland","Wetland","Betula michauxii",0.2
+"T_WL2","b","Wetland","Wetland","Carex folliculata",0.05
+"T_WL2","b","Wetland","Wetland","Chamaedaphne calyculata",0.2
+"T_WL2","b","Wetland","Wetland","Cladonia raniferina",0.05
+"T_WL2","b","Wetland","Wetland","Coptis trifolia",0.05
+"T_WL2","b","Wetland","Wetland","Eriophorum virginicum",0.02
+"T_WL2","b","Wetland","Wetland","Juniperus communis",0.1
+"T_WL2","b","Wetland","Wetland","Kalmia angustifolia",0.15
+"T_WL2","b","Wetland","Wetland","Kalmia polifolia",0.1
+"T_WL2","b","Wetland","Wetland","Larix laricina",0.1
+"T_WL2","b","Wetland","Wetland","Linnaea borealis",0.02
+"T_WL2","b","Wetland","Wetland",NA,0.05
+"T_WL2","b","Wetland","Wetland","Picea mariana",0.05
+"T_WL2","b","Wetland","Wetland","Pleurozium schreberi",0.05
+"T_WL2","b","Wetland","Wetland","Polytrichum strictum",0.05
+"T_WL2","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"T_WL2","b","Wetland","Wetland","Sanguisorba canadensis",0.05
+"T_WL2","b","Wetland","Wetland","Sarracenia purpurea",0.05
+"T_WL2","b","Wetland","Wetland","Solidago uliginosa",0.02
+"T_WL2","b","Wetland","Wetland","Sphagnum sp.",0.7
+"T_WL2","b","Wetland","Wetland","Unidentified Grass",0.4
+"T_WL2","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"T_WL2","b","Wetland","Wetland","Vaccinium vitis-idaea",0.05
+"T_WL2","b","Wetland","Wetland","Viola sp.",0.05
+"T_WL3","b","Wetland","Wetland","Aster nemoralis",0.05
+"T_WL3","b","Wetland","Wetland","Betula pumila",0.2
+"T_WL3","b","Wetland","Wetland","Chamaedaphne calyculata",0.1
+"T_WL3","b","Wetland","Wetland","Dasiphora fruticosa",0.2
+"T_WL3","b","Wetland","Wetland","Juniperus communis",0.05
+"T_WL3","b","Wetland","Wetland","Kalmia angustifolia",0.1
+"T_WL3","b","Wetland","Wetland","Kalmia polifolia",0.02
+"T_WL3","b","Wetland","Wetland","Larix laricina",0.1
+"T_WL3","b","Wetland","Wetland",NA,0.05
+"T_WL3","b","Wetland","Wetland","Picea mariana",0.02
+"T_WL3","b","Wetland","Wetland","Rosa nitida",0.05
+"T_WL3","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"T_WL3","b","Wetland","Wetland","Rubus idaeus",0.05
+"T_WL3","b","Wetland","Wetland","Rubus pubescens",0.1
+"T_WL3","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"T_WL3","b","Wetland","Wetland","Solidago uliginosa",0.05
+"T_WL3","b","Wetland","Wetland","Sphagnum sp.",0.8
+"T_WL3","b","Wetland","Wetland","Unidentified Grass",0.4
+"T_WL3","b","Wetland","Wetland","Vaccinium oxycoccos",0.05
+"T_WL3","b","Wetland","Wetland","Viburnum cassinoides",0.02
+"T_WL3","b","Wetland","Wetland","Viola sp.",0.02
+"T_WL4","b","Wetland","Wetland","Aster nemoralis",0.02
+"T_WL4","b","Wetland","Wetland","Calamagrostis canadensis",0.1
+"T_WL4","b","Wetland","Wetland","Carex folliculata",0.1
+"T_WL4","b","Wetland","Wetland","Chamaedaphne calyculata",0.02
+"T_WL4","b","Wetland","Wetland","Coptis trifolia",0.02
+"T_WL4","b","Wetland","Wetland","Juniperus communis",0.05
+"T_WL4","b","Wetland","Wetland","Kalmia polifolia",0.05
+"T_WL4","b","Wetland","Wetland","Larix laricina",0.1
+"T_WL4","b","Wetland","Wetland","Linnaea borealis",0.02
+"T_WL4","b","Wetland","Wetland","Myrica gale",0.2
+"T_WL4","b","Wetland","Wetland",NA,0.02
+"T_WL4","b","Wetland","Wetland","Picea mariana",0.05
+"T_WL4","b","Wetland","Wetland","Rosa nitida",0.05
+"T_WL4","b","Wetland","Wetland","Sanguisorba canadensis",0.02
+"T_WL4","b","Wetland","Wetland","Sphagnum sp.",0.8
+"T_WL4","b","Wetland","Wetland","Unidentified Grass",0.4
+"T_WL4","b","Wetland","Wetland","Vaccinium oxycoccos",0.02
+"T_WL4","b","Wetland","Wetland","Viola sp.",0.1
+"T_WL6","b","Wetland","Wetland","Carex trisperma",0.05
+"T_WL6","b","Wetland","Wetland","Chamaedaphne calyculata",0.05
+"T_WL6","b","Wetland","Wetland","Cladonia raniferina",0.15
+"T_WL6","b","Wetland","Wetland","Eriophorum virginicum",0.02
+"T_WL6","b","Wetland","Wetland","Kalmia angustifolia",0.3
+"T_WL6","b","Wetland","Wetland","Kalmia polifolia",0.02
+"T_WL6","b","Wetland","Wetland",NA,0.05
+"T_WL6","b","Wetland","Wetland","Picea mariana",0.2
+"T_WL6","b","Wetland","Wetland","Rubus chamaemorus",0.02
+"T_WL6","b","Wetland","Wetland","Sphagnum sp.",0.9
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.05
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Alnus rugosa",0.05
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Betula papyrifera",0.02
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.05
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.1
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Hylocomium splendens",0.25
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.15
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.65
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.3
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Ptilium crista-castrensis",0.25
+"TV_15","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Unidentified Grass",0.1
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Abies balsamea",0.1
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Clintonia borealis",0.05
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Cornus canadensis",0.1
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Dicranum spp.",0.1
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Gaultheria hispidula",0.2
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Kalmia angustifolia",0.05
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Picea mariana",0.4
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Pleurozium schreberi",0.1
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Sphagnum sp.",0.3
+"TV_16","b","BF/BS Forest, Mature","BF/BS Forest, Mature","Vaccinium angustifolium",0.02

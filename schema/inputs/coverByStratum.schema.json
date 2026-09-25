@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/vqa2/schema/inputs/coverByStratum.schema.json",
+  "title": "inputs/coverByStratum.csv",
+  "description": "Rows from coverByStratum.csv. This file follows the same row structure as coverByGrowthForm.csv and is used by PCS/older naming paths.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "$ref": "../base/row-patterns.schema.json#/$defs/coverIndicatorRow"
+  }
+}

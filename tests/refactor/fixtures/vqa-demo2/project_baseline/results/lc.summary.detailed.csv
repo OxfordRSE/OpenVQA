@@ -1,0 +1,16 @@
+﻿"Land cover class","Benchmark vegetation","Vegetation structural type","n.f.plots","n.b.plots","n.f.speciesStems","n.b.speciesStems","n.f.coverByStratum","n.b.coverByStratum","n.f.SR","n.b.SR","n.f.TD","n.b.TD","n.f.PCESS","n.b.PCESS","n.f.PCGF","n.b.PCGF"
+"Stratum-M24-1","M24","Mesic grassland",12,12,0,0,12,12,12,12,12,12,12,12,12,12
+"Stratum-U16-1","U16","Tall-herb meadow",12,12,11,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-U16-2","U16","Tall-herb meadow",12,12,12,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-U17-1","U17","Tall-herb meadow",12,12,11,5,12,12,12,12,12,12,12,12,12,12
+"Stratum-U4-1","U4","Grassland",12,12,0,0,12,12,12,12,12,12,12,12,12,12
+"Stratum-U4-2","U4","Grassland",12,12,0,0,12,12,12,12,12,12,12,12,12,12
+"Stratum-W10-1","W10","Forest",15,13,12,13,15,13,15,13,15,13,15,13,15,13
+"Stratum-W11-1","W11","Forest",12,12,12,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-W11-2","W11","Forest",20,12,12,12,20,12,20,12,20,12,20,12,20,12
+"Stratum-W12-1","W12","Forest",13,12,12,12,13,12,13,12,13,12,13,12,13,12
+"Stratum-W16-1","W16","Forest",12,12,12,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-W17-1","W17","Forest",12,12,7,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-W18-1","W18","Forest",12,12,12,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-W2-1","W2","Flooded woodland",12,12,11,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-W21-1","W21","Shrubland",12,12,11,0,12,12,12,12,12,12,12,12,12,12

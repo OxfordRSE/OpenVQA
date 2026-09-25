@@ -1,0 +1,8 @@
+﻿"Land cover class","Benchmark vegetation","Vegetation structural type","n.f.plots","n.b.plots","n.f.speciesStems","n.b.speciesStems","n.f.coverByStratum","n.b.coverByStratum","n.f.SR","n.b.SR","n.f.TD","n.b.TD","n.f.PCESS","n.b.PCESS","n.f.PCGF","n.b.PCGF"
+"Stratum-Off-W11-1","W11","Forest",12,12,5,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-Off-W11-2","W11","Forest",12,12,1,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-Off-W11-3","W11","Forest",12,12,8,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-Off-W11-4","W11","Forest",12,12,4,12,12,12,12,12,12,12,12,12,12,12
+"Stratum-Off-W2-1","W2","Flooded woodland",8,12,6,12,8,12,8,12,8,12,8,12,8,12
+"Stratum-Off-W2-3","W2","Flooded woodland",4,12,2,12,4,12,4,12,4,12,4,12,4,12
+"Stratum-Off-W2-4","W2","Flooded woodland",12,12,2,12,12,12,12,12,12,12,12,12,12,12

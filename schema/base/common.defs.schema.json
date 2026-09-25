@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/vqa2/schema/base/common.defs.schema.json",
+  "title": "VQA2 Common Schema Definitions",
+  "description": "Shared primitive definitions for input CSV schemas. These schemas validate JSON row objects converted from CSV.",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nonNegativeIntegerValue": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\d+$"
+        }
+      ]
+    },
+    "positiveIntegerValue": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "pattern": "^[1-9]\\d*$"
+        }
+      ]
+    },
+    "nonNegativeNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "nonNegativeNumberValue": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)(\\.\\d+)?$"
+        }
+      ]
+    },
+    "proportionNumber": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "proportionValue": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/proportionNumber"
+        },
+        {
+          "type": "string",
+          "pattern": "^(0(\\.\\d+)?|1(\\.0+)?)$"
+        }
+      ]
+    },
+    "focalOrBenchmark": {
+      "type": "string",
+      "enum": [
+        "f",
+        "b"
+      ]
+    },
+    "eiCode": {
+      "type": "string",
+      "enum": [
+        "SR",
+        "TD",
+        "PCGF",
+        "GC",
+        "PCESS"
+      ]
+    },
+    "functionGroup": {
+      "type": "string",
+      "enum": [
+        "composition",
+        "structure",
+        "function",
+        "integrity"
+      ]
+    },
+    "includeFlag": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "",
+            "T",
+            "F",
+            "TRUE",
+            "FALSE",
+            "true",
+            "false"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "booleanLike": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "TRUE",
+            "FALSE",
+            "true",
+            "false",
+            "T",
+            "F"
+          ]
+        }
+      ]
+    },
+    "optionalText": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "nonEmptyStringOrNull": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binary01": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "0",
+            "1"
+          ]
+        }
+      ]
+    },
+    "lcType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "simpleStratum": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exoticSimpleStratum": {
+      "type": "string",
+      "minLength": 1
+    },
+    "groundCoverStratum": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

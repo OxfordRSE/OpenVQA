@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/vqa2/schema/inputs/vegetation.schema.json",
+  "title": "inputs/vegetation.csv",
+  "description": "Rows from vegetation.csv containing benchmark vegetation lookup metadata.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "$ref": "../base/row-patterns.schema.json#/$defs/vegetationRow"
+  }
+}

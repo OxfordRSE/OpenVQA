@@ -1,11 +1,25 @@
-bak/
-includes/bak/
-under_construction/
-Rplots.pdf
-.Rapp.history
-.Rhistory
-.DS_Store
-custom_scripts/
-manual_validations/
+data/*
+!data/README.md
+!data/vqa-demo1/raw/
+!data/vqa-demo2/raw/
+!data/vqa-demo1-min/
+!data/vqa-demo1-min/**
+!data/vqa-demo2-min/
+!data/vqa-demo2-min/**
+
 CHANGELOG_ps.md
 
+# R project files
+## rv
+rv/
+rv.lock
+
+## R
+.Rprofile
+.Rhistory
+.Rapp.history
+
+.vscode/
+
+__MACOSX/
+.DS_Store

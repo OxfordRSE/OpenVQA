@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/vqa2/schema/inputs/inputs.bundle.schema.json",
+  "title": "inputs bundle schema",
+  "description": "Optional bundle schema for validating a JSON object that contains all required input CSVs as arrays of row objects.",
+  "type": "object",
+  "required": [
+    "coverByGrowthForm.csv",
+    "exoticCoverByStratum.csv",
+    "groundCover.csv",
+    "plotMetadata.csv",
+    "species.csv",
+    "speciesCover.csv"
+  ],
+  "properties": {
+    "coverByGrowthForm.csv": {
+      "$ref": "./coverByGrowthForm.schema.json"
+    },
+    "coverByStratum.csv": {
+      "$ref": "./coverByStratum.schema.json"
+    },
+    "exoticCoverByStratum.csv": {
+      "$ref": "./exoticCoverByStratum.schema.json"
+    },
+    "groundCover.csv": {
+      "$ref": "./groundCover.schema.json"
+    },
+    "landCover.csv": {
+      "$ref": "./landCover.schema.json"
+    },
+    "plotMetadata.csv": {
+      "$ref": "./plotMetadata.schema.json"
+    },
+    "species.csv": {
+      "$ref": "./species.schema.json"
+    },
+    "speciesCover.csv": {
+      "$ref": "./speciesCover.schema.json"
+    },
+    "speciesStems.csv": {
+      "$ref": "./speciesStems.schema.json"
+    }
+  },
+  "additionalProperties": false
+}
