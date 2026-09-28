@@ -107,17 +107,19 @@ jobs:
       - name: Restore R package library
         uses: actions/cache@v6
         with:
-          path: rv/library
-          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rproject.toml') }}
+          path: tests/refactor/rv/library
+          key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
 
       - name: Install system dependencies
         shell: bash
         run: |
           sudo apt-get update
-          rv sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
+          rv --config-file tests/refactor/rproject.toml sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
 
       - name: Sync R dependencies
-        run: rv sync
+        run: rv --config-file tests/refactor/rproject.toml sync --locked
 
       - name: Run refactor parity tests
-        run: Rscript tests/refactor/testthat.R
+        run: |
+          R_LIBS_USER="$(rv --config-file tests/refactor/rproject.toml library)" \
+            Rscript --vanilla tests/refactor/testthat.R
