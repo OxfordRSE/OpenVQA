@@ -1,5 +1,7 @@
 # Vegetation Quality Assessment (VQA)
 
+[![R CI](https://github.com/OxfordRSE/OpenVQA/actions/workflows/r-tests.yml/badge.svg)](https://github.com/OxfordRSE/OpenVQA/actions/workflows/r-tests.yml)
+
 ***Warning: this is an outdated README. Will update soon for OpenVQA***
 
 VQA is a semi-automated R pipeline for estimating quality of reclaimed vegetation relative to undisturbed native vegetation.
@@ -83,6 +85,9 @@ You can read more about VQA in detail in this open access [publication](https://
 * Multiple R packages (see script `libraries.R` for details)  
 
 ## Developer Setup
+
+GitHub Actions validates both minimal demo projects, runs the standard and refactor parity
+test suites, and lints the actively refactored R code on pull requests and pushes to `main`.
 
 If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
 
