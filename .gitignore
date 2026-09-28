@@ -13,6 +13,8 @@ Rplots.pdf
 # R project files
 ## rv
 rv.lock
+!tests/refactor/rv.lock
+tests/refactor/rv/
 
 ## R
 .Rhistory
