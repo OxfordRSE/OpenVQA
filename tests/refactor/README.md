@@ -15,11 +15,20 @@ Fixtures were generated from the corresponding non-`-min` legacy project.
 The legacy code is not run by these tests and may be deleted once the fixtures
 have been reviewed.
 
-Run the suite from the repository root:
+The suite has a temporary frozen dependency environment so that its numerical
+golden fixtures do not change as CRAN packages are updated. Sync and run it from
+the repository root with:
 
 ```sh
-Rscript tests/refactor/testthat.R
+rv --config-file tests/refactor/rproject.toml sync --locked
+R_LIBS_USER="$(rv --config-file tests/refactor/rproject.toml library)" \
+  Rscript --vanilla tests/refactor/testthat.R
 ```
+
+This uses `tests/refactor/rv.lock` and `tests/refactor/rv/library`. Normal
+development and the standard CI checks continue to use the root
+`rproject.toml` and `rv/library`. Remove the refactor configuration and lock
+when this regression suite is retired.
 
 CSV and XLSX outputs are compared as tables, rather than raw files. The XLSX
 `Meta` sheet's `Analysis date:` row is excluded because it records execution
