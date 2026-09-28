@@ -189,7 +189,14 @@ read_refactor_png <- function(file_path) {
     requireNamespace("png", quietly = TRUE),
     info = "Package 'png' is required to compare PNG figures."
   )
-  png::readPNG(file_path, native = FALSE)
+  image <- png::readPNG(file_path, native = FALSE)
+  if (
+    length(dim(image)) == 3L && dim(image)[3L] == 4L &&
+      all(image[, , 4L] == 1)
+  ) {
+    image <- image[, , seq_len(3L), drop = FALSE]
+  }
+  image
 }
 
 compare_refactor_figure_sets <- function(actual_directory, expected_directory,
@@ -199,12 +206,20 @@ compare_refactor_figure_sets <- function(actual_directory, expected_directory,
     recursive = TRUE,
     full.names = TRUE
   )
-  expected_files <- list.files(expected_directory,
-    recursive = TRUE,
-    full.names = TRUE
-  )
+  expected_files <- if (dir.exists(expected_directory)) {
+    list.files(expected_directory,
+      recursive = TRUE,
+      full.names = TRUE
+    )
+  } else {
+    character()
+  }
   actual_names <- relative_file_names(actual_files, actual_directory)
-  expected_names <- relative_file_names(expected_files, expected_directory)
+  expected_names <- if (length(expected_files)) {
+    relative_file_names(expected_files, expected_directory)
+  } else {
+    character()
+  }
 
   testthat::expect_identical(
     sort(setdiff(actual_names, allowed_new)), sort(expected_names),
@@ -222,10 +237,15 @@ compare_refactor_figure_sets <- function(actual_directory, expected_directory,
 
     actual <- read_refactor_png(actual_path)
     expected <- read_refactor_png(expected_path)
-    testthat::expect_identical(
-      dim(actual), dim(expected),
-      info = paste("Figure dimensions/channels differ:", file_name)
-    )
+    if (!identical(dim(actual), dim(expected))) {
+      testthat::fail(sprintf(
+        "Figure dimensions/channels differ for %s: actual = %s; expected = %s",
+        file_name,
+        paste(dim(actual), collapse = " x "),
+        paste(dim(expected), collapse = " x ")
+      ))
+      next
+    }
 
     difference <- abs(actual - expected)
     max_difference <- max(difference)
