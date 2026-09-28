@@ -11,11 +11,9 @@ CHANGELOG_ps.md
 
 # R project files
 ## rv
-rv/
 rv.lock
 
 ## R
-.Rprofile
 .Rhistory
 .Rapp.history
 
