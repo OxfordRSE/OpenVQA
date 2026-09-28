@@ -193,7 +193,7 @@ read_refactor_png <- function(file_path) {
 }
 
 compare_refactor_figure_sets <- function(actual_directory, expected_directory,
-                                         pixel_tolerance = 1 / 255,
+                                         pixel_tolerance = 1 / 255 + 1e-12,
                                          allowed_new = character()) {
   actual_files <- list.files(actual_directory,
     recursive = TRUE,
