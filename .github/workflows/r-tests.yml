@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: rv/library
-          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rv.lock') }}
+          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rproject.toml') }}
 
       - name: Install system dependencies
         shell: bash
@@ -53,7 +53,7 @@ jobs:
           rv sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
 
       - name: Sync R dependencies
-        run: rv sync --locked
+        run: rv sync
 
       - name: Validate minimal demo inputs
         run: |
@@ -107,7 +107,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: rv/library
-          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rv.lock') }}
+          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rproject.toml') }}
 
       - name: Install system dependencies
         shell: bash
@@ -116,7 +116,7 @@ jobs:
           rv sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
 
       - name: Sync R dependencies
-        run: rv sync --locked
+        run: rv sync
 
       - name: Run refactor parity tests
         run: Rscript tests/refactor/testthat.R

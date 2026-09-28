@@ -92,7 +92,7 @@ test suites, and lints the actively refactored R code on every push and pull req
 If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
 
 1. Install the R project dependencies.
-   - If you are using `rv`, run `rv sync --locked` from the repository root.
+   - If you are using `rv`, run `rv sync` from the repository root.
 2. Install `pre-commit` itself if it is not already available on your machine.
    - `pipx install pre-commit`
    - or `python -m pip install --user pre-commit`
