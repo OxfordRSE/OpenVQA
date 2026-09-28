@@ -60,3 +60,14 @@ for (contract in contracts) {
     }
   )
 }
+
+testthat::test_that("different seeds change an empirical bootstrap table", {
+  first_root <- run_refactor_workflow("vqa-demo2", "project_current", seed = 20260810L)
+  on.exit(cleanup_refactor_project(first_root), add = TRUE)
+  second_root <- run_refactor_workflow("vqa-demo2", "project_current", seed = 20260811L)
+  on.exit(cleanup_refactor_project(second_root), add = TRUE)
+
+  first <- read_csv_table(file.path(first_root, "project_current", "results", "SR_boot.q.csv"))
+  second <- read_csv_table(file.path(second_root, "project_current", "results", "SR_boot.q.csv"))
+  testthat::expect_false(identical(first, second))
+})
