@@ -1,0 +1,47 @@
+# Frozen dependency environment for the temporary refactor parity suite.
+# Keep the root rproject.toml as the source for normal development and CI.
+
+[project]
+name = "vqa2-refactor"
+r_version = "4.5"
+
+repositories = [
+  { alias = "PPM", url = "https://packagemanager.posit.co/cran/2026-08-20" },
+  { alias = "CRAN", url = "https://cloud.r-project.org/" },
+]
+
+dependencies = [
+  "tidyverse",
+  "Hmisc",
+  "betareg",
+  "lmtest",
+  "car",
+  "pscl",
+  "MASS",
+  "vcd",
+  "fitdistrplus",
+  "boot",
+  "gamlss",
+  "gamlss.dist",
+  "pwr",
+  "simpleboot",
+  "VGAM",
+  "vegan",
+  "picante",
+  "readxl",
+  "png",
+  "openxlsx2",
+  "RCurl",
+  "jsonlite",
+  "data.table",
+  "drc",
+  "SemNetCleaner",
+  "tools",
+  "optparse",
+  "sqldf",
+  "styler",
+  "lintr",
+  "jsonvalidate",
+  "yaml",
+  "testthat",
+]

@@ -86,8 +86,14 @@ You can read more about VQA in detail in this open access [publication](https://
 
 ## Developer Setup
 
-GitHub Actions validates both minimal demo projects, runs the standard and refactor parity
-test suites, and lints the actively refactored R code on pull requests and pushes to `main`.
+GitHub Actions validates both minimal demo projects, runs the standard tests, checks all
+six golden refactor contracts on macOS 26, and lints the actively refactored R code on
+pull requests and pushes to `main`. Ubuntu refactor diagnostics are paused while the
+legacy parametric-fitting failures are investigated; set the repository variable
+`ENABLE_UBUNTU_REFACTOR=true` to enable all six non-blocking Ubuntu shards. Windows checks
+are paused pending Windows-safe fixture filenames; set `ENABLE_WINDOWS_REFACTOR=true` to
+enable them. The rationale and restoration criteria are documented in
+[`tests/refactor/README.md`](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
 
 If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
 

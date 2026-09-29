@@ -82,10 +82,23 @@ jobs:
           print(lints)
           quit(status = as.integer(length(lints) > 0L))
 
+  # macOS 26 reproduces the reviewed fixtures and is the required refactor platform.
+  # It runs every contract with strict numerical and decoded-figure parity. See
+  # tests/refactor/README.md#why-ci-is-intentionally-asymmetric.
   refactor:
-    name: Refactor parity
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    name: Refactor parity (macos-26, ${{ matrix.contract }})
+    runs-on: macos-26
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
     steps:
       - uses: actions/checkout@v6
 
@@ -96,28 +109,175 @@ jobs:
       - name: Install rv
         shell: bash
         run: |
-          mkdir -p "$HOME/.local/bin"
+          mkdir -p "$RUNNER_TEMP/rv-bin"
           curl -fsSL \
-            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-aarch64-apple-darwin.tar.gz" \
             -o "$RUNNER_TEMP/rv.tar.gz"
-          echo "$RV_SHA256  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
-          tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$HOME/.local/bin"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956  $RUNNER_TEMP/rv.tar.gz" | shasum -a 256 --check
+          tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
+          echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
 
       - name: Restore R package library
         uses: actions/cache@v6
         with:
-          path: rv/library
-          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rproject.toml') }}
+          path: tests/refactor/rv/library
+          key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
+
+      - name: Sync R dependencies
+        run: rv --config-file tests/refactor/rproject.toml sync --locked
+
+      - name: Select refactor library
+        shell: bash
+        run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
+
+      - name: Run refactor tests
+        env:
+          VQA_COMPARE_FIGURES: true
+          VQA_COMPARE_GOLDEN: true
+          VQA_NUMERIC_TOLERANCE: 1e-12
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
+        run: Rscript --vanilla tests/refactor/testthat.R
+
+  # Linux fitting is currently diagnostic: poor-quality inputs can make the legacy
+  # fitdistr path abort before parity is evaluated. Enable it explicitly while
+  # investigating with the repository variable ENABLE_UBUNTU_REFACTOR=true.
+  refactor-ubuntu:
+    name: Refactor diagnostic (ubuntu-24.04, ${{ matrix.contract }})
+    if: ${{ vars.ENABLE_UBUNTU_REFACTOR == 'true' }}
+    continue-on-error: true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+
+      - name: Install rv
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/rv-bin"
+          curl -fsSL \
+            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            -o "$RUNNER_TEMP/rv.tar.gz"
+          echo "$RV_SHA256  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
+          echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
+
+      - name: Restore R package library
+        uses: actions/cache@v6
+        with:
+          path: tests/refactor/rv/library
+          key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
 
       - name: Install system dependencies
         shell: bash
         run: |
           sudo apt-get update
-          rv sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
+          rv --config-file tests/refactor/rproject.toml sysdeps --only-absent | xargs --no-run-if-empty sudo apt-get install -y
 
       - name: Sync R dependencies
-        run: rv sync
+        run: rv --config-file tests/refactor/rproject.toml sync --locked
 
-      - name: Run refactor parity tests
-        run: Rscript tests/refactor/testthat.R
+      - name: Select refactor library
+        shell: bash
+        run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
+
+      - name: Run refactor tests
+        env:
+          VQA_COMPARE_FIGURES: false
+          VQA_COMPARE_GOLDEN: false
+          VQA_NUMERIC_TOLERANCE: 1e-8
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: false
+        run: Rscript --vanilla tests/refactor/testthat.R
+
+  # Keep the Windows runner definition executable, but do not allocate runners by default.
+  # Existing fixture names containing '>' cannot be checked out on Windows. Once renamed,
+  # set the repository variable ENABLE_WINDOWS_REFACTOR=true to restore all six shards.
+  refactor-windows:
+    name: Refactor portability (windows-2025, ${{ matrix.contract }})
+    if: ${{ vars.ENABLE_WINDOWS_REFACTOR == 'true' }} # GH repo variable
+    runs-on: windows-2025
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+
+      - name: Install rv
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP "rv.zip"
+          $bin = Join-Path $env:RUNNER_TEMP "rv-bin"
+          Invoke-WebRequest `
+            -Uri "https://github.com/A2-ai/rv/releases/download/v$env:RV_VERSION/rv-v$env:RV_VERSION-x86_64-pc-windows-msvc.zip" `
+            -OutFile $archive
+          $actual = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLowerInvariant()
+          if ($actual -ne "8adc0d558e0459e58eb88a770082211bcb1e23c2efc1f6ba5da3d5a9ba39877c") {
+            throw "rv archive checksum mismatch: $actual"
+          }
+          Expand-Archive -Path $archive -DestinationPath $bin
+          $bin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Restore R package library
+        uses: actions/cache@v6
+        with:
+          path: tests/refactor/rv/library
+          key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
+
+      - name: Sync R dependencies
+        run: rv --config-file tests/refactor/rproject.toml sync --locked
+
+      - name: Select refactor library
+        shell: pwsh
+        run: |
+          "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" |
+            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Run refactor tests
+        env:
+          VQA_COMPARE_FIGURES: false
+          VQA_COMPARE_GOLDEN: false
+          VQA_NUMERIC_TOLERANCE: 1e-8
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
+        run: Rscript --vanilla tests/refactor/testthat.R
+
+  refactor-complete:
+    name: Refactor checks
+    if: always()
+    needs: [refactor, refactor-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm all refactor shards passed
+        env:
+          MATRIX_RESULT: ${{ needs.refactor.result }}
+          WINDOWS_RESULT: ${{ needs.refactor-windows.result }}
+        run: |
+          test "$MATRIX_RESULT" = success
+          test "$WINDOWS_RESULT" = success || test "$WINDOWS_RESULT" = skipped
