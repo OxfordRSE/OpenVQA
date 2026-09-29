@@ -86,9 +86,13 @@ You can read more about VQA in detail in this open access [publication](https://
 
 ## Developer Setup
 
-GitHub Actions validates both minimal demo projects, runs the standard tests, checks golden
-refactor parity on macOS and portability on Linux and Windows, and lints the actively
-refactored R code on pull requests and pushes to `main`.
+GitHub Actions validates both minimal demo projects, runs the standard tests, checks
+refactor portability on Linux, and lints the actively refactored R code on pull requests
+and pushes to `main`. A temporary macOS 15/26 diagnostic compares demo1 repeatability and
+golden parity. Windows checks are paused pending Windows-safe fixture filenames; set the
+repository variable `ENABLE_WINDOWS_REFACTOR=true` to enable all six Windows shards. The
+rationale and restoration criteria are documented in
+[`tests/refactor/README.md`](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
 
 If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
 
