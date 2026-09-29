@@ -30,11 +30,21 @@ development and the standard CI checks continue to use the root
 `rproject.toml` and `rv/library`. Remove the refactor configuration and lock
 when this regression suite is retired.
 
+With no contract selected, the runner executes the six assessments in parallel using half
+the detected logical CPUs, capped at six workers. Set `VQA_TEST_WORKERS=1` for the original
+sequential behaviour or another positive integer to choose a different limit.
+
 CSV and XLSX outputs are compared as tables, rather than raw files. The XLSX
 `Meta` sheet's `Analysis date:` row is excluded because it records execution
 time, not an analysis result. PNG files are decoded and compared by dimensions,
 channels, and pixel values; PNG metadata and compression timestamps therefore
 do not affect the result.
+
+CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`.
+`VQA_NUMERIC_TOLERANCE` sets the table-comparison tolerance, and
+`VQA_COMPARE_FIGURES=false` skips platform-rendered figure comparisons. Local runs keep
+the strict tolerance, compare figures, and exercise every assessment by default. The
+distinct-seed check can be selected independently with `VQA_TEST_DISTINCT_SEED`.
 
 ## Creating or refreshing a fixture
 
