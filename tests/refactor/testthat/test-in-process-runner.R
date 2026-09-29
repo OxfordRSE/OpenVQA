@@ -1,4 +1,10 @@
 testthat::test_that("in-process analysis invocations do not leak legacy state", {
+  selected_contract <- Sys.getenv("VQA_TEST_CONTRACT")
+  if (nzchar(selected_contract) &&
+      selected_contract != "vqa-demo1/main_001_current") {
+    testthat::skip("The in-process isolation check runs in one CI shard.")
+  }
+
   old_directory <- getwd()
   on.exit(setwd(old_directory), add = TRUE)
   setwd(refactor_project_root)

@@ -54,5 +54,4 @@ main <- function() {
   run_analysis(cli$data_root, cli$assessment)
 }
 
-script_file <- sub("^--file=", "", commandArgs(FALSE)[grepl("^--file=", commandArgs(FALSE))])
-if (length(script_file) && identical(normalizePath(script_file), normalizePath("analyse.R"))) main()
+if (sys.nframe() == 0L) main()

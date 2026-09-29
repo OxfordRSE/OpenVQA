@@ -33,10 +33,10 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
 confirm_legacy_batch <- function(run_env) {
   evalq({
     cat(paste0(
-      "Run VQA Batch for project '", 
-      PROJ, 
-      "', assessment '", 
-      ASSESS, 
+      "Run VQA Batch for project '",
+      PROJ,
+      "', assessment '",
+      ASSESS,
       "' using the following settings: \n"
     ))
     cat(paste0(MSG.CONF.START, MSG.CONF.BATCH))
@@ -55,23 +55,23 @@ execute_legacy_batch <- function(run_env) {
   old_functions <- mget(legacy_functions[had_function], envir = .GlobalEnv, inherits = FALSE)
   list2env(mget(legacy_functions, envir = run_env), envir = .GlobalEnv)
   on.exit(for (name in legacy_functions) {
-    if (had_function[[name]]){
+    if (had_function[[name]]) {
       assign(name, old_functions[[name]], envir = .GlobalEnv)
     } else {
       rm(list = name, envir = .GlobalEnv)
     }
   }, add = TRUE)
-  logfile <- evalq(
-    if(REPLACE.LOG){
+  logfile <- evalq({
+    if (REPLACE.LOG) {
       paste0(LOGDIR, LOGFILE.BASENAME, ".txt")
     } else {
       paste0(
-        LOGDIR, 
-        LOGFILE.BASENAME, 
-        format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"), 
-        envir = run_env
+        LOGDIR,
+        LOGFILE.BASENAME,
+        format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"
       )
     }
+  }, envir = run_env)
   log <- file(logfile)
   sink_depth <- sink.number(type = "output")
   sink(log, append = TRUE, type = "output", split = TRUE)
@@ -81,8 +81,8 @@ execute_legacy_batch <- function(run_env) {
   }, add = TRUE)
   sys.source("analysis/legacy-batch.R", envir = run_env, toplevel.env = run_env)
   invisible(list(
-    results = evalq(RESULTSDIR, envir = run_env), 
-    figures = evalq(FIGDIR, envir = run_env), 
+    results = evalq(RESULTSDIR, envir = run_env),
+    figures = evalq(FIGDIR, envir = run_env),
     log = logfile
   ))
 }
