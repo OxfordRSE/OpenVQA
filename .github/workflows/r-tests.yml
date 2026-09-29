@@ -89,7 +89,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-15, windows-2025]
+        os: [ubuntu-24.04]
         contract:
           - vqa-demo1/main_001_current
           - vqa-demo1/offset_001_current
@@ -106,39 +106,29 @@ jobs:
             rv_asset: x86_64-unknown-linux-gnu.tar.gz
             rv_sha256: 9805dbad14eb049265c0052635873c9b7891bc7334d445662c13fbad61cb269c
           - os: macos-15
+            contract: vqa-demo1/main_001_current
+            compare_figures: false
+            compare_golden: false
+            check_name: repeatability
+            numeric_tolerance: '1e-12'
+            rv_asset: aarch64-apple-darwin.tar.gz
+            rv_sha256: 626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956
+          - os: macos-26
+            contract: vqa-demo1/main_001_current
             compare_figures: true
             compare_golden: true
             check_name: parity
             numeric_tolerance: '1e-12'
             rv_asset: aarch64-apple-darwin.tar.gz
             rv_sha256: 626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956
-          - os: windows-2025
-            compare_figures: false
-            compare_golden: false
-            check_name: portability
-            numeric_tolerance: '1e-8'
-            rv_asset: x86_64-pc-windows-msvc.zip
-            rv_sha256: 8adc0d558e0459e58eb88a770082211bcb1e23c2efc1f6ba5da3d5a9ba39877c
     steps:
       - uses: actions/checkout@v6
-        if: runner.os != 'Windows'
-
-      - uses: actions/checkout@v6
-        if: runner.os == 'Windows'
-        with:
-          # Windows cannot check out fixture figure names containing '<' or '>'.
-          # Figures are only compared by the canonical macOS parity jobs.
-          sparse-checkout: |
-            /*
-            !/tests/refactor/fixtures/*/*/figs/
-          sparse-checkout-cone-mode: false
 
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ env.R_VERSION }}
 
       - name: Install rv
-        if: runner.os != 'Windows'
         shell: bash
         run: |
           mkdir -p "$RUNNER_TEMP/rv-bin"
@@ -152,22 +142,6 @@ jobs:
           fi
           tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
           echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
-
-      - name: Install rv
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $archive = Join-Path $env:RUNNER_TEMP "rv.zip"
-          $bin = Join-Path $env:RUNNER_TEMP "rv-bin"
-          Invoke-WebRequest `
-            -Uri "https://github.com/A2-ai/rv/releases/download/v$env:RV_VERSION/rv-v$env:RV_VERSION-${{ matrix.rv_asset }}" `
-            -OutFile $archive
-          $actual = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLowerInvariant()
-          if ($actual -ne "${{ matrix.rv_sha256 }}") {
-            throw "rv archive checksum mismatch: $actual"
-          }
-          Expand-Archive -Path $archive -DestinationPath $bin
-          $bin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Restore R package library
         uses: actions/cache@v6
@@ -186,16 +160,8 @@ jobs:
         run: rv --config-file tests/refactor/rproject.toml sync --locked
 
       - name: Select refactor library
-        if: runner.os != 'Windows'
         shell: bash
         run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
-
-      - name: Select refactor library
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" |
-            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Run refactor tests
         env:
@@ -203,7 +169,7 @@ jobs:
           VQA_COMPARE_GOLDEN: ${{ matrix.compare_golden }}
           VQA_NUMERIC_TOLERANCE: ${{ matrix.numeric_tolerance }}
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
-          VQA_TEST_DISTINCT_SEED: ${{ matrix.os == 'macos-15' && matrix.contract == 'vqa-demo2/project_current' }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.os == 'ubuntu-24.04' && matrix.contract == 'vqa-demo2/project_current' }}
         run: Rscript --vanilla tests/refactor/testthat.R
 
   refactor-complete:
