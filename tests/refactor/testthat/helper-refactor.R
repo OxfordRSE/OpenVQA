@@ -86,13 +86,22 @@ relative_file_names <- function(files, root) {
 }
 
 compare_named_table_sets <- function(actual, expected, tolerance = 1e-12) {
-  testthat::expect_identical(sort(names(actual)), sort(names(expected)))
+  names_match <- identical(sort(names(actual)), sort(names(expected)))
+  testthat::expect_true(
+    names_match,
+    info = "Table or workbook sheet names differ."
+  )
+  if (!names_match) return(invisible(FALSE))
 
   for (file_name in names(expected)) {
-    testthat::expect_identical(
-      names(actual[[file_name]]), names(expected[[file_name]]),
+    columns_match <- identical(
+      names(actual[[file_name]]), names(expected[[file_name]])
+    )
+    testthat::expect_true(
+      columns_match,
       info = paste("Columns differ:", file_name)
     )
+    if (!columns_match) return(invisible(FALSE))
     testthat::expect_equal(
       actual[[file_name]], expected[[file_name]],
       tolerance = tolerance, check.attributes = FALSE,
@@ -153,10 +162,14 @@ compare_refactor_result_sets <- function(actual_directory, expected_directory,
   actual_names <- relative_file_names(actual_files, actual_directory)
   expected_names <- relative_file_names(expected_files, expected_directory)
 
-  testthat::expect_identical(
-    sort(setdiff(actual_names, allowed_new)), sort(expected_names),
+  files_match <- identical(
+    sort(setdiff(actual_names, allowed_new)), sort(expected_names)
+  )
+  testthat::expect_true(
+    files_match,
     info = "The new workflow produced unexpected or missing result files."
   )
+  if (!files_match) return(invisible(FALSE))
 
   for (file_name in expected_names) {
     actual_path <- file.path(actual_directory, file_name)
@@ -221,10 +234,14 @@ compare_refactor_figure_sets <- function(actual_directory, expected_directory,
     character()
   }
 
-  testthat::expect_identical(
-    sort(setdiff(actual_names, allowed_new)), sort(expected_names),
+  files_match <- identical(
+    sort(setdiff(actual_names, allowed_new)), sort(expected_names)
+  )
+  testthat::expect_true(
+    files_match,
     info = "The new workflow produced unexpected or missing figure files."
   )
+  if (!files_match) return(invisible(FALSE))
 
   for (file_name in expected_names) {
     actual_path <- file.path(actual_directory, file_name)

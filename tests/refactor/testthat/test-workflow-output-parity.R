@@ -16,6 +16,40 @@ contracts <- unlist(lapply(minimal_projects, function(minimal_project) {
   })
 }), recursive = FALSE)
 
+selected_contract <- Sys.getenv("VQA_TEST_CONTRACT")
+if (nzchar(selected_contract)) {
+  contract_parts <- strsplit(selected_contract, "/", fixed = TRUE)[[1L]]
+  if (length(contract_parts) != 2L || any(!nzchar(contract_parts))) {
+    stop("VQA_TEST_CONTRACT must have the form 'project/assessment'.")
+  }
+  contracts <- Filter(function(contract) {
+    identical(contract$project, contract_parts[[1L]]) &&
+      identical(contract$assessment, contract_parts[[2L]])
+  }, contracts)
+  if (length(contracts) != 1L) {
+    stop("VQA_TEST_CONTRACT does not identify exactly one assessment.")
+  }
+}
+
+numeric_tolerance <- suppressWarnings(as.numeric(
+  Sys.getenv("VQA_NUMERIC_TOLERANCE", "1e-12")
+))
+if (length(numeric_tolerance) != 1L ||
+    !is.finite(numeric_tolerance) || numeric_tolerance < 0) {
+  stop("VQA_NUMERIC_TOLERANCE must be one finite non-negative number.")
+}
+
+parse_flag <- function(name, default = "true") {
+  value <- tolower(Sys.getenv(name, default))
+  if (!value %in% c("true", "false")) {
+    stop(name, " must be 'true' or 'false'.")
+  }
+  identical(value, "true")
+}
+
+compare_figures <- parse_flag("VQA_COMPARE_FIGURES")
+test_distinct_seed <- parse_flag("VQA_TEST_DISTINCT_SEED")
+
 for (contract in contracts) {
   testthat::test_that(
     sprintf("%s/%s preserves the complete output contract", contract$project, contract$assessment),
@@ -36,12 +70,15 @@ for (contract in contracts) {
 
       compare_refactor_result_sets(
         file.path(first_root, contract$assessment, "results"),
-        file.path(expected_root, "results")
+        file.path(expected_root, "results"),
+        tolerance = numeric_tolerance
       )
-      compare_refactor_figure_sets(
-        file.path(first_root, contract$assessment, "figs"),
-        file.path(expected_root, "figs")
-      )
+      if (compare_figures) {
+        compare_refactor_figure_sets(
+          file.path(first_root, contract$assessment, "figs"),
+          file.path(expected_root, "figs")
+        )
+      }
 
       second_root <- run_refactor_workflow(
         contract$project, contract$assessment,
@@ -51,23 +88,36 @@ for (contract in contracts) {
 
       compare_refactor_result_sets(
         file.path(second_root, contract$assessment, "results"),
-        file.path(expected_root, "results")
+        file.path(expected_root, "results"),
+        tolerance = numeric_tolerance
       )
-      compare_refactor_figure_sets(
-        file.path(second_root, contract$assessment, "figs"),
-        file.path(expected_root, "figs")
-      )
+      if (compare_figures) {
+        compare_refactor_figure_sets(
+          file.path(second_root, contract$assessment, "figs"),
+          file.path(expected_root, "figs")
+        )
+      }
+
+      if (test_distinct_seed &&
+          identical(contract$project, "vqa-demo2") &&
+          identical(contract$assessment, "project_current")) {
+        different_seed_root <- run_refactor_workflow(
+          contract$project, contract$assessment,
+          seed = seed + 1L
+        )
+        on.exit(cleanup_refactor_project(different_seed_root), add = TRUE)
+        first <- read_csv_table(file.path(
+          first_root, contract$assessment, "results", "SR_boot.q.csv"
+        ))
+        different <- read_csv_table(file.path(
+          different_seed_root, contract$assessment,
+          "results", "SR_boot.q.csv"
+        ))
+        testthat::expect_false(
+          identical(first, different),
+          info = "Different seeds produced the same empirical bootstrap table."
+        )
+      }
     }
   )
 }
-
-testthat::test_that("different seeds change an empirical bootstrap table", {
-  first_root <- run_refactor_workflow("vqa-demo2", "project_current", seed = 20260810L)
-  on.exit(cleanup_refactor_project(first_root), add = TRUE)
-  second_root <- run_refactor_workflow("vqa-demo2", "project_current", seed = 20260811L)
-  on.exit(cleanup_refactor_project(second_root), add = TRUE)
-
-  first <- read_csv_table(file.path(first_root, "project_current", "results", "SR_boot.q.csv"))
-  second <- read_csv_table(file.path(second_root, "project_current", "results", "SR_boot.q.csv"))
-  testthat::expect_false(identical(first, second))
-})
