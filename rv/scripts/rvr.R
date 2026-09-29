@@ -1,5 +1,8 @@
 .rv <- new.env()
-.rv$config_path <- file.path(normalizePath(getwd()), "rproject.toml")
+.rv$config_path <- normalizePath(
+  Sys.getenv("RV_CONFIG_FILE", "rproject.toml"),
+  mustWork = FALSE
+)
 .rv$summary <- function(json = FALSE) {
   command <- c("summary")
   if (json) { command <- c(command, "--json") }
