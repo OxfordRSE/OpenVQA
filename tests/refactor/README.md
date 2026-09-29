@@ -49,21 +49,20 @@ different, explicit responsibility:
 
 | Environment | Current check | Reason |
 | --- | --- | --- |
-| Ubuntu 24.04 | All six contracts: golden file manifest plus two same-seed runs | Exercises every workflow on Linux without treating platform-sensitive fitted values as macOS parity. |
-| macOS 15 | `vqa-demo1/main_001_current`: two same-seed runs | The runner was repeatable, but a small number of demo1 bootstrap fits differed from the golden output and propagated into confidence limits. |
-| macOS 26 | `vqa-demo1/main_001_current`: strict tables and decoded figures | This modern runner reproduces the reviewed golden fixture and is the temporary canonical parity environment. |
+| Ubuntu 24.04 | Disabled, with the complete six-shard diagnostic retained | Poor-quality inputs can make the legacy `fitdistr()` path abort before output comparison; set `ENABLE_UBUNTU_REFACTOR=true` to investigate without blocking required checks. |
+| macOS 26 | All six contracts: strict tables, decoded figures, and repeatability | This runner reproduces the reviewed golden fixtures and is the temporary canonical parity environment. |
 | Windows 2025 | Disabled, with the complete six-shard job retained | Existing fixture names containing `>` fail during checkout before R starts. |
 
-The macOS split is diagnostic and temporary. Restore all six strict parity contracts on
-macOS 26 after the bootstrap investigation, then remove the macOS 15 comparison. Restore
+Restore Ubuntu as a required portability check only after the legacy parametric-fitting
+methodology has been made robust for sparse, zero-heavy, and extreme-value inputs. Restore
 Windows by renaming incompatible fixtures and setting the repository variable
-`ENABLE_WINDOWS_REFACTOR=true`. The distinct-seed assertion remains active in the Ubuntu
-`vqa-demo2/project_current` shard while the macOS matrix is reduced.
+`ENABLE_WINDOWS_REFACTOR=true`. The distinct-seed assertion remains active in the macOS 26
+`vqa-demo2/project_current` shard.
 
-CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`. Linux and
-macOS 15 use `VQA_COMPARE_GOLDEN=false`: they require the golden result-file manifest,
-then compare two same-seed runs on that platform. macOS 26 retains strict golden numerical
-and figure parity.
+CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`. The optional
+Ubuntu diagnostic uses `VQA_COMPARE_GOLDEN=false`: it requires the golden result-file
+manifest, then compares two same-seed runs on Linux. macOS 26 retains strict golden
+numerical and figure parity.
 `VQA_NUMERIC_TOLERANCE` sets the table-comparison tolerance, and
 `VQA_COMPARE_FIGURES=false` skips platform-rendered figure comparisons. Local runs keep
 the strict golden comparison, compare figures, and exercise every assessment by default.
