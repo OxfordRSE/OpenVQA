@@ -150,7 +150,8 @@ read_refactor_xlsx_tables <- function(file_path) {
 
 compare_refactor_result_sets <- function(actual_directory, expected_directory,
                                          tolerance = 1e-12,
-                                         allowed_new = character()) {
+                                         allowed_new = character(),
+                                         compare_values = TRUE) {
   actual_files <- list.files(actual_directory,
     recursive = TRUE,
     full.names = TRUE
@@ -169,7 +170,7 @@ compare_refactor_result_sets <- function(actual_directory, expected_directory,
     files_match,
     info = "The new workflow produced unexpected or missing result files."
   )
-  if (!files_match) return(invisible(FALSE))
+  if (!files_match || !compare_values) return(invisible(files_match))
 
   for (file_name in expected_names) {
     actual_path <- file.path(actual_directory, file_name)

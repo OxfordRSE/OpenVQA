@@ -48,11 +48,24 @@ parse_flag <- function(name, default = "true") {
 }
 
 compare_figures <- parse_flag("VQA_COMPARE_FIGURES")
+compare_golden <- parse_flag("VQA_COMPARE_GOLDEN")
 test_distinct_seed <- parse_flag("VQA_TEST_DISTINCT_SEED")
 
+if (compare_figures && !compare_golden) {
+  stop("VQA_COMPARE_FIGURES=true requires VQA_COMPARE_GOLDEN=true.")
+}
+
 for (contract in contracts) {
+  contract_check <- if (compare_golden) {
+    "preserves the complete output contract"
+  } else {
+    "is portable and same-seed repeatable"
+  }
+  description <- sprintf(
+    "%s/%s %s", contract$project, contract$assessment, contract_check
+  )
   testthat::test_that(
-    sprintf("%s/%s preserves the complete output contract", contract$project, contract$assessment),
+    description,
     {
       expected_root <- file.path(
         refactor_project_root,
@@ -71,7 +84,8 @@ for (contract in contracts) {
       compare_refactor_result_sets(
         file.path(first_root, contract$assessment, "results"),
         file.path(expected_root, "results"),
-        tolerance = numeric_tolerance
+        tolerance = numeric_tolerance,
+        compare_values = compare_golden
       )
       if (compare_figures) {
         compare_refactor_figure_sets(
@@ -86,9 +100,14 @@ for (contract in contracts) {
       )
       on.exit(cleanup_refactor_project(second_root), add = TRUE)
 
+      second_expected <- if (compare_golden) {
+        file.path(expected_root, "results")
+      } else {
+        file.path(first_root, contract$assessment, "results")
+      }
       compare_refactor_result_sets(
         file.path(second_root, contract$assessment, "results"),
-        file.path(expected_root, "results"),
+        second_expected,
         tolerance = numeric_tolerance
       )
       if (compare_figures) {

@@ -83,8 +83,7 @@ jobs:
           quit(status = as.integer(length(lints) > 0L))
 
   refactor:
-    name: Refactor parity shard (${{ matrix.os }}, ${{ matrix.contract }})
-    continue-on-error: ${{ matrix.experimental }}
+    name: Refactor ${{ matrix.check_name }} (${{ matrix.os }}, ${{ matrix.contract }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
@@ -101,24 +100,38 @@ jobs:
         include:
           - os: ubuntu-24.04
             compare_figures: false
-            experimental: true
+            compare_golden: false
+            check_name: portability
             numeric_tolerance: '1e-8'
             rv_asset: x86_64-unknown-linux-gnu.tar.gz
             rv_sha256: 9805dbad14eb049265c0052635873c9b7891bc7334d445662c13fbad61cb269c
           - os: macos-15
             compare_figures: true
-            experimental: false
+            compare_golden: true
+            check_name: parity
             numeric_tolerance: '1e-12'
             rv_asset: aarch64-apple-darwin.tar.gz
             rv_sha256: 626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956
           - os: windows-2025
             compare_figures: false
-            experimental: true
+            compare_golden: false
+            check_name: portability
             numeric_tolerance: '1e-8'
             rv_asset: x86_64-pc-windows-msvc.zip
             rv_sha256: 8adc0d558e0459e58eb88a770082211bcb1e23c2efc1f6ba5da3d5a9ba39877c
     steps:
       - uses: actions/checkout@v6
+        if: runner.os != 'Windows'
+
+      - uses: actions/checkout@v6
+        if: runner.os == 'Windows'
+        with:
+          # Windows cannot check out fixture figure names containing '<' or '>'.
+          # Figures are only compared by the canonical macOS parity jobs.
+          sparse-checkout: |
+            /*
+            !/tests/refactor/fixtures/*/*/figs/
+          sparse-checkout-cone-mode: false
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -132,10 +145,10 @@ jobs:
           curl -fsSL \
             "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-${{ matrix.rv_asset }}" \
             -o "$RUNNER_TEMP/rv.tar.gz"
-          if command -v sha256sum >/dev/null; then
-            echo "${{ matrix.rv_sha256 }}  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
-          else
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
             echo "${{ matrix.rv_sha256 }}  $RUNNER_TEMP/rv.tar.gz" | shasum -a 256 --check
+          else
+            echo "${{ matrix.rv_sha256 }}  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
           fi
           tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
           echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
@@ -184,21 +197,22 @@ jobs:
           "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" |
             Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Run refactor parity tests
+      - name: Run refactor tests
         env:
           VQA_COMPARE_FIGURES: ${{ matrix.compare_figures }}
+          VQA_COMPARE_GOLDEN: ${{ matrix.compare_golden }}
           VQA_NUMERIC_TOLERANCE: ${{ matrix.numeric_tolerance }}
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
           VQA_TEST_DISTINCT_SEED: ${{ matrix.os == 'macos-15' && matrix.contract == 'vqa-demo2/project_current' }}
         run: Rscript --vanilla tests/refactor/testthat.R
 
   refactor-complete:
-    name: Refactor parity
+    name: Refactor checks
     if: always()
     needs: refactor
     runs-on: ubuntu-latest
     steps:
-      - name: Confirm required parity shards passed
+      - name: Confirm all refactor shards passed
         env:
           MATRIX_RESULT: ${{ needs.refactor.result }}
         run: test "$MATRIX_RESULT" = success

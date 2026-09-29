@@ -41,10 +41,15 @@ channels, and pixel values; PNG metadata and compression timestamps therefore
 do not affect the result.
 
 CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`.
-`VQA_NUMERIC_TOLERANCE` sets the table-comparison tolerance, and
-`VQA_COMPARE_FIGURES=false` skips platform-rendered figure comparisons. Local runs keep
-the strict tolerance, compare figures, and exercise every assessment by default. The
-distinct-seed check can be selected independently with `VQA_TEST_DISTINCT_SEED`.
+macOS is the canonical parity platform: it compares tables against the reviewed golden
+fixtures with the strict tolerance and compares decoded figures. Numerical fitting can
+select different valid solutions on other operating systems, so Linux and Windows use
+`VQA_COMPARE_GOLDEN=false`: they require the golden result-file manifest, then compare
+two same-seed runs on that platform. `VQA_NUMERIC_TOLERANCE` sets the table-comparison
+tolerance, and `VQA_COMPARE_FIGURES=false` skips platform-rendered figure comparisons.
+Local runs keep the strict golden comparison, compare figures, and exercise every
+assessment by default. The distinct-seed check can be selected independently with
+`VQA_TEST_DISTINCT_SEED`.
 
 ## Creating or refreshing a fixture
 
