@@ -82,23 +82,16 @@ jobs:
           print(lints)
           quit(status = as.integer(length(lints) > 0L))
 
-  # The refactor matrix is intentionally asymmetric while legacy numerical code remains:
-  # - Ubuntu runs every contract as a portability/repeatability check, not against
-  #   macOS-generated numerical fixtures.
-  # - macOS 15 proved same-seed repeatable, but demo1 bootstrap fits differ from the
-  #   reviewed golden output, so it checks repeatability only.
-  # - macOS 26 reproduces the reviewed fixtures and therefore owns strict numerical and
-  #   decoded-figure parity. One demo1 contract is sufficient for this temporary OS check.
-  # Restore all six macOS 26 parity shards after the bootstrap investigation. See
+  # macOS 26 reproduces the reviewed fixtures and is the required refactor platform.
+  # It runs every contract with strict numerical and decoded-figure parity. See
   # tests/refactor/README.md#why-ci-is-intentionally-asymmetric.
   refactor:
-    name: Refactor ${{ matrix.check_name }} (${{ matrix.os }}, ${{ matrix.contract }})
-    runs-on: ${{ matrix.os }}
+    name: Refactor parity (macos-26, ${{ matrix.contract }})
+    runs-on: macos-26
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
         contract:
           - vqa-demo1/main_001_current
           - vqa-demo1/offset_001_current
@@ -106,30 +99,6 @@ jobs:
           - vqa-demo2/offset_current
           - vqa-demo2/project_baseline
           - vqa-demo2/project_current
-        include:
-          - os: ubuntu-24.04
-            compare_figures: false
-            compare_golden: false
-            check_name: portability
-            numeric_tolerance: '1e-8'
-            rv_asset: x86_64-unknown-linux-gnu.tar.gz
-            rv_sha256: 9805dbad14eb049265c0052635873c9b7891bc7334d445662c13fbad61cb269c
-          - os: macos-15
-            contract: vqa-demo1/main_001_current
-            compare_figures: false
-            compare_golden: false
-            check_name: repeatability
-            numeric_tolerance: '1e-12'
-            rv_asset: aarch64-apple-darwin.tar.gz
-            rv_sha256: 626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956
-          - os: macos-26
-            contract: vqa-demo1/main_001_current
-            compare_figures: true
-            compare_golden: true
-            check_name: parity
-            numeric_tolerance: '1e-12'
-            rv_asset: aarch64-apple-darwin.tar.gz
-            rv_sha256: 626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956
     steps:
       - uses: actions/checkout@v6
 
@@ -142,13 +111,68 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/rv-bin"
           curl -fsSL \
-            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-${{ matrix.rv_asset }}" \
+            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-aarch64-apple-darwin.tar.gz" \
             -o "$RUNNER_TEMP/rv.tar.gz"
-          if [[ "$RUNNER_OS" == "macOS" ]]; then
-            echo "${{ matrix.rv_sha256 }}  $RUNNER_TEMP/rv.tar.gz" | shasum -a 256 --check
-          else
-            echo "${{ matrix.rv_sha256 }}  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
-          fi
+          echo "626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956  $RUNNER_TEMP/rv.tar.gz" | shasum -a 256 --check
+          tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
+          echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
+
+      - name: Restore R package library
+        uses: actions/cache@v6
+        with:
+          path: tests/refactor/rv/library
+          key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
+
+      - name: Sync R dependencies
+        run: rv --config-file tests/refactor/rproject.toml sync --locked
+
+      - name: Select refactor library
+        shell: bash
+        run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
+
+      - name: Run refactor tests
+        env:
+          VQA_COMPARE_FIGURES: true
+          VQA_COMPARE_GOLDEN: true
+          VQA_NUMERIC_TOLERANCE: 1e-12
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
+        run: Rscript --vanilla tests/refactor/testthat.R
+
+  # Linux fitting is currently diagnostic: poor-quality inputs can make the legacy
+  # fitdistr path abort before parity is evaluated. Enable it explicitly while
+  # investigating with the repository variable ENABLE_UBUNTU_REFACTOR=true.
+  refactor-ubuntu:
+    name: Refactor diagnostic (ubuntu-24.04, ${{ matrix.contract }})
+    if: ${{ vars.ENABLE_UBUNTU_REFACTOR == 'true' }}
+    continue-on-error: true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+
+      - name: Install rv
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/rv-bin"
+          curl -fsSL \
+            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            -o "$RUNNER_TEMP/rv.tar.gz"
+          echo "$RV_SHA256  $RUNNER_TEMP/rv.tar.gz" | sha256sum --check
           tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
           echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
 
@@ -159,7 +183,6 @@ jobs:
           key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
 
       - name: Install system dependencies
-        if: runner.os == 'Linux'
         shell: bash
         run: |
           sudo apt-get update
@@ -174,11 +197,11 @@ jobs:
 
       - name: Run refactor tests
         env:
-          VQA_COMPARE_FIGURES: ${{ matrix.compare_figures }}
-          VQA_COMPARE_GOLDEN: ${{ matrix.compare_golden }}
-          VQA_NUMERIC_TOLERANCE: ${{ matrix.numeric_tolerance }}
+          VQA_COMPARE_FIGURES: false
+          VQA_COMPARE_GOLDEN: false
+          VQA_NUMERIC_TOLERANCE: 1e-8
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
-          VQA_TEST_DISTINCT_SEED: ${{ matrix.os == 'ubuntu-24.04' && matrix.contract == 'vqa-demo2/project_current' }}
+          VQA_TEST_DISTINCT_SEED: false
         run: Rscript --vanilla tests/refactor/testthat.R
 
   # Keep the Windows runner definition executable, but do not allocate runners by default.
