@@ -8,7 +8,10 @@ local({
 	}
 	rv_info <- system2(
 		"rv",
-		c("info", "--library", "--r-version", "--repositories"),
+		c(
+			"info", "--library", "--r-version", "--repositories",
+			"--config-file", Sys.getenv("RV_CONFIG_FILE", "rproject.toml")
+		),
 		stdout = TRUE
 	)
 	if (!is.null(attr(rv_info, "status"))) {

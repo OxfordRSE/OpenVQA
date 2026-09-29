@@ -89,6 +89,8 @@ jobs:
     name: Refactor parity (macos-26, ${{ matrix.contract }})
     runs-on: macos-26
     timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
     strategy:
       fail-fast: false
       matrix:
@@ -126,10 +128,6 @@ jobs:
       - name: Sync R dependencies
         run: rv --config-file tests/refactor/rproject.toml sync --locked
 
-      - name: Select refactor library
-        shell: bash
-        run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
-
       - name: Run refactor tests
         env:
           VQA_COMPARE_FIGURES: true
@@ -137,7 +135,7 @@ jobs:
           VQA_NUMERIC_TOLERANCE: 1e-12
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
           VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
-        run: Rscript --vanilla tests/refactor/testthat.R
+        run: Rscript tests/refactor/testthat.R
 
   # Linux fitting is currently diagnostic: poor-quality inputs can make the legacy
   # fitdistr path abort before parity is evaluated. Enable it explicitly while
@@ -148,6 +146,8 @@ jobs:
     continue-on-error: true
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
     strategy:
       fail-fast: false
       matrix:
@@ -191,10 +191,6 @@ jobs:
       - name: Sync R dependencies
         run: rv --config-file tests/refactor/rproject.toml sync --locked
 
-      - name: Select refactor library
-        shell: bash
-        run: echo "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" >> "$GITHUB_ENV"
-
       - name: Run refactor tests
         env:
           VQA_COMPARE_FIGURES: false
@@ -202,7 +198,7 @@ jobs:
           VQA_NUMERIC_TOLERANCE: 1e-8
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
           VQA_TEST_DISTINCT_SEED: false
-        run: Rscript --vanilla tests/refactor/testthat.R
+        run: Rscript tests/refactor/testthat.R
 
   # Keep the Windows runner definition executable, but do not allocate runners by default.
   # Existing fixture names containing '>' cannot be checked out on Windows. Once renamed,
@@ -212,6 +208,8 @@ jobs:
     if: ${{ vars.ENABLE_WINDOWS_REFACTOR == 'true' }} # GH repo variable
     runs-on: windows-2025
     timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
     strategy:
       fail-fast: false
       matrix:
@@ -253,12 +251,6 @@ jobs:
       - name: Sync R dependencies
         run: rv --config-file tests/refactor/rproject.toml sync --locked
 
-      - name: Select refactor library
-        shell: pwsh
-        run: |
-          "R_LIBS_USER=$(rv --config-file tests/refactor/rproject.toml library)" |
-            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
       - name: Run refactor tests
         env:
           VQA_COMPARE_FIGURES: false
@@ -266,7 +258,7 @@ jobs:
           VQA_NUMERIC_TOLERANCE: 1e-8
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
           VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
-        run: Rscript --vanilla tests/refactor/testthat.R
+        run: Rscript tests/refactor/testthat.R
 
   refactor-complete:
     name: Refactor checks

@@ -21,8 +21,7 @@ the repository root with:
 
 ```sh
 rv --config-file tests/refactor/rproject.toml sync --locked
-R_LIBS_USER="$(rv --config-file tests/refactor/rproject.toml library)" \
-  Rscript --vanilla tests/refactor/testthat.R
+RV_CONFIG_FILE=tests/refactor/rproject.toml Rscript tests/refactor/testthat.R
 ```
 
 This uses `tests/refactor/rv.lock` and `tests/refactor/rv/library`. Normal

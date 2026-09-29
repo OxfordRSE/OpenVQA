@@ -113,13 +113,14 @@ wd
 # compatibility (for now). Do not delete!
 params.loaded <- function() {}
 global.params.loaded<-""
+legacy.run.env <- if (exists("VQA_RUN_ENV")) VQA_RUN_ENV else topenv()
 
 # Load separate parameter file specifying
 # project and assessment to be analyzed. The environment bridge is temporary:
 # Phase 2 replaces this legacy edge with an in-process runner.
-legacy.data.root <- Sys.getenv("VQA_DATA_ROOT", "")
-legacy.project <- Sys.getenv("VQA_PROJECT", "")
-legacy.assessment <- Sys.getenv("VQA_ASSESSMENT", "")
+legacy.data.root <- if (exists("VQA_DATA_ROOT")) VQA_DATA_ROOT else Sys.getenv("VQA_DATA_ROOT", "")
+legacy.project <- if (exists("VQA_PROJECT")) VQA_PROJECT else Sys.getenv("VQA_PROJECT", "")
+legacy.assessment <- if (exists("VQA_ASSESSMENT")) VQA_ASSESSMENT else Sys.getenv("VQA_ASSESSMENT", "")
 legacy.selection <- c(legacy.data.root, legacy.project, legacy.assessment)
 
 if (any(nzchar(legacy.selection))) {
@@ -143,11 +144,11 @@ if (any(nzchar(legacy.selection))) {
   BASEDIR_PSFILES <- SRCDIR
 } else {
   params.pa.file <- paste0(BASEDIR_PSFILES, "params.pa.R")
-  source(params.pa.file)
+  sys.source(params.pa.file, envir = legacy.run.env)
 }
 
 # Throw intelligible error if PROJ or ASSESS not properly set
-if ( !all(sapply(c("PROJ", "ASSESS"), exists)) ) {
+if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists))) {
   msg.err <- "ERROR: One or both parameters PROJ and ASSESS are undefined!\n"
   msg.err <- paste0( msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
   stop_quietly(msg.err)
@@ -1613,13 +1614,13 @@ params.proj.file <- paste0( BASEDIR_PSFILES, "params/", params.proj.filename )
 
 # Load project-specific parameters file if exists
 if ( file.exists(params.proj.file) ) {
-  source(params.proj.file)
+  sys.source(params.proj.file, envir = legacy.run.env)
 } else {
   # Warn file doesn't exist & continue, using default parameters
   cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep="")
 }
 
-legacy.seed <- Sys.getenv("VQA_TEST_SEED", "")
+legacy.seed <- if (exists("VQA_TEST_SEED")) VQA_TEST_SEED else Sys.getenv("VQA_TEST_SEED", "")
 if (nzchar(legacy.seed)) {
   seed <- suppressWarnings(as.integer(legacy.seed))
   if (is.na(seed) || as.character(seed) != legacy.seed) {
@@ -1634,4 +1635,4 @@ if (nzchar(legacy.seed)) {
 #####################################
 #####################################
 
-source( paste0( SRCDIR, "params.conf.general.R") )
+sys.source(paste0(SRCDIR, "params.conf.general.R"), envir = legacy.run.env)

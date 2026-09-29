@@ -17,7 +17,7 @@ copy_refactor_project <- function(project) {
 
 run_refactor_command <- function(script, data_root, assessment = NULL,
                                  seed = NULL) {
-  args <- c("--vanilla", script, "--data-root", data_root)
+  args <- c(script, "--data-root", data_root)
   if (!is.null(assessment)) {
     args <- c(args, "--assessment", assessment)
   }
