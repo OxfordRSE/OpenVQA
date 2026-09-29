@@ -86,8 +86,9 @@ You can read more about VQA in detail in this open access [publication](https://
 
 ## Developer Setup
 
-GitHub Actions validates both minimal demo projects, runs the standard and refactor parity
-test suites, and lints the actively refactored R code on pull requests and pushes to `main`.
+GitHub Actions validates both minimal demo projects, runs the standard tests, checks golden
+refactor parity on macOS and portability on Linux and Windows, and lints the actively
+refactored R code on pull requests and pushes to `main`.
 
 If you are working on the codebase itself, use the tracked `pre-commit` configuration to run formatting and linting automatically before commits.
 
