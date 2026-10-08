@@ -15,17 +15,57 @@ Fixtures were generated from the corresponding non-`-min` legacy project.
 The legacy code is not run by these tests and may be deleted once the fixtures
 have been reviewed.
 
-Run the suite from the repository root:
+The suite has a temporary frozen dependency environment so that its numerical
+golden fixtures do not change as CRAN packages are updated. Sync and run it from
+the repository root with:
 
 ```sh
-Rscript tests/refactor/testthat.R
+rv --config-file tests/refactor/rproject.toml sync --locked
+RV_CONFIG_FILE=tests/refactor/rproject.toml Rscript tests/refactor/testthat.R
 ```
+
+This uses `tests/refactor/rv.lock` and `tests/refactor/rv/library`. Normal
+development and the standard CI checks continue to use the root
+`rproject.toml` and `rv/library`. Remove the refactor configuration and lock
+when this regression suite is retired.
+
+With no contract selected, the runner executes the six assessments in parallel using half
+the detected logical CPUs, capped at six workers. Set `VQA_TEST_WORKERS=1` for the original
+sequential behaviour or another positive integer to choose a different limit.
 
 CSV and XLSX outputs are compared as tables, rather than raw files. The XLSX
 `Meta` sheet's `Analysis date:` row is excluded because it records execution
 time, not an analysis result. PNG files are decoded and compared by dimensions,
 channels, and pixel values; PNG metadata and compression timestamps therefore
 do not affect the result.
+
+### Why CI is intentionally asymmetric
+
+The golden fixtures were reviewed on a modern Apple Silicon macOS environment. They are a
+regression contract for the refactor, not a claim that legacy optimizers produce identical
+floating-point results on every operating system. CI therefore assigns each environment a
+different, explicit responsibility:
+
+| Environment | Current check | Reason |
+| --- | --- | --- |
+| Ubuntu 24.04 | Disabled, with the complete six-shard diagnostic retained | Poor-quality inputs can make the legacy `fitdistr()` path abort before output comparison; set `ENABLE_UBUNTU_REFACTOR=true` to investigate without blocking required checks. |
+| macOS 26 | All six contracts: strict tables, decoded figures, and repeatability | This runner reproduces the reviewed golden fixtures and is the temporary canonical parity environment. |
+| Windows 2025 | Disabled, with the complete six-shard job retained | Existing fixture names containing `>` fail during checkout before R starts. |
+
+Restore Ubuntu as a required portability check only after the legacy parametric-fitting
+methodology has been made robust for sparse, zero-heavy, and extreme-value inputs. Restore
+Windows by renaming incompatible fixtures and setting the repository variable
+`ENABLE_WINDOWS_REFACTOR=true`. The distinct-seed assertion remains active in the macOS 26
+`vqa-demo2/project_current` shard.
+
+CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`. The optional
+Ubuntu diagnostic uses `VQA_COMPARE_GOLDEN=false`: it requires the golden result-file
+manifest, then compares two same-seed runs on Linux. macOS 26 retains strict golden
+numerical and figure parity.
+`VQA_NUMERIC_TOLERANCE` sets the table-comparison tolerance, and
+`VQA_COMPARE_FIGURES=false` skips platform-rendered figure comparisons. Local runs keep
+the strict golden comparison, compare figures, and exercise every assessment by default.
+The distinct-seed check can be selected independently with `VQA_TEST_DISTINCT_SEED`.
 
 ## Creating or refreshing a fixture
 

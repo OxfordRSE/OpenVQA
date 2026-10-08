@@ -42,8 +42,11 @@ run_analysis <- function(data_root, assessment, seed = Sys.getenv("VQA_TEST_SEED
   if (!is.null(seed) && is.na(seed)) {
     stop("VQA_TEST_SEED must be an integer.", call. = FALSE)
   }
-  run_legacy_batch(data_root, legacy_project_name(context), assessment, seed)
-  invisible(context)
+  run_vqa_analysis(
+    context,
+    config = list(data_root = data_root, assessment = assessment),
+    seed = seed
+  )
 }
 
 main <- function() {
@@ -51,4 +54,4 @@ main <- function() {
   run_analysis(cli$data_root, cli$assessment)
 }
 
-main()
+if (sys.nframe() == 0L) main()

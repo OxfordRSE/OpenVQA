@@ -17,7 +17,7 @@ copy_refactor_project <- function(project) {
 
 run_refactor_command <- function(script, data_root, assessment = NULL,
                                  seed = NULL) {
-  args <- c("--vanilla", script, "--data-root", data_root)
+  args <- c(script, "--data-root", data_root)
   if (!is.null(assessment)) {
     args <- c(args, "--assessment", assessment)
   }
@@ -86,13 +86,22 @@ relative_file_names <- function(files, root) {
 }
 
 compare_named_table_sets <- function(actual, expected, tolerance = 1e-12) {
-  testthat::expect_identical(sort(names(actual)), sort(names(expected)))
+  names_match <- identical(sort(names(actual)), sort(names(expected)))
+  testthat::expect_true(
+    names_match,
+    info = "Table or workbook sheet names differ."
+  )
+  if (!names_match) return(invisible(FALSE))
 
   for (file_name in names(expected)) {
-    testthat::expect_identical(
-      names(actual[[file_name]]), names(expected[[file_name]]),
+    columns_match <- identical(
+      names(actual[[file_name]]), names(expected[[file_name]])
+    )
+    testthat::expect_true(
+      columns_match,
       info = paste("Columns differ:", file_name)
     )
+    if (!columns_match) return(invisible(FALSE))
     testthat::expect_equal(
       actual[[file_name]], expected[[file_name]],
       tolerance = tolerance, check.attributes = FALSE,
@@ -141,7 +150,8 @@ read_refactor_xlsx_tables <- function(file_path) {
 
 compare_refactor_result_sets <- function(actual_directory, expected_directory,
                                          tolerance = 1e-12,
-                                         allowed_new = character()) {
+                                         allowed_new = character(),
+                                         compare_values = TRUE) {
   actual_files <- list.files(actual_directory,
     recursive = TRUE,
     full.names = TRUE
@@ -153,10 +163,14 @@ compare_refactor_result_sets <- function(actual_directory, expected_directory,
   actual_names <- relative_file_names(actual_files, actual_directory)
   expected_names <- relative_file_names(expected_files, expected_directory)
 
-  testthat::expect_identical(
-    sort(setdiff(actual_names, allowed_new)), sort(expected_names),
+  files_match <- identical(
+    sort(setdiff(actual_names, allowed_new)), sort(expected_names)
+  )
+  testthat::expect_true(
+    files_match,
     info = "The new workflow produced unexpected or missing result files."
   )
+  if (!files_match || !compare_values) return(invisible(files_match))
 
   for (file_name in expected_names) {
     actual_path <- file.path(actual_directory, file_name)
@@ -189,27 +203,46 @@ read_refactor_png <- function(file_path) {
     requireNamespace("png", quietly = TRUE),
     info = "Package 'png' is required to compare PNG figures."
   )
-  png::readPNG(file_path, native = FALSE)
+  image <- png::readPNG(file_path, native = FALSE)
+  if (
+    length(dim(image)) == 3L && dim(image)[3L] == 4L &&
+      all(image[, , 4L] == 1)
+  ) {
+    image <- image[, , seq_len(3L), drop = FALSE]
+  }
+  image
 }
 
 compare_refactor_figure_sets <- function(actual_directory, expected_directory,
-                                         pixel_tolerance = 1 / 255,
+                                         pixel_tolerance = 1 / 255 + 1e-12,
                                          allowed_new = character()) {
   actual_files <- list.files(actual_directory,
     recursive = TRUE,
     full.names = TRUE
   )
-  expected_files <- list.files(expected_directory,
-    recursive = TRUE,
-    full.names = TRUE
-  )
+  expected_files <- if (dir.exists(expected_directory)) {
+    list.files(expected_directory,
+      recursive = TRUE,
+      full.names = TRUE
+    )
+  } else {
+    character()
+  }
   actual_names <- relative_file_names(actual_files, actual_directory)
-  expected_names <- relative_file_names(expected_files, expected_directory)
+  expected_names <- if (length(expected_files)) {
+    relative_file_names(expected_files, expected_directory)
+  } else {
+    character()
+  }
 
-  testthat::expect_identical(
-    sort(setdiff(actual_names, allowed_new)), sort(expected_names),
+  files_match <- identical(
+    sort(setdiff(actual_names, allowed_new)), sort(expected_names)
+  )
+  testthat::expect_true(
+    files_match,
     info = "The new workflow produced unexpected or missing figure files."
   )
+  if (!files_match) return(invisible(FALSE))
 
   for (file_name in expected_names) {
     actual_path <- file.path(actual_directory, file_name)
@@ -222,10 +255,15 @@ compare_refactor_figure_sets <- function(actual_directory, expected_directory,
 
     actual <- read_refactor_png(actual_path)
     expected <- read_refactor_png(expected_path)
-    testthat::expect_identical(
-      dim(actual), dim(expected),
-      info = paste("Figure dimensions/channels differ:", file_name)
-    )
+    if (!identical(dim(actual), dim(expected))) {
+      testthat::fail(sprintf(
+        "Figure dimensions/channels differ for %s: actual = %s; expected = %s",
+        file_name,
+        paste(dim(actual), collapse = " x "),
+        paste(dim(expected), collapse = " x ")
+      ))
+      next
+    }
 
     difference <- abs(actual - expected)
     max_difference <- max(difference)

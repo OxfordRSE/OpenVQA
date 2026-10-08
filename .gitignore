@@ -8,14 +8,15 @@ data/*
 !data/vqa-demo2-min/**
 
 CHANGELOG_ps.md
+Rplots.pdf
 
 # R project files
 ## rv
-rv/
 rv.lock
+!tests/refactor/rv.lock
+tests/refactor/rv/
 
 ## R
-.Rprofile
 .Rhistory
 .Rapp.history
 

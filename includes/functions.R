@@ -5390,6 +5390,9 @@ unix.friendly <- function(sometext) {
 	str <- gsub('_-_', '-', str) # Remove redundant underscores+hyphens
 	str <- gsub("]", "", str)		# Remove square brackets
 	str <- gsub("\\[", "", str)	# Remove square brackets
+	if (.Platform$OS.type == "windows") {
+		str <- gsub('[<>:"|?*]', '_', str)
+	}
 	friendly <- tolower(str)
 	
 	return(friendly)

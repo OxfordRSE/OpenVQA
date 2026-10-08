@@ -113,16 +113,42 @@ wd
 # compatibility (for now). Do not delete!
 params.loaded <- function() {}
 global.params.loaded<-""
+legacy.run.env <- if (exists("VQA_RUN_ENV")) VQA_RUN_ENV else topenv()
 
-# Load separate parameter file specifying 
-# project and assessment to be analyzed.
-# CRITICAL: many file paths and other parameters
-# depend on these two parameters
-params.pa.file <- paste0(BASEDIR_PSFILES, "params.pa.R")
-source(params.pa.file)
+# Load separate parameter file specifying
+# project and assessment to be analyzed. The environment bridge is temporary:
+# Phase 2 replaces this legacy edge with an in-process runner.
+legacy.data.root <- if (exists("VQA_DATA_ROOT")) VQA_DATA_ROOT else Sys.getenv("VQA_DATA_ROOT", "")
+legacy.project <- if (exists("VQA_PROJECT")) VQA_PROJECT else Sys.getenv("VQA_PROJECT", "")
+legacy.assessment <- if (exists("VQA_ASSESSMENT")) VQA_ASSESSMENT else Sys.getenv("VQA_ASSESSMENT", "")
+legacy.selection <- c(legacy.data.root, legacy.project, legacy.assessment)
+
+if (any(nzchar(legacy.selection))) {
+  if (!all(nzchar(legacy.selection))) {
+    stop_quietly("ERROR: VQA_DATA_ROOT, VQA_PROJECT, and VQA_ASSESSMENT must be supplied together.\n")
+  }
+  if (any(!grepl("^[[:alnum:]_-]+$", legacy.selection[-1L]))) {
+    stop_quietly("ERROR: VQA_PROJECT and VQA_ASSESSMENT may contain only letters, numbers, '_' and '-'.\n")
+  }
+  if (!file.exists(file.path(SRCDIR, "params", paste0("params.", legacy.project, ".R")))) {
+    stop_quietly("ERROR: VQA_PROJECT has no project parameter file.\n")
+  }
+  legacy.data.root <- normalizePath(legacy.data.root, mustWork = TRUE)
+  if (!dir.exists(file.path(legacy.data.root, legacy.assessment))) {
+    stop_quietly("ERROR: VQA_ASSESSMENT directory is not present in VQA_DATA_ROOT.\n")
+  }
+  PROJ <- legacy.project
+  ASSESS <- legacy.assessment
+  PARAMS.USE.ASSESS <- FALSE
+  IMPORT.USE.ASSESS <- FALSE
+  BASEDIR_PSFILES <- SRCDIR
+} else {
+  params.pa.file <- paste0(BASEDIR_PSFILES, "params.pa.R")
+  sys.source(params.pa.file, envir = legacy.run.env)
+}
 
 # Throw intelligible error if PROJ or ASSESS not properly set
-if ( !all(sapply(c("PROJ", "ASSESS"), exists)) ) {
+if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists))) {
   msg.err <- "ERROR: One or both parameters PROJ and ASSESS are undefined!\n"
   msg.err <- paste0( msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
   stop_quietly(msg.err)
@@ -159,7 +185,11 @@ LIB.LOAD.SILENT <- TRUE
 
 # Project base data directory
 # This is used mostly by qh.net.R to build qh.net input directory paths
-DATA_BASEDIR_PROJ <- paste0( DATA_BASEDIR_FINAL, PROJ, "/" )
+if (nzchar(legacy.data.root)) {
+  DATA_BASEDIR_PROJ <- paste0(legacy.data.root, "/")
+} else {
+  DATA_BASEDIR_PROJ <- paste0( DATA_BASEDIR_FINAL, PROJ, "/" )
+}
 
 # Main data base directory (= assessment data directory)
 # In general, everthing live here
@@ -1584,10 +1614,19 @@ params.proj.file <- paste0( BASEDIR_PSFILES, "params/", params.proj.filename )
 
 # Load project-specific parameters file if exists
 if ( file.exists(params.proj.file) ) {
-  source(params.proj.file)
+  sys.source(params.proj.file, envir = legacy.run.env)
 } else {
   # Warn file doesn't exist & continue, using default parameters
   cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep="")
+}
+
+legacy.seed <- if (exists("VQA_TEST_SEED")) VQA_TEST_SEED else Sys.getenv("VQA_TEST_SEED", "")
+if (nzchar(legacy.seed)) {
+  seed <- suppressWarnings(as.integer(legacy.seed))
+  if (is.na(seed) || as.character(seed) != legacy.seed) {
+    stop_quietly("ERROR: VQA_TEST_SEED must be an integer.\n")
+  }
+  set.seed <- TRUE
 }
 
 #####################################
@@ -1596,6 +1635,4 @@ if ( file.exists(params.proj.file) ) {
 #####################################
 #####################################
 
-source( paste0( SRCDIR, "params.conf.general.R") )
-
-
+sys.source(paste0(SRCDIR, "params.conf.general.R"), envir = legacy.run.env)
