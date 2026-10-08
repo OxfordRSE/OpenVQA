@@ -1,7 +1,7 @@
 testthat::test_that("in-process analysis invocations do not leak legacy state", {
   selected_contract <- Sys.getenv("VQA_TEST_CONTRACT")
   if (nzchar(selected_contract) &&
-      selected_contract != "vqa-demo1/main_001_current") {
+    selected_contract != "vqa-demo1/main_001_current") {
     testthat::skip("The in-process isolation check runs in one CI shard.")
   }
 
@@ -22,6 +22,7 @@ testthat::test_that("in-process analysis invocations do not leak legacy state", 
   testthat::expect_equal(second$context$params$project, "vqa-demo2-min")
   testthat::expect_false(any(vapply(
     c("PROJ", "ASSESS", "RESULTSDIR", "EI.vec"),
-    exists, logical(1), envir = .GlobalEnv, inherits = FALSE
+    exists, logical(1),
+    envir = .GlobalEnv, inherits = FALSE
   )))
 })

@@ -17,17 +17,17 @@
 
 cat("\n")
 cat("**************************************************\n")
-cat("Running alternative VQA for QH.METHOD='", QH.METHOD, "'\n", sep="")
+cat("Running alternative VQA for QH.METHOD='", QH.METHOD, "'\n", sep = "")
 cat("**************************************************\n")
 
 # ##########################################
 # # Report parameters & confirm operation
 # ##########################################
-# 
+#
 # # Display confirmation message
 # cat( paste0( "Calculate Q.fixed for project '", PROJ, "' using the following settings: \n") )
 # cat( paste0( MSG.CONF.START, MSG.CONF.QH.NET ) )
-# 
+#
 # if (interactive()==FALSE) {
 #   yes <- c("y", "Y", "Yes", "yes")
 #   cat("Continue? (y/n):")
@@ -36,35 +36,35 @@ cat("**************************************************\n")
 # } else {
 #   cat("\n\n")
 # }
-# 
+#
 # cat("\n")
 # cat("##########################################\n")
 # cat("Begin operation\n")
 # cat("\n")
 # source("libraries.R")
-# 
+#
 #######################################
 # Determine fixed Q value to use
 #######################################
 
 cat("Determining default quality...")
-if (QH.METHOD=="assume.0") {
+if (QH.METHOD == "assume.0") {
   q.fixed <- 0
-} else if (QH.METHOD=="assume.1") {
+} else if (QH.METHOD == "assume.1") {
   q.fixed <- 1
 } else {
   msg <- paste0("ERROR: '", QH.METHOD, "': invalid value of QH.METHOD!")
   stop_quietly(msg)
 }
-cat("Q.fixed=", q.fixed, "...done\n", sep="")
+cat("Q.fixed=", q.fixed, "...done\n", sep = "")
 
 #######################################
 # Import land cover data
 #######################################
 
-fileandpath <- paste0( INPUTDIR, LANDCOVER.FILE )
-cat( "Importing df.landCover from file 'inputs/", LANDCOVER.FILE, "'...", sep="" )
-df.landCover <- read.csv( fileandpath, header=TRUE)
+fileandpath <- paste0(INPUTDIR, LANDCOVER.FILE)
+cat("Importing df.landCover from file 'inputs/", LANDCOVER.FILE, "'...", sep = "")
+df.landCover <- read.csv(fileandpath, header = TRUE)
 df.landCover$area_ha <- as.numeric(df.landCover$area_ha)
 df.landCover$area_ha[is.na(df.landCover$area_ha)] <- 0
 cat("done\n")
@@ -77,8 +77,8 @@ cat("Creating df.qh.bm:\n")
 cat("- Aggregating land cover by bm vegetation...")
 df.qh.bm <- aggregate(
   area_ha ~ vegClass,
-  data=df.landCover,
-  FUN=sum
+  data = df.landCover,
+  FUN = sum
 )
 cat("done\n")
 
@@ -89,11 +89,11 @@ df.qh.bm$qh.ucl <- df.qh.bm$area_ha * q.fixed
 cat("done\n")
 
 cat("- Restructing data frame...")
-names(df.qh.bm)[names(df.qh.bm) == 'vegClass'] <- 'bm.veg'
+names(df.qh.bm)[names(df.qh.bm) == "vegClass"] <- "bm.veg"
 df.qh.bm$notes <- ""
-df.qh.bm <- df.qh.bm[,c(
+df.qh.bm <- df.qh.bm[, c(
   "bm.veg", "area_ha", "qh", "qh.lcl", "qh.ucl", "notes"
-  )]
+)]
 cat("done\n")
 
 #######################################
@@ -102,12 +102,12 @@ cat("done\n")
 
 cat("Creating df.qh.bm.boot:\n")
 cat("- Extracting applicable veg classes from df.qh.bm...")
-df.qh.bm.boot <- df.qh.bm[ !is.na(df.qh.bm$qh), c("bm.veg"), drop=FALSE]
+df.qh.bm.boot <- df.qh.bm[!is.na(df.qh.bm$qh), c("bm.veg"), drop = FALSE]
 cat("done\n")
 
-cat("- Appending and populating n=", boot.reps, " bootrapped quality columns...", sep="")
+cat("- Appending and populating n=", boot.reps, " bootrapped quality columns...", sep = "")
 n.rows <- nrow(df.qh.bm.boot)
-boot.cols <- data.frame(matrix(q.fixed, nrow=n.rows, ncol=boot.reps))
+boot.cols <- data.frame(matrix(q.fixed, nrow = n.rows, ncol = boot.reps))
 boot.cols <- convert.magic(boot.cols, "numeric")
 df.qh.bm.boot <- cbind(df.qh.bm.boot, boot.cols)
 cat("done\n")
@@ -119,15 +119,14 @@ cat("done\n")
 cat("Saving final results files:\n")
 
 filename <- SUMMARY.FOCAL.BM.FILE
-fileandpath <- paste0( RESULTSDIR, filename )
-cat("- df.qh.bm as file 'results/", filename, "'...", sep="")
-#suppressWarnings( write_excel_csv( df.qh.bm, file=fileandpath ) )
-suppressMessages( write_excel_csv( df.qh.bm, file=fileandpath ) )
+fileandpath <- paste0(RESULTSDIR, filename)
+cat("- df.qh.bm as file 'results/", filename, "'...", sep = "")
+# suppressWarnings( write_excel_csv( df.qh.bm, file=fileandpath ) )
+suppressMessages(write_excel_csv(df.qh.bm, file = fileandpath))
 cat("done\n")
 
 filename <- SUMMARY.QH.BOOT.BM.FILE
-fileandpath <- paste0( RESULTSDIR, filename )
-cat("- df.qh.bm.boot as file 'results/", filename, "'...", sep="")
-suppressMessages( write_excel_csv( df.qh.bm.boot, file=fileandpath ) )
+fileandpath <- paste0(RESULTSDIR, filename)
+cat("- df.qh.bm.boot as file 'results/", filename, "'...", sep = "")
+suppressMessages(write_excel_csv(df.qh.bm.boot, file = fileandpath))
 cat("done\n")
-

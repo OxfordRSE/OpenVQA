@@ -35,7 +35,7 @@ numeric_tolerance <- suppressWarnings(as.numeric(
   Sys.getenv("VQA_NUMERIC_TOLERANCE", "1e-12")
 ))
 if (length(numeric_tolerance) != 1L ||
-    !is.finite(numeric_tolerance) || numeric_tolerance < 0) {
+  !is.finite(numeric_tolerance) || numeric_tolerance < 0) {
   stop("VQA_NUMERIC_TOLERANCE must be one finite non-negative number.")
 }
 
@@ -118,8 +118,8 @@ for (contract in contracts) {
       }
 
       if (test_distinct_seed &&
-          identical(contract$project, "vqa-demo2") &&
-          identical(contract$assessment, "project_current")) {
+        identical(contract$project, "vqa-demo2") &&
+        identical(contract$assessment, "project_current")) {
         different_seed_root <- run_refactor_workflow(
           contract$project, contract$assessment,
           seed = seed + 1L
