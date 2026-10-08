@@ -19,8 +19,8 @@ env:
   RV_SHA256: '9805dbad14eb049265c0052635873c9b7891bc7334d445662c13fbad61cb269c'
 
 jobs:
-  standard:
-    name: Standard checks
+  tests:
+    name: Demo and tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -56,13 +56,13 @@ jobs:
       - name: Sync R dependencies
         run: rv sync
 
+      - name: Run standard tests
+        run: Rscript tests/testthat.R
+
       - name: Validate minimal demo inputs
         run: |
           Rscript validate.R --data-root data/vqa-demo1-min
           Rscript validate.R --data-root data/vqa-demo2-min
-
-      - name: Run standard tests
-        run: Rscript tests/testthat.R
 
       - name: Run lintr
         shell: Rscript {0}
@@ -85,7 +85,7 @@ jobs:
   # macOS 26 reproduces the reviewed fixtures and is the required refactor platform.
   # It runs every contract with strict numerical and decoded-figure parity. See
   # tests/refactor/README.md#why-ci-is-intentionally-asymmetric.
-  refactor:
+  refactor-macos:
     name: Refactor parity (macos-26, ${{ matrix.contract }})
     runs-on: macos-26
     timeout-minutes: 30
@@ -259,17 +259,3 @@ jobs:
           VQA_TEST_CONTRACT: ${{ matrix.contract }}
           VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
         run: Rscript tests/refactor/testthat.R
-
-  refactor-complete:
-    name: Refactor checks
-    if: always()
-    needs: [refactor, refactor-windows]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Confirm all refactor shards passed
-        env:
-          MATRIX_RESULT: ${{ needs.refactor.result }}
-          WINDOWS_RESULT: ${{ needs.refactor-windows.result }}
-        run: |
-          test "$MATRIX_RESULT" = success
-          test "$WINDOWS_RESULT" = success || test "$WINDOWS_RESULT" = skipped
