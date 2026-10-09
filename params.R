@@ -2,15 +2,15 @@
 # Default VQA parameters
 #
 # Important! Read this:
-# * Always keep this file in the application base 
+# * Always keep this file in the application base
 #   directory
 # * Some parameter values listed here are example
 #   values only, and should be changed to values
 #   appropriate for your analysis
-# * If any parameters need to be changed, copy them 
+# * If any parameters need to be changed, copy them
 #   to project-specific parameters file (in params/)
 #   and set them there. Parameters set in project-
-#   specific parameters file are loaded later and will 
+#   specific parameters file are loaded later and will
 #   override default values set here.
 #
 # Version: 2024-02-16
@@ -18,19 +18,19 @@
 #######################################################
 
 #####################################
-# Functions needed before loading 
+# Functions needed before loading
 # functions file
 #####################################
 
-stop_quietly <- function(exit.msg=NULL) {
+stop_quietly <- function(exit.msg = NULL) {
   opt <- options(show.error.messages = FALSE)
   on.exit(options(opt))
-  
-  if ( is.null(exit.msg) ) {
+
+  if (is.null(exit.msg)) {
     stop()
   } else {
     cat(exit.msg)
-    stop()		
+    stop()
   }
 }
 
@@ -39,8 +39,8 @@ stop_quietly <- function(exit.msg=NULL) {
 #####################################
 
 # Don't change these
-SRCDIR <- paste0(wd, "/")  # Source code base directory
-BASEDIR <- paste0( dirname(SRCDIR), "/" )  # Application base directory
+SRCDIR <- paste0(wd, "/") # Source code base directory
+BASEDIR <- paste0(dirname(SRCDIR), "/") # Application base directory
 
 # Data directory location
 # relative to VQA code directory (repo)
@@ -79,16 +79,16 @@ SRCDIR_CONF <- "src_conf_demo/"
 SRCDIR_CONF <- "src_conf_tap/"
 
 # Apply the above options
-if (LOC_DATA_DIR=="out") {
+if (LOC_DATA_DIR == "out") {
   # Data are *outside* SRCDIR
-  DATA_BASEDIR_FINAL <- paste0( BASEDIR, "data/" )
+  DATA_BASEDIR_FINAL <- paste0(BASEDIR, "data/")
 } else {
   # Data are *inside* SRCDIR
-  DATA_BASEDIR_FINAL <- paste0( SRCDIR, "data/" ) 
+  DATA_BASEDIR_FINAL <- paste0(SRCDIR, "data/")
 }
-if (LOC_PSFILES_DIR=="out") {
+if (LOC_PSFILES_DIR == "out") {
   # PSSD is *outside* SRCDIR
-  BASEDIR_PSFILES <- paste0( BASEDIR, SRCDIR_CONF )
+  BASEDIR_PSFILES <- paste0(BASEDIR, SRCDIR_CONF)
 } else {
   # PSSD is *inside* SRCDIR
   BASEDIR_PSFILES <- SRCDIR
@@ -98,21 +98,21 @@ if (LOC_PSFILES_DIR=="out") {
 # Startup
 #####################################
 
-#rm(list=ls())	# Clear memory
+# rm(list=ls())	# Clear memory
 
 # Set working directory (base application directory)
-wd<-getwd()
+wd <- getwd()
 setwd(wd)
 wd
 
 # # Initialize flow control parameter job
 # job=""
-# 
+#
 # Dummy parameter & function used to detect if parameters
 # already loaded. Keep both versions for backwards-
 # compatibility (for now). Do not delete!
 params.loaded <- function() {}
-global.params.loaded<-""
+global.params.loaded <- ""
 legacy.run.env <- if (exists("VQA_RUN_ENV")) VQA_RUN_ENV else topenv()
 
 # Load separate parameter file specifying
@@ -150,27 +150,27 @@ if (any(nzchar(legacy.selection))) {
 # Throw intelligible error if PROJ or ASSESS not properly set
 if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists))) {
   msg.err <- "ERROR: One or both parameters PROJ and ASSESS are undefined!\n"
-  msg.err <- paste0( msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
+  msg.err <- paste0(msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
   stop_quietly(msg.err)
-} else if ( any(sapply(list(PROJ, ASSESS), function(x) is.null(x) || x == "")) ) {
+} else if (any(sapply(list(PROJ, ASSESS), function(x) is.null(x) || x == ""))) {
   msg.err <- "ERROR: One or both parameters PROJ and ASSESS are empty or null!\n"
-  msg.err <- paste0( msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
+  msg.err <- paste0(msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
   stop_quietly(msg.err)
 }
 
 # Load libraries silently (TRUE|FALSE)
-# Affects how packages are loaded at the 
-# end of this script. Can be over-ridden  
+# Affects how packages are loaded at the
+# end of this script. Can be over-ridden
 # in project-specific parameters file, which
 # is sourced before libraries are loaded
-# Will suppress display of namespace 
-# conflicts ("masking"). 
+# Will suppress display of namespace
+# conflicts ("masking").
 LIB.LOAD.SILENT <- TRUE
 
 ######################################
 ######################################
 # DIRECTORY OPTIONS
-# 
+#
 # All are set relative to BASEDIR, which
 # is defined at the start of this file.
 # Keep near the top of params file as
@@ -188,28 +188,28 @@ LIB.LOAD.SILENT <- TRUE
 if (nzchar(legacy.data.root)) {
   DATA_BASEDIR_PROJ <- paste0(legacy.data.root, "/")
 } else {
-  DATA_BASEDIR_PROJ <- paste0( DATA_BASEDIR_FINAL, PROJ, "/" )
+  DATA_BASEDIR_PROJ <- paste0(DATA_BASEDIR_FINAL, PROJ, "/")
 }
 
 # Main data base directory (= assessment data directory)
 # In general, everthing live here
-DATA_BASEDIR <- paste0( DATA_BASEDIR_PROJ, ASSESS, "/" )  
-data_base_dir <- DATA_BASEDIR  # for backward-compatibility (remove if not needed)
+DATA_BASEDIR <- paste0(DATA_BASEDIR_PROJ, ASSESS, "/")
+data_base_dir <- DATA_BASEDIR # for backward-compatibility (remove if not needed)
 
 # Raw data directory
 # Default: RAWDATADIR <- paste0( DATA_BASEDIR, 'raw/')
 # You can change this to use data stored at different location
-RAWDATADIR <- paste0( DATA_BASEDIR, 'raw/')
+RAWDATADIR <- paste0(DATA_BASEDIR, "raw/")
 
 # these directories are relative to working directory (wd) of parent file
-INPUTDIR <- paste0(DATA_BASEDIR, "inputs/")		# Standaridized input files 
-RESULTSDIR <- paste0(DATA_BASEDIR, "results/")	# results directory (text file not figures)
-FIGDIR <- paste0(DATA_BASEDIR, "figs/")		# figures directory
-#FIGDIR_REL <- paste0( DATADIR_REL, "figs/")
-FIGDIR_REL <- paste0( "data/", PROJ, "/", ASSESS, "/figs/")
-figs.dir <- FIGDIR			# For compatibility with legacy variable names
-figdir.abs <- paste(wd, figs.dir, sep='/')
-LOGDIR <- paste0(DATA_BASEDIR, "log/")		# log file directory
+INPUTDIR <- paste0(DATA_BASEDIR, "inputs/") # Standaridized input files
+RESULTSDIR <- paste0(DATA_BASEDIR, "results/") # results directory (text file not figures)
+FIGDIR <- paste0(DATA_BASEDIR, "figs/") # figures directory
+# FIGDIR_REL <- paste0( DATADIR_REL, "figs/")
+FIGDIR_REL <- paste0("data/", PROJ, "/", ASSESS, "/figs/")
+figs.dir <- FIGDIR # For compatibility with legacy variable names
+figdir.abs <- paste(wd, figs.dir, sep = "/")
+LOGDIR <- paste0(DATA_BASEDIR, "log/") # log file directory
 
 # Create data directories if not exist
 dir.create(file.path(INPUTDIR), showWarnings = FALSE)
@@ -218,7 +218,7 @@ dir.create(file.path(FIGDIR), showWarnings = FALSE)
 dir.create(file.path(LOGDIR), showWarnings = FALSE)
 
 # General include scripts directory (functions, etc.)
-INCLUDESDIR <- paste0(SRCDIR, "includes/")	
+INCLUDESDIR <- paste0(SRCDIR, "includes/")
 
 #########################
 #########################
@@ -231,7 +231,7 @@ INCLUDESDIR <- paste0(SRCDIR, "includes/")
 #
 # * All files should be in RAWDATADIR
 # * If files are further buried in subdirectories, be
-#   sure to include the path to the file relative to 
+#   sure to include the path to the file relative to
 #   RAWDATADIR
 # * If you have multiple files (e.g., sheets from an Excel
 #   workbook) then create those parameters and supply their
@@ -240,7 +240,7 @@ INCLUDESDIR <- paste0(SRCDIR, "includes/")
 
 # File name of raw land cover master list
 # If no file, set to ""
-RAW_LANDCOVER_FILENAME <- "my_land_cover_data_file" 
+RAW_LANDCOVER_FILENAME <- "my_land_cover_data_file"
 
 # Name of file or database of raw plot and landcover data
 RAW_PLOTDATA_FILENAME <- "my_plot_data_file"
@@ -248,7 +248,7 @@ RAW_PLOTDATA_FILENAME <- "my_plot_data_file"
 # Species attributes data file name
 # If separate file or database of species attributes will
 # be imported, list it here. If no file, set to ""
-RAW_SPP_FILENAME <- "my_reference_species_list_file" 
+RAW_SPP_FILENAME <- "my_reference_species_list_file"
 
 #####################################
 # Other import options
@@ -268,11 +268,11 @@ RAW_SPP_FILENAME <- "my_reference_species_list_file"
 # IMPORTANT: Declare *before* parameter function ei.params()
 DATA.TYPE <- "cover"
 
-# Absolute minimum number of focal and benchmark plots 
+# Absolute minimum number of focal and benchmark plots
 # per land cover class required for VQA to run. Does NOT
 # guarantee adequate power! If DELETE.PLOTS.BELOW.N.MIN=TRUE,
-# all plot & vegetation data for this land cover class will 
-# be deleted from final df and saved input files. 
+# all plot & vegetation data for this land cover class will
+# be deleted from final df and saved input files.
 # Recommend N.MIN.ABS=6
 N.MIN.ABS <- 6
 
@@ -280,15 +280,15 @@ N.MIN.ABS <- 6
 # focal or benchmark plot sample sizes below N.MIN.ABS?
 # TRUE | FALSE
 # Will also delete any orphan benchmark plots and vegetation
-# (i.e., not linked to any focal land cover after removal 
-# of focal land cover and plots with sample sizes below 
-# N.MIN.ABS) 
+# (i.e., not linked to any focal land cover after removal
+# of focal land cover and plots with sample sizes below
+# N.MIN.ABS)
 # Generally always set to TRUE: indicator scripts will fail
 # if too few plots.
 DELETE.LC.BELOW.N.MIN.ABS <- TRUE
 
 # Make new include files? (BLACKLIST.FILE, WHITELIST.FILE)
-# TRUE: Replace existing files on import, including all 
+# TRUE: Replace existing files on import, including all
 #   indicators and strata present in the data
 # FALSE: reuse existing include files. Use this
 #   option to preserve previously created include
@@ -314,14 +314,14 @@ REPLACE.INCLUDE.FILES <- FALSE
 # FALSE: Echo error message and quit
 IS.EXOTIC.MISSING.ASSUME.NATIVE <- TRUE
 
-# For input df species, export only the subset of 
+# For input df species, export only the subset of
 # columns currently used for populating field "is_exotic"
 # TRUE|FALSE
-DF.SPECIES.MINIMAL<-TRUE
+DF.SPECIES.MINIMAL <- TRUE
 
 ################################
 # Land cover-specific parameters
-# Check carefully: highly 
+# Check carefully: highly
 # project-specific!
 ################################
 
@@ -330,36 +330,36 @@ DF.SPECIES.MINIMAL<-TRUE
 # If none, set to empty string ""
 # Prevents errors due to attempting to analyse
 # vegetation for which there is not data. Also
-# used to distinguish native vegetation not analyzed  
-# fom anthropogenic land cover classes in final 
+# used to distinguish native vegetation not analyzed
+# fom anthropogenic land cover classes in final
 # summary tables.
-veg.nodata<-c( "" )
+veg.nodata <- c("")
 
 ##############################################
 ##############################################
 # VQA.BATCH OPTIONS
 #
-# Parameters that govern behaviour of script 
+# Parameters that govern behaviour of script
 # vqa.batch.R (the main VQA analysis pipeline).
 #
-# 
+#
 # These options control the behavior of vqa.batch.R,
-# the main VQA code pipeline which (a) imports 
-# standardized input files, (b) calculates and saves  
-# indicator values, (c) calculates indicator, functional 
-# group, and overall quality, (d) calculates quality 
-# hectares, and (e) generates the figures show the 
-# empirical sampling distributions and fitted 
-# probability distributions for all indicators. 
+# the main VQA code pipeline which (a) imports
+# standardized input files, (b) calculates and saves
+# indicator values, (c) calculates indicator, functional
+# group, and overall quality, (d) calculates quality
+# hectares, and (e) generates the figures show the
+# empirical sampling distributions and fitted
+# probability distributions for all indicators.
 ##############################################
 ##############################################
 
 # Calculate all indicators from scratch?
-# If TRUE, overrides any indicator-specific setting of 
+# If TRUE, overrides any indicator-specific setting of
 # parameter prepare.raw.
 # TRUE: Prepare raw data for all indicators.
 # FALSE: Do not force preparation of raw data for all indicators.
-# If force.prepare.raw==FALSE, then values of prepare.raw 
+# If force.prepare.raw==FALSE, then values of prepare.raw
 # in ei.params (see below) will determine action taken.
 # Generally, set to FALSE after first run, as indicator
 # values don't change after initial calculation, and the
@@ -384,21 +384,21 @@ QH.OMIT <- FALSE
 # Log file base name
 LOGFILE.BASENAME <- "log_vqa.batch"
 
-# Replace log file each time (TRUE) or preserve each log file 
+# Replace log file each time (TRUE) or preserve each log file
 # by adding timestamp to name (FALSE)?
 REPLACE.LOG <- FALSE
 
 # Run indicator TD only?
 # TRUE: TD only
 # FALSE: run all indicators in EI.vec
-# Set to TRUE when doing multiple TD runs to 
+# Set to TRUE when doing multiple TD runs to
 # adjust NMDS parameters (see below)
 TD.ONLY <- FALSE
 
 # Bootstrap replicates
-boot.reps <- 10000  # For production run with accurate CLs; slow
-boot.reps <- 10 	# For rapid testing only
-boot.reps <- 100  # For trial run with approximate CLs
+boot.reps <- 10000 # For production run with accurate CLs; slow
+boot.reps <- 10 # For rapid testing only
+boot.reps <- 100 # For trial run with approximate CLs
 
 ##############################
 ##############################
@@ -415,7 +415,7 @@ boot.reps <- 100  # For trial run with approximate CLs
 #  indicator: group by individual Q.i values in land cover + F.group class
 #  indicator_group: Aggregate Q.i (indicators quality) to Q.ig (indicator group quality)
 #    within each indicator group (EI) + land cover + F.group class, then aggregate the Q.ig
-#    by land cover + F.group. This remove the excessive weight of indicators group with 
+#    by land cover + F.group. This remove the excessive weight of indicators group with
 #    many component indicator (=strata)
 Q.FG.GROUP.BY <- "indicator"
 
@@ -426,9 +426,9 @@ Q.FG.GROUP.BY <- "indicator"
 # If Q.FG.METHOD=="generalized_mean" uses custom function
 # generalized_mean(), which behaves like geometric
 # mean, but with a less severe penalty for low values; also,
-# it drops to zero only if *all* input values are zero. 
-# As called in VQA, generalized_mean() uses the default 
-# value of p=3, which applies a moderate penalty for low values. 
+# it drops to zero only if *all* input values are zero.
+# As called in VQA, generalized_mean() uses the default
+# value of p=3, which applies a moderate penalty for low values.
 # See functions.R.
 Q.FG.METHOD <- "generalized_mean"
 
@@ -441,15 +441,15 @@ Q.OVERALL.METHOD <- "gmean"
 
 # Include plots with no data for a given indicator
 # Exact actions are indicator-specific, but for most
-# indicators this means insert a row for the plot, 
+# indicators this means insert a row for the plot,
 # with an indicator value of zero. For indicators with
-# strata, this mean insert a row for each plot+stratum 
-# combination, plus an indicator value of zero. 
-# Fixes issues of inflated quality scores due to 
+# strata, this mean insert a row for each plot+stratum
+# combination, plus an indicator value of zero.
+# Fixes issues of inflated quality scores due to
 # ommission of highly disturbed / early succession
 # plots with no regeneration in some or all strata
 # Values: TRUE|FALSE
-# Normaly should always be TRUE, but may need to set 
+# Normaly should always be TRUE, but may need to set
 # to FALSE for early applications which have not been
 # updated with speciall handling of no-data plots
 INCLUDE.PLOTS.NODATA <- TRUE
@@ -462,48 +462,48 @@ NODATA.SD <- 3 # Number of standard deviations of no-data value
 
 # Quality algorithm for beta-distributed indicators
 # "mixed" applies to beta-distributed indicators only, and only when q.method =
-# "empirical". Parameter q.method is set for individual indicators only, at the 
-# start of the script, not in this (global parameters file (this one). 
-# Two options: 
+# "empirical". Parameter q.method is set for individual indicators only, at the
+# start of the script, not in this (global parameters file (this one).
+# Two options:
 # overlap:	Quality based on overlap only for all indicators. For beta-distributed
-#					indicators, attempts to correct  artifacts cause by zero- and 
-#					one-inflation, and narrow distributions close to 1 & 0. Still has issues 
-#					so do not use without further fixes.
-# mixed:		Use weighted average of overlap-based quality and means-base 
-#					quality for beta-distributed indicators.
-#beta.algorithm <- "overlap"
+# 					indicators, attempts to correct  artifacts cause by zero- and
+# 					one-inflation, and narrow distributions close to 1 & 0. Still has issues
+# 					so do not use without further fixes.
+# mixed:		Use weighted average of overlap-based quality and means-base
+# 					quality for beta-distributed indicators.
+# beta.algorithm <- "overlap"
 beta.algorithm <- "mixed"
 
 # Use raw means-based quality
-# Applies to beta distributed indicators only. If FALSE, adjusts q.diff to 1 (100%) 
-# when means not sig. diff (p.diff>=0.05). If TRUE, set q.diff to actual q.diff, 
-# regardless of significance. This parameter does not effect whether or not 
+# Applies to beta distributed indicators only. If FALSE, adjusts q.diff to 1 (100%)
+# when means not sig. diff (p.diff>=0.05). If TRUE, set q.diff to actual q.diff,
+# regardless of significance. This parameter does not effect whether or not
 # tranformations are applied to q.dist; this is set separately by parameter
 # discount.method
 use.q.diff.raw <- TRUE
 
 # Method of discounting for means-based quality (beta distributions only)
-# Affects final transformation of q.dist. Value discount.method <- "linear" 
+# Affects final transformation of q.dist. Value discount.method <- "linear"
 # means no transformation. discount.method <- "scaled" causes means-
-# based quality to be transformed using function q.scaled.beta. 
+# based quality to be transformed using function q.scaled.beta.
 # Parameters for function q.scaled.beta are set directly in the function itself.
 # Currently, values s1=0.3, s2=1 give best (=moderate) discount
-# Values: 
+# Values:
 # 		linear 		No discount; Q declines linearly toward 0 at farthest boundary
-#		scaled		Q declines exponentially toward zero
-discount.method <- "scaled"	
+# 		scaled		Q declines exponentially toward zero
+discount.method <- "scaled"
 
 # Method for weighting overlap- vs means-based quality
 # Applies to beta distributed indicators where beta.algorithm <- "mixed" only,
 # otherwise ignored. See function "qual.beta" for details.
 # Values: "linear", "u.beta", "u.beta.buffered"
-wt.method="u.beta.buffered"
+wt.method <- "u.beta.buffered"
 
 # Edge-buffer to use for wt.method="u.beta.buffered"
 # Ignored for other weighting methods
 # See function "u.beta.buffered" for details.
 # Recommend 0.01
-buffer=0.01
+buffer <- 0.01
 
 # Set to FALSE to turn off permutation tests for q.diff when calculating bootstrap CLs
 # Will increase speed, but CLs will no longer be accurate if any p>=0.05
@@ -522,7 +522,7 @@ seed <- 123
 # Infer missing confidence limits due to all-zero indicators,
 # division-by-zero errors, and other issues. This action
 # performed in script summary.R. Setting to FALSE may
-# result in some indicators being excluded from CL 
+# result in some indicators being excluded from CL
 # calculations.
 infer.missing.cls <- FALSE
 
@@ -534,7 +534,7 @@ infer.missing.cls.strict <- TRUE
 # Quality Hectares Assessment Method
 #
 # Values:
-#   "empirical" [default]: Determine Q and QH 
+#   "empirical" [default]: Determine Q and QH
 #     empirically using plot data.
 #   "assume.1": Q=1 (100%) and QH=actualHa for all
 #     vegetation.
@@ -542,37 +542,37 @@ infer.missing.cls.strict <- TRUE
 #
 # Almost always, QH.METHOD="empirical"
 # QH.METHOD="assume.1" is used only for
-#   baseline assessments where no empirical data 
+#   baseline assessments where no empirical data
 #   are available and only justifiable assumption
 #   is that all vegetation was pristine.
-# QH.METHOD="assume.0": For (a) project baseline 
-#   assessment where entire area was destroyed by 
+# QH.METHOD="assume.0": For (a) project baseline
+#   assessment where entire area was destroyed by
 #   project, or (b) project baseline assessment
 #   where empirical data not available but impacts
 #   are so extensive that empirical measurement
-#   of the remaining QH is not cost-effective, 
+#   of the remaining QH is not cost-effective,
 #   or (c) offset baseline assessment averted-loss
 #   scenario, where the counterfactual is complete
-#   and permanent destruction of offset biodiversity 
+#   and permanent destruction of offset biodiversity
 #   value.
 #
 # This parameter is used by import (import.R),
 # and the main VQA pipleline (vqa.batch.R) in
-# producing output used by Net Quality 
+# producing output used by Net Quality
 # Hectares (qh.net.R), but QH.METHOD is not
 # directly referenced by qh.net.R.
 ##############################################
 ##############################################
 
-#QH.METHOD <- "assume.0"         
-#QH.METHOD <- "assume.1"   
-QH.METHOD <- "empirical"         
+# QH.METHOD <- "assume.0"
+# QH.METHOD <- "assume.1"
+QH.METHOD <- "empirical"
 
 ##############################################
 ##############################################
 # QH.net options
 # * Affect script "qh.net.R" only
-# * By default, assumes ASSESS is the current 
+# * By default, assumes ASSESS is the current
 #   offset to be compared to baseline, as set
 #   in params.pa.R
 ##############################################
@@ -586,10 +586,10 @@ QH.METHOD <- "empirical"
 #    in qh.net/results/ folder of current assessment
 # 2. Bm QH and bootstrapped Bm QH CSV files for baseline assessment
 #    in qh.net/results/ folder of baseline assessment
-# 3. QH.net and bootstrapped QH.net results for offset assessment, 
+# 3. QH.net and bootstrapped QH.net results for offset assessment,
 #    in qh.net/results/ folder of current offset assessment
 #
-# Notes: 
+# Notes:
 # 1. Currently only 1 offset supported
 # 2. All bootstrap file must contain same number of
 #    bootstrap replicates.
@@ -605,7 +605,7 @@ ASSESS.BASELINE <- "mine_baseline"
 # Only NET quality hectares for the offset is used,
 # therefore the offset listed must have it's own qh.net
 # directory, containing the results of a qh.net comparison
-# against it's own (offset) baseline. 
+# against it's own (offset) baseline.
 # Current only one offset site recorded, will expand
 # to multiple offsets in later versions.
 # If no offset, set to empty string ("")
@@ -613,16 +613,16 @@ ASSESS.OFFSET <- ""
 
 # Prepare df & file qh.net.comp?
 # qh.net.comp is similar to qh.net but calculates
-# QH and QH.net using Qc (the complement of Q), 
+# QH and QH.net using Qc (the complement of Q),
 # where Qc = 1- Q. This provides an estimate of
-# the total potential additional QH available, 
+# the total potential additional QH available,
 # assuming quality of all classes of vegetation
 # is increased to 100%
 # Values: TRUE|FALSE
 PREPARE.QH.NET.P <- FALSE
 
 # Reset quality of offset vegetation with area_ha1==0
-# back to zero, under assumption that absent vegetetion 
+# back to zero, under assumption that absent vegetetion
 # will not be created from scratch. This is essentially
 # a restoration management decision.
 # Ignored if PREPARE.QH.NET.P==FALSE
@@ -637,38 +637,38 @@ ALLOW.TRADE.UP <- FALSE
 
 # Vector of vegetation types to trade up
 # * QH are reassigned in order, starting with the first
-#   vegetation type and reassigning its "spare" QH (i.e., 
+#   vegetation type and reassigning its "spare" QH (i.e.,
 #   until its H.net==0) then moving onto the next vegetation
-#   type, until either (a) all vegetation types have positive 
+#   type, until either (a) all vegetation types have positive
 #   QH.net, or (b) QH.net==0 for all vegetation types listed
 # * To use all vegetation with  QH.net>0, set this
 #   vector to a single empty string ("")
 # * Only applies if ALLOW.TRADE.UP==TRUE
-VEG.TRADE.UP <- ""    # Use this value to use all veg with QN.net>0
+VEG.TRADE.UP <- "" # Use this value to use all veg with QN.net>0
 
 # QH.net results directory
-# Set to subdirectory of current assessment data 
+# Set to subdirectory of current assessment data
 # directory, as defined by parameter ASSESS
 # Comparison is always to the baseline assessment
 QH.NET.DIR <- paste0(DATA_BASEDIR_PROJ, ASSESS, "/qh.net/")
-QH.NET.RESULTSDIR <- paste0(QH.NET.DIR,"results/")
+QH.NET.RESULTSDIR <- paste0(QH.NET.DIR, "results/")
 
 # QH.net input file directories
-QH.NET.INPUTDIR.CURRENT <- paste0( DATA_BASEDIR_PROJ, ASSESS, "/results/" ) # QH files
-QH.NET.INPUTDIR.BASELINE <- paste0( DATA_BASEDIR_PROJ, ASSESS.BASELINE, "/results/" ) # QH files
-QH.NET.INPUTDIR.OFFSET <- paste0( DATA_BASEDIR_PROJ, ASSESS.OFFSET, "/qh.net/results/" ) # Net QH files
+QH.NET.INPUTDIR.CURRENT <- paste0(DATA_BASEDIR_PROJ, ASSESS, "/results/") # QH files
+QH.NET.INPUTDIR.BASELINE <- paste0(DATA_BASEDIR_PROJ, ASSESS.BASELINE, "/results/") # QH files
+QH.NET.INPUTDIR.OFFSET <- paste0(DATA_BASEDIR_PROJ, ASSESS.OFFSET, "/qh.net/results/") # Net QH files
 
 # Transform one or more vegetation classes? (TRUE|FALSE)
 # Generally, keep this set to FALSE
-# However, if appropriate can be used to combine different 
+# However, if appropriate can be used to combine different
 # benchmark vegetation types to make them equivalent trades
 # during QH.net analysis.
-# If TRUE, then you MUST define the mapping vector 
+# If TRUE, then you MUST define the mapping vector
 # BM.VEG.TRANSFORM.VECTOR (see below)
 BM.VEG.TRANSFORM <- FALSE
 
 # Vector of benchmark vegetation types to transform.
-# For example, "91M0" and mixed "91M0x62A0" can be treated 
+# For example, "91M0" and mixed "91M0x62A0" can be treated
 # as equivalents by converting as follows:
 # BM.VEG.TRANSFORM.VECTOR <- c(
 #   "91M0" <- "91M0x62A0 or 91M0",
@@ -698,21 +698,21 @@ BM.VEG.TRANSFORM.VECTOR <- c(
 
 # Remove TD outlier plots?
 # TRUE: delete plots with outliers in TD score
-# Such plots may be very early successionk, or they may be misclassified--in which 
-# case they should be reclassified to a different land cover class (and possibly 
+# Such plots may be very early successionk, or they may be misclassified--in which
+# case they should be reclassified to a different land cover class (and possibly
 # bm veg). TD outlier plots can crash quality calculations for indicator TD, and
-# may distort quality scores (generally, inflating them). 
-# Generally leave REMOVE.TD.OUTLIERS<-TRUE. Outliers will be saved to outlier 
+# may distort quality scores (generally, inflating them).
+# Generally leave REMOVE.TD.OUTLIERS<-TRUE. Outliers will be saved to outlier
 # file (F.TD.OUTLIERS) on the first run of td.R, and new outliers appended
 # to this file on subsequent runs, until no new outliers are found.
-# Generally, keep -re-running td.R until no new outliers are found. 
+# Generally, keep -re-running td.R until no new outliers are found.
 REMOVE.TD.OUTLIERS <- TRUE
 
 # Number of standard deviations from mean NMDS
 # score for plot to qualify as an NMDS outlier
 # Only put this as low as needed to remove outliers
 # which are causing calculation of TD to crash. If
-# no crashes, but outliers are being removed, either 
+# no crashes, but outliers are being removed, either
 # increase this value or set REMOVE.TD.OUTLIERS <- FALSE
 # Recommend start at 4 and work down
 TD.OUTLIER.STDEVS <- 4
@@ -740,7 +740,7 @@ F.TD.OUTLIERS <- "TD_outliers.csv"
 # Prevent bm plots from being replicated
 # while running NMDS for indicator TD.
 # Used in script td.R only.
-# A temporary hack until package "vegan" 
+# A temporary hack until package "vegan"
 # version 7.0 is released
 TD.BM.PLOTS.DEDUPLICATE <- TRUE
 
@@ -779,68 +779,68 @@ F.BA.OUTLIERS <- "BA_outliers.csv"
 # This parameters does two things:
 # 1. Sets the indicators to include in
 #   the current analysis
-# 2. Sets the functional group to which 
+# 2. Sets the functional group to which
 #   each indicator belongs
 #
-# CRITICAL! Indicators not listed here 
+# CRITICAL! Indicators not listed here
 # will not be included in the analysis!
 #
-# Indicators which consist of multiple 
-# subindicators that vary depending on 
-# the data are called "indicator groups". 
+# Indicators which consist of multiple
+# subindicators that vary depending on
+# the data are called "indicator groups".
 # For example, indicator group PCGF could
 # consist of c("Herbs", "Shrubs") in one
 # dataset and c("Herbs", "Lianas", "Trees")
-# in a different dataset. For these 
-# indicators, include only the high level 
-# indicator group, not the subindicators. 
-# For example, include 'PCGF' but omit 
-# "Herbs", "Shrubs" and "Trees". 
+# in a different dataset. For these
+# indicators, include only the high level
+# indicator group, not the subindicators.
+# For example, include 'PCGF' but omit
+# "Herbs", "Shrubs" and "Trees".
 ####################################
 
 EI.F.GROUPS <- t(as.data.frame(list(
-  c('SR', 'composition'),
-  c('TD', 'composition'),
-  c('PCGF', 'structure'),
-  c('GC', 'function'),
-  c('PCESS', 'integrity')
+  c("SR", "composition"),
+  c("TD", "composition"),
+  c("PCGF", "structure"),
+  c("GC", "function"),
+  c("PCESS", "integrity")
 )))
 
-# Temporarily reset this parameter if 
+# Temporarily reset this parameter if
 # running TD only to fine-tune NMDS
 # parameters
-if (TD.ONLY==TRUE) {
+if (TD.ONLY == TRUE) {
   EI.F.GROUPS <- t(as.data.frame(list(
-    c('TD', 'composition')
+    c("TD", "composition")
   )))
 }
 
 # Final adjustments to EI.F.GROUPS
 rownames(EI.F.GROUPS) <- NULL
-colnames(EI.F.GROUPS) <- c( 'EI', 'f.group' )
+colnames(EI.F.GROUPS) <- c("EI", "f.group")
 
 # Some important derived parameters
 df.EI.FG <- as.data.frame(EI.F.GROUPS)
-EI.list <- data.frame(fname= EI.F.GROUPS[,1])
-EI.vec <- EI.F.GROUPS[,1]
+EI.list <- data.frame(fname = EI.F.GROUPS[, 1])
+EI.vec <- EI.F.GROUPS[, 1]
 
 ##################################
 # Aggregate indicators
 #
-# Ecological Indicators (abbreviations) for which stratum 
+# Ecological Indicators (abbreviations) for which stratum
 # scores will be combined in results files
 # Set EI.agg.list to NA if not applicable for this analysis
 ##################################
 
-EI.agg.list<-data.frame(fname=c(
-'PCGF',
-'PCESS',
-'GC'
+EI.agg.list <- data.frame(fname = c(
+  "PCGF",
+  "PCESS",
+  "GC"
 ))
 
 # Include only stratum "Herbs" in indicator PCESS?
 # Also allows "Hierba", "Hierbas", etc.
-pcess.herbs.only=FALSE
+pcess.herbs.only <- FALSE
 
 ############################################
 # Indicator group properties
@@ -850,7 +850,7 @@ pcess.herbs.only=FALSE
 #   indicator group code (e.g., "SR", "PCGF")
 #   as its argument. The parameter values
 #   returned are applicable to that indicator
-#   group only. Make sure all indicators in 
+#   group only. Make sure all indicators in
 #   current analysis are included.
 #   You can use this function to store all
 #   indicator groups and their settings. But
@@ -858,7 +858,7 @@ pcess.herbs.only=FALSE
 #   parameter EI.F.GROUPS (see above) will
 #   be included in the current analysis.
 # 2. Some indicator groups consist
-#   of multiple subindicators that vary 
+#   of multiple subindicators that vary
 #   depending on the dataset (e.g., PCGF
 #   contains growth forms such as "Herbs",
 #   "Shrubs", "Trees"). Other indicator groups
@@ -868,22 +868,22 @@ pcess.herbs.only=FALSE
 # REVIEW CAREFULLY!
 ############################################
 
-ei.params <- function( ei.code ) {
-	####################################
-	# Returns all parameters associated
+ei.params <- function(ei.code) {
+  ####################################
+  # Returns all parameters associated
   # with a given indicator (EI)
   #
   # * 'ei.code' is the indicator code,
-  #   not the name (e.g., use 'SR',  
+  #   not the name (e.g., use 'SR',
   #   not 'Species Ricness').
-  # * For indicators which are one of  
-  #   several strata of an indicator group, 
-  #   submit the indicator group code only. 
-  #   For example, for indicator "Percent 
-  #   Cover Trees", submit the code of 
-  #   indicator group PCGF (Percent Cover 
+  # * For indicators which are one of
+  #   several strata of an indicator group,
+  #   submit the indicator group code only.
+  #   For example, for indicator "Percent
+  #   Cover Trees", submit the code of
+  #   indicator group PCGF (Percent Cover
   #   by Growth Form)
-  # * Parameter bm.val only required if 
+  # * Parameter bm.val only required if
   #   q.method=='fixed', otherwise NA.
   # * "source.file" is the name of the
   #   input file used to calculate indicator
@@ -893,386 +893,388 @@ ei.params <- function( ei.code ) {
   #############################
   # Default values
   #############################
-  
+
   convert.percent <- FALSE
   remove.zero.cover.plots <- FALSE
   prepare.raw <- FALSE # All over-ridden by force.prepare.raw
   ei.data.type <- DATA.TYPE # Global variable accessible here due to R scoping
-  
+
   # Transformation: convert raw abundance to proportional (TRUE|FALSE)
   # abundance, relative to maximum abundance.
   # *** Important: MUST be set to TRUE if values are absolute abundance ***
   # Generally set to FALSE for percent cover, unless some cover values>100%
-  scale.abund <- FALSE	
-  
+  scale.abund <- FALSE
+
   # Logit transformation, for proportions only
   # Generally a bad idea, esp. for NMDS, & not needed for overlap
   # MUST be FALSE for absolute abundance
   logit <- FALSE
-  
- 	# Initialize TD-specific indicators
- 	td.multiplier <- NA
- 	td.multiplier.omit <- ""
- 	
- 	# Exclude non-native species from calculations 
- 	# for current indicator?
- 	exclude.exotics <- FALSE
- 	
- 	# Scalar multiplier for this indicator
- 	# Transformation used to improve distribution fitting
- 	# Default MUST be 1 to avoid distorting all indicators
- 	# Make changes ONLY inside specific indicator 
- 	# parameter sets
- 	ei.multiplier <- 1
- 	
- 	# Scale indicators to values expected
-	# in subsamples of same area==normalize.m2?
- 	# Corrects for use of different sample
- 	# areas for different stem sizes (DBH classes).
- 	# Applies only to indicators for which DATA.TYPE="ind".
- 	# normalize.m2 <- 10000 for 1 ha.
- 	# normalize.m2 <- FALSE (default) turns  
- 	#   off normalization
- 	normalize.m2 <- FALSE
- 	
- 	# Set NA values to 0 for this indicator
- 	# Values: TRUE|FALSE
- 	#  TRUE: Issue warning, set NA values to 0, and continue
- 	#  FALSE: Report error and stop
- 	NA.TO.ZERO <- TRUE
 
- 	####################################
- 	# Indicator-specific values
- 	# Override defaults as needed
- 	####################################
- 	
- 	if ( ei.code =='GC' ) {
-	  ei.name <- 'Ground Cover'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  q.method <- 'empirical'
-	  has.stratum <- TRUE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  proportions <- TRUE  # FALSE if raw data are percent
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "cover"  # Always cover, by definition
-	  df.input <- "groundCover"  
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='PCESS' ) {
-	  # Percent cover exotic species, separately by stratum
-	  ei.name <- 'Percent Cover Exotic Species'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  q.method <- 'fixed'	# c('empirical','fixed')
-	  has.stratum <- TRUE
-	  test.tail <- "upper"
-	  bm.val <- 0		# should be integer if q.method='fixed', otherwise numeric
-	  proportions <- TRUE  # FALSE if raw data are percent
-	  remove.zero.cover.plots <- FALSE		# all-zero cover possible for this EI
-	  
-	  # Set NA to 0 for this indicator?
-	  NA.TO.ZERO <- TRUE
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "cover"  # Always cover, by definition
-	  df.input <- "exoticCoverByStratum"  
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='PCES' ) {
-	  # Percent cover exotic species (for entire plot, not by stratum)
-	  ei.name <- 'Percent Cover Exotic Species'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  q.method <- 'fixed'	# c('empirical','fixed')
-	  has.stratum <- FALSE
-	  test.tail <- "upper"
-	  bm.val <- 0		# should be integer if q.method='fixed', otherwise numeric
-	  proportions <- TRUE  # FALSE if raw data are percent
-	  remove.zero.cover.plots <- FALSE		# Zero cover common for this EI
-	  ei.data.type <- "cover"  # Always cover, by definition
-	  df.input <- "exoticCoverByStratum"  
-	  source.file <- paste0(df.input, '.csv')  # Input file full name
-	} else if ( ei.code =='PCGF' ) {
-	  ei.name <- 'Percent Cover by Growth Form'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  proportions <- TRUE  # FALSE if raw data are percent
-	  q.method <- 'empirical'	# c('empirical','fixed')
-	  has.stratum <- TRUE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  remove.zero.cover.plots <- FALSE		# all-zero cover possible for this EI
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "cover"  # Always cover, by definition
-	  df.input <- "coverByGrowthForm"  
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='PCS' ) {
-	  # Equivalent to PCGF but with vegetation height classes instead
-	  ei.name <- 'Percent Cover by Stratum'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  proportions <- TRUE  # FALSE if raw data are percent
-	  q.method <- 'empirical'	# c('empirical','fixed')
-	  has.stratum <- TRUE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  remove.zero.cover.plots <- FALSE		# all-zero cover possible for this EI
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "cover"  # Always cover, by definition
-	  df.input <- "coverByStratum"  
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='SR' ) {
-	  ei.name <- 'Species Richness'
-	  ei.name.with.units <- ei.name
-	  distn <- 'NBin'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  test.tail <- "lower"
-	  bm.val <- NA
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- DATA.TYPE
-	  if (ei.data.type=="ind") {
-	    df.input <- "speciesStems" # Individuals data (stems of individual trees)
-	  } else {
-	    df.input <- "speciesCover"  # Prefer species cover data if available
-	  }
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='TD' ) {
-	  ei.name <- 'Taxonomic distance'
-	  ei.name.with.units <- ei.name
-	  distn <- 'gamma'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  proportions <- FALSE  # Must be FALSE if individuals data (stems)
-	  convert.percent <- FALSE  # Must be FALSE if individuals data (stems)
-	  remove.zero.cover.plots <- TRUE		# all-zero cover impossible for this EI; ignored if individuals data
-	  
-	  #  Set TRUE to scale abundance values between 0 and 1
-	  # Use if species cover sums to >100% (or >1 proportional abundance)
-	  scale.abund<-FALSE
-	  
-	  # Transform all TD values by multiplying by td.multiplier?
-	  # td.multiplier <-1 skips transformation
-	  # Strongly recommend td.multiplier <- 20
-	  # Low values, especially close to one, result in poor fit with high overlap 
-	  td.multiplier <- 20
-	  
-	  # Vector of land cover classes to omit from scaling
-	  # If no omissions, set to empty string ""
-	  td.multiplier.omit <- ""
-	  td.multiplier.omit <- c(
-	    "Greenleaf Fescue - Hood's Sedge - Lupine species Subalpine Mesic Meadow Alliance - Reclaimed",
-	    "Idaho Fescue - Bluebunch Wheatgrass - Sandberg Bluegrass Dry Grassland Alliance - Reclaimed"
-	  )
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- DATA.TYPE
-	  if (ei.data.type=="ind") {
-	    df.input <- "speciesStems" # Individuals data (stems of individual trees)
-	  } else {
-	    df.input <- "speciesCover"  # Prefer species cover data if available
-	  }
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='TS' ) {
-	  # Pairwise taxonomic similarity based on Sorensen Index
-	  # Compare distributions of focal<-->benchmark and 
-	  # benchmark<-->benchmark between-plot similarity
-	  ei.name <- 'Taxonomic Similarity'
-	  ei.name.with.units <- ei.name
-	  distn <- 'Bet'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  # Lower test tail only: focal plots more similar on average 
-	  # to benchmark plots than the benchmark plots themselves 
-	  # receive 100% quality score
-	  test.tail <- "lower"
-	  bm.val <- NA
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- DATA.TYPE
-	  if (ei.data.type=="ind") {
-	    df.input <- "speciesStems" # Individuals data (stems of individual trees)
-	  } else {
-	    df.input <- "speciesCover"  # Prefer species cover data if available
-	  }
-	  source.file <- paste0(df.input, '.csv')  # Input file required for this indicator
-	} else if ( ei.code =='ASC' ) {
-	  ei.name <- 'Abundance by Size Class'
-	  ei.name.with.units <- ei.name
-	  distn <- 'NBin'
-	  q.method <- 'empirical'
-	  has.stratum <- TRUE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  exclude.exotics <- FALSE
-	  ei.multiplier <- 1
-	 # NORMALIZE.BY.DBH <- TRUE
-	  NA.TO.ZERO <- FALSE  # Do not set NA abundance to zero; report error  & abort instead
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "ind" # By definition for this indicator
-	  df.input <- "speciesStems"  
-	  source.file <- paste0(df.input, '.csv')  
-	} else if ( ei.code =='BA' ) {
-	  ei.name <- 'Basal Area'
-	  ei.name.with.units <- ei.name
-	  distn <- 'gamma'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  exclude.exotics <- FALSE
-	  
-	  # Normalize indicators to values expected
-	  # in a common area of normalize.m2?
-	  # normalize.m2<-10000 scales to 1 ha
-	  # normalize.m2<-FALSE turns off normalization
-	  normalize.m2 <- 10000
-	  
-	  # Additional multiplier applied to final ei value?
-	  # Delete or set to 1 to keep original value (default)
-	  ei.multiplier <- 1
-	  
-	  # Revise ei.name.with.units to reflect area changes
-	  # due to use of normalize.m2 and ei.multiplier
-	  ei.name <- "Basal Area (m2/ha)"
-	  
-	  # Set NA to 0 for this indicator?
-	  NA.TO.ZERO <- TRUE
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "ind" # By definition for this indicator
-	  df.input <- "speciesStems"  
-	  source.file <- paste0(df.input, '.csv')  
-	} else if ( ei.code =='CH' ) {
-	  ei.name <- "Canopy Height"
-	  ei.name.with.units <- "Canopy Height (m)"
-	  distn <- 'gamma'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  test.tail <- "both"
-	  bm.val <- NA
-	  exclude.exotics <- FALSE
-	  ei.multiplier <- 1
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "ind" # By definition for this indicator
-	  df.input <- "speciesStems"  
-	  source.file <- paste0(df.input, '.csv')  
-	} else if ( ei.code =='BAES' ) {
-	  ei.name <- 'Basal Area Exotic Species'
-	  ei.name.with.units <- ei.name
-	  distn <- 'gamma'
-	  q.method <- 'empirical'
-	  has.stratum <- FALSE
-	  test.tail <- "upper"
-	  bm.val <- NA
-	  exclude.exotics <- FALSE
-	  ei.multiplier <- 100
-	  # Revised ei.name.with.units to reflect ei.multiplier
-	  ei.name.with.units <- "Basal Area Exotic Species (m2/ha)"
-	  
-	  # Input data frame and file for this indicator
-	  ei.data.type <- "ind" # By definition for this indicator
-	  df.input <- "speciesStems"  
-	  source.file <- paste0(df.input, '.csv')  
-	} else {
-		stop("ERROR: unknown EI (function ei.params)" )
-	}
-	
- 	# Be careful with these next two assignments
- 	# that every parameter is included.
- 	# Any parameter omitted will be silently omitted!
- 	param.list <- list(
- 	  ei.name, distn,  q.method, ei.data.type,
- 	  has.stratum, test.tail, bm.val, proportions, df.input, 
- 	  source.file, prepare.raw, convert.percent, logit,
- 	  remove.zero.cover.plots,	scale.abund, 
- 	  td.multiplier, td.multiplier.omit, exclude.exotics, ei.multiplier,
- 	  normalize.m2, NA.TO.ZERO
- 	)
- 	names(param.list) <- c(
- 	  "ei.name", "distn", "q.method", "ei.data.type",
- 	  "has.stratum", "test.tail", 	"bm.val", "proportions", "df.input", 
- 	  "source.file", 	"prepare.raw", "convert.percent", "logit",
- 	  "remove.zero.cover.plots", "scale.abund", 
- 	  "td.multiplier", "td.multiplier.omit", "exclude.exotics", "ei.multiplier",
- 	  "normalize.m2", "NA.TO.ZERO"
- 	)
- 	
-	return(param.list)
-	
+  # Initialize TD-specific indicators
+  td.multiplier <- NA
+  td.multiplier.omit <- ""
+
+  # Exclude non-native species from calculations
+  # for current indicator?
+  exclude.exotics <- FALSE
+
+  # Scalar multiplier for this indicator
+  # Transformation used to improve distribution fitting
+  # Default MUST be 1 to avoid distorting all indicators
+  # Make changes ONLY inside specific indicator
+  # parameter sets
+  ei.multiplier <- 1
+
+  # Scale indicators to values expected
+  # in subsamples of same area==normalize.m2?
+  # Corrects for use of different sample
+  # areas for different stem sizes (DBH classes).
+  # Applies only to indicators for which DATA.TYPE="ind".
+  # normalize.m2 <- 10000 for 1 ha.
+  # normalize.m2 <- FALSE (default) turns
+  #   off normalization
+  normalize.m2 <- FALSE
+
+  # Set NA values to 0 for this indicator
+  # Values: TRUE|FALSE
+  #  TRUE: Issue warning, set NA values to 0, and continue
+  #  FALSE: Report error and stop
+  NA.TO.ZERO <- TRUE
+
+  ####################################
+  # Indicator-specific values
+  # Override defaults as needed
+  ####################################
+
+  if (ei.code == "GC") {
+    ei.name <- "Ground Cover"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    q.method <- "empirical"
+    has.stratum <- TRUE
+    test.tail <- "both"
+    bm.val <- NA
+    proportions <- TRUE # FALSE if raw data are percent
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "cover" # Always cover, by definition
+    df.input <- "groundCover"
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "PCESS") {
+    # Percent cover exotic species, separately by stratum
+    ei.name <- "Percent Cover Exotic Species"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    q.method <- "fixed" # c('empirical','fixed')
+    has.stratum <- TRUE
+    test.tail <- "upper"
+    bm.val <- 0 # should be integer if q.method='fixed', otherwise numeric
+    proportions <- TRUE # FALSE if raw data are percent
+    remove.zero.cover.plots <- FALSE # all-zero cover possible for this EI
+
+    # Set NA to 0 for this indicator?
+    NA.TO.ZERO <- TRUE
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "cover" # Always cover, by definition
+    df.input <- "exoticCoverByStratum"
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "PCES") {
+    # Percent cover exotic species (for entire plot, not by stratum)
+    ei.name <- "Percent Cover Exotic Species"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    q.method <- "fixed" # c('empirical','fixed')
+    has.stratum <- FALSE
+    test.tail <- "upper"
+    bm.val <- 0 # should be integer if q.method='fixed', otherwise numeric
+    proportions <- TRUE # FALSE if raw data are percent
+    remove.zero.cover.plots <- FALSE # Zero cover common for this EI
+    ei.data.type <- "cover" # Always cover, by definition
+    df.input <- "exoticCoverByStratum"
+    source.file <- paste0(df.input, ".csv") # Input file full name
+  } else if (ei.code == "PCGF") {
+    ei.name <- "Percent Cover by Growth Form"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    proportions <- TRUE # FALSE if raw data are percent
+    q.method <- "empirical" # c('empirical','fixed')
+    has.stratum <- TRUE
+    test.tail <- "both"
+    bm.val <- NA
+    remove.zero.cover.plots <- FALSE # all-zero cover possible for this EI
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "cover" # Always cover, by definition
+    df.input <- "coverByGrowthForm"
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "PCS") {
+    # Equivalent to PCGF but with vegetation height classes instead
+    ei.name <- "Percent Cover by Stratum"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    proportions <- TRUE # FALSE if raw data are percent
+    q.method <- "empirical" # c('empirical','fixed')
+    has.stratum <- TRUE
+    test.tail <- "both"
+    bm.val <- NA
+    remove.zero.cover.plots <- FALSE # all-zero cover possible for this EI
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "cover" # Always cover, by definition
+    df.input <- "coverByStratum"
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "SR") {
+    ei.name <- "Species Richness"
+    ei.name.with.units <- ei.name
+    distn <- "NBin"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    test.tail <- "lower"
+    bm.val <- NA
+
+    # Input data frame and file for this indicator
+    ei.data.type <- DATA.TYPE
+    if (ei.data.type == "ind") {
+      df.input <- "speciesStems" # Individuals data (stems of individual trees)
+    } else {
+      df.input <- "speciesCover" # Prefer species cover data if available
+    }
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "TD") {
+    ei.name <- "Taxonomic distance"
+    ei.name.with.units <- ei.name
+    distn <- "gamma"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    test.tail <- "both"
+    bm.val <- NA
+    proportions <- FALSE # Must be FALSE if individuals data (stems)
+    convert.percent <- FALSE # Must be FALSE if individuals data (stems)
+    remove.zero.cover.plots <- TRUE # all-zero cover impossible for this EI; ignored if individuals data
+
+    #  Set TRUE to scale abundance values between 0 and 1
+    # Use if species cover sums to >100% (or >1 proportional abundance)
+    scale.abund <- FALSE
+
+    # Transform all TD values by multiplying by td.multiplier?
+    # td.multiplier <-1 skips transformation
+    # Strongly recommend td.multiplier <- 20
+    # Low values, especially close to one, result in poor fit with high overlap
+    td.multiplier <- 20
+
+    # Vector of land cover classes to omit from scaling
+    # If no omissions, set to empty string ""
+    td.multiplier.omit <- ""
+    td.multiplier.omit <- c(
+      "Greenleaf Fescue - Hood's Sedge - Lupine species Subalpine Mesic Meadow Alliance - Reclaimed",
+      "Idaho Fescue - Bluebunch Wheatgrass - Sandberg Bluegrass Dry Grassland Alliance - Reclaimed"
+    )
+
+    # Input data frame and file for this indicator
+    ei.data.type <- DATA.TYPE
+    if (ei.data.type == "ind") {
+      df.input <- "speciesStems" # Individuals data (stems of individual trees)
+    } else {
+      df.input <- "speciesCover" # Prefer species cover data if available
+    }
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "TS") {
+    # Pairwise taxonomic similarity based on Sorensen Index
+    # Compare distributions of focal<-->benchmark and
+    # benchmark<-->benchmark between-plot similarity
+    ei.name <- "Taxonomic Similarity"
+    ei.name.with.units <- ei.name
+    distn <- "Bet"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    # Lower test tail only: focal plots more similar on average
+    # to benchmark plots than the benchmark plots themselves
+    # receive 100% quality score
+    test.tail <- "lower"
+    bm.val <- NA
+
+    # Input data frame and file for this indicator
+    ei.data.type <- DATA.TYPE
+    if (ei.data.type == "ind") {
+      df.input <- "speciesStems" # Individuals data (stems of individual trees)
+    } else {
+      df.input <- "speciesCover" # Prefer species cover data if available
+    }
+    source.file <- paste0(df.input, ".csv") # Input file required for this indicator
+  } else if (ei.code == "ASC") {
+    ei.name <- "Abundance by Size Class"
+    ei.name.with.units <- ei.name
+    distn <- "NBin"
+    q.method <- "empirical"
+    has.stratum <- TRUE
+    test.tail <- "both"
+    bm.val <- NA
+    exclude.exotics <- FALSE
+    ei.multiplier <- 1
+    # NORMALIZE.BY.DBH <- TRUE
+    NA.TO.ZERO <- FALSE # Do not set NA abundance to zero; report error  & abort instead
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "ind" # By definition for this indicator
+    df.input <- "speciesStems"
+    source.file <- paste0(df.input, ".csv")
+  } else if (ei.code == "BA") {
+    ei.name <- "Basal Area"
+    ei.name.with.units <- ei.name
+    distn <- "gamma"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    test.tail <- "both"
+    bm.val <- NA
+    exclude.exotics <- FALSE
+
+    # Normalize indicators to values expected
+    # in a common area of normalize.m2?
+    # normalize.m2<-10000 scales to 1 ha
+    # normalize.m2<-FALSE turns off normalization
+    normalize.m2 <- 10000
+
+    # Additional multiplier applied to final ei value?
+    # Delete or set to 1 to keep original value (default)
+    ei.multiplier <- 1
+
+    # Revise ei.name.with.units to reflect area changes
+    # due to use of normalize.m2 and ei.multiplier
+    ei.name <- "Basal Area (m2/ha)"
+
+    # Set NA to 0 for this indicator?
+    NA.TO.ZERO <- TRUE
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "ind" # By definition for this indicator
+    df.input <- "speciesStems"
+    source.file <- paste0(df.input, ".csv")
+  } else if (ei.code == "CH") {
+    ei.name <- "Canopy Height"
+    ei.name.with.units <- "Canopy Height (m)"
+    distn <- "gamma"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    test.tail <- "both"
+    bm.val <- NA
+    exclude.exotics <- FALSE
+    ei.multiplier <- 1
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "ind" # By definition for this indicator
+    df.input <- "speciesStems"
+    source.file <- paste0(df.input, ".csv")
+  } else if (ei.code == "BAES") {
+    ei.name <- "Basal Area Exotic Species"
+    ei.name.with.units <- ei.name
+    distn <- "gamma"
+    q.method <- "empirical"
+    has.stratum <- FALSE
+    test.tail <- "upper"
+    bm.val <- NA
+    exclude.exotics <- FALSE
+    ei.multiplier <- 100
+    # Revised ei.name.with.units to reflect ei.multiplier
+    ei.name.with.units <- "Basal Area Exotic Species (m2/ha)"
+
+    # Input data frame and file for this indicator
+    ei.data.type <- "ind" # By definition for this indicator
+    df.input <- "speciesStems"
+    source.file <- paste0(df.input, ".csv")
+  } else {
+    stop("ERROR: unknown EI (function ei.params)")
+  }
+
+  # Be careful with these next two assignments
+  # that every parameter is included.
+  # Any parameter omitted will be silently omitted!
+  param.list <- list(
+    ei.name, distn, q.method, ei.data.type,
+    has.stratum, test.tail, bm.val, proportions, df.input,
+    source.file, prepare.raw, convert.percent, logit,
+    remove.zero.cover.plots, scale.abund,
+    td.multiplier, td.multiplier.omit, exclude.exotics, ei.multiplier,
+    normalize.m2, NA.TO.ZERO
+  )
+  names(param.list) <- c(
+    "ei.name", "distn", "q.method", "ei.data.type",
+    "has.stratum", "test.tail", "bm.val", "proportions", "df.input",
+    "source.file", "prepare.raw", "convert.percent", "logit",
+    "remove.zero.cover.plots", "scale.abund",
+    "td.multiplier", "td.multiplier.omit", "exclude.exotics", "ei.multiplier",
+    "normalize.m2", "NA.TO.ZERO"
+  )
+
+  return(param.list)
 }
 
 ##########################################
 ##########################################
 # NMDS options
-# 
+#
 # Applies to indicator script "td.R" only
 ##########################################
 ##########################################
 
-nmds.params <- function( land.cover ) {
-	##############################
-	# Key NMDS parameters
+nmds.params <- function(land.cover) {
+  ##############################
+  # Key NMDS parameters
   #
-  # In most cases the default 
-	# values should work. 
-  # Use this function to fiddle with 
-  # parameters to achieve convergence 
+  # In most cases the default
+  # values should work.
+  # Use this function to fiddle with
+  # parameters to achieve convergence
   # for specific vegetation types.
-	##############################
-	
-	###################
+  ##############################
+
+  ###################
   # Default options
   ###################
-  
-	# NMDS verbose mode
-	# Generally set to FALSE, unless want
-	# verbose output from each iteration
-	nmds.verbose <- FALSE
-	
-	# Use randomization seed?
-	# Should always be=TRUE unless testing
-	# Possibly no longer used?
-	nmds.set.seed <-TRUE
 
-	# Default metaMDS options
-	nmds.seed <- 10		
-	nmds.trymax<- 1000
-	nmds.k <- 3
-	nmds.maxit <- 200
+  # NMDS verbose mode
+  # Generally set to FALSE, unless want
+  # verbose output from each iteration
+  nmds.verbose <- FALSE
 
-	######################################
-	# Set landCover-specific metaNMDS 
-	# options here. Add more land cover 
-	# classes as needed.
-	######################################
+  # Use randomization seed?
+  # Should always be=TRUE unless testing
+  # Possibly no longer used?
+  nmds.set.seed <- TRUE
 
-	if ( land.cover =='LC.EXAMPLE' ) {
-		nmds.seed <- 19590731	
-		nmds.trymax<- 5000
-		nmds.maxit <- 400
-	} else if ( land.cover =='LC.EXAMPLE2' ) {
-		nmds.seed <- 19590731	
-		nmds.trymax<- 5000
-		nmds.maxit <- 400
-	}
-		
-	# Compile final list of option values
-	nmds.param.list <- list(land.cover, nmds.verbose, nmds.set.seed, 
-		nmds.seed, nmds.trymax, nmds.k, nmds.maxit)
-	names(nmds.param.list) <- c("land.cover", "nmds.verbose", "nmds.set.seed", 
-		"nmds.seed", "nmds.trymax", "nmds.k", "nmds.maxit")	
-	
-	return(nmds.param.list)	
-	
+  # Default metaMDS options
+  nmds.seed <- 10
+  nmds.trymax <- 1000
+  nmds.k <- 3
+  nmds.maxit <- 200
+
+  ######################################
+  # Set landCover-specific metaNMDS
+  # options here. Add more land cover
+  # classes as needed.
+  ######################################
+
+  if (land.cover == "LC.EXAMPLE") {
+    nmds.seed <- 19590731
+    nmds.trymax <- 5000
+    nmds.maxit <- 400
+  } else if (land.cover == "LC.EXAMPLE2") {
+    nmds.seed <- 19590731
+    nmds.trymax <- 5000
+    nmds.maxit <- 400
+  }
+
+  # Compile final list of option values
+  nmds.param.list <- list(
+    land.cover, nmds.verbose, nmds.set.seed,
+    nmds.seed, nmds.trymax, nmds.k, nmds.maxit
+  )
+  names(nmds.param.list) <- c(
+    "land.cover", "nmds.verbose", "nmds.set.seed",
+    "nmds.seed", "nmds.trymax", "nmds.k", "nmds.maxit"
+  )
+
+  return(nmds.param.list)
 }
 
 ###################################
@@ -1284,12 +1286,12 @@ nmds.params <- function( land.cover ) {
 # MUST set parameter logit.inverse.beta if set this parameter to TRUE
 q.tr.logit.inverse <- FALSE
 
-# Inflection steepness parameter for logit.inverse function. 
+# Inflection steepness parameter for logit.inverse function.
 # Only used if q.tr.logit.inverse=TRUE
 logit.inverse.beta <- 2
 
 # Convert zeros to ones (NBin distributions only)
-# Currently implemented only for indicator SR (species 
+# Currently implemented only for indicator SR (species
 # richness). Prevents zero-related crashes.
 zero_to_one <- TRUE
 
@@ -1323,7 +1325,7 @@ quality.legend.only <- TRUE
 
 # Formal quality legend as percent?
 # If false, keeps quality a proportion
-Q.LEGEND.PERCENT<-FALSE
+Q.LEGEND.PERCENT <- FALSE
 
 # Set to false to omit legends entirely from indicator histograms
 plot.legends <- TRUE
@@ -1331,12 +1333,12 @@ plot.legends <- TRUE
 # Set to FALSE to omit focal and benchmark color key from legend
 LEGEND.NO.FB <- FALSE
 
-# Subsample bootstrap pdfs for figures? 
+# Subsample bootstrap pdfs for figures?
 # Improves clarity and plotting time
 boot.graph.subsample <- TRUE
 
-# Allow use of discrete bar plots instead of histograms 
-# for discrete data. Sets bin size to exactly 1, so in 
+# Allow use of discrete bar plots instead of histograms
+# for discrete data. Sets bin size to exactly 1, so in
 # most cases will want to set this to FALSE
 allow.discrete <- FALSE
 
@@ -1347,16 +1349,16 @@ plot.mean <- TRUE
 # Display sample sizes on histograms legends?
 show.n <- TRUE
 
-#Display overlap in results legend on figure
+# Display overlap in results legend on figure
 show.overlap <- TRUE
 
-remove.grid <- TRUE 	# Set true to remove background grid
+remove.grid <- TRUE # Set true to remove background grid
 
 # Set TRUE to plot bootstrapped pdfs and confidence limits on overlap graph
 # Set FALSE to omit
 plot.boot.pdfs <- TRUE
 
-# Set TRUE to overlay pdf fit curve on histograms of empirical sampling distribution 
+# Set TRUE to overlay pdf fit curve on histograms of empirical sampling distribution
 plot.pdf <- TRUE
 
 # Set the following to TRUE to keep graphs without pdf fit in separate directory
@@ -1370,15 +1372,15 @@ no.fit.keep.separate <- FALSE
 GROUP.MTEXT.LINE <- 1
 
 # Which graphs to plot? TRUE/FALSE
-# Each parameter is "plot." concatenated with the name 
+# Each parameter is "plot." concatenated with the name
 # of a subdirectory of figures based directory "figs/"
 # Set to FALSE to skip printing figures in that directory
 # and save a lot of hard drive space!
 # The one you should generally always enable is
-# plot.dists_fitted_rescaled, also 
+# plot.dists_fitted_rescaled, also
 # plot.dists_fitted_grouped_rescaled if any indicators
 # you are using consist of multiple strata.
-# Setting all to TRUE can result in the production of 
+# Setting all to TRUE can result in the production of
 # 100 MB or more of figures per VQA run
 plot.dists_fitted <- FALSE
 plot.dists_fitted_bm <- FALSE
@@ -1399,11 +1401,11 @@ plot.dists_fitted_focal_rescaled <- FALSE
 plot.dists_fitted_focal_rescaled_nofit <- FALSE
 plot.dists_fitted_grouped <- FALSE
 plot.dists_fitted_grouped_nofit <- FALSE
-plot.dists_fitted_grouped_rescaled <- TRUE  # Enable if any indicators have strata
+plot.dists_fitted_grouped_rescaled <- TRUE # Enable if any indicators have strata
 plot.dists_fitted_grouped_rescaled_nofit <- FALSE
 plot.dists_fitted_nofit <- FALSE
-plot.dists_fitted_rescaled <- TRUE  # Always enable this one
-plot.dists_fitted_rescaled_nofit <- FALSE  # Enable if q.method=="fixed"
+plot.dists_fitted_rescaled <- TRUE # Always enable this one
+plot.dists_fitted_rescaled_nofit <- FALSE # Enable if q.method=="fixed"
 
 #################################
 #################################
@@ -1429,7 +1431,7 @@ VQA.XLS.REMOVE.Q.NA <- TRUE
 VQA.XLS.DROP.INCLUDE.FALSE <- TRUE
 
 # Output file
-FNAME.Q.XLSX.OUT<- "vqa_summary.xlsx"
+FNAME.Q.XLSX.OUT <- "vqa_summary.xlsx"
 
 # Pluralize stratum names?
 VQA.SUMMARY.PLURALIZE.STRATA <- FALSE
@@ -1448,10 +1450,10 @@ VQA.SUMMARY.PLURALIZE.STRATA <- FALSE
 # These are the names of CSV files
 # created by the import script and saved
 # to directory inputs/, and imported
-# by indicator and summary scripts. 
+# by indicator and summary scripts.
 # With the exception of the whitelist/
-# blacklist files, the base name of 
-# each file is the also the name of a 
+# blacklist files, the base name of
+# each file is the also the name of a
 # data frame created by the project-
 # specific import script.
 ###############################
@@ -1483,19 +1485,19 @@ SPECIES.FILE <- paste0(DF.SPECIES, ".csv")
 # Edit to exclude certain indicators or indicator-stratum
 # combinations on the fly. After editing, you MUST set
 # REPLACE.INCLUDE.FILES <- TRUE to preserve your changes.
-BLACKLIST.FILE <- "ei.stratum.include.csv"	
+BLACKLIST.FILE <- "ei.stratum.include.csv"
 
 # Indicator-stratum-bm.veg include file.
 # Vegetation-specific exceptions to indicators and
 # strata excluded in blacklist.file
-# When created, combines all classes of bm vegetation 
+# When created, combines all classes of bm vegetation
 # present in the data with all indicators (as set in the
 # parameters files) and all strata (as extracted from
 # the raw data).
 # Edit to exclude certain indicators or indicator-stratum
 # combinations on the fly. After editing, you MUST set
 # REPLACE.INCLUDE.FILES <- TRUE to preserve your changes.
-WHITELIST.FILE <- 'ei.stratum.veg.include.csv' 
+WHITELIST.FILE <- "ei.stratum.veg.include.csv"
 
 ###############################
 # Intermediate file names
@@ -1506,7 +1508,7 @@ WHITELIST.FILE <- 'ei.stratum.veg.include.csv'
 
 # Land cover sample size summary
 LC.SUMMARY.FILE <- "lc.summary.csv"
-#LC.SUMMARY.FILE <- "sample.size.summary.csv"
+# LC.SUMMARY.FILE <- "sample.size.summary.csv"
 
 # Details land cover sample size summary
 LC.SUMMARY.DETAILED.FILE <- "lc.summary.detailed.csv"
@@ -1519,31 +1521,31 @@ FILENAME.EI.SUMMARY <- "ei.summary.csv"
 # vqa.summary file names
 #################################
 
-# Combined focal indicator values & quality calculations 
-SUMMARY.FOCAL.EI.FILE <- "summary_focal_ei.csv"	
+# Combined focal indicator values & quality calculations
+SUMMARY.FOCAL.EI.FILE <- "summary_focal_ei.csv"
 
-# Vector of bootstrapped EI quality 
-SUMMARY.FOCAL.EI.BOOT.FILE <- "summary_q.ei_boot.csv"	
+# Vector of bootstrapped EI quality
+SUMMARY.FOCAL.EI.BOOT.FILE <- "summary_q.ei_boot.csv"
 
 # Combined bm indicator values
-SUMMARY.BM.EI.FILE <- "summary_bm_ei.csv"		
+SUMMARY.BM.EI.FILE <- "summary_bm_ei.csv"
 
 # Functional group quality by land cover class
-SUMMARY.FOCAL.FG.FILE <- "summary_focal_fg.csv"	
+SUMMARY.FOCAL.FG.FILE <- "summary_focal_fg.csv"
 
 # Functional group quality by benchmark vegetation class
-SUMMARY.FOCAL.FG.BM.FILE <- "summary_focal_fg_bm.csv"	
+SUMMARY.FOCAL.FG.BM.FILE <- "summary_focal_fg_bm.csv"
 
 # Overall quality and QH by land cover class
 # Anthropogenic land cover classes separate
-SUMMARY.FOCAL.ALL.FILE <- "summary_focal_q_qh_all.csv"	
+SUMMARY.FOCAL.ALL.FILE <- "summary_focal_q_qh_all.csv"
 
 # Overall quality and QH by land cover class
 # Anthropogenic land cover classes combined
-SUMMARY.FOCAL.FILE <- "summary_focal_q_qh.csv"		
+SUMMARY.FOCAL.FILE <- "summary_focal_q_qh.csv"
 
 # Overall QH by benchmark vegetation class
-SUMMARY.FOCAL.BM.FILE <- "summary_focal_qh_bm.csv"	
+SUMMARY.FOCAL.BM.FILE <- "summary_focal_qh_bm.csv"
 
 # Vector of bootstrapped overall quality, by landcover class
 SUMMARY.Q.OVERALL.BOOT.LC.FILE <- "summary_q.overall_boot_lc.csv"
@@ -1570,21 +1572,21 @@ FNAME.Q.EI.OUT <- "vqa_summary_q.ei.csv"
 ##########################################
 # Taxonomic Name Resolution Service (TNRS)
 # See: https://tnrs.biendata.org
-# For resolving species names and looking 
+# For resolving species names and looking
 # up standardized family classifications
 ##########################################
 
 # Base URL for TNRS api
-TNRS_URL = "http://vegbiendev.nceas.ucsb.edu:8975/tnrs_api.php" 
+TNRS_URL <- "http://vegbiendev.nceas.ucsb.edu:8975/tnrs_api.php"
 
 # TNRS options
 # Other two options (mode, matches) set on the fly depending on
 # output desired
-TNRS_SOURCES <- "tropicos,tpl,usda"	# Taxonomic sources
-TNRS_CLASS <- "tropicos"						# Family classification source
+TNRS_SOURCES <- "tropicos,tpl,usda" # Taxonomic sources
+TNRS_CLASS <- "tropicos" # Family classification source
 
 # Request headers
-TNRS_HEADERS <- list('Accept' = 'application/json', 'Content-Type' = 'application/json', 'charset' = 'UTF-8')
+TNRS_HEADERS <- list("Accept" = "application/json", "Content-Type" = "application/json", "charset" = "UTF-8")
 
 #####################################
 #####################################
@@ -1604,20 +1606,20 @@ TNRS_HEADERS <- list('Accept' = 'application/json', 'Content-Type' = 'applicatio
 # Set project-specific parameters file name
 params.proj.filename <- paste0("params.", PROJ, ".R")
 
-if ( exists("PARAMS.USE.ASSESS") ) {
-  if ( PARAMS.USE.ASSESS==TRUE ) {
+if (exists("PARAMS.USE.ASSESS")) {
+  if (PARAMS.USE.ASSESS == TRUE) {
     params.proj.filename <- paste0("params.", PROJ, ".", ASSESS, ".R")
   }
 }
-#params.proj.file <- paste0( "params/", params.proj.filename )
-params.proj.file <- paste0( BASEDIR_PSFILES, "params/", params.proj.filename )
+# params.proj.file <- paste0( "params/", params.proj.filename )
+params.proj.file <- paste0(BASEDIR_PSFILES, "params/", params.proj.filename)
 
 # Load project-specific parameters file if exists
-if ( file.exists(params.proj.file) ) {
+if (file.exists(params.proj.file)) {
   sys.source(params.proj.file, envir = legacy.run.env)
 } else {
   # Warn file doesn't exist & continue, using default parameters
-  cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep="")
+  cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep = "")
 }
 
 legacy.seed <- if (exists("VQA_TEST_SEED")) VQA_TEST_SEED else Sys.getenv("VQA_TEST_SEED", "")

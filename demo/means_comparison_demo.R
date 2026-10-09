@@ -2,7 +2,7 @@
 # OPTION 1: USER-DEFINED PARAMETER
 # ==============================================================================
 # Change this value to automatically update the function, labels, and legend
-power_p <- 0.3 
+power_p <- 0.3
 
 # Load required libraries
 library(ggplot2)
@@ -53,8 +53,10 @@ data_long$Mean_Type <- factor(data_long$Mean_Type, levels = c("Arithmetic", "Geo
 ggplot(data_long, aes(x = c, y = Mean_Value, color = Mean_Type)) +
   geom_line(linewidth = 1) +
   geom_point(size = 2) +
-  scale_color_manual(values = setNames(c("#E41A1C", "#377EB8", "#4DAF4A"), 
-    c("Arithmetic", "Geometric", power_label))) +
+  scale_color_manual(values = setNames(
+    c("#E41A1C", "#377EB8", "#4DAF4A"),
+    c("Arithmetic", "Geometric", power_label)
+  )) +
   labs(
     title = "Comparison of Pythagorean and Power Means",
     subtitle = paste0("Calculated across vectors a=1, b=1, and c varying from 0 to 1"),
@@ -63,20 +65,20 @@ ggplot(data_long, aes(x = c, y = Mean_Value, color = Mean_Type)) +
     color = "Type of Mean"
   ) +
   # OPTION 2: Bounding box, tick marks, and zero gridlines
-  theme_bw(base_size = 14) + 
+  theme_bw(base_size = 14) +
   theme(
     panel.grid.major = element_blank(), # Removes major grid lines
     panel.grid.minor = element_blank(), # Removes minor grid lines
     axis.ticks = element_line(color = "black"), # Forces visible tick marks
     axis.ticks.length = unit(0.2, "cm"),
-    
+
     # OPTION 3: Legend placed inside the lower-right quadrant
-    legend.position = c(0.95, 0.05),       # Anchor coordinate close to bottom-right corner
+    legend.position = c(0.95, 0.05), # Anchor coordinate close to bottom-right corner
     legend.justification = c("right", "bottom"), # Aligns the legend box to that anchor point
-    legend.direction = "vertical",        # Arranges options vertically
-    legend.box.just = "left",            # Left-justifies the legend content inside its box
+    legend.direction = "vertical", # Arranges options vertically
+    legend.box.just = "left", # Left-justifies the legend content inside its box
     legend.background = element_rect(fill = "white", color = "black", linewidth = 0.5), # Optional box around legend
-    
+
     # Title formatting
     plot.title = element_text(face = "bold", hjust = 0.5),
     plot.subtitle = element_text(hjust = 0.5)

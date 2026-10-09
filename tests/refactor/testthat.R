@@ -28,9 +28,10 @@ detect_test_workers <- function(contract_count) {
     available <- parallel::detectCores()
   }
   if ((length(available) != 1L || is.na(available)) &&
-      nzchar(Sys.which("getconf"))) {
+    nzchar(Sys.which("getconf"))) {
     available <- suppressWarnings(as.integer(system2(
-      "getconf", "_NPROCESSORS_ONLN", stdout = TRUE, stderr = FALSE
+      "getconf", "_NPROCESSORS_ONLN",
+      stdout = TRUE, stderr = FALSE
     )))
   }
   if (length(available) != 1L || is.na(available) || available < 1L) {

@@ -31,22 +31,27 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
 }
 
 confirm_legacy_batch <- function(run_env) {
-  evalq({
-    cat(paste0(
-      "Run VQA Batch for project '",
-      PROJ,
-      "', assessment '",
-      ASSESS,
-      "' using the following settings: \n"
-    ))
-    cat(paste0(MSG.CONF.START, MSG.CONF.BATCH))
-    if (!interactive()) {
-      cat("Continue? (y/n):")
-      if (!readLines("stdin", n = 1L) %in% c("y", "Y", "Yes", "yes")) {
-        stop_quietly("Operation cancelled\n\n")
+  evalq(
+    {
+      cat(paste0(
+        "Run VQA Batch for project '",
+        PROJ,
+        "', assessment '",
+        ASSESS,
+        "' using the following settings: \n"
+      ))
+      cat(paste0(MSG.CONF.START, MSG.CONF.BATCH))
+      if (!interactive()) {
+        cat("Continue? (y/n):")
+        if (!readLines("stdin", n = 1L) %in% c("y", "Y", "Yes", "yes")) {
+          stop_quietly("Operation cancelled\n\n")
+        }
+      } else {
+        cat("\n\n")
       }
-    } else cat("\n\n")
-  }, envir = run_env)
+    },
+    envir = run_env
+  )
 }
 
 execute_legacy_batch <- function(run_env) {
@@ -61,24 +66,30 @@ execute_legacy_batch <- function(run_env) {
       rm(list = name, envir = .GlobalEnv)
     }
   }, add = TRUE)
-  logfile <- evalq({
-    if (REPLACE.LOG) {
-      paste0(LOGDIR, LOGFILE.BASENAME, ".txt")
-    } else {
-      paste0(
-        LOGDIR,
-        LOGFILE.BASENAME,
-        format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"
-      )
-    }
-  }, envir = run_env)
+  logfile <- evalq(
+    {
+      if (REPLACE.LOG) {
+        paste0(LOGDIR, LOGFILE.BASENAME, ".txt")
+      } else {
+        paste0(
+          LOGDIR,
+          LOGFILE.BASENAME,
+          format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"
+        )
+      }
+    },
+    envir = run_env
+  )
   log <- file(logfile)
   sink_depth <- sink.number(type = "output")
   sink(log, append = TRUE, type = "output", split = TRUE)
-  on.exit({
-    while (sink.number(type = "output") > sink_depth) sink(type = "output")
-    close(log)
-  }, add = TRUE)
+  on.exit(
+    {
+      while (sink.number(type = "output") > sink_depth) sink(type = "output")
+      close(log)
+    },
+    add = TRUE
+  )
   sys.source("analysis/legacy-batch.R", envir = run_env, toplevel.env = run_env)
   invisible(list(
     results = evalq(RESULTSDIR, envir = run_env),
