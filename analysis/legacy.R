@@ -1,3 +1,5 @@
+source(file.path("analysis", "legacy-batch.R"), local = TRUE)
+
 legacy_project_name <- function(context) {
   project <- context$params$project
   if (is.null(project) || !nzchar(project)) {
@@ -54,6 +56,34 @@ confirm_legacy_batch <- function(run_env) {
   )
 }
 
+with_legacy_analysis_log <- function(run_env, code) {
+  logfile <- evalq(
+    {
+      if (REPLACE.LOG) {
+        file.path(LOGDIR, paste0(LOGFILE.BASENAME, ".txt"))
+      } else {
+        file.path(LOGDIR, paste0(
+          LOGFILE.BASENAME,
+          format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"
+        ))
+      }
+    },
+    envir = run_env
+  )
+  log <- file(logfile)
+  sink_depth <- sink.number(type = "output")
+  on.exit(
+    {
+      if (sink.number(type = "output") > sink_depth) sink(type = "output")
+      close(log)
+    },
+    add = TRUE
+  )
+  sink(log, append = TRUE, type = "output", split = TRUE)
+  force(code)
+  logfile
+}
+
 execute_legacy_batch <- function(run_env) {
   legacy_functions <- c("gmean", "generalized_mean")
   had_function <- vapply(legacy_functions, exists, logical(1), envir = .GlobalEnv, inherits = FALSE)
@@ -66,31 +96,20 @@ execute_legacy_batch <- function(run_env) {
       rm(list = name, envir = .GlobalEnv)
     }
   }, add = TRUE)
-  logfile <- evalq(
-    {
-      if (REPLACE.LOG) {
-        paste0(LOGDIR, LOGFILE.BASENAME, ".txt")
-      } else {
-        paste0(
-          LOGDIR,
-          LOGFILE.BASENAME,
-          format(Sys.time(), "_%Y%m%d_%H%M%S"), ".txt"
-        )
-      }
-    },
-    envir = run_env
-  )
-  log <- file(logfile)
-  sink_depth <- sink.number(type = "output")
-  sink(log, append = TRUE, type = "output", split = TRUE)
-  on.exit(
-    {
-      while (sink.number(type = "output") > sink_depth) sink(type = "output")
-      close(log)
-    },
-    add = TRUE
-  )
-  sys.source("analysis/legacy-batch.R", envir = run_env, toplevel.env = run_env)
+
+  logfile <- with_legacy_analysis_log(run_env, {
+    cat("\n############################################\nBegin operation\n\n")
+    check_legacy_inputs(run_env)
+    evalq(source("libraries.R"), envir = run_env)
+
+    if (run_env$QH.METHOD %in% c("assume.0", "assume.1")) {
+      run_legacy_fixed_quality(run_env)
+    } else {
+      run_legacy_indicators(run_env)
+    }
+    run_legacy_summaries(run_env)
+    cat("\nOperation completed\n############################################\n\n")
+  })
   invisible(list(
     results = evalq(RESULTSDIR, envir = run_env),
     figures = evalq(FIGDIR, envir = run_env),
