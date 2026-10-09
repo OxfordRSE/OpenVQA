@@ -9,5 +9,6 @@ source(file.path("preprocessing", "standardise.R"))
 source(file.path("preprocessing", "export.R"))
 source(file.path("preprocessing", "land-cover-summaries.R"))
 source(file.path("preprocessing", "workflow.R"))
+source(file.path("analysis", "legacy.R"))
 
 testthat::test_dir("tests/testthat", reporter = "progress")
