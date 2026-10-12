@@ -28,7 +28,11 @@ run_legacy_indicators <- function(run_env) {
         cat("*** Running indicator TD only ***\n\n")
         source(file.path("indicators", "td.R"), local = TRUE)
       } else {
-        for (EI in EI.vec) source(file.path("indicators", paste0(tolower(EI), ".R")), local = TRUE)
+        for (EI in EI.vec) {
+          source(
+            file.path("indicators", paste0(tolower(EI), ".R")), local = TRUE
+          )
+        }
       }
     }
   }, envir = run_env)
