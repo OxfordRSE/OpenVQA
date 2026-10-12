@@ -8,7 +8,9 @@ check_legacy_inputs <- function(run_env) {
     }
     for (fname in required_files) {
       if (!file.exists(file.path(INPUTDIR, paste0(fname, ".csv")))) {
-        stop_quietly("ERROR: one or more required input files missing!\nHave you run import.R yet?\n")
+        stop_quietly(
+          "ERROR: one or more required input files missing!\nHave you run import.R yet?\n"
+        )
       }
     }
     cat("done\n")
