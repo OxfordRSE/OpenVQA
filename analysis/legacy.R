@@ -1,5 +1,6 @@
 source(file.path("analysis", "legacy-batch.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
+source(file.path("analysis", "legacy-params.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
@@ -23,13 +24,22 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
   )
   if (!is.null(context)) {
     data_root <- if (is.null(config$data_root)) context$data_root else config$data_root
-    project <- legacy_project_name(if (is.null(config$project)) context$params$project else config$project)
+    project <- legacy_project_name(
+      if (is.null(config$project)) {
+        context$params$project
+      } else {
+        config$project
+      }
+    )
     assessment <- if (is.null(config$assessment)) context$assessment else config$assessment
     run_env$VQA_DATA_ROOT <- normalizePath(data_root, mustWork = TRUE)
     run_env$VQA_PROJECT <- project
     run_env$VQA_ASSESSMENT <- assessment
   }
   sys.source("includes/functions.R", envir = run_env, toplevel.env = run_env)
+  run_env$VQA_COMMON_PARAMS <- legacy_common_params(
+    if (is.null(context)) load_default_params() else config
+  )
   sys.source("params.R", envir = run_env, toplevel.env = run_env)
   run_env$seed_enabled <- !is.null(seed) || isTRUE(run_env$set.seed)
   if (!is.null(seed)) run_env$seed <- seed

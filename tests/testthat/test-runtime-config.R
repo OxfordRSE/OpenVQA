@@ -5,7 +5,10 @@ testthat::test_that("parameter precedence preserves inputs and empty assessment 
   original <- project
   testthat::expect_identical(resolve_params(defaults)$value, 1)
   testthat::expect_identical(resolve_params(defaults, project)$value, 2)
-  testthat::expect_identical(resolve_params(defaults, project, project$assessments$current)$value, 3)
+  testthat::expect_identical(
+    resolve_params(defaults, project, project$assessments$current)$value,
+    3
+  )
   resolved <- resolve_params(defaults, project, project$assessments$current, list(value = 4))
   testthat::expect_identical(resolved$value, 4)
   testthat::expect_true(resolved$default_only)
@@ -13,8 +16,9 @@ testthat::test_that("parameter precedence preserves inputs and empty assessment 
   testthat::expect_identical(resolved$active_indicators, list())
   testthat::expect_null(resolved$assessments)
   testthat::expect_identical(project, original)
-  testthat::expect_identical(resolve_assessment_params(project, "current")$value, 3)
-  testthat::expect_identical(resolve_assessment_params(project, "other")$value, 2)
+  project <- list(beta_buffer = 0.02, assessments = list(current = list(beta_buffer = 0.03)))
+  testthat::expect_identical(resolve_assessment_params(project, "current")$beta_buffer, 0.03)
+  testthat::expect_identical(resolve_assessment_params(project, "other")$beta_buffer, 0.02)
   testthat::expect_identical(resolve_assessment_params(NULL, "current"), list())
   testthat::expect_error(resolve_params(project = list("unnamed")), "named list")
   testthat::expect_error(resolve_params(project = "invalid"), "named list")

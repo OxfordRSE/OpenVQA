@@ -1,0 +1,447 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenVQA analysis parameters",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "library_load_silent": {
+      "title": "Library load silent",
+      "description": "Suppress package startup messages during analysis.",
+      "type": "boolean"
+    },
+    "logfile_basename": {
+      "title": "Logfile basename",
+      "description": "Base name of the analysis log within the assessment log directory.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_.-]+$"
+    },
+    "replace_log": {
+      "title": "Replace log",
+      "description": "Replace the previous analysis log instead of adding a timestamp.",
+      "type": "boolean"
+    },
+    "beta_algorithm": {
+      "title": "Beta algorithm",
+      "description": "Algorithm used to calculate quality for beta-distributed indicators.",
+      "type": "string",
+      "enum": [
+        "overlap",
+        "mixed"
+      ]
+    },
+    "use_quality_difference_raw": {
+      "title": "Use quality difference raw",
+      "description": "Keep the observed means-based quality even when the difference is not significant.",
+      "type": "boolean"
+    },
+    "quality_discount_method": {
+      "title": "Quality discount method",
+      "description": "Transformation applied to means-based beta quality.",
+      "type": "string",
+      "enum": [
+        "linear",
+        "scaled"
+      ]
+    },
+    "beta_weight_method": {
+      "title": "Beta weight method",
+      "description": "Weighting of overlap-based and means-based beta quality.",
+      "type": "string",
+      "enum": [
+        "linear",
+        "u.beta",
+        "u.beta.buffered"
+      ]
+    },
+    "beta_buffer": {
+      "title": "Beta buffer",
+      "description": "Edge buffer used by buffered beta weighting.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 0.1
+    },
+    "test_difference_bootstrap": {
+      "title": "Test difference bootstrap",
+      "description": "Run the permutation difference test inside beta bootstrap replicates.",
+      "type": "boolean"
+    },
+    "permutation_reps": {
+      "title": "Permutation reps",
+      "description": "Number of permutation replicates for tests of mean differences.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "infer_missing_cls": {
+      "title": "Infer missing cls",
+      "description": "Infer missing confidence limits in the final quality summary.",
+      "type": "boolean"
+    },
+    "infer_missing_cls_strict": {
+      "title": "Infer missing cls strict",
+      "description": "Also infer confidence limits when observed limits are close to zero.",
+      "type": "boolean"
+    },
+    "td_outliers_append": {
+      "title": "Td outliers append",
+      "description": "Append detected taxonomic distance outliers to the existing outlier file.",
+      "type": "boolean"
+    },
+    "td_outlier_upper_threshold": {
+      "title": "Td outlier upper threshold",
+      "description": "Taxonomic distance above which a plot is automatically an outlier.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "td_bm_plots_deduplicate": {
+      "title": "Td bm plots deduplicate",
+      "description": "Deduplicate benchmark plots before taxonomic distance NMDS.",
+      "type": "boolean"
+    },
+    "remove_ba_outliers": {
+      "title": "Remove ba outliers",
+      "description": "Remove basal area outliers before calculating quality.",
+      "type": "boolean"
+    },
+    "ba_outliers_stdevs": {
+      "title": "Ba outliers stdevs",
+      "description": "Standard deviation threshold for basal area outliers.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "ba_outliers_append": {
+      "title": "Ba outliers append",
+      "description": "Append basal area outliers to the existing outlier file.",
+      "type": "boolean"
+    },
+    "ba_outliers_upper_threshold": {
+      "title": "Ba outliers upper threshold",
+      "description": "Basal area above which a plot is automatically an outlier.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "quality_inverse_logit": {
+      "title": "Quality inverse logit",
+      "description": "Transform final indicator quality with the anchored inverse logit.",
+      "type": "boolean"
+    },
+    "inverse_logit_beta": {
+      "title": "Inverse logit beta",
+      "description": "Steepness of the anchored inverse logit quality transformation.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "zero_to_one": {
+      "title": "Zero to one",
+      "description": "Replace zero species richness with one before negative binomial fitting.",
+      "type": "boolean"
+    },
+    "plot_overlap": {
+      "title": "Plot overlap",
+      "description": "Generate overlap diagnostic figures.",
+      "type": "boolean"
+    },
+    "plot_hist": {
+      "title": "Plot hist",
+      "description": "Generate focal and benchmark distribution histograms.",
+      "type": "boolean"
+    },
+    "quality_legend_only": {
+      "title": "Quality legend only",
+      "description": "Show quality and confidence limits alone in the main results legend.",
+      "type": "boolean"
+    },
+    "quality_legend_percent": {
+      "title": "Quality legend percent",
+      "description": "Display legend quality as a percentage.",
+      "type": "boolean"
+    },
+    "boot_graph_subsample": {
+      "title": "Boot graph subsample",
+      "description": "Subsample bootstrap distributions when drawing figures.",
+      "type": "boolean"
+    },
+    "show_overlap": {
+      "title": "Show overlap",
+      "description": "Show overlap in the figure results legend.",
+      "type": "boolean"
+    },
+    "plot_boot_pdfs": {
+      "title": "Plot boot pdfs",
+      "description": "Draw bootstrap probability densities and confidence limits on overlap figures.",
+      "type": "boolean"
+    },
+    "plot_pdf": {
+      "title": "Plot pdf",
+      "description": "Overlay fitted probability density curves on histograms.",
+      "type": "boolean"
+    },
+    "no_fit_keep_separate": {
+      "title": "No fit keep separate",
+      "description": "Keep histograms without fitted curves in a separate directory.",
+      "type": "boolean"
+    },
+    "group_mtext_line": {
+      "title": "Group mtext line",
+      "description": "Vertical title placement for grouped figures.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "workbook_drop_notes": {
+      "title": "Workbook drop notes",
+      "description": "Drop notes from the overall quality worksheet.",
+      "type": "boolean"
+    },
+    "workbook_remove_missing_quality": {
+      "title": "Workbook remove missing quality",
+      "description": "Remove worksheet rows with missing overall quality.",
+      "type": "boolean"
+    },
+    "workbook_drop_excluded": {
+      "title": "Workbook drop excluded",
+      "description": "Remove excluded indicator rows from the indicator worksheet.",
+      "type": "boolean"
+    },
+    "summary_pluralize_strata": {
+      "title": "Summary pluralize strata",
+      "description": "Pluralize stratum names in summary output.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted": {
+      "title": "Plot dists fitted",
+      "description": "Generate figures in the dists_fitted output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm": {
+      "title": "Plot dists fitted bm",
+      "description": "Generate figures in the dists_fitted_bm output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped": {
+      "title": "Plot dists fitted bm grouped",
+      "description": "Generate figures in the dists_fitted_bm_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_nofit": {
+      "title": "Plot dists fitted bm grouped nofit",
+      "description": "Generate figures in the dists_fitted_bm_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_rescaled": {
+      "title": "Plot dists fitted bm grouped rescaled",
+      "description": "Generate figures in the dists_fitted_bm_grouped_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted bm grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_bm_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_nofit": {
+      "title": "Plot dists fitted bm nofit",
+      "description": "Generate figures in the dists_fitted_bm_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_rescaled": {
+      "title": "Plot dists fitted bm rescaled",
+      "description": "Generate figures in the dists_fitted_bm_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_rescaled_nofit": {
+      "title": "Plot dists fitted bm rescaled nofit",
+      "description": "Generate figures in the dists_fitted_bm_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal": {
+      "title": "Plot dists fitted focal",
+      "description": "Generate figures in the dists_fitted_focal output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped": {
+      "title": "Plot dists fitted focal grouped",
+      "description": "Generate figures in the dists_fitted_focal_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_nofit": {
+      "title": "Plot dists fitted focal grouped nofit",
+      "description": "Generate figures in the dists_fitted_focal_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_rescaled": {
+      "title": "Plot dists fitted focal grouped rescaled",
+      "description": "Generate figures in the dists_fitted_focal_grouped_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted focal grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_focal_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_nofit": {
+      "title": "Plot dists fitted focal nofit",
+      "description": "Generate figures in the dists_fitted_focal_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_rescaled": {
+      "title": "Plot dists fitted focal rescaled",
+      "description": "Generate figures in the dists_fitted_focal_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_rescaled_nofit": {
+      "title": "Plot dists fitted focal rescaled nofit",
+      "description": "Generate figures in the dists_fitted_focal_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped": {
+      "title": "Plot dists fitted grouped",
+      "description": "Generate figures in the dists_fitted_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_nofit": {
+      "title": "Plot dists fitted grouped nofit",
+      "description": "Generate figures in the dists_fitted_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_nofit": {
+      "title": "Plot dists fitted nofit",
+      "description": "Generate figures in the dists_fitted_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_rescaled_nofit": {
+      "title": "Plot dists fitted rescaled nofit",
+      "description": "Generate figures in the dists_fitted_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "project": {
+      "title": "Project",
+      "type": "string",
+      "minLength": 1,
+      "description": "Project label used to select the project's parameter script."
+    },
+    "legacy_summary_area_ha": {
+      "title": "Legacy summary area ha",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Area used by the legacy demo 1 summary compatibility calculation."
+    },
+    "data_type": {
+      "title": "Data type",
+      "type": "string",
+      "enum": [
+        "cover",
+        "ind",
+        "mixed"
+      ],
+      "description": "Species observation data available to preprocessing and analysis."
+    },
+    "qh_method": {
+      "title": "Qh method",
+      "type": "string",
+      "enum": [
+        "empirical",
+        "assume.0",
+        "assume.1"
+      ],
+      "description": "Empirical quality or an assumed constant quality of zero or one."
+    },
+    "active_indicators": {
+      "title": "Active indicators",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SR",
+          "TD",
+          "TS",
+          "PCGF",
+          "GC",
+          "PCESS",
+          "PCES",
+          "BA",
+          "ASC",
+          "PCS",
+          "CH",
+          "BAES"
+        ]
+      },
+      "uniqueItems": true,
+      "description": "Indicator codes selected for the assessment."
+    },
+    "td_only": {
+      "title": "Td only",
+      "type": "boolean",
+      "description": "Run taxonomic distance alone for NMDS tuning."
+    },
+    "include_plots_nodata": {
+      "title": "Include plots nodata",
+      "type": "boolean",
+      "description": "Include plots lacking observations for an indicator."
+    }
+  },
+  "required": [
+    "library_load_silent",
+    "logfile_basename",
+    "replace_log",
+    "beta_algorithm",
+    "use_quality_difference_raw",
+    "quality_discount_method",
+    "beta_weight_method",
+    "beta_buffer",
+    "test_difference_bootstrap",
+    "permutation_reps",
+    "infer_missing_cls",
+    "infer_missing_cls_strict",
+    "td_outliers_append",
+    "td_outlier_upper_threshold",
+    "td_bm_plots_deduplicate",
+    "remove_ba_outliers",
+    "ba_outliers_stdevs",
+    "ba_outliers_append",
+    "ba_outliers_upper_threshold",
+    "quality_inverse_logit",
+    "inverse_logit_beta",
+    "zero_to_one",
+    "plot_overlap",
+    "plot_hist",
+    "quality_legend_only",
+    "quality_legend_percent",
+    "boot_graph_subsample",
+    "show_overlap",
+    "plot_boot_pdfs",
+    "plot_pdf",
+    "no_fit_keep_separate",
+    "group_mtext_line",
+    "workbook_drop_notes",
+    "workbook_remove_missing_quality",
+    "workbook_drop_excluded",
+    "summary_pluralize_strata",
+    "plot_dists_fitted",
+    "plot_dists_fitted_bm",
+    "plot_dists_fitted_bm_grouped",
+    "plot_dists_fitted_bm_grouped_nofit",
+    "plot_dists_fitted_bm_grouped_rescaled",
+    "plot_dists_fitted_bm_grouped_rescaled_nofit",
+    "plot_dists_fitted_bm_nofit",
+    "plot_dists_fitted_bm_rescaled",
+    "plot_dists_fitted_bm_rescaled_nofit",
+    "plot_dists_fitted_focal",
+    "plot_dists_fitted_focal_grouped",
+    "plot_dists_fitted_focal_grouped_nofit",
+    "plot_dists_fitted_focal_grouped_rescaled",
+    "plot_dists_fitted_focal_grouped_rescaled_nofit",
+    "plot_dists_fitted_focal_nofit",
+    "plot_dists_fitted_focal_rescaled",
+    "plot_dists_fitted_focal_rescaled_nofit",
+    "plot_dists_fitted_grouped",
+    "plot_dists_fitted_grouped_nofit",
+    "plot_dists_fitted_grouped_rescaled_nofit",
+    "plot_dists_fitted_nofit",
+    "plot_dists_fitted_rescaled_nofit"
+  ]
+}
