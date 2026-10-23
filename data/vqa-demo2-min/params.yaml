@@ -1,21 +1,31 @@
 project: vqa-demo2-min
-
-# Validation-only manifest for now.
-# This is a declarative subset of params/params.vqa-demo2.R.
 data_type: mixed
-qh_method: empirical
-td_only: false
-include_plots_nodata: true
-
-active_indicators:
-  - SR
-  - TS
-  - PCES
-  - PCGF
-  - BA
-  - ASC
-
+bootstrap_reps: 10
+min_plots: 4
+omit_quality_hectares: false
+functional_group_group_by: indicator_group
+functional_group_method: generalized_mean
+overall_quality_method: mixed
+nodata_sd: 4
+aggregate_indicators: [PCGF, ASC]
+active_indicators: [SR, TS, PCES, PCGF, BA, ASC]
+source_plot_data_filename: Demo_data_main.xlsx
+indicator_settings:
+  SR:
+    data_type: cover
+    test_tail: both
+  ASC:
+    distribution: gamma
+stem_sampling:
+  min_dbh_cm: 2.5
+  split_dbh_cm: 10
+  small_plot_area_m2: 48
+  large_plot_area_m2: 192
 assessments:
   offset_baseline:
     active_indicators: []
+    aggregate_indicators: []
     qh_method: assume.0
+    source_plot_data_filename: Demo_data_offsets.xlsx
+  offset_current:
+    source_plot_data_filename: Demo_data_offsets.xlsx

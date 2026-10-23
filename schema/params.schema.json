@@ -520,7 +520,11 @@
           "TD",
           "PCGF",
           "GC",
-          "PCESS"
+          "PCESS",
+          "TS",
+          "PCES",
+          "BA",
+          "ASC"
         ]
       },
       "uniqueItems": true
@@ -596,6 +600,25 @@
           "title": "Na to zero",
           "description": "Treat missing observations as zero for the indicator.",
           "type": "boolean"
+        },
+        "multiplier": {
+          "title": "Multiplier",
+          "description": "Scalar applied to indicator observations.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "normalize_area_m2": {
+          "title": "Normalize area in square metres",
+          "description": "Common area for basal-area normalization; false keeps the observed area.",
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ]
         }
       },
       "additionalProperties": false,
@@ -609,7 +632,9 @@
         "td_multiplier",
         "td_multiplier_omit",
         "exclude_exotics",
-        "na_to_zero"
+        "na_to_zero",
+        "multiplier",
+        "normalize_area_m2"
       ]
     },
     "indicator_settings": {
@@ -640,6 +665,26 @@
         "PCESS": {
           "title": "Percent Cover Exotic Species",
           "description": "Calculation settings for Percent Cover Exotic Species.",
+          "$ref": "#/definitions/indicator"
+        },
+        "TS": {
+          "title": "Taxonomic Similarity",
+          "description": "Calculation settings for Taxonomic Similarity.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCES": {
+          "title": "Percent Cover Exotic Species",
+          "description": "Calculation settings for Percent Cover Exotic Species.",
+          "$ref": "#/definitions/indicator"
+        },
+        "BA": {
+          "title": "Basal Area (m2/ha)",
+          "description": "Calculation settings for Basal Area (m2/ha).",
+          "$ref": "#/definitions/indicator"
+        },
+        "ASC": {
+          "title": "Abundance by Size Class",
+          "description": "Calculation settings for Abundance by Size Class.",
           "$ref": "#/definitions/indicator"
         }
       },
@@ -697,6 +742,50 @@
         "PCESS": {
           "title": "Pcess",
           "description": "Functional group for Percent Cover Exotic Species.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "TS": {
+          "title": "Ts",
+          "description": "Functional group for Taxonomic Similarity.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCES": {
+          "title": "Pces",
+          "description": "Functional group for Percent Cover Exotic Species.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "BA": {
+          "title": "Ba",
+          "description": "Functional group for Basal Area (m2/ha).",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "ASC": {
+          "title": "Asc",
+          "description": "Functional group for Abundance by Size Class.",
           "type": "string",
           "enum": [
             "composition",
@@ -769,6 +858,44 @@
       "title": "Missing exotic status assumes native",
       "description": "Record whether missing exotic status was treated as native during data preparation.",
       "type": "boolean"
+    },
+    "stem_sampling": {
+      "title": "Stem sampling",
+      "description": "Sampling geometry used to normalize basal area by stem size.",
+      "type": "object",
+      "properties": {
+        "min_dbh_cm": {
+          "title": "Minimum dbh cm",
+          "description": "Minimum measured stem diameter included in basal-area normalization.",
+          "type": "number",
+          "minimum": 0
+        },
+        "split_dbh_cm": {
+          "title": "Split dbh cm",
+          "description": "Stem diameter separating the two sampling areas.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "small_plot_area_m2": {
+          "title": "Small plot area m2",
+          "description": "Total sampled area for stems below the diameter split.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "large_plot_area_m2": {
+          "title": "Large plot area m2",
+          "description": "Total sampled area for stems at or above the diameter split.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "min_dbh_cm",
+        "split_dbh_cm",
+        "small_plot_area_m2",
+        "large_plot_area_m2"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -851,7 +978,8 @@
     "indicator_settings",
     "indicator_groups",
     "nmds",
-    "missing_exotic_status_assume_native"
+    "missing_exotic_status_assume_native",
+    "pcess_herbs_only"
   ],
   "definitions": {
     "indicator": {
@@ -960,6 +1088,35 @@
           "title": "Na to zero",
           "description": "Treat missing observations as zero for the indicator.",
           "type": "boolean"
+        },
+        "data_type": {
+          "title": "Data type",
+          "type": "string",
+          "enum": [
+            "cover",
+            "ind",
+            "mixed"
+          ],
+          "description": "Species observation data available to preprocessing and analysis."
+        },
+        "multiplier": {
+          "title": "Multiplier",
+          "description": "Scalar applied to indicator observations.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "normalize_area_m2": {
+          "title": "Normalize area in square metres",
+          "description": "Common area for basal-area normalization; false keeps the observed area.",
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ]
         }
       },
       "additionalProperties": false,
@@ -1003,6 +1160,36 @@
           "active_indicators",
           "indicator_defaults",
           "source_plot_data_filename"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "project": {
+            "enum": [
+              "vqa-demo2",
+              "vqa-demo2-min"
+            ]
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "then": {
+        "required": [
+          "data_type",
+          "bootstrap_reps",
+          "omit_quality_hectares",
+          "functional_group_group_by",
+          "functional_group_method",
+          "overall_quality_method",
+          "nodata_sd",
+          "aggregate_indicators",
+          "active_indicators",
+          "source_plot_data_filename",
+          "stem_sampling"
         ]
       }
     }

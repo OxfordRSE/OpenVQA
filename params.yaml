@@ -79,11 +79,13 @@ indicator_defaults:
   convert_percent: no
   logit: no
   remove_zero_cover_plots: no
-  scale_abundance: no
+  scale_abundance: yes
   td_multiplier: ~
   td_multiplier_omit: []
   exclude_exotics: no
   na_to_zero: yes
+  multiplier: 1
+  normalize_area_m2: false
 indicator_settings:
   SR:
     name: Species Richness
@@ -119,12 +121,45 @@ indicator_settings:
     has_stratum: yes
     test_tail: upper
     benchmark_value: 0
+  TS:
+    name: Taxonomic Similarity
+    distribution: Bet
+    quality_method: empirical
+    has_stratum: no
+    test_tail: lower
+  PCES:
+    name: Percent Cover Exotic Species
+    distribution: Bet
+    quality_method: fixed
+    has_stratum: no
+    test_tail: upper
+    benchmark_value: 0
+  BA:
+    name: Basal Area (m2/ha)
+    distribution: gamma
+    quality_method: empirical
+    has_stratum: no
+    test_tail: both
+    data_type: ind
+    normalize_area_m2: 10000
+  ASC:
+    name: Abundance by Size Class
+    distribution: NBin
+    quality_method: empirical
+    has_stratum: yes
+    test_tail: both
+    data_type: ind
+    na_to_zero: no
 indicator_groups:
   SR: composition
   TD: composition
   PCGF: structure
   GC: function
   PCESS: integrity
+  TS: composition
+  PCES: integrity
+  BA: structure
+  ASC: structure
 nmds:
   verbose: no
   seed_enabled: yes
@@ -133,3 +168,4 @@ nmds:
   dimensions: 3
   max_iterations: 200
 missing_exotic_status_assume_native: true
+pcess_herbs_only: false

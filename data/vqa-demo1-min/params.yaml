@@ -18,6 +18,4 @@ active_indicators:
 - PCGF
 - GC
 - PCESS
-indicator_defaults:
-  scale_abundance: yes
 source_plot_data_filename: vqa-demo1_data.accdb
