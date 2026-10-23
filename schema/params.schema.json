@@ -322,7 +322,7 @@
       "title": "Project",
       "type": "string",
       "minLength": 1,
-      "description": "Project label used to select the project's parameter script."
+      "description": "Project label recorded in run metadata and used by standalone parameter scripts."
     },
     "legacy_summary_area_ha": {
       "title": "Legacy summary area ha",
@@ -382,6 +382,393 @@
       "title": "Include plots nodata",
       "type": "boolean",
       "description": "Include plots lacking observations for an indicator."
+    },
+    "min_plots": {
+      "title": "Min plots",
+      "description": "Minimum plot count reported in the analysis workbook.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "force_prepare_raw": {
+      "title": "Force prepare raw",
+      "description": "Recalculate raw values for every active indicator.",
+      "type": "boolean"
+    },
+    "plot_figures_only": {
+      "title": "Plot figures only",
+      "description": "Generate figures using existing analysis results.",
+      "type": "boolean"
+    },
+    "summary_only": {
+      "title": "Summary only",
+      "description": "Generate summaries using existing indicator results.",
+      "type": "boolean"
+    },
+    "remove_td_outliers": {
+      "title": "Remove td outliers",
+      "description": "Remove plots with outlying taxonomic distance values.",
+      "type": "boolean"
+    },
+    "td_outlier_stdevs": {
+      "title": "Td outlier stdevs",
+      "description": "Standard deviation threshold for taxonomic distance outliers.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "figure_type": {
+      "title": "Figure type",
+      "description": "File format for distribution figures.",
+      "type": "string",
+      "enum": [
+        "png",
+        "pdf"
+      ]
+    },
+    "plot_legends": {
+      "title": "Plot legends",
+      "description": "Draw legends on indicator histograms.",
+      "type": "boolean"
+    },
+    "legend_no_focal_benchmark": {
+      "title": "Legend no focal benchmark",
+      "description": "Omit the focal and benchmark colour key.",
+      "type": "boolean"
+    },
+    "show_sample_sizes": {
+      "title": "Show sample sizes",
+      "description": "Display sample sizes in histogram legends.",
+      "type": "boolean"
+    },
+    "legend_combined": {
+      "title": "Legend combined",
+      "description": "Combine histogram legends on the right side of the figure.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_rescaled": {
+      "title": "Plot dists fitted grouped rescaled",
+      "description": "Generate grouped distribution figures with rescaled axes.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_rescaled": {
+      "title": "Plot dists fitted rescaled",
+      "description": "Generate individual distribution figures with rescaled axes.",
+      "type": "boolean"
+    },
+    "vegetation_without_data": {
+      "title": "Vegetation without data",
+      "description": "Vegetation classes excluded because observations are unavailable.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "bootstrap_reps": {
+      "title": "Bootstrap reps",
+      "description": "Number of bootstrap replicates for quality confidence limits.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "omit_quality_hectares": {
+      "title": "Omit quality hectares",
+      "description": "Omit quality hectare calculations from the final summary.",
+      "type": "boolean"
+    },
+    "functional_group_group_by": {
+      "title": "Functional group group by",
+      "description": "Unit used when aggregating functional group quality.",
+      "type": "string",
+      "enum": [
+        "indicator",
+        "indicator_group"
+      ]
+    },
+    "functional_group_method": {
+      "title": "Functional group method",
+      "description": "Mean used to aggregate functional group quality.",
+      "type": "string",
+      "enum": [
+        "arithmetic",
+        "generalized_mean"
+      ]
+    },
+    "overall_quality_method": {
+      "title": "Overall quality method",
+      "description": "Method used to combine functional group qualities.",
+      "type": "string",
+      "enum": [
+        "gmean",
+        "prod",
+        "mixed"
+      ]
+    },
+    "nodata_sd": {
+      "title": "Nodata sd",
+      "description": "Standard deviation penalty for indicators with no-data plots.",
+      "type": "number",
+      "minimum": 0
+    },
+    "aggregate_indicators": {
+      "title": "Aggregate indicators",
+      "description": "Indicators whose stratum scores are combined in summary output.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SR",
+          "TD",
+          "PCGF",
+          "GC",
+          "PCESS"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "pcess_herbs_only": {
+      "title": "Pcess herbs only",
+      "description": "Restrict exotic species cover by stratum to herbs.",
+      "type": "boolean"
+    },
+    "indicator_defaults": {
+      "title": "Indicator defaults",
+      "description": "Calculation settings shared by indicators.",
+      "type": "object",
+      "properties": {
+        "benchmark_value": {
+          "title": "Benchmark value",
+          "description": "Fixed benchmark value; null for empirical comparisons.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prepare_raw": {
+          "title": "Prepare raw",
+          "description": "Recalculate raw values for this indicator.",
+          "type": "boolean"
+        },
+        "convert_percent": {
+          "title": "Convert percent",
+          "description": "Convert percentage observations into proportions.",
+          "type": "boolean"
+        },
+        "logit": {
+          "title": "Logit",
+          "description": "Apply a logit transformation to proportional observations.",
+          "type": "boolean"
+        },
+        "remove_zero_cover_plots": {
+          "title": "Remove zero cover plots",
+          "description": "Exclude plots with zero species cover.",
+          "type": "boolean"
+        },
+        "scale_abundance": {
+          "title": "Scale abundance",
+          "description": "Rescale observations into the interval from zero to one.",
+          "type": "boolean"
+        },
+        "td_multiplier": {
+          "title": "Td multiplier",
+          "description": "Multiplier applied to taxonomic distance before distribution fitting.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "td_multiplier_omit": {
+          "title": "Td multiplier omit",
+          "description": "Land cover classes exempt from the taxonomic distance multiplier.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exclude_exotics": {
+          "title": "Exclude exotics",
+          "description": "Exclude exotic species when calculating the indicator.",
+          "type": "boolean"
+        },
+        "na_to_zero": {
+          "title": "Na to zero",
+          "description": "Treat missing observations as zero for the indicator.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "benchmark_value",
+        "prepare_raw",
+        "convert_percent",
+        "logit",
+        "remove_zero_cover_plots",
+        "scale_abundance",
+        "td_multiplier",
+        "td_multiplier_omit",
+        "exclude_exotics",
+        "na_to_zero"
+      ]
+    },
+    "indicator_settings": {
+      "title": "Indicator settings",
+      "description": "Calculation settings for each indicator.",
+      "type": "object",
+      "properties": {
+        "SR": {
+          "title": "Species Richness",
+          "description": "Calculation settings for Species Richness.",
+          "$ref": "#/definitions/indicator"
+        },
+        "TD": {
+          "title": "Taxonomic distance",
+          "description": "Calculation settings for Taxonomic distance.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCGF": {
+          "title": "Percent Cover by Growth Form",
+          "description": "Calculation settings for Percent Cover by Growth Form.",
+          "$ref": "#/definitions/indicator"
+        },
+        "GC": {
+          "title": "Ground Cover",
+          "description": "Calculation settings for Ground Cover.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCESS": {
+          "title": "Percent Cover Exotic Species",
+          "description": "Calculation settings for Percent Cover Exotic Species.",
+          "$ref": "#/definitions/indicator"
+        }
+      },
+      "additionalProperties": false
+    },
+    "indicator_groups": {
+      "title": "Indicator groups",
+      "description": "Functional group assigned to each indicator.",
+      "type": "object",
+      "properties": {
+        "SR": {
+          "title": "Sr",
+          "description": "Functional group for Species Richness.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "TD": {
+          "title": "Td",
+          "description": "Functional group for Taxonomic distance.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCGF": {
+          "title": "Pcgf",
+          "description": "Functional group for Percent Cover by Growth Form.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "GC": {
+          "title": "Gc",
+          "description": "Functional group for Ground Cover.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCESS": {
+          "title": "Pcess",
+          "description": "Functional group for Percent Cover Exotic Species.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "nmds": {
+      "title": "Nmds",
+      "description": "Non-metric multidimensional scaling settings.",
+      "type": "object",
+      "properties": {
+        "verbose": {
+          "title": "Verbose",
+          "description": "Print progress from NMDS fitting.",
+          "type": "boolean"
+        },
+        "seed_enabled": {
+          "title": "Seed enabled",
+          "description": "Reset the random seed before NMDS fitting.",
+          "type": "boolean"
+        },
+        "seed": {
+          "title": "Seed",
+          "description": "Random seed used for NMDS operations.",
+          "type": "integer",
+          "minimum": -2147483647,
+          "maximum": 2147483647
+        },
+        "trymax": {
+          "title": "Trymax",
+          "description": "Maximum number of random starts for NMDS fitting.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "dimensions": {
+          "title": "Dimensions",
+          "description": "Number of NMDS dimensions.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_iterations": {
+          "title": "Max iterations",
+          "description": "Maximum iterations within each NMDS fit.",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "verbose",
+        "seed_enabled",
+        "seed",
+        "trymax",
+        "dimensions",
+        "max_iterations"
+      ]
+    },
+    "source_plot_data_filename": {
+      "title": "Source plot data filename",
+      "description": "Name of the original plot data source recorded in the workbook.",
+      "type": "string",
+      "minLength": 1
+    },
+    "missing_exotic_status_assume_native": {
+      "title": "Missing exotic status assumes native",
+      "description": "Record whether missing exotic status was treated as native during data preparation.",
+      "type": "boolean"
     }
   },
   "required": [
@@ -442,6 +829,182 @@
     "plot_dists_fitted_grouped_nofit",
     "plot_dists_fitted_grouped_rescaled_nofit",
     "plot_dists_fitted_nofit",
-    "plot_dists_fitted_rescaled_nofit"
+    "plot_dists_fitted_rescaled_nofit",
+    "min_plots",
+    "force_prepare_raw",
+    "plot_figures_only",
+    "summary_only",
+    "td_only",
+    "include_plots_nodata",
+    "qh_method",
+    "remove_td_outliers",
+    "td_outlier_stdevs",
+    "figure_type",
+    "plot_legends",
+    "legend_no_focal_benchmark",
+    "show_sample_sizes",
+    "legend_combined",
+    "plot_dists_fitted_grouped_rescaled",
+    "plot_dists_fitted_rescaled",
+    "vegetation_without_data",
+    "indicator_defaults",
+    "indicator_settings",
+    "indicator_groups",
+    "nmds",
+    "missing_exotic_status_assume_native"
+  ],
+  "definitions": {
+    "indicator": {
+      "title": "Indicator",
+      "description": "Indicator calculation settings.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Display name of the indicator.",
+          "type": "string",
+          "minLength": 1
+        },
+        "distribution": {
+          "title": "Distribution",
+          "description": "Distribution fitted to indicator observations.",
+          "type": "string",
+          "enum": [
+            "NBin",
+            "Bet",
+            "gamma"
+          ]
+        },
+        "quality_method": {
+          "title": "Quality method",
+          "description": "Comparison against observed benchmark data or a fixed value.",
+          "type": "string",
+          "enum": [
+            "empirical",
+            "fixed"
+          ]
+        },
+        "has_stratum": {
+          "title": "Has stratum",
+          "description": "Whether the indicator has multiple strata.",
+          "type": "boolean"
+        },
+        "test_tail": {
+          "title": "Test tail",
+          "description": "Direction of departure from the benchmark penalised by quality.",
+          "type": "string",
+          "enum": [
+            "lower",
+            "upper",
+            "both"
+          ]
+        },
+        "benchmark_value": {
+          "title": "Benchmark value",
+          "description": "Fixed benchmark value; null for empirical comparisons.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prepare_raw": {
+          "title": "Prepare raw",
+          "description": "Recalculate raw values for this indicator.",
+          "type": "boolean"
+        },
+        "convert_percent": {
+          "title": "Convert percent",
+          "description": "Convert percentage observations into proportions.",
+          "type": "boolean"
+        },
+        "logit": {
+          "title": "Logit",
+          "description": "Apply a logit transformation to proportional observations.",
+          "type": "boolean"
+        },
+        "remove_zero_cover_plots": {
+          "title": "Remove zero cover plots",
+          "description": "Exclude plots with zero species cover.",
+          "type": "boolean"
+        },
+        "scale_abundance": {
+          "title": "Scale abundance",
+          "description": "Rescale observations into the interval from zero to one.",
+          "type": "boolean"
+        },
+        "td_multiplier": {
+          "title": "Td multiplier",
+          "description": "Multiplier applied to taxonomic distance before distribution fitting.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "td_multiplier_omit": {
+          "title": "Td multiplier omit",
+          "description": "Land cover classes exempt from the taxonomic distance multiplier.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exclude_exotics": {
+          "title": "Exclude exotics",
+          "description": "Exclude exotic species when calculating the indicator.",
+          "type": "boolean"
+        },
+        "na_to_zero": {
+          "title": "Na to zero",
+          "description": "Treat missing observations as zero for the indicator.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "distribution",
+        "quality_method",
+        "has_stratum",
+        "test_tail"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "project": {
+            "enum": [
+              "vqa-demo1",
+              "vqa-demo1-min"
+            ]
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "then": {
+        "required": [
+          "project",
+          "legacy_summary_area_ha",
+          "data_type",
+          "bootstrap_reps",
+          "omit_quality_hectares",
+          "functional_group_group_by",
+          "functional_group_method",
+          "overall_quality_method",
+          "nodata_sd",
+          "aggregate_indicators",
+          "pcess_herbs_only",
+          "active_indicators",
+          "indicator_defaults",
+          "source_plot_data_filename"
+        ]
+      }
+    }
   ]
 }

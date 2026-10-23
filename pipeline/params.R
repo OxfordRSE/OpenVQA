@@ -11,16 +11,55 @@
 
 validate_params_schema <- function(params) {
   schema <- jsonlite::read_json(file.path(.params_root, "schema", "params.schema.json"))
-  for (name in names(schema$properties)) {
-    if (identical(schema$properties[[name]]$type, "array") && !is.null(params[[name]])) {
-      params[[name]] <- I(params[[name]])
+  json_value <- function(value, definition) {
+    if (!is.null(definition$`$ref`)) {
+      definition <- schema$definitions[[sub("^#/definitions/", "", definition$`$ref`)]]
     }
+    if (identical(definition$type, "array")) {
+      return(I(value))
+    }
+    if (is.list(value) && identical(definition$type, "object")) {
+      for (name in intersect(names(value), names(definition$properties))) {
+        value[name] <- list(json_value(value[[name]], definition$properties[[name]]))
+      }
+    }
+    value
   }
   jsonvalidate::json_validate(
-    jsonlite::toJSON(params, auto_unbox = TRUE, null = "null"),
+    jsonlite::toJSON(json_value(params, schema), auto_unbox = TRUE, null = "null"),
     jsonlite::toJSON(schema, auto_unbox = TRUE),
     engine = "ajv", error = TRUE
   )
+  invisible(TRUE)
+}
+
+validate_analysis_params <- function(params) {
+  validate_params_schema(params)
+  if (isTRUE(params$project %in% c("vqa-demo1", "vqa-demo1-min"))) {
+    active <- unlist(params$active_indicators, use.names = FALSE)
+    if ((identical(params$qh_method, "empirical") && !length(active)) ||
+      !all(active %in% names(params$indicator_settings)) ||
+      !all(active %in% names(params$indicator_groups)) ||
+      !all(unlist(params$aggregate_indicators) %in% active)) {
+      stop(
+        paste0(
+          "Active indicators must have calculation settings and functional groups; ",
+          "aggregate indicators must be active."
+        ),
+        call. = FALSE
+      )
+    }
+    for (code in active) {
+      settings <- resolve_params(params$indicator_defaults, params$indicator_settings[[code]])
+      if ((settings$quality_method == "fixed" && is.null(settings$benchmark_value)) ||
+        (code == "TD" && is.null(settings$td_multiplier))) {
+        stop(
+          "Fixed quality requires a benchmark value; taxonomic distance requires a multiplier.",
+          call. = FALSE
+        )
+      }
+    }
+  }
   invisible(TRUE)
 }
 
@@ -61,18 +100,20 @@ resolve_assessment_params <- function(params, assessment) {
     params$assessments[[assessment]]
   }
   resolved <- resolve_params(load_default_params(), project = params, assessment = overrides)
-  validate_params_schema(resolved)
+  validate_analysis_params(resolved)
   resolved
 }
 
 validate_resolved_params <- function(params) {
   if (!is.list(params) || (length(params) &&
-      (is.null(names(params)) || anyNA(names(params)) ||
-       any(!nzchar(names(params))) || anyDuplicated(names(params))))) {
+    (is.null(names(params)) || anyNA(names(params)) ||
+      any(!nzchar(names(params))) || anyDuplicated(names(params))))) {
     stop("Parameters must be a named list.", call. = FALSE)
   }
-  reserved <- c("data_root", "assessment", "seed", "paths", "inputs_dir",
-                "output_dir", "results_dir", "figures_dir", "log_dir")
+  reserved <- c(
+    "data_root", "assessment", "seed", "paths", "inputs_dir",
+    "output_dir", "results_dir", "figures_dir", "log_dir"
+  )
   if (any(names(params) %in% reserved)) {
     stop("Runtime selection and derived paths cannot be configured in YAML.", call. = FALSE)
   }
@@ -81,13 +122,23 @@ validate_resolved_params <- function(params) {
 
 resolve_params <- function(defaults = list(), project = list(),
                            assessment = list(), explicit = list()) {
+  merge_values <- function(current, override) {
+    if (is.list(current) && is.list(override) && length(override) &&
+      !is.null(names(override))) {
+      for (name in names(override)) {
+        current[name] <- list(merge_values(current[[name]], override[[name]]))
+      }
+      return(current)
+    }
+    override
+  }
   resolved <- list()
   for (layer in list(defaults, project, assessment, explicit)) {
     if (is.null(layer)) next
     if (!is.list(layer)) stop("Parameters must be a named list.", call. = FALSE)
     layer$assessments <- NULL
     layer <- validate_resolved_params(layer)
-    for (name in names(layer)) resolved[name] <- layer[name]
+    if (length(layer)) resolved <- merge_values(resolved, layer)
   }
   validate_resolved_params(resolved)
 }
@@ -95,11 +146,13 @@ resolve_params <- function(defaults = list(), project = list(),
 resolve_seed <- function(seed = NULL) {
   if (is.null(seed)) {
     fallback <- Sys.getenv("VQA_TEST_SEED", "")
-    if (!nzchar(fallback)) return(NULL)
+    if (!nzchar(fallback)) {
+      return(NULL)
+    }
     seed <- fallback
   }
   if (length(seed) != 1L || is.na(seed) ||
-      !(is.numeric(seed) || is.character(seed))) {
+    !(is.numeric(seed) || is.character(seed))) {
     stop("seed must be one non-missing integer.", call. = FALSE)
   }
   value <- suppressWarnings(as.numeric(seed))
@@ -114,12 +167,12 @@ resolve_runtime_config <- function(data_root, assessment, seed = NULL,
                                    defaults = NULL, project = NULL,
                                    assessment_overrides = NULL, explicit = list()) {
   if (!is.character(data_root) || length(data_root) != 1L ||
-      is.na(data_root) || !dir.exists(data_root)) {
+    is.na(data_root) || !dir.exists(data_root)) {
     stop("data_root must be an existing directory.", call. = FALSE)
   }
   data_root <- normalizePath(data_root, mustWork = TRUE)
   if (!is.character(assessment) || length(assessment) != 1L ||
-      is.na(assessment) || !grepl("^[[:alnum:]_-]+$", assessment)) {
+    is.na(assessment) || !grepl("^[[:alnum:]_-]+$", assessment)) {
     stop("assessment must be one directory name within data_root.", call. = FALSE)
   }
   assessment_dir <- file.path(data_root, assessment)
@@ -135,12 +188,15 @@ resolve_runtime_config <- function(data_root, assessment, seed = NULL,
   if (is.null(assessment_overrides)) assessment_overrides <- project$assessments[[assessment]]
   defaults <- resolve_params(load_default_params(), defaults)
   settings <- resolve_params(defaults, project, assessment_overrides, explicit)
-  validate_params_schema(settings)
-  paths <- list(inputs = file.path(assessment_dir, "inputs"),
-                results = file.path(assessment_dir, "results"),
-                figures = file.path(assessment_dir, "figs"),
-                log = file.path(assessment_dir, "log"))
-  list(config = c(list(data_root = data_root, assessment = assessment, seed = seed), settings),
-       params = settings, paths = paths)
+  validate_analysis_params(settings)
+  paths <- list(
+    inputs = file.path(assessment_dir, "inputs"),
+    results = file.path(assessment_dir, "results"),
+    figures = file.path(assessment_dir, "figs"),
+    log = file.path(assessment_dir, "log")
+  )
+  list(
+    config = c(list(data_root = data_root, assessment = assessment, seed = seed), settings),
+    params = settings, paths = paths
+  )
 }
-
