@@ -1622,15 +1622,6 @@ if (file.exists(params.proj.file)) {
   cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep = "")
 }
 
-legacy.seed <- if (exists("VQA_TEST_SEED")) VQA_TEST_SEED else Sys.getenv("VQA_TEST_SEED", "")
-if (nzchar(legacy.seed)) {
-  seed <- suppressWarnings(as.integer(legacy.seed))
-  if (is.na(seed) || as.character(seed) != legacy.seed) {
-    stop_quietly("ERROR: VQA_TEST_SEED must be an integer.\n")
-  }
-  set.seed <- TRUE
-}
-
 #####################################
 #####################################
 # Load parameter confirmation messages

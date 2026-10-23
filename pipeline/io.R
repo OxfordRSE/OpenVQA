@@ -29,43 +29,6 @@ load_yaml_file <- function(file_path, required = TRUE) {
   yaml::read_yaml(file_path)
 }
 
-#' Load the project-level YAML configuration
-#'
-#' @param data_root Project data root.
-#' @param file_name Configuration filename.
-#' @param required Whether a missing configuration is an error.
-#' @return List with `data`, `path`, and `exists` fields.
-#' @keywords internal
-load_project_config <- function(
-  data_root,
-  file_name = "params.yaml",
-  required = FALSE
-) {
-  path <- file.path(data_root, file_name)
-  list(
-    data = load_yaml_file(path, required = required),
-    path = path,
-    exists = file.exists(path)
-  )
-}
-
-resolve_assessment_params <- function(params, assessment) {
-  if (is.null(params)) {
-    return(list())
-  }
-  overrides <- if (is.null(assessment) || is.null(params$assessments)) {
-    NULL
-  } else {
-    params$assessments[[assessment]]
-  }
-  params$assessments <- NULL
-  if (is.null(overrides)) {
-    return(params)
-  }
-  for (name in names(overrides)) params[[name]] <- overrides[[name]]
-  params
-}
-
 list_assessments <- function(data_root, exclude_dirs = character()) {
   assessments <- list.dirs(data_root, full.names = FALSE, recursive = FALSE)
   setdiff(assessments, exclude_dirs)

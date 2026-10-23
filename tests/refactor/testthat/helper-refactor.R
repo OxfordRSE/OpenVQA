@@ -1,6 +1,7 @@
 refactor_project_root <- normalizePath(file.path("..", "..", ".."))
 refactor_rscript <- file.path(R.home("bin"), "Rscript")
 source(file.path(refactor_project_root, "pipeline", "io.R"), local = TRUE)
+source(file.path(refactor_project_root, "pipeline", "params.R"), local = TRUE)
 
 copy_refactor_project <- function(project) {
   source_root <- file.path(refactor_project_root, "data", paste0(project, "-min"))
