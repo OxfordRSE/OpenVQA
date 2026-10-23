@@ -158,14 +158,15 @@ if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists)))
   stop_quietly(msg.err)
 }
 
-# Load libraries silently (TRUE|FALSE)
-# Affects how packages are loaded at the
-# end of this script. Can be over-ridden
-# in project-specific parameters file, which
-# is sourced before libraries are loaded
-# Will suppress display of namespace
-# conflicts ("masking").
-LIB.LOAD.SILENT <- TRUE
+# Standalone scripts load application defaults; callable analysis supplies resolved settings.
+if (!exists("VQA_COMMON_PARAMS", envir = legacy.run.env, inherits = FALSE)) {
+  common.loader <- new.env(parent = baseenv())
+  sys.source(file.path(SRCDIR, "pipeline", "io.R"), envir = common.loader)
+  sys.source(file.path(SRCDIR, "pipeline", "params.R"), envir = common.loader)
+  sys.source(file.path(SRCDIR, "analysis", "legacy-params.R"), envir = common.loader)
+  VQA_COMMON_PARAMS <- common.loader$legacy_common_params(common.loader$load_default_params())
+}
+list2env(VQA_COMMON_PARAMS, envir = legacy.run.env)
 
 ######################################
 ######################################
@@ -381,12 +382,6 @@ VQA.SUMMARY.ONLY <- FALSE
 # FALSE: Include Quality Hectares (default)
 QH.OMIT <- FALSE
 
-# Log file base name
-LOGFILE.BASENAME <- "log_vqa.batch"
-
-# Replace log file each time (TRUE) or preserve each log file
-# by adding timestamp to name (FALSE)?
-REPLACE.LOG <- FALSE
 
 # Run indicator TD only?
 # TRUE: TD only
@@ -460,58 +455,6 @@ INCLUDE.PLOTS.NODATA <- TRUE
 # Ignored if INCLUDE.PLOTS.NODATA == FALSE
 NODATA.SD <- 3 # Number of standard deviations of no-data value
 
-# Quality algorithm for beta-distributed indicators
-# "mixed" applies to beta-distributed indicators only, and only when q.method =
-# "empirical". Parameter q.method is set for individual indicators only, at the
-# start of the script, not in this (global parameters file (this one).
-# Two options:
-# overlap:	Quality based on overlap only for all indicators. For beta-distributed
-# 					indicators, attempts to correct  artifacts cause by zero- and
-# 					one-inflation, and narrow distributions close to 1 & 0. Still has issues
-# 					so do not use without further fixes.
-# mixed:		Use weighted average of overlap-based quality and means-base
-# 					quality for beta-distributed indicators.
-# beta.algorithm <- "overlap"
-beta.algorithm <- "mixed"
-
-# Use raw means-based quality
-# Applies to beta distributed indicators only. If FALSE, adjusts q.diff to 1 (100%)
-# when means not sig. diff (p.diff>=0.05). If TRUE, set q.diff to actual q.diff,
-# regardless of significance. This parameter does not effect whether or not
-# tranformations are applied to q.dist; this is set separately by parameter
-# discount.method
-use.q.diff.raw <- TRUE
-
-# Method of discounting for means-based quality (beta distributions only)
-# Affects final transformation of q.dist. Value discount.method <- "linear"
-# means no transformation. discount.method <- "scaled" causes means-
-# based quality to be transformed using function q.scaled.beta.
-# Parameters for function q.scaled.beta are set directly in the function itself.
-# Currently, values s1=0.3, s2=1 give best (=moderate) discount
-# Values:
-# 		linear 		No discount; Q declines linearly toward 0 at farthest boundary
-# 		scaled		Q declines exponentially toward zero
-discount.method <- "scaled"
-
-# Method for weighting overlap- vs means-based quality
-# Applies to beta distributed indicators where beta.algorithm <- "mixed" only,
-# otherwise ignored. See function "qual.beta" for details.
-# Values: "linear", "u.beta", "u.beta.buffered"
-wt.method <- "u.beta.buffered"
-
-# Edge-buffer to use for wt.method="u.beta.buffered"
-# Ignored for other weighting methods
-# See function "u.beta.buffered" for details.
-# Recommend 0.01
-buffer <- 0.01
-
-# Set to FALSE to turn off permutation tests for q.diff when calculating bootstrap CLs
-# Will increase speed, but CLs will no longer be accurate if any p>=0.05
-# Applies to beta-distributed indicators only
-test.diff.boot <- FALSE
-
-# Permutation test replicates
-perm.reps <- 1000
 
 # Fix randomization seed for repeatable (fixed) bootstrap results?
 set.seed <- FALSE
@@ -519,15 +462,6 @@ set.seed <- FALSE
 # Randomization seed. Only applies if set.seed=TRUE
 seed <- 123
 
-# Infer missing confidence limits due to all-zero indicators,
-# division-by-zero errors, and other issues. This action
-# performed in script summary.R. Setting to FALSE may
-# result in some indicators being excluded from CL
-# calculations.
-infer.missing.cls <- FALSE
-
-# Infer missing CLs for observed CLs close to zero
-infer.missing.cls.strict <- TRUE
 
 ##############################################
 ##############################################
@@ -717,32 +651,11 @@ REMOVE.TD.OUTLIERS <- TRUE
 # Recommend start at 4 and work down
 TD.OUTLIER.STDEVS <- 4
 
-# Append outliers to existing outlier file? (TRUE|FALSE)
-# If FALSE, existing file will be replaced
-# Generally keep set to TRUE to accumulate outliers
-# across multiple runs until no more outliers found.
-TD.OUTLIERS.APPEND <- TRUE
-
-# Upper threshold beyond which value of TD
-# should be regarded automatically as an outlier
-# This check is needed for outliers which
-# are so extreme they blow up the TD stdev,
-# thereby preventing the distribution-based
-# threshold (TD.OUTLIER.STDEVS) from working.
-# You shouldn't have to change this.
-# 500 seems to work well.
-TD.OUTLIER.UPPER.THRESHOLD <- 500
 
 # Name of TD NMDS outlier plot file
 # Saved to RESULTSDIR
 F.TD.OUTLIERS <- "TD_outliers.csv"
 
-# Prevent bm plots from being replicated
-# while running NMDS for indicator TD.
-# Used in script td.R only.
-# A temporary hack until package "vegan"
-# version 7.0 is released
-TD.BM.PLOTS.DEDUPLICATE <- TRUE
 
 ###############################
 # BA
@@ -751,23 +664,6 @@ TD.BM.PLOTS.DEDUPLICATE <- TRUE
 # See TD options for details.
 ###############################
 
-# Remove BA outlier plots?
-# TRUE|FALSE
-REMOVE.BA.OUTLIERS <- TRUE
-
-# Number of standard deviations from mean value of BA
-# Recommend start at 4 and work down
-BA.OUTLIERS.STDEVS <- 4
-
-# Append outliers to existing outlier file? (TRUE|FALSE)
-# Generally keep set to TRUE
-BA.OUTLIERS.APPEND <- TRUE
-
-# Upper threshold beyond which value of BA
-# should be regarded automatically as an outlier
-# You shouldn't have to change this.
-# 500 seems to work well.
-BA.OUTLIERS.UPPER.THRESHOLD <- 500
 
 # Name of BA outlier plot file
 # Saved to RESULTSDIR
@@ -1281,19 +1177,6 @@ nmds.params <- function(land.cover) {
 # General transformation options
 ###################################
 
-# Transform final indicator quality scores using inverse logit transformation
-# Like logistic transformation but anchored at 0 & 1
-# MUST set parameter logit.inverse.beta if set this parameter to TRUE
-q.tr.logit.inverse <- FALSE
-
-# Inflection steepness parameter for logit.inverse function.
-# Only used if q.tr.logit.inverse=TRUE
-logit.inverse.beta <- 2
-
-# Convert zeros to ones (NBin distributions only)
-# Currently implemented only for indicator SR (species
-# richness). Prevents zero-related crashes.
-zero_to_one <- TRUE
 
 ##########################################################
 ##########################################################
@@ -1307,25 +1190,10 @@ zero_to_one <- TRUE
 FIG.TYPE <- "pdf"
 FIG.TYPE <- "png"
 
-# Set true to plot overlap graphs
-# These are very time consuming if using many bootstrap iterations
-# so don't print unless you need them
-plot.overlap <- FALSE
-
-# Set true to plot histograms of focal and bm distributions
-plot.hist <- TRUE
 
 # Combine all legends on right side of histogram
 legend.combined <- TRUE
 
-# Display quality only, plus CLs, in main legend text?
-# If TRUE, omits overlap in percent.
-# Over-rides other legend settings except plot.n
-quality.legend.only <- TRUE
-
-# Formal quality legend as percent?
-# If false, keeps quality a proportion
-Q.LEGEND.PERCENT <- FALSE
 
 # Set to false to omit legends entirely from indicator histograms
 plot.legends <- TRUE
@@ -1333,9 +1201,6 @@ plot.legends <- TRUE
 # Set to FALSE to omit focal and benchmark color key from legend
 LEGEND.NO.FB <- FALSE
 
-# Subsample bootstrap pdfs for figures?
-# Improves clarity and plotting time
-boot.graph.subsample <- TRUE
 
 # Allow use of discrete bar plots instead of histograms
 # for discrete data. Sets bin size to exactly 1, so in
@@ -1349,63 +1214,12 @@ plot.mean <- TRUE
 # Display sample sizes on histograms legends?
 show.n <- TRUE
 
-# Display overlap in results legend on figure
-show.overlap <- TRUE
 
 remove.grid <- TRUE # Set true to remove background grid
 
-# Set TRUE to plot bootstrapped pdfs and confidence limits on overlap graph
-# Set FALSE to omit
-plot.boot.pdfs <- TRUE
 
-# Set TRUE to overlay pdf fit curve on histograms of empirical sampling distribution
-plot.pdf <- TRUE
-
-# Set the following to TRUE to keep graphs without pdf fit in separate directory
-# Ignored if plot.pdf = TRUE
-no.fit.keep.separate <- FALSE
-
-# Group figure mtext "line" option
-# (multi-panel figures only)
-# Sets vertical placement of group title
-# Integer from 0:3
-GROUP.MTEXT.LINE <- 1
-
-# Which graphs to plot? TRUE/FALSE
-# Each parameter is "plot." concatenated with the name
-# of a subdirectory of figures based directory "figs/"
-# Set to FALSE to skip printing figures in that directory
-# and save a lot of hard drive space!
-# The one you should generally always enable is
-# plot.dists_fitted_rescaled, also
-# plot.dists_fitted_grouped_rescaled if any indicators
-# you are using consist of multiple strata.
-# Setting all to TRUE can result in the production of
-# 100 MB or more of figures per VQA run
-plot.dists_fitted <- FALSE
-plot.dists_fitted_bm <- FALSE
-plot.dists_fitted_bm_grouped <- FALSE
-plot.dists_fitted_bm_grouped_nofit <- FALSE
-plot.dists_fitted_bm_grouped_rescaled <- FALSE
-plot.dists_fitted_bm_grouped_rescaled_nofit <- FALSE
-plot.dists_fitted_bm_nofit <- FALSE
-plot.dists_fitted_bm_rescaled <- FALSE
-plot.dists_fitted_bm_rescaled_nofit <- FALSE
-plot.dists_fitted_focal <- FALSE
-plot.dists_fitted_focal_grouped <- FALSE
-plot.dists_fitted_focal_grouped_nofit <- FALSE
-plot.dists_fitted_focal_grouped_rescaled <- FALSE
-plot.dists_fitted_focal_grouped_rescaled_nofit <- FALSE
-plot.dists_fitted_focal_nofit <- FALSE
-plot.dists_fitted_focal_rescaled <- FALSE
-plot.dists_fitted_focal_rescaled_nofit <- FALSE
-plot.dists_fitted_grouped <- FALSE
-plot.dists_fitted_grouped_nofit <- FALSE
 plot.dists_fitted_grouped_rescaled <- TRUE # Enable if any indicators have strata
-plot.dists_fitted_grouped_rescaled_nofit <- FALSE
-plot.dists_fitted_nofit <- FALSE
 plot.dists_fitted_rescaled <- TRUE # Always enable this one
-plot.dists_fitted_rescaled_nofit <- FALSE # Enable if q.method=="fixed"
 
 #################################
 #################################
@@ -1417,24 +1231,13 @@ plot.dists_fitted_rescaled_nofit <- FALSE # Enable if q.method=="fixed"
 #################################
 
 # Remove area & QH columns from sheet q.overall?
-# Use TRUE if no areas provided (i.e., analysis is quality only)
-# Otherwise FALSE
+# Retained for legacy callers; the current workbook path does not read it.
 VQA.XLS.NO.AREA <- TRUE
 
-# Drop column "notes" from df q.overall
-VQA.XLS.DROP.NOTES <- TRUE
-
-# Remove rows from df q.overall where q=NA
-VQA.XLS.REMOVE.Q.NA <- TRUE
-
-# Drop rows from q.ei where include==FALSE?
-VQA.XLS.DROP.INCLUDE.FALSE <- TRUE
 
 # Output file
 FNAME.Q.XLSX.OUT <- "vqa_summary.xlsx"
 
-# Pluralize stratum names?
-VQA.SUMMARY.PLURALIZE.STRATA <- FALSE
 
 ######################################
 ######################################
