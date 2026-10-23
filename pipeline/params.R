@@ -35,7 +35,7 @@ validate_params_schema <- function(params) {
 
 validate_analysis_params <- function(params) {
   validate_params_schema(params)
-  if (isTRUE(params$project %in% c("vqa-demo1", "vqa-demo1-min"))) {
+  if (isTRUE(params$project %in% c("vqa-demo1", "vqa-demo1-min", "vqa-demo2", "vqa-demo2-min"))) {
     active <- unlist(params$active_indicators, use.names = FALSE)
     if ((identical(params$qh_method, "empirical") && !length(active)) ||
       !all(active %in% names(params$indicator_settings)) ||
@@ -58,6 +58,13 @@ validate_analysis_params <- function(params) {
           call. = FALSE
         )
       }
+      if (code == "BA" && !isFALSE(settings$normalize_area_m2) && is.null(params$stem_sampling)) {
+        stop("Basal-area normalization requires stem sampling geometry.", call. = FALSE)
+      }
+    }
+    if (!is.null(params$stem_sampling) &&
+      params$stem_sampling$min_dbh_cm >= params$stem_sampling$split_dbh_cm) {
+      stop("The stem diameter split must exceed the minimum measured diameter.", call. = FALSE)
     }
   }
   invisible(TRUE)

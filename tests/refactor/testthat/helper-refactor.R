@@ -74,24 +74,18 @@ copy_analysis_application <- function() {
     )
   )
   testthat::expect_true(all(file.copy(files, application_root, recursive = TRUE)))
-  testthat::expect_false(file.exists(
-    file.path(application_root, "params", "params.vqa-demo1.R")
-  ))
+  testthat::expect_false(dir.exists(file.path(application_root, "params")))
   application_root
 }
 
 run_refactor_workflow <- function(project, assessment, seed = 20260810L) {
   data_root <- copy_refactor_project(project)
   old_directory <- getwd()
-  application_root <- if (identical(project, "vqa-demo1")) {
-    copy_analysis_application()
-  } else {
-    refactor_project_root
-  }
+  application_root <- copy_analysis_application()
   on.exit(
     {
       setwd(old_directory)
-      if (identical(project, "vqa-demo1")) unlink(application_root, recursive = TRUE)
+      unlink(application_root, recursive = TRUE)
     },
     add = TRUE
   )

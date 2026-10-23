@@ -92,7 +92,7 @@ testthat::test_that("context resolution applies assessment overrides and derives
   testthat::expect_identical(context$config$qh_method, "assume.0")
   override <- load_preprocessing_context(root, "offset_baseline",
     seed = 7L,
-    explicit = list(qh_method = "empirical")
+    explicit = list(qh_method = "empirical", active_indicators = "SR")
   )
   testthat::expect_identical(override$params$qh_method, "empirical")
   testthat::expect_identical(override$config$qh_method, "empirical")

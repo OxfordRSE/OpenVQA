@@ -89,22 +89,30 @@ legacy_indicator_symbols <- c(
   prepare_raw = "prepare.raw", convert_percent = "convert.percent", logit = "logit",
   remove_zero_cover_plots = "remove.zero.cover.plots", scale_abundance = "scale.abund",
   td_multiplier = "td.multiplier", td_multiplier_omit = "td.multiplier.omit",
-  exclude_exotics = "exclude.exotics", na_to_zero = "NA.TO.ZERO"
+  exclude_exotics = "exclude.exotics", na_to_zero = "NA.TO.ZERO",
+  multiplier = "ei.multiplier", normalize_area_m2 = "normalize.m2"
 )
 
 legacy_project_params <- function(config) {
   values <- config[names(legacy_project_symbols)]
   names(values) <- unname(legacy_project_symbols)
-  active <- unlist(config$active_indicators, use.names = FALSE)
+  active <- as.character(unlist(config$active_indicators, use.names = FALSE))
   if (config$td_only) active <- "TD"
   values$EI.vec <- active
   values$EI.F.GROUPS <- cbind(
     EI = active,
-    f.group = unname(unlist(config$indicator_groups[active]))
+    f.group = as.character(unlist(config$indicator_groups[active], use.names = FALSE))
   )
   values$df.EI.FG <- as.data.frame(values$EI.F.GROUPS)
   values$EI.list <- data.frame(fname = active)
-  values$EI.agg.list <- data.frame(fname = unlist(config$aggregate_indicators, use.names = FALSE))
+  values$EI.agg.list <- data.frame(
+    fname = as.character(
+      unlist(
+        config$aggregate_indicators,
+        use.names = FALSE
+      )
+    )
+  )
   nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
   values$veg.nodata <- if (length(nodata)) nodata else ""
   values$ei.params <- function(ei_code) {
@@ -117,10 +125,17 @@ legacy_project_params <- function(config) {
     if (is.null(parameters$td.multiplier)) parameters$td.multiplier <- NA
     omit <- unlist(parameters$td.multiplier.omit, use.names = FALSE)
     parameters$td.multiplier.omit <- if (length(omit)) omit else ""
-    parameters$ei.data.type <- if (ei_code %in% c("SR", "TD")) config$data_type else "cover"
+    parameters$ei.data.type <- if (!is.null(settings$data_type)) {
+      settings$data_type
+    } else if (ei_code %in% c("SR", "TD", "TS")) {
+      config$data_type
+    } else {
+      "cover"
+    }
     inputs <- c(
-      SR = "speciesCover", TD = "speciesCover", PCGF = "coverByGrowthForm",
-      GC = "groundCover", PCESS = "exoticCoverByStratum"
+      SR = "speciesCover", TD = "speciesCover", TS = "speciesCover", PCGF = "coverByGrowthForm",
+      GC = "groundCover", PCESS = "exoticCoverByStratum", PCES = "exoticCoverByStratum",
+      BA = "speciesStems", ASC = "speciesStems"
     )
     parameters$df.input <- if (parameters$ei.data.type == "ind") {
       "speciesStems"
@@ -138,6 +153,20 @@ legacy_project_params <- function(config) {
     parameters <- config$nmds[names(symbols)]
     names(parameters) <- unname(symbols)
     c(list(land.cover = land_cover), parameters)
+  }
+  if (!is.null(config$stem_sampling)) {
+    values$dbh.ba.scaled <- function(dbh, target_area_m2 = NULL) {
+      sampling <- config$stem_sampling
+      if (is.null(target_area_m2)) target_area_m2 <- 10000
+      dplyr::case_when(
+        dbh >= sampling$min_dbh_cm & dbh < sampling$split_dbh_cm ~
+          pi * ((dbh / 2)^2) / 10000 * target_area_m2 / sampling$small_plot_area_m2,
+        dbh >= sampling$split_dbh_cm ~
+          pi * ((dbh / 2)^2) / 10000 * target_area_m2 / sampling$large_plot_area_m2,
+        is.na(dbh) ~ NA,
+        .default = NA
+      )
+    }
   }
   values
 }

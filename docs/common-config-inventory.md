@@ -76,7 +76,7 @@ counts as a consumer because it decides which calculations or outputs run.
 
 ## Project analysis configuration
 
-Demo 1 uses root defaults plus `data/vqa-demo1-min/params.yaml` for both assessments.
+Both demo projects use root defaults plus their project `params.yaml` files.
 `legacy_project_symbols` and `legacy_indicator_symbols` in `analysis/legacy-params.R`
 map resolved settings to script parameters. The adapter derives indicator lists, groups,
 input filenames, and the `ei.params()` and `nmds.params()` functions from that configuration.
@@ -89,15 +89,28 @@ input filenames, and the `ei.params()` and `nmds.params()` functions from that c
 | `figure_type`, `plot_legends`, `legend_no_focal_benchmark`, `show_sample_sizes`, `legend_combined`, `plot_dists_fitted_grouped_rescaled`, `plot_dists_fitted_rescaled` | Distribution figures. |
 | `indicator_defaults`, `indicator_settings`, `nmds`, `pcess_herbs_only`, `vegetation_without_data` | Indicator scripts, NMDS fitting, and workbook indicator metadata. |
 | `min_plots`, `legacy_summary_area_ha`, `source_plot_data_filename`, `missing_exotic_status_assume_native` | Workbook metadata and preprocessing summaries. |
+| `stem_sampling` and indicator `normalize_area_m2` | Basal-area normalization using the sampled area for each DBH size class. |
 
 Both demo 1 assessments share the same settings. Their input tables determine the
 assessment differences. Root defaults contain application settings and indicator
 definitions; project YAML supplies data type, bootstrap count, aggregation choices,
-aggregate indicators, herbs-only exotic cover, and abundance scaling.
+aggregate indicators, and herbs-only exotic cover. Abundance scaling is a shared default,
+with a separate setting for taxonomic distance.
 
-Demo 2 analysis settings are supplied by `params/params.vqa-demo2.R`. Standalone commands
-such as `import.R` and `qh.net.R` load project parameter scripts through `params.R`.
-Callable demo 1 analysis supplies resolved project settings directly to that wrapper.
+Demo 2 uses mixed data: species richness selects cover observations, taxonomic similarity
+uses the project data type, and basal area and abundance by size class select stem records.
+Basal area uses configured DBH sampling geometry; abundance by size class counts individuals
+from standardized stem records. Indicator settings select the distributions, transformations,
+and handling of missing observations.
+
+The `offset_baseline` override explicitly selects `assume.0`, with no active or aggregate
+indicators. Other assessments use empirical quality. Source-data labels for the offset
+assessments are explicit overrides. Analysis settings do not depend on assessment-name
+patterns. Baseline/offset relationships for net-quality calculations are not read by the
+assessment analysis workflow.
+
+Standalone commands such as `import.R` and `qh.net.R` load project parameter scripts through
+`params.R`. Callable analysis supplies resolved project settings directly to that wrapper.
 
 ## Runtime and file conventions
 
@@ -105,7 +118,7 @@ Runtime arguments select the data root, assessment, and seed. Analysis operation
 RNG seeds individually; NMDS has its own seed settings. Paths, input and output filenames,
 and indicator lists are constructed in code. `params.R` defines application file conventions.
 
-Raw filenames, import filters, include-file replacement, taxonomy/TNRS settings, and
+Raw-data loading, import filters, include-file replacement, taxonomy/TNRS settings, and
 net-quality calculations are separate from assessment analysis. Parameters such as
 `allow.discrete`, `plot.mean`, `remove.grid`, and `VQA.XLS.NO.AREA` have no reads in the
 active scripts and are retained for standalone caller compatibility.

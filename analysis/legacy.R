@@ -40,7 +40,7 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
   run_env$VQA_COMMON_PARAMS <- legacy_common_params(
     if (is.null(context)) load_default_params() else config
   )
-  if (!is.null(context) && identical(project, "vqa-demo1")) {
+  if (!is.null(context) && project %in% c("vqa-demo1", "vqa-demo2")) {
     run_env$VQA_PROJECT_PARAMS <- legacy_project_params(config)
   }
   sys.source("params.R", envir = run_env, toplevel.env = run_env)
