@@ -74,28 +74,42 @@ counts as a consumer because it decides which calculations or outputs run.
 | `plot_dists_fitted_nofit` | `plot.dists_fitted_nofit` | `includes/graph.dists.R` |
 | `plot_dists_fitted_rescaled_nofit` | `plot.dists_fitted_rescaled_nofit` | `includes/graph.dists.R` |
 
-## Project and runtime settings
+## Project analysis configuration
 
-| Classification | Values | Consumers / reason |
-| --- | --- | --- |
-| Project setting | `DATA.TYPE`, `force.prepare.raw`, `PLOT.FIGS.ONLY`, `VQA.SUMMARY.ONLY`, `QH.OMIT`, `TD.ONLY`, `boot.reps`, `Q.FG.GROUP.BY`, `Q.FG.METHOD`, `Q.OVERALL.METHOD`, `INCLUDE.PLOTS.NODATA`, `NODATA.SD` | Indicator preparation, quality calculations, and summary aggregation; project scripts assign these. |
-| Project setting | `REMOVE.TD.OUTLIERS`, `TD.OUTLIER.STDEVS`, `pcess.herbs.only`, `ei.params()`, `nmds.params()` | TD/outlier handling and project-specific indicator definitions. |
-| Project setting | `FIG.TYPE`, `plot.legends`, `LEGEND.NO.FB`, `show.n`, `legend.combined`, `plot.dists_fitted_grouped_rescaled`, `plot.dists_fitted_rescaled` | Project-controlled figure rendering and output selection. |
-| Project setting | `EI.F.GROUPS`, `EI.agg.list`, `veg.nodata`, `eg.*`, project helper functions, `legacy_summary_area_ha` | Group membership, summary classification, and project-specific data handling. |
-| Assessment override | `QH.METHOD`, active indicators | Demo 2 assumed-zero branch and indicator selection are defined in its project script and YAML manifest. |
-| Runtime selection | Project data root, assessment, explicit seed and compatibility `set.seed`/`seed` | Runtime configuration selects the assessment and seed; analysis operations reset the RNG individually. |
-| Derived value / application file convention | All directory paths; `DF.*`, input and output filenames, `EI.vec`, `EI.list`, `df.EI.FG` | Constructed in code. Application file conventions are defined in `params.R`. |
-| Obsolete / inactive | `allow.discrete`, `plot.mean`, `remove.grid`, `VQA.XLS.NO.AREA` | No reads in the active scripts; retained only for compatibility. |
-| Import-only / other commands | Raw filenames, sample-size import filters, include-file replacement, taxonomy/TNRS settings, `QH.NET.*`, offsets and trade-up configuration | Import, net-quality, and utilities are outside the six assessment analysis paths. |
+Demo 1 uses root defaults plus `data/vqa-demo1-min/params.yaml` for both assessments.
+`legacy_project_symbols` and `legacy_indicator_symbols` in `analysis/legacy-params.R`
+map resolved settings to script parameters. The adapter derives indicator lists, groups,
+input filenames, and the `ei.params()` and `nmds.params()` functions from that configuration.
 
-Project YAML fields are catalogued and validated by the parameter schema.
-Root defaults are loaded by module location, then project, assessment, and
-explicit overrides are merged and validated at the runtime boundary. Validation-only
-assessment resolution uses the same defaults and schema. The generic `resolve_params()`
-helper only merges named lists.
+| Settings | Consumers |
+| --- | --- |
+| `data_type`, `force_prepare_raw`, `td_only`, `plot_figures_only`, `summary_only` | Input selection and indicator dispatch. |
+| `bootstrap_reps`, `include_plots_nodata`, `nodata_sd`, `remove_td_outliers`, `td_outlier_stdevs` | Indicator calculations, quality bootstrap, and TD outlier handling. |
+| `qh_method`, `omit_quality_hectares`, `functional_group_group_by`, `functional_group_method`, `overall_quality_method`, `indicator_groups`, `aggregate_indicators` | Quality aggregation and summary output. |
+| `figure_type`, `plot_legends`, `legend_no_focal_benchmark`, `show_sample_sizes`, `legend_combined`, `plot_dists_fitted_grouped_rescaled`, `plot_dists_fitted_rescaled` | Distribution figures. |
+| `indicator_defaults`, `indicator_settings`, `nmds`, `pcess_herbs_only`, `vegetation_without_data` | Indicator scripts, NMDS fitting, and workbook indicator metadata. |
+| `min_plots`, `legacy_summary_area_ha`, `source_plot_data_filename`, `missing_exotic_status_assume_native` | Workbook metadata and preprocessing summaries. |
 
-Standalone callers (`import.R`, `qh.net.R`, indicator/summary scripts) source
-`params.R`. That wrapper obtains application defaults from the same YAML and mapping.
-Callable analysis injects the already resolved mapping into its private environment, so
-the wrapper does not reread defaults or project YAML for the run. Project-specific R scripts
-supply indicator definitions and project settings.
+Both demo 1 assessments share the same settings. Their input tables determine the
+assessment differences. Root defaults contain application settings and indicator
+definitions; project YAML supplies data type, bootstrap count, aggregation choices,
+aggregate indicators, herbs-only exotic cover, and abundance scaling.
+
+Demo 2 analysis settings are supplied by `params/params.vqa-demo2.R`. Standalone commands
+such as `import.R` and `qh.net.R` load project parameter scripts through `params.R`.
+Callable demo 1 analysis supplies resolved project settings directly to that wrapper.
+
+## Runtime and file conventions
+
+Runtime arguments select the data root, assessment, and seed. Analysis operations reset
+RNG seeds individually; NMDS has its own seed settings. Paths, input and output filenames,
+and indicator lists are constructed in code. `params.R` defines application file conventions.
+
+Raw filenames, import filters, include-file replacement, taxonomy/TNRS settings, and
+net-quality calculations are separate from assessment analysis. Parameters such as
+`allow.discrete`, `plot.mean`, `remove.grid`, and `VQA.XLS.NO.AREA` have no reads in the
+active scripts and are retained for standalone caller compatibility.
+
+Root defaults are loaded by module location, then project, assessment, and explicit
+overrides are merged and validated. Named objects merge by field; arrays replace previous
+values. Validation-only assessment resolution uses the same defaults and schema.
