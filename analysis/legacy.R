@@ -40,6 +40,9 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
   run_env$VQA_COMMON_PARAMS <- legacy_common_params(
     if (is.null(context)) load_default_params() else config
   )
+  if (!is.null(context) && identical(project, "vqa-demo1")) {
+    run_env$VQA_PROJECT_PARAMS <- legacy_project_params(config)
+  }
   sys.source("params.R", envir = run_env, toplevel.env = run_env)
   run_env$seed_enabled <- !is.null(seed) || isTRUE(run_env$set.seed)
   if (!is.null(seed)) run_env$seed <- seed
@@ -148,10 +151,14 @@ run_vqa_analysis <- function(context, config = context$config, seed = NULL) {
   output_paths <- execute_legacy_batch(
     prepare_legacy_environment(context, config, seed)
   )
-  metadata <- list(seed = seed, project = config$project,
-                   assessment = config$assessment, config = config)
-  invisible(list(context = context, seed = seed, output_paths = output_paths,
-                 metadata = metadata))
+  metadata <- list(
+    seed = seed, project = config$project,
+    assessment = config$assessment, config = config
+  )
+  invisible(list(
+    context = context, seed = seed, output_paths = output_paths,
+    metadata = metadata
+  ))
 }
 
 run_vqa_batch_cli <- function() {

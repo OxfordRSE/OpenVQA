@@ -120,17 +120,28 @@ legacy.run.env <- if (exists("VQA_RUN_ENV")) VQA_RUN_ENV else topenv()
 # Phase 2 replaces this legacy edge with an in-process runner.
 legacy.data.root <- if (exists("VQA_DATA_ROOT")) VQA_DATA_ROOT else Sys.getenv("VQA_DATA_ROOT", "")
 legacy.project <- if (exists("VQA_PROJECT")) VQA_PROJECT else Sys.getenv("VQA_PROJECT", "")
-legacy.assessment <- if (exists("VQA_ASSESSMENT")) VQA_ASSESSMENT else Sys.getenv("VQA_ASSESSMENT", "")
+legacy.assessment <- if (exists("VQA_ASSESSMENT")) {
+  VQA_ASSESSMENT
+} else {
+  Sys.getenv("VQA_ASSESSMENT", "")
+}
 legacy.selection <- c(legacy.data.root, legacy.project, legacy.assessment)
 
 if (any(nzchar(legacy.selection))) {
   if (!all(nzchar(legacy.selection))) {
-    stop_quietly("ERROR: VQA_DATA_ROOT, VQA_PROJECT, and VQA_ASSESSMENT must be supplied together.\n")
+    stop_quietly(paste0(
+      "ERROR: VQA_DATA_ROOT, VQA_PROJECT, and ",
+      "VQA_ASSESSMENT must be supplied together.\n"
+    ))
   }
   if (any(!grepl("^[[:alnum:]_-]+$", legacy.selection[-1L]))) {
-    stop_quietly("ERROR: VQA_PROJECT and VQA_ASSESSMENT may contain only letters, numbers, '_' and '-'.\n")
+    stop_quietly(paste0(
+      "ERROR: VQA_PROJECT and VQA_ASSESSMENT ",
+      "may contain only letters, numbers, '_' and '-'.\n"
+    ))
   }
-  if (!file.exists(file.path(SRCDIR, "params", paste0("params.", legacy.project, ".R")))) {
+  if (!exists("VQA_PROJECT_PARAMS", envir = legacy.run.env, inherits = FALSE) &&
+    !file.exists(file.path(SRCDIR, "params", paste0("params.", legacy.project, ".R")))) {
     stop_quietly("ERROR: VQA_PROJECT has no project parameter file.\n")
   }
   legacy.data.root <- normalizePath(legacy.data.root, mustWork = TRUE)
@@ -588,9 +599,15 @@ QH.NET.DIR <- paste0(DATA_BASEDIR_PROJ, ASSESS, "/qh.net/")
 QH.NET.RESULTSDIR <- paste0(QH.NET.DIR, "results/")
 
 # QH.net input file directories
-QH.NET.INPUTDIR.CURRENT <- paste0(DATA_BASEDIR_PROJ, ASSESS, "/results/") # QH files
-QH.NET.INPUTDIR.BASELINE <- paste0(DATA_BASEDIR_PROJ, ASSESS.BASELINE, "/results/") # QH files
-QH.NET.INPUTDIR.OFFSET <- paste0(DATA_BASEDIR_PROJ, ASSESS.OFFSET, "/qh.net/results/") # Net QH files
+QH.NET.INPUTDIR.CURRENT <- paste0(
+  DATA_BASEDIR_PROJ, ASSESS, "/results/"
+) # QH files
+QH.NET.INPUTDIR.BASELINE <- paste0(
+  DATA_BASEDIR_PROJ, ASSESS.BASELINE, "/results/"
+) # QH files
+QH.NET.INPUTDIR.OFFSET <- paste0(
+  DATA_BASEDIR_PROJ, ASSESS.OFFSET, "/qh.net/results/"
+) # Net QH files
 
 # Transform one or more vegetation classes? (TRUE|FALSE)
 # Generally, keep this set to FALSE
@@ -947,7 +964,8 @@ ei.params <- function(ei.code) {
     bm.val <- NA
     proportions <- FALSE # Must be FALSE if individuals data (stems)
     convert.percent <- FALSE # Must be FALSE if individuals data (stems)
-    remove.zero.cover.plots <- TRUE # all-zero cover impossible for this EI; ignored if individuals data
+    remove.zero.cover.plots <- TRUE # all-zero cover impossible for this EI; ignored if...
+    # individuals data
 
     #  Set TRUE to scale abundance values between 0 and 1
     # Use if species cover sums to >100% (or >1 proportional abundance)
@@ -963,7 +981,10 @@ ei.params <- function(ei.code) {
     # If no omissions, set to empty string ""
     td.multiplier.omit <- ""
     td.multiplier.omit <- c(
-      "Greenleaf Fescue - Hood's Sedge - Lupine species Subalpine Mesic Meadow Alliance - Reclaimed",
+      paste0(
+        "Greenleaf Fescue - Hood's Sedge - ",
+        "Lupine species Subalpine Mesic Meadow Alliance - Reclaimed"
+      ),
       "Idaho Fescue - Bluebunch Wheatgrass - Sandberg Bluegrass Dry Grassland Alliance - Reclaimed"
     )
 
@@ -1389,7 +1410,11 @@ TNRS_SOURCES <- "tropicos,tpl,usda" # Taxonomic sources
 TNRS_CLASS <- "tropicos" # Family classification source
 
 # Request headers
-TNRS_HEADERS <- list("Accept" = "application/json", "Content-Type" = "application/json", "charset" = "UTF-8")
+TNRS_HEADERS <- list(
+  "Accept" = "application/json",
+  "Content-Type" = "application/json",
+  "charset" = "UTF-8"
+)
 
 #####################################
 #####################################
@@ -1417,12 +1442,19 @@ if (exists("PARAMS.USE.ASSESS")) {
 # params.proj.file <- paste0( "params/", params.proj.filename )
 params.proj.file <- paste0(BASEDIR_PSFILES, "params/", params.proj.filename)
 
-# Load project-specific parameters file if exists
-if (file.exists(params.proj.file)) {
+# Apply supplied settings or load the project parameter script.
+if (exists("VQA_PROJECT_PARAMS", envir = legacy.run.env, inherits = FALSE)) {
+  list2env(VQA_PROJECT_PARAMS, envir = legacy.run.env)
+} else if (file.exists(params.proj.file)) {
   sys.source(params.proj.file, envir = legacy.run.env)
 } else {
   # Warn file doesn't exist & continue, using default parameters
-  cat("\nWARNING: project-specific parameters file '", params.proj.file, "' not found!\n\n", sep = "")
+  cat(
+    "\nWARNING: project-specific parameters file '",
+    params.proj.file,
+    "' not found!\n\n",
+    sep = ""
+  )
 }
 
 #####################################

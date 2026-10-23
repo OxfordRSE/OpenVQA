@@ -65,3 +65,79 @@ legacy_common_params <- function(config) {
   names(values) <- unname(legacy_common_symbols)
   values
 }
+
+legacy_project_symbols <- c(
+  data_type = "DATA.TYPE", min_plots = "N.MIN.ABS",
+  source_plot_data_filename = "RAW_PLOTDATA_FILENAME",
+  missing_exotic_status_assume_native = "IS.EXOTIC.MISSING.ASSUME.NATIVE",
+  force_prepare_raw = "force.prepare.raw", td_only = "TD.ONLY",
+  remove_td_outliers = "REMOVE.TD.OUTLIERS", td_outlier_stdevs = "TD.OUTLIER.STDEVS",
+  plot_figures_only = "PLOT.FIGS.ONLY", summary_only = "VQA.SUMMARY.ONLY",
+  omit_quality_hectares = "QH.OMIT", functional_group_group_by = "Q.FG.GROUP.BY",
+  functional_group_method = "Q.FG.METHOD", overall_quality_method = "Q.OVERALL.METHOD",
+  include_plots_nodata = "INCLUDE.PLOTS.NODATA", nodata_sd = "NODATA.SD",
+  bootstrap_reps = "boot.reps", qh_method = "QH.METHOD", figure_type = "FIG.TYPE",
+  plot_legends = "plot.legends", legend_no_focal_benchmark = "LEGEND.NO.FB",
+  show_sample_sizes = "show.n", legend_combined = "legend.combined",
+  plot_dists_fitted_grouped_rescaled = "plot.dists_fitted_grouped_rescaled",
+  plot_dists_fitted_rescaled = "plot.dists_fitted_rescaled", pcess_herbs_only = "pcess.herbs.only"
+)
+
+legacy_indicator_symbols <- c(
+  name = "ei.name", distribution = "distn", quality_method = "q.method",
+  has_stratum = "has.stratum", test_tail = "test.tail", benchmark_value = "bm.val",
+  prepare_raw = "prepare.raw", convert_percent = "convert.percent", logit = "logit",
+  remove_zero_cover_plots = "remove.zero.cover.plots", scale_abundance = "scale.abund",
+  td_multiplier = "td.multiplier", td_multiplier_omit = "td.multiplier.omit",
+  exclude_exotics = "exclude.exotics", na_to_zero = "NA.TO.ZERO"
+)
+
+legacy_project_params <- function(config) {
+  values <- config[names(legacy_project_symbols)]
+  names(values) <- unname(legacy_project_symbols)
+  active <- unlist(config$active_indicators, use.names = FALSE)
+  if (config$td_only) active <- "TD"
+  values$EI.vec <- active
+  values$EI.F.GROUPS <- cbind(
+    EI = active,
+    f.group = unname(unlist(config$indicator_groups[active]))
+  )
+  values$df.EI.FG <- as.data.frame(values$EI.F.GROUPS)
+  values$EI.list <- data.frame(fname = active)
+  values$EI.agg.list <- data.frame(fname = unlist(config$aggregate_indicators, use.names = FALSE))
+  nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
+  values$veg.nodata <- if (length(nodata)) nodata else ""
+  values$ei.params <- function(ei_code) {
+    settings <- config$indicator_settings[[ei_code]]
+    if (is.null(settings)) stop("Unknown indicator: ", ei_code, call. = FALSE)
+    settings <- resolve_params(config$indicator_defaults, settings)
+    parameters <- settings[names(legacy_indicator_symbols)]
+    names(parameters) <- unname(legacy_indicator_symbols)
+    if (is.null(parameters$bm.val)) parameters$bm.val <- NA
+    if (is.null(parameters$td.multiplier)) parameters$td.multiplier <- NA
+    omit <- unlist(parameters$td.multiplier.omit, use.names = FALSE)
+    parameters$td.multiplier.omit <- if (length(omit)) omit else ""
+    parameters$ei.data.type <- if (ei_code %in% c("SR", "TD")) config$data_type else "cover"
+    inputs <- c(
+      SR = "speciesCover", TD = "speciesCover", PCGF = "coverByGrowthForm",
+      GC = "groundCover", PCESS = "exoticCoverByStratum"
+    )
+    parameters$df.input <- if (parameters$ei.data.type == "ind") {
+      "speciesStems"
+    } else {
+      unname(inputs[[ei_code]])
+    }
+    parameters$source.file <- paste0(parameters$df.input, ".csv")
+    parameters
+  }
+  values$nmds.params <- function(land_cover) {
+    symbols <- c(
+      verbose = "nmds.verbose", seed_enabled = "nmds.set.seed", seed = "nmds.seed",
+      trymax = "nmds.trymax", dimensions = "nmds.k", max_iterations = "nmds.maxit"
+    )
+    parameters <- config$nmds[names(symbols)]
+    names(parameters) <- unname(symbols)
+    c(list(land.cover = land_cover), parameters)
+  }
+  values
+}
