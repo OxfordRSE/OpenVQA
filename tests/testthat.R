@@ -2,6 +2,7 @@
 
 Sys.setenv(VQA_PREPROCESS_NO_AUTORUN = "1")
 source(file.path("pipeline", "io.R"))
+source(file.path("pipeline", "params.R"))
 source(file.path("preprocessing", "helpers.R"))
 source(file.path("preprocessing", "prune.R"))
 source(file.path("preprocessing", "allowlists.R"))
