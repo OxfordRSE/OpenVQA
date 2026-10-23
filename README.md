@@ -86,6 +86,8 @@ You can read more about VQA in detail in this open access [publication](https://
 
 ## Developer Setup
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for Git hook installation and local formatting checks.
+
 GitHub Actions validates both minimal demo projects, runs the standard tests, checks all
 six golden refactor contracts on macOS 26, and lints the actively refactored R code on
 pull requests and pushes to `main`. Ubuntu refactor diagnostics are paused while the
