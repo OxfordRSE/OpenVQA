@@ -33,6 +33,12 @@ testthat::test_that("summary-only runs skip indicators and keep summary script o
 
 testthat::test_that("TD-only and figures-only runs suppress summaries", {
   run_env <- orchestration_environment()
+  rlang::local_bindings(
+    run_species_richness = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "SR")
+    },
+    .env = environment(run_legacy_indicators)
+  )
   run_env$TD.ONLY <- TRUE
   execute_legacy_batch(run_env)
   testthat::expect_identical(run_env$scripts, c("libraries.R", file.path("indicators", "td.R")))
@@ -42,7 +48,7 @@ testthat::test_that("TD-only and figures-only runs suppress summaries", {
   rm("TD.ONLY", envir = run_env)
   execute_legacy_batch(run_env)
   testthat::expect_identical(run_env$scripts, c(
-    "libraries.R", file.path("indicators", c("ts.R", "sr.R"))
+    "libraries.R", file.path("indicators", "ts.R")
   ))
   testthat::expect_identical(run_env$indicator_order, c("TS", "SR"))
   testthat::expect_identical(run_env$TD.ONLY, FALSE)
@@ -52,10 +58,15 @@ testthat::test_that("both fixed-quality methods bypass indicators and summaries"
   for (method in c("assume.0", "assume.1")) {
     run_env <- orchestration_environment()
     run_env$QH.METHOD <- method
+    rlang::local_bindings(
+      run_fixed_quality = function(inputs, config, output_paths) run_env$fixed_called <- TRUE,
+      .env = environment(run_legacy_fixed_quality)
+    )
     run_env$VQA.SUMMARY.ONLY <- TRUE
     run_env$input_file_list <- function(...) stop("Empirical check must be skipped")
     execute_legacy_batch(run_env)
-    testthat::expect_identical(run_env$scripts, c("libraries.R", "q.fixed.R"))
+    testthat::expect_identical(run_env$scripts, "libraries.R")
+    testthat::expect_true(run_env$fixed_called)
   }
 })
 
