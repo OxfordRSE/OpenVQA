@@ -64,6 +64,7 @@ run_species_richness <- local({
       environment(helper) <- state
       state[[name]] <- helper
     }
+    state$fitdistr <- MASS::fitdistr
     state$RESULTSDIR <- paste0(output_paths$results, "/")
     state$FIGDIR <- paste0(output_paths$figures, "/")
     state$FIGDIR_REL <- paste0(output_paths$figures, "/")
