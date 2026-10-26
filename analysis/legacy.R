@@ -1,6 +1,8 @@
 source(file.path("analysis", "legacy-batch.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
 source(file.path("analysis", "legacy-params.R"), local = TRUE)
+source(file.path("analysis", "fixed-quality.R"), local = TRUE)
+source(file.path("analysis", "species-richness.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
@@ -44,6 +46,13 @@ prepare_legacy_environment <- function(context = NULL, config = list(), seed = N
     run_env$VQA_PROJECT_PARAMS <- legacy_project_params(config)
   }
   sys.source("params.R", envir = run_env, toplevel.env = run_env)
+  resolved <- if (is.null(context)) {
+    resolve_runtime_config(run_env$DATA_BASEDIR_PROJ, run_env$ASSESS, seed = seed)
+  } else {
+    list(config = config, paths = context$paths)
+  }
+  run_env$analysis_config <- resolved$config
+  run_env$analysis_paths <- resolved$paths
   run_env$seed_enabled <- !is.null(seed) || isTRUE(run_env$set.seed)
   if (!is.null(seed)) run_env$seed <- seed
   # Legacy operations still reset the RNG individually using this compatibility symbol.
