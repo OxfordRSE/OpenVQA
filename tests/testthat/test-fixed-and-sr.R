@@ -139,3 +139,51 @@ testthat::test_that("the all-zero SR workflow is callable without scripts or cal
   second <- lapply(list.files(directory, full.names = TRUE), readLines, warn = FALSE)
   testthat::expect_identical(second, first)
 })
+
+testthat::test_that("nonzero empirical SR fitting works in a fresh session without attached MASS", {
+  root <- normalizePath(file.path("..", ".."))
+  directory <- tempfile("sr-standalone-")
+  dir.create(directory)
+  on.exit(unlink(directory, recursive = TRUE))
+  values <- c(1, 1, 2, 3, 5, 8, 13, 21, 34, 55)
+  raw <- data.frame(
+    plotCode = paste0(rep(c("b", "f"), each = 10), rep(1:10, 2)),
+    focalOrBenchmark = rep(c("b", "f"), each = 10),
+    landCover = rep(c("forest", "focal"), each = 10),
+    vegClass = "forest", stratum = "nostrata", EI = c(values + 1, values)
+  )
+  raw$EI.tr <- raw$EI
+  write.csv(raw, file.path(directory, "SR_raw.csv"), row.names = FALSE)
+  config <- sr_test_config()
+  config$seed <- 42L
+  config$force_prepare_raw <- FALSE
+  config$indicator_settings$SR$test_tail <- "both"
+  payload <- file.path(directory, "arguments.rds")
+  saveRDS(list(config = config, paths = list(results = directory, figures = directory)), payload)
+  script <- file.path(directory, "standalone.R")
+  writeLines(c(
+    "args <- commandArgs(trailingOnly = TRUE)",
+    "setwd(args[[1]])",
+    'source("pipeline/io.R")',
+    'source("pipeline/params.R")',
+    'source("analysis/legacy-params.R")',
+    'source("analysis/species-richness.R")',
+    'stopifnot(!"package:MASS" %in% search())',
+    "payload <- readRDS(args[[2]])",
+    "result <- run_species_richness(list(), payload$config, payload$paths)",
+    "focal <- read.csv(result$focal)",
+    'bootstrap <- read.csv(file.path(payload$paths$results, "SR_boot.q.csv"))',
+    "stopifnot(nrow(focal) == 1L, is.finite(focal$q), focal$q > 0, focal$q < 1)",
+    'stopifnot(all(is.finite(unlist(bootstrap[paste0("X", 1:5)]))))',
+    'stopifnot(!"package:MASS" %in% search())'
+  ), script)
+  output <- suppressWarnings(system2(
+    file.path(R.home("bin"), "Rscript"),
+    c("--vanilla", shQuote(script), shQuote(root), shQuote(payload)),
+    stdout = TRUE, stderr = TRUE,
+    env = paste0("R_LIBS_USER=", shQuote(paste(.libPaths(), collapse = .Platform$path.sep)))
+  ))
+  status <- attr(output, "status")
+  if (is.null(status)) status <- 0L
+  testthat::expect_identical(status, 0L, info = paste(output, collapse = "\n"))
+})
