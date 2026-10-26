@@ -13,7 +13,8 @@ local({
     "quality-functions.R", "distribution-functions.R",
     "overlap-functions.R", "bootstrap-functions.R",
     "utility-functions.R", "formatting-functions.R",
-    "spreadsheet-functions.R", "plotting-functions.R"
+    "spreadsheet-functions.R", "plotting-functions.R",
+    "indicator-results-functions.R", "indicator-figure-functions.R"
   )) {
     sys.source(file.path(includes_dir, file), envir = parent.env(environment()))
   }
