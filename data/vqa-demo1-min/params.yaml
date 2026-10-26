@@ -1,11 +1,21 @@
 project: vqa-demo1-min
 legacy_summary_area_ha: 100
-
-# Validation-only manifest for now.
-# This will eventually replace the old params R file for file-presence checks.
+data_type: cover
+bootstrap_reps: 100
+omit_quality_hectares: yes
+functional_group_group_by: indicator
+functional_group_method: arithmetic
+overall_quality_method: gmean
+nodata_sd: 3
+aggregate_indicators:
+- PCGF
+- PCESS
+- GC
+pcess_herbs_only: yes
 active_indicators:
-  - SR
-  - TD
-  - PCGF
-  - GC
-  - PCESS
+- SR
+- TD
+- PCGF
+- GC
+- PCESS
+source_plot_data_filename: vqa-demo1_data.accdb

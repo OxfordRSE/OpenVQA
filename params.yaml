@@ -1,0 +1,171 @@
+library_load_silent: true
+logfile_basename: "log_vqa.batch"
+replace_log: false
+beta_algorithm: "mixed"
+use_quality_difference_raw: true
+quality_discount_method: "scaled"
+beta_weight_method: "u.beta.buffered"
+beta_buffer: 0.01
+test_difference_bootstrap: false
+permutation_reps: 1000
+infer_missing_cls: false
+infer_missing_cls_strict: true
+td_outliers_append: true
+td_outlier_upper_threshold: 500
+td_bm_plots_deduplicate: true
+remove_ba_outliers: true
+ba_outliers_stdevs: 4
+ba_outliers_append: true
+ba_outliers_upper_threshold: 500
+quality_inverse_logit: false
+inverse_logit_beta: 2
+zero_to_one: true
+plot_overlap: false
+plot_hist: true
+quality_legend_only: true
+quality_legend_percent: false
+boot_graph_subsample: true
+show_overlap: true
+plot_boot_pdfs: true
+plot_pdf: true
+no_fit_keep_separate: false
+group_mtext_line: 1
+workbook_drop_notes: true
+workbook_remove_missing_quality: true
+workbook_drop_excluded: true
+summary_pluralize_strata: false
+plot_dists_fitted: false
+plot_dists_fitted_bm: false
+plot_dists_fitted_bm_grouped: false
+plot_dists_fitted_bm_grouped_nofit: false
+plot_dists_fitted_bm_grouped_rescaled: false
+plot_dists_fitted_bm_grouped_rescaled_nofit: false
+plot_dists_fitted_bm_nofit: false
+plot_dists_fitted_bm_rescaled: false
+plot_dists_fitted_bm_rescaled_nofit: false
+plot_dists_fitted_focal: false
+plot_dists_fitted_focal_grouped: false
+plot_dists_fitted_focal_grouped_nofit: false
+plot_dists_fitted_focal_grouped_rescaled: false
+plot_dists_fitted_focal_grouped_rescaled_nofit: false
+plot_dists_fitted_focal_nofit: false
+plot_dists_fitted_focal_rescaled: false
+plot_dists_fitted_focal_rescaled_nofit: false
+plot_dists_fitted_grouped: false
+plot_dists_fitted_grouped_nofit: false
+plot_dists_fitted_grouped_rescaled_nofit: false
+plot_dists_fitted_nofit: false
+plot_dists_fitted_rescaled_nofit: false
+min_plots: 6
+force_prepare_raw: yes
+plot_figures_only: no
+summary_only: no
+td_only: no
+include_plots_nodata: yes
+qh_method: empirical
+remove_td_outliers: yes
+td_outlier_stdevs: 4
+figure_type: png
+plot_legends: yes
+legend_no_focal_benchmark: no
+show_sample_sizes: no
+legend_combined: no
+plot_dists_fitted_grouped_rescaled: no
+plot_dists_fitted_rescaled: yes
+vegetation_without_data: []
+indicator_defaults:
+  benchmark_value: ~
+  prepare_raw: no
+  convert_percent: no
+  logit: no
+  remove_zero_cover_plots: no
+  scale_abundance: yes
+  td_multiplier: ~
+  td_multiplier_omit: []
+  exclude_exotics: no
+  na_to_zero: yes
+  multiplier: 1
+  normalize_area_m2: false
+indicator_settings:
+  SR:
+    name: Species Richness
+    distribution: NBin
+    quality_method: empirical
+    has_stratum: no
+    test_tail: lower
+  TD:
+    name: Taxonomic distance
+    distribution: gamma
+    quality_method: empirical
+    has_stratum: no
+    test_tail: both
+    remove_zero_cover_plots: yes
+    scale_abundance: no
+    td_multiplier: 20
+  PCGF:
+    name: Percent Cover by Growth Form
+    distribution: Bet
+    quality_method: empirical
+    has_stratum: yes
+    test_tail: both
+  GC:
+    name: Ground Cover
+    distribution: Bet
+    quality_method: empirical
+    has_stratum: yes
+    test_tail: both
+  PCESS:
+    name: Percent Cover Exotic Species
+    distribution: Bet
+    quality_method: fixed
+    has_stratum: yes
+    test_tail: upper
+    benchmark_value: 0
+  TS:
+    name: Taxonomic Similarity
+    distribution: Bet
+    quality_method: empirical
+    has_stratum: no
+    test_tail: lower
+  PCES:
+    name: Percent Cover Exotic Species
+    distribution: Bet
+    quality_method: fixed
+    has_stratum: no
+    test_tail: upper
+    benchmark_value: 0
+  BA:
+    name: Basal Area (m2/ha)
+    distribution: gamma
+    quality_method: empirical
+    has_stratum: no
+    test_tail: both
+    data_type: ind
+    normalize_area_m2: 10000
+  ASC:
+    name: Abundance by Size Class
+    distribution: NBin
+    quality_method: empirical
+    has_stratum: yes
+    test_tail: both
+    data_type: ind
+    na_to_zero: no
+indicator_groups:
+  SR: composition
+  TD: composition
+  PCGF: structure
+  GC: function
+  PCESS: integrity
+  TS: composition
+  PCES: integrity
+  BA: structure
+  ASC: structure
+nmds:
+  verbose: no
+  seed_enabled: yes
+  seed: 10
+  trymax: 1000
+  dimensions: 3
+  max_iterations: 200
+missing_exotic_status_assume_native: true
+pcess_herbs_only: false

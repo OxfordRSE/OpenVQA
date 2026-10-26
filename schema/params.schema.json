@@ -1,0 +1,1197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenVQA analysis parameters",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "library_load_silent": {
+      "title": "Library load silent",
+      "description": "Suppress package startup messages during analysis.",
+      "type": "boolean"
+    },
+    "logfile_basename": {
+      "title": "Logfile basename",
+      "description": "Base name of the analysis log within the assessment log directory.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_.-]+$"
+    },
+    "replace_log": {
+      "title": "Replace log",
+      "description": "Replace the previous analysis log instead of adding a timestamp.",
+      "type": "boolean"
+    },
+    "beta_algorithm": {
+      "title": "Beta algorithm",
+      "description": "Algorithm used to calculate quality for beta-distributed indicators.",
+      "type": "string",
+      "enum": [
+        "overlap",
+        "mixed"
+      ]
+    },
+    "use_quality_difference_raw": {
+      "title": "Use quality difference raw",
+      "description": "Keep the observed means-based quality even when the difference is not significant.",
+      "type": "boolean"
+    },
+    "quality_discount_method": {
+      "title": "Quality discount method",
+      "description": "Transformation applied to means-based beta quality.",
+      "type": "string",
+      "enum": [
+        "linear",
+        "scaled"
+      ]
+    },
+    "beta_weight_method": {
+      "title": "Beta weight method",
+      "description": "Weighting of overlap-based and means-based beta quality.",
+      "type": "string",
+      "enum": [
+        "linear",
+        "u.beta",
+        "u.beta.buffered"
+      ]
+    },
+    "beta_buffer": {
+      "title": "Beta buffer",
+      "description": "Edge buffer used by buffered beta weighting.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 0.1
+    },
+    "test_difference_bootstrap": {
+      "title": "Test difference bootstrap",
+      "description": "Run the permutation difference test inside beta bootstrap replicates.",
+      "type": "boolean"
+    },
+    "permutation_reps": {
+      "title": "Permutation reps",
+      "description": "Number of permutation replicates for tests of mean differences.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "infer_missing_cls": {
+      "title": "Infer missing cls",
+      "description": "Infer missing confidence limits in the final quality summary.",
+      "type": "boolean"
+    },
+    "infer_missing_cls_strict": {
+      "title": "Infer missing cls strict",
+      "description": "Also infer confidence limits when observed limits are close to zero.",
+      "type": "boolean"
+    },
+    "td_outliers_append": {
+      "title": "Td outliers append",
+      "description": "Append detected taxonomic distance outliers to the existing outlier file.",
+      "type": "boolean"
+    },
+    "td_outlier_upper_threshold": {
+      "title": "Td outlier upper threshold",
+      "description": "Taxonomic distance above which a plot is automatically an outlier.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "td_bm_plots_deduplicate": {
+      "title": "Td bm plots deduplicate",
+      "description": "Deduplicate benchmark plots before taxonomic distance NMDS.",
+      "type": "boolean"
+    },
+    "remove_ba_outliers": {
+      "title": "Remove ba outliers",
+      "description": "Remove basal area outliers before calculating quality.",
+      "type": "boolean"
+    },
+    "ba_outliers_stdevs": {
+      "title": "Ba outliers stdevs",
+      "description": "Standard deviation threshold for basal area outliers.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "ba_outliers_append": {
+      "title": "Ba outliers append",
+      "description": "Append basal area outliers to the existing outlier file.",
+      "type": "boolean"
+    },
+    "ba_outliers_upper_threshold": {
+      "title": "Ba outliers upper threshold",
+      "description": "Basal area above which a plot is automatically an outlier.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "quality_inverse_logit": {
+      "title": "Quality inverse logit",
+      "description": "Transform final indicator quality with the anchored inverse logit.",
+      "type": "boolean"
+    },
+    "inverse_logit_beta": {
+      "title": "Inverse logit beta",
+      "description": "Steepness of the anchored inverse logit quality transformation.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "zero_to_one": {
+      "title": "Zero to one",
+      "description": "Replace zero species richness with one before negative binomial fitting.",
+      "type": "boolean"
+    },
+    "plot_overlap": {
+      "title": "Plot overlap",
+      "description": "Generate overlap diagnostic figures.",
+      "type": "boolean"
+    },
+    "plot_hist": {
+      "title": "Plot hist",
+      "description": "Generate focal and benchmark distribution histograms.",
+      "type": "boolean"
+    },
+    "quality_legend_only": {
+      "title": "Quality legend only",
+      "description": "Show quality and confidence limits alone in the main results legend.",
+      "type": "boolean"
+    },
+    "quality_legend_percent": {
+      "title": "Quality legend percent",
+      "description": "Display legend quality as a percentage.",
+      "type": "boolean"
+    },
+    "boot_graph_subsample": {
+      "title": "Boot graph subsample",
+      "description": "Subsample bootstrap distributions when drawing figures.",
+      "type": "boolean"
+    },
+    "show_overlap": {
+      "title": "Show overlap",
+      "description": "Show overlap in the figure results legend.",
+      "type": "boolean"
+    },
+    "plot_boot_pdfs": {
+      "title": "Plot boot pdfs",
+      "description": "Draw bootstrap probability densities and confidence limits on overlap figures.",
+      "type": "boolean"
+    },
+    "plot_pdf": {
+      "title": "Plot pdf",
+      "description": "Overlay fitted probability density curves on histograms.",
+      "type": "boolean"
+    },
+    "no_fit_keep_separate": {
+      "title": "No fit keep separate",
+      "description": "Keep histograms without fitted curves in a separate directory.",
+      "type": "boolean"
+    },
+    "group_mtext_line": {
+      "title": "Group mtext line",
+      "description": "Vertical title placement for grouped figures.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "workbook_drop_notes": {
+      "title": "Workbook drop notes",
+      "description": "Drop notes from the overall quality worksheet.",
+      "type": "boolean"
+    },
+    "workbook_remove_missing_quality": {
+      "title": "Workbook remove missing quality",
+      "description": "Remove worksheet rows with missing overall quality.",
+      "type": "boolean"
+    },
+    "workbook_drop_excluded": {
+      "title": "Workbook drop excluded",
+      "description": "Remove excluded indicator rows from the indicator worksheet.",
+      "type": "boolean"
+    },
+    "summary_pluralize_strata": {
+      "title": "Summary pluralize strata",
+      "description": "Pluralize stratum names in summary output.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted": {
+      "title": "Plot dists fitted",
+      "description": "Generate figures in the dists_fitted output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm": {
+      "title": "Plot dists fitted bm",
+      "description": "Generate figures in the dists_fitted_bm output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped": {
+      "title": "Plot dists fitted bm grouped",
+      "description": "Generate figures in the dists_fitted_bm_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_nofit": {
+      "title": "Plot dists fitted bm grouped nofit",
+      "description": "Generate figures in the dists_fitted_bm_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_rescaled": {
+      "title": "Plot dists fitted bm grouped rescaled",
+      "description": "Generate figures in the dists_fitted_bm_grouped_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted bm grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_bm_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_nofit": {
+      "title": "Plot dists fitted bm nofit",
+      "description": "Generate figures in the dists_fitted_bm_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_rescaled": {
+      "title": "Plot dists fitted bm rescaled",
+      "description": "Generate figures in the dists_fitted_bm_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_bm_rescaled_nofit": {
+      "title": "Plot dists fitted bm rescaled nofit",
+      "description": "Generate figures in the dists_fitted_bm_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal": {
+      "title": "Plot dists fitted focal",
+      "description": "Generate figures in the dists_fitted_focal output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped": {
+      "title": "Plot dists fitted focal grouped",
+      "description": "Generate figures in the dists_fitted_focal_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_nofit": {
+      "title": "Plot dists fitted focal grouped nofit",
+      "description": "Generate figures in the dists_fitted_focal_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_rescaled": {
+      "title": "Plot dists fitted focal grouped rescaled",
+      "description": "Generate figures in the dists_fitted_focal_grouped_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted focal grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_focal_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_nofit": {
+      "title": "Plot dists fitted focal nofit",
+      "description": "Generate figures in the dists_fitted_focal_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_rescaled": {
+      "title": "Plot dists fitted focal rescaled",
+      "description": "Generate figures in the dists_fitted_focal_rescaled output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_focal_rescaled_nofit": {
+      "title": "Plot dists fitted focal rescaled nofit",
+      "description": "Generate figures in the dists_fitted_focal_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped": {
+      "title": "Plot dists fitted grouped",
+      "description": "Generate figures in the dists_fitted_grouped output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_nofit": {
+      "title": "Plot dists fitted grouped nofit",
+      "description": "Generate figures in the dists_fitted_grouped_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_rescaled_nofit": {
+      "title": "Plot dists fitted grouped rescaled nofit",
+      "description": "Generate figures in the dists_fitted_grouped_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_nofit": {
+      "title": "Plot dists fitted nofit",
+      "description": "Generate figures in the dists_fitted_nofit output directory.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_rescaled_nofit": {
+      "title": "Plot dists fitted rescaled nofit",
+      "description": "Generate figures in the dists_fitted_rescaled_nofit output directory.",
+      "type": "boolean"
+    },
+    "project": {
+      "title": "Project",
+      "type": "string",
+      "minLength": 1,
+      "description": "Project label recorded in run metadata and used by standalone parameter scripts."
+    },
+    "legacy_summary_area_ha": {
+      "title": "Legacy summary area ha",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Area used by the legacy demo 1 summary compatibility calculation."
+    },
+    "data_type": {
+      "title": "Data type",
+      "type": "string",
+      "enum": [
+        "cover",
+        "ind",
+        "mixed"
+      ],
+      "description": "Species observation data available to preprocessing and analysis."
+    },
+    "qh_method": {
+      "title": "Qh method",
+      "type": "string",
+      "enum": [
+        "empirical",
+        "assume.0",
+        "assume.1"
+      ],
+      "description": "Empirical quality or an assumed constant quality of zero or one."
+    },
+    "active_indicators": {
+      "title": "Active indicators",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SR",
+          "TD",
+          "TS",
+          "PCGF",
+          "GC",
+          "PCESS",
+          "PCES",
+          "BA",
+          "ASC",
+          "PCS",
+          "CH",
+          "BAES"
+        ]
+      },
+      "uniqueItems": true,
+      "description": "Indicator codes selected for the assessment."
+    },
+    "td_only": {
+      "title": "Td only",
+      "type": "boolean",
+      "description": "Run taxonomic distance alone for NMDS tuning."
+    },
+    "include_plots_nodata": {
+      "title": "Include plots nodata",
+      "type": "boolean",
+      "description": "Include plots lacking observations for an indicator."
+    },
+    "min_plots": {
+      "title": "Min plots",
+      "description": "Minimum plot count reported in the analysis workbook.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "force_prepare_raw": {
+      "title": "Force prepare raw",
+      "description": "Recalculate raw values for every active indicator.",
+      "type": "boolean"
+    },
+    "plot_figures_only": {
+      "title": "Plot figures only",
+      "description": "Generate figures using existing analysis results.",
+      "type": "boolean"
+    },
+    "summary_only": {
+      "title": "Summary only",
+      "description": "Generate summaries using existing indicator results.",
+      "type": "boolean"
+    },
+    "remove_td_outliers": {
+      "title": "Remove td outliers",
+      "description": "Remove plots with outlying taxonomic distance values.",
+      "type": "boolean"
+    },
+    "td_outlier_stdevs": {
+      "title": "Td outlier stdevs",
+      "description": "Standard deviation threshold for taxonomic distance outliers.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "figure_type": {
+      "title": "Figure type",
+      "description": "File format for distribution figures.",
+      "type": "string",
+      "enum": [
+        "png",
+        "pdf"
+      ]
+    },
+    "plot_legends": {
+      "title": "Plot legends",
+      "description": "Draw legends on indicator histograms.",
+      "type": "boolean"
+    },
+    "legend_no_focal_benchmark": {
+      "title": "Legend no focal benchmark",
+      "description": "Omit the focal and benchmark colour key.",
+      "type": "boolean"
+    },
+    "show_sample_sizes": {
+      "title": "Show sample sizes",
+      "description": "Display sample sizes in histogram legends.",
+      "type": "boolean"
+    },
+    "legend_combined": {
+      "title": "Legend combined",
+      "description": "Combine histogram legends on the right side of the figure.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_grouped_rescaled": {
+      "title": "Plot dists fitted grouped rescaled",
+      "description": "Generate grouped distribution figures with rescaled axes.",
+      "type": "boolean"
+    },
+    "plot_dists_fitted_rescaled": {
+      "title": "Plot dists fitted rescaled",
+      "description": "Generate individual distribution figures with rescaled axes.",
+      "type": "boolean"
+    },
+    "vegetation_without_data": {
+      "title": "Vegetation without data",
+      "description": "Vegetation classes excluded because observations are unavailable.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "bootstrap_reps": {
+      "title": "Bootstrap reps",
+      "description": "Number of bootstrap replicates for quality confidence limits.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "omit_quality_hectares": {
+      "title": "Omit quality hectares",
+      "description": "Omit quality hectare calculations from the final summary.",
+      "type": "boolean"
+    },
+    "functional_group_group_by": {
+      "title": "Functional group group by",
+      "description": "Unit used when aggregating functional group quality.",
+      "type": "string",
+      "enum": [
+        "indicator",
+        "indicator_group"
+      ]
+    },
+    "functional_group_method": {
+      "title": "Functional group method",
+      "description": "Mean used to aggregate functional group quality.",
+      "type": "string",
+      "enum": [
+        "arithmetic",
+        "generalized_mean"
+      ]
+    },
+    "overall_quality_method": {
+      "title": "Overall quality method",
+      "description": "Method used to combine functional group qualities.",
+      "type": "string",
+      "enum": [
+        "gmean",
+        "prod",
+        "mixed"
+      ]
+    },
+    "nodata_sd": {
+      "title": "Nodata sd",
+      "description": "Standard deviation penalty for indicators with no-data plots.",
+      "type": "number",
+      "minimum": 0
+    },
+    "aggregate_indicators": {
+      "title": "Aggregate indicators",
+      "description": "Indicators whose stratum scores are combined in summary output.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SR",
+          "TD",
+          "PCGF",
+          "GC",
+          "PCESS",
+          "TS",
+          "PCES",
+          "BA",
+          "ASC"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "pcess_herbs_only": {
+      "title": "Pcess herbs only",
+      "description": "Restrict exotic species cover by stratum to herbs.",
+      "type": "boolean"
+    },
+    "indicator_defaults": {
+      "title": "Indicator defaults",
+      "description": "Calculation settings shared by indicators.",
+      "type": "object",
+      "properties": {
+        "benchmark_value": {
+          "title": "Benchmark value",
+          "description": "Fixed benchmark value; null for empirical comparisons.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prepare_raw": {
+          "title": "Prepare raw",
+          "description": "Recalculate raw values for this indicator.",
+          "type": "boolean"
+        },
+        "convert_percent": {
+          "title": "Convert percent",
+          "description": "Convert percentage observations into proportions.",
+          "type": "boolean"
+        },
+        "logit": {
+          "title": "Logit",
+          "description": "Apply a logit transformation to proportional observations.",
+          "type": "boolean"
+        },
+        "remove_zero_cover_plots": {
+          "title": "Remove zero cover plots",
+          "description": "Exclude plots with zero species cover.",
+          "type": "boolean"
+        },
+        "scale_abundance": {
+          "title": "Scale abundance",
+          "description": "Rescale observations into the interval from zero to one.",
+          "type": "boolean"
+        },
+        "td_multiplier": {
+          "title": "Td multiplier",
+          "description": "Multiplier applied to taxonomic distance before distribution fitting.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "td_multiplier_omit": {
+          "title": "Td multiplier omit",
+          "description": "Land cover classes exempt from the taxonomic distance multiplier.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exclude_exotics": {
+          "title": "Exclude exotics",
+          "description": "Exclude exotic species when calculating the indicator.",
+          "type": "boolean"
+        },
+        "na_to_zero": {
+          "title": "Na to zero",
+          "description": "Treat missing observations as zero for the indicator.",
+          "type": "boolean"
+        },
+        "multiplier": {
+          "title": "Multiplier",
+          "description": "Scalar applied to indicator observations.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "normalize_area_m2": {
+          "title": "Normalize area in square metres",
+          "description": "Common area for basal-area normalization; false keeps the observed area.",
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "benchmark_value",
+        "prepare_raw",
+        "convert_percent",
+        "logit",
+        "remove_zero_cover_plots",
+        "scale_abundance",
+        "td_multiplier",
+        "td_multiplier_omit",
+        "exclude_exotics",
+        "na_to_zero",
+        "multiplier",
+        "normalize_area_m2"
+      ]
+    },
+    "indicator_settings": {
+      "title": "Indicator settings",
+      "description": "Calculation settings for each indicator.",
+      "type": "object",
+      "properties": {
+        "SR": {
+          "title": "Species Richness",
+          "description": "Calculation settings for Species Richness.",
+          "$ref": "#/definitions/indicator"
+        },
+        "TD": {
+          "title": "Taxonomic distance",
+          "description": "Calculation settings for Taxonomic distance.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCGF": {
+          "title": "Percent Cover by Growth Form",
+          "description": "Calculation settings for Percent Cover by Growth Form.",
+          "$ref": "#/definitions/indicator"
+        },
+        "GC": {
+          "title": "Ground Cover",
+          "description": "Calculation settings for Ground Cover.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCESS": {
+          "title": "Percent Cover Exotic Species",
+          "description": "Calculation settings for Percent Cover Exotic Species.",
+          "$ref": "#/definitions/indicator"
+        },
+        "TS": {
+          "title": "Taxonomic Similarity",
+          "description": "Calculation settings for Taxonomic Similarity.",
+          "$ref": "#/definitions/indicator"
+        },
+        "PCES": {
+          "title": "Percent Cover Exotic Species",
+          "description": "Calculation settings for Percent Cover Exotic Species.",
+          "$ref": "#/definitions/indicator"
+        },
+        "BA": {
+          "title": "Basal Area (m2/ha)",
+          "description": "Calculation settings for Basal Area (m2/ha).",
+          "$ref": "#/definitions/indicator"
+        },
+        "ASC": {
+          "title": "Abundance by Size Class",
+          "description": "Calculation settings for Abundance by Size Class.",
+          "$ref": "#/definitions/indicator"
+        }
+      },
+      "additionalProperties": false
+    },
+    "indicator_groups": {
+      "title": "Indicator groups",
+      "description": "Functional group assigned to each indicator.",
+      "type": "object",
+      "properties": {
+        "SR": {
+          "title": "Sr",
+          "description": "Functional group for Species Richness.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "TD": {
+          "title": "Td",
+          "description": "Functional group for Taxonomic distance.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCGF": {
+          "title": "Pcgf",
+          "description": "Functional group for Percent Cover by Growth Form.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "GC": {
+          "title": "Gc",
+          "description": "Functional group for Ground Cover.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCESS": {
+          "title": "Pcess",
+          "description": "Functional group for Percent Cover Exotic Species.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "TS": {
+          "title": "Ts",
+          "description": "Functional group for Taxonomic Similarity.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCES": {
+          "title": "Pces",
+          "description": "Functional group for Percent Cover Exotic Species.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "BA": {
+          "title": "Ba",
+          "description": "Functional group for Basal Area (m2/ha).",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "ASC": {
+          "title": "Asc",
+          "description": "Functional group for Abundance by Size Class.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "nmds": {
+      "title": "Nmds",
+      "description": "Non-metric multidimensional scaling settings.",
+      "type": "object",
+      "properties": {
+        "verbose": {
+          "title": "Verbose",
+          "description": "Print progress from NMDS fitting.",
+          "type": "boolean"
+        },
+        "seed_enabled": {
+          "title": "Seed enabled",
+          "description": "Reset the random seed before NMDS fitting.",
+          "type": "boolean"
+        },
+        "seed": {
+          "title": "Seed",
+          "description": "Random seed used for NMDS operations.",
+          "type": "integer",
+          "minimum": -2147483647,
+          "maximum": 2147483647
+        },
+        "trymax": {
+          "title": "Trymax",
+          "description": "Maximum number of random starts for NMDS fitting.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "dimensions": {
+          "title": "Dimensions",
+          "description": "Number of NMDS dimensions.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_iterations": {
+          "title": "Max iterations",
+          "description": "Maximum iterations within each NMDS fit.",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "verbose",
+        "seed_enabled",
+        "seed",
+        "trymax",
+        "dimensions",
+        "max_iterations"
+      ]
+    },
+    "source_plot_data_filename": {
+      "title": "Source plot data filename",
+      "description": "Name of the original plot data source recorded in the workbook.",
+      "type": "string",
+      "minLength": 1
+    },
+    "missing_exotic_status_assume_native": {
+      "title": "Missing exotic status assumes native",
+      "description": "Record whether missing exotic status was treated as native during data preparation.",
+      "type": "boolean"
+    },
+    "stem_sampling": {
+      "title": "Stem sampling",
+      "description": "Sampling geometry used to normalize basal area by stem size.",
+      "type": "object",
+      "properties": {
+        "min_dbh_cm": {
+          "title": "Minimum dbh cm",
+          "description": "Minimum measured stem diameter included in basal-area normalization.",
+          "type": "number",
+          "minimum": 0
+        },
+        "split_dbh_cm": {
+          "title": "Split dbh cm",
+          "description": "Stem diameter separating the two sampling areas.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "small_plot_area_m2": {
+          "title": "Small plot area m2",
+          "description": "Total sampled area for stems below the diameter split.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "large_plot_area_m2": {
+          "title": "Large plot area m2",
+          "description": "Total sampled area for stems at or above the diameter split.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "min_dbh_cm",
+        "split_dbh_cm",
+        "small_plot_area_m2",
+        "large_plot_area_m2"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "library_load_silent",
+    "logfile_basename",
+    "replace_log",
+    "beta_algorithm",
+    "use_quality_difference_raw",
+    "quality_discount_method",
+    "beta_weight_method",
+    "beta_buffer",
+    "test_difference_bootstrap",
+    "permutation_reps",
+    "infer_missing_cls",
+    "infer_missing_cls_strict",
+    "td_outliers_append",
+    "td_outlier_upper_threshold",
+    "td_bm_plots_deduplicate",
+    "remove_ba_outliers",
+    "ba_outliers_stdevs",
+    "ba_outliers_append",
+    "ba_outliers_upper_threshold",
+    "quality_inverse_logit",
+    "inverse_logit_beta",
+    "zero_to_one",
+    "plot_overlap",
+    "plot_hist",
+    "quality_legend_only",
+    "quality_legend_percent",
+    "boot_graph_subsample",
+    "show_overlap",
+    "plot_boot_pdfs",
+    "plot_pdf",
+    "no_fit_keep_separate",
+    "group_mtext_line",
+    "workbook_drop_notes",
+    "workbook_remove_missing_quality",
+    "workbook_drop_excluded",
+    "summary_pluralize_strata",
+    "plot_dists_fitted",
+    "plot_dists_fitted_bm",
+    "plot_dists_fitted_bm_grouped",
+    "plot_dists_fitted_bm_grouped_nofit",
+    "plot_dists_fitted_bm_grouped_rescaled",
+    "plot_dists_fitted_bm_grouped_rescaled_nofit",
+    "plot_dists_fitted_bm_nofit",
+    "plot_dists_fitted_bm_rescaled",
+    "plot_dists_fitted_bm_rescaled_nofit",
+    "plot_dists_fitted_focal",
+    "plot_dists_fitted_focal_grouped",
+    "plot_dists_fitted_focal_grouped_nofit",
+    "plot_dists_fitted_focal_grouped_rescaled",
+    "plot_dists_fitted_focal_grouped_rescaled_nofit",
+    "plot_dists_fitted_focal_nofit",
+    "plot_dists_fitted_focal_rescaled",
+    "plot_dists_fitted_focal_rescaled_nofit",
+    "plot_dists_fitted_grouped",
+    "plot_dists_fitted_grouped_nofit",
+    "plot_dists_fitted_grouped_rescaled_nofit",
+    "plot_dists_fitted_nofit",
+    "plot_dists_fitted_rescaled_nofit",
+    "min_plots",
+    "force_prepare_raw",
+    "plot_figures_only",
+    "summary_only",
+    "td_only",
+    "include_plots_nodata",
+    "qh_method",
+    "remove_td_outliers",
+    "td_outlier_stdevs",
+    "figure_type",
+    "plot_legends",
+    "legend_no_focal_benchmark",
+    "show_sample_sizes",
+    "legend_combined",
+    "plot_dists_fitted_grouped_rescaled",
+    "plot_dists_fitted_rescaled",
+    "vegetation_without_data",
+    "indicator_defaults",
+    "indicator_settings",
+    "indicator_groups",
+    "nmds",
+    "missing_exotic_status_assume_native",
+    "pcess_herbs_only"
+  ],
+  "definitions": {
+    "indicator": {
+      "title": "Indicator",
+      "description": "Indicator calculation settings.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Display name of the indicator.",
+          "type": "string",
+          "minLength": 1
+        },
+        "distribution": {
+          "title": "Distribution",
+          "description": "Distribution fitted to indicator observations.",
+          "type": "string",
+          "enum": [
+            "NBin",
+            "Bet",
+            "gamma"
+          ]
+        },
+        "quality_method": {
+          "title": "Quality method",
+          "description": "Comparison against observed benchmark data or a fixed value.",
+          "type": "string",
+          "enum": [
+            "empirical",
+            "fixed"
+          ]
+        },
+        "has_stratum": {
+          "title": "Has stratum",
+          "description": "Whether the indicator has multiple strata.",
+          "type": "boolean"
+        },
+        "test_tail": {
+          "title": "Test tail",
+          "description": "Direction of departure from the benchmark penalised by quality.",
+          "type": "string",
+          "enum": [
+            "lower",
+            "upper",
+            "both"
+          ]
+        },
+        "benchmark_value": {
+          "title": "Benchmark value",
+          "description": "Fixed benchmark value; null for empirical comparisons.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prepare_raw": {
+          "title": "Prepare raw",
+          "description": "Recalculate raw values for this indicator.",
+          "type": "boolean"
+        },
+        "convert_percent": {
+          "title": "Convert percent",
+          "description": "Convert percentage observations into proportions.",
+          "type": "boolean"
+        },
+        "logit": {
+          "title": "Logit",
+          "description": "Apply a logit transformation to proportional observations.",
+          "type": "boolean"
+        },
+        "remove_zero_cover_plots": {
+          "title": "Remove zero cover plots",
+          "description": "Exclude plots with zero species cover.",
+          "type": "boolean"
+        },
+        "scale_abundance": {
+          "title": "Scale abundance",
+          "description": "Rescale observations into the interval from zero to one.",
+          "type": "boolean"
+        },
+        "td_multiplier": {
+          "title": "Td multiplier",
+          "description": "Multiplier applied to taxonomic distance before distribution fitting.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "td_multiplier_omit": {
+          "title": "Td multiplier omit",
+          "description": "Land cover classes exempt from the taxonomic distance multiplier.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exclude_exotics": {
+          "title": "Exclude exotics",
+          "description": "Exclude exotic species when calculating the indicator.",
+          "type": "boolean"
+        },
+        "na_to_zero": {
+          "title": "Na to zero",
+          "description": "Treat missing observations as zero for the indicator.",
+          "type": "boolean"
+        },
+        "data_type": {
+          "title": "Data type",
+          "type": "string",
+          "enum": [
+            "cover",
+            "ind",
+            "mixed"
+          ],
+          "description": "Species observation data available to preprocessing and analysis."
+        },
+        "multiplier": {
+          "title": "Multiplier",
+          "description": "Scalar applied to indicator observations.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "normalize_area_m2": {
+          "title": "Normalize area in square metres",
+          "description": "Common area for basal-area normalization; false keeps the observed area.",
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "distribution",
+        "quality_method",
+        "has_stratum",
+        "test_tail"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "project": {
+            "enum": [
+              "vqa-demo1",
+              "vqa-demo1-min"
+            ]
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "then": {
+        "required": [
+          "project",
+          "legacy_summary_area_ha",
+          "data_type",
+          "bootstrap_reps",
+          "omit_quality_hectares",
+          "functional_group_group_by",
+          "functional_group_method",
+          "overall_quality_method",
+          "nodata_sd",
+          "aggregate_indicators",
+          "pcess_herbs_only",
+          "active_indicators",
+          "indicator_defaults",
+          "source_plot_data_filename"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "project": {
+            "enum": [
+              "vqa-demo2",
+              "vqa-demo2-min"
+            ]
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "then": {
+        "required": [
+          "data_type",
+          "bootstrap_reps",
+          "omit_quality_hectares",
+          "functional_group_group_by",
+          "functional_group_method",
+          "overall_quality_method",
+          "nodata_sd",
+          "aggregate_indicators",
+          "active_indicators",
+          "source_plot_data_filename",
+          "stem_sampling"
+        ]
+      }
+    }
+  ]
+}

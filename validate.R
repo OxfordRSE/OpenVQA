@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
 
 source(file.path("validation", "helpers.R"))
 source(file.path("pipeline", "io.R"))
+source(file.path("pipeline", "params.R"))
 source(file.path("validation", "requirements.R"))
 source(file.path("validation", "schema.R"))
 source(file.path("validation", "crossfile.R"))

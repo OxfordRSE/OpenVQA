@@ -1,6 +1,7 @@
 refactor_project_root <- normalizePath(file.path("..", "..", ".."))
 refactor_rscript <- file.path(R.home("bin"), "Rscript")
 source(file.path(refactor_project_root, "pipeline", "io.R"), local = TRUE)
+source(file.path(refactor_project_root, "pipeline", "params.R"), local = TRUE)
 
 copy_refactor_project <- function(project) {
   source_root <- file.path(refactor_project_root, "data", paste0(project, "-min"))
@@ -48,11 +49,47 @@ run_refactor_command <- function(script, data_root, assessment = NULL,
   invisible(output)
 }
 
+copy_analysis_application <- function() {
+  application_root <- tempfile("analysis-application-")
+  dir.create(application_root)
+  files <- c(
+    list.files(
+      refactor_project_root,
+      pattern = "\\.R$",
+      full.names = TRUE
+    ),
+    file.path(
+      refactor_project_root,
+      c(
+        "params.yaml",
+        "analysis",
+        "pipeline",
+        "preprocessing",
+        "includes",
+        "indicators",
+        "vqa.summary",
+        "schema",
+        "validation"
+      )
+    )
+  )
+  testthat::expect_true(all(file.copy(files, application_root, recursive = TRUE)))
+  testthat::expect_false(dir.exists(file.path(application_root, "params")))
+  application_root
+}
+
 run_refactor_workflow <- function(project, assessment, seed = 20260810L) {
   data_root <- copy_refactor_project(project)
   old_directory <- getwd()
-  on.exit(setwd(old_directory), add = TRUE)
-  setwd(refactor_project_root)
+  application_root <- copy_analysis_application()
+  on.exit(
+    {
+      setwd(old_directory)
+      unlink(application_root, recursive = TRUE)
+    },
+    add = TRUE
+  )
+  setwd(application_root)
 
   run_refactor_command("validate.R", data_root)
   run_refactor_command(
