@@ -57,6 +57,11 @@ run_legacy_indicators <- function(run_env) {
             load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
             run_env$analysis_config, run_env$analysis_paths
           )
+        } else if (indicator == "PCES") {
+          run_pces(
+            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+            run_env$analysis_config, run_env$analysis_paths
+          )
         } else {
           evalq(source(
             file.path("indicators", paste0(tolower(EI), ".R")),

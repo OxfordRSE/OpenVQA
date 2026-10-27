@@ -7,6 +7,7 @@ source(file.path("analysis", "cover-indicators.R"), local = TRUE)
 source(file.path("indicators", "pcgf.R"), local = TRUE)
 source(file.path("indicators", "gc.R"), local = TRUE)
 source(file.path("indicators", "pcess.R"), local = TRUE)
+source(file.path("indicators", "pces.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
