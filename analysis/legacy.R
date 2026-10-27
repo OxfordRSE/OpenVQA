@@ -4,6 +4,7 @@ source(file.path("analysis", "legacy-params.R"), local = TRUE)
 source(file.path("analysis", "fixed-quality.R"), local = TRUE)
 source(file.path("analysis", "species-richness.R"), local = TRUE)
 source(file.path("indicators", "pcgf.R"), local = TRUE)
+source(file.path("indicators", "gc.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
