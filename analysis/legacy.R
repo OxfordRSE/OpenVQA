@@ -10,6 +10,7 @@ source(file.path("indicators", "pcess.R"), local = TRUE)
 source(file.path("indicators", "pces.R"), local = TRUE)
 source(file.path("analysis", "stem-indicators.R"), local = TRUE)
 source(file.path("indicators", "ba.R"), local = TRUE)
+source(file.path("indicators", "asc.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
