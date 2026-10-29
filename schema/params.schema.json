@@ -809,12 +809,12 @@
         },
         "seed_enabled": {
           "title": "Seed enabled",
-          "description": "Reset the random seed before NMDS fitting.",
+          "description": "Recorded NMDS seeding preference. TD resets to the NMDS seed when a run seed is supplied, independently of this flag.",
           "type": "boolean"
         },
         "seed": {
           "title": "Seed",
-          "description": "Random seed used for NMDS operations.",
+          "description": "Seed used for NMDS fitting when run-level seeding is enabled, separate from the run seed used for quality calculations.",
           "type": "integer",
           "minimum": -2147483647,
           "maximum": 2147483647
