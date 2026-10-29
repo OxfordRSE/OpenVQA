@@ -33,7 +33,10 @@ run_legacy_indicators <- function(run_env) {
     if (is.null(run_env$TD.ONLY)) run_env$TD.ONLY <- FALSE
     if (run_env$TD.ONLY) {
       cat("*** Running indicator TD only ***\n\n")
-      evalq(source(file.path("indicators", "td.R"), local = TRUE), envir = run_env)
+      run_taxonomic_distance(
+        load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+        run_env$analysis_config, run_env$analysis_paths
+      )
     } else {
       for (indicator in run_env$EI.vec) {
         run_env$EI <- indicator
@@ -69,6 +72,16 @@ run_legacy_indicators <- function(run_env) {
           )
         } else if (indicator == "ASC") {
           run_stem_abundance(
+            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+            run_env$analysis_config, run_env$analysis_paths
+          )
+        } else if (indicator == "TS") {
+          run_taxonomic_similarity(
+            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+            run_env$analysis_config, run_env$analysis_paths
+          )
+        } else if (indicator == "TD") {
+          run_taxonomic_distance(
             load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
             run_env$analysis_config, run_env$analysis_paths
           )

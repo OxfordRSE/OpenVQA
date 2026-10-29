@@ -37,19 +37,24 @@ testthat::test_that("TD-only and figures-only runs suppress summaries", {
     run_species_richness = function(inputs, config, output_paths) {
       run_env$indicator_order <- c(run_env$indicator_order, "SR")
     },
+    run_taxonomic_similarity = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "TS")
+    },
+    run_taxonomic_distance = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "TD")
+    },
     .env = environment(run_legacy_indicators)
   )
   run_env$TD.ONLY <- TRUE
   execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c("libraries.R", file.path("indicators", "td.R")))
+  testthat::expect_identical(run_env$scripts, "libraries.R")
+  testthat::expect_identical(run_env$indicator_order, "TD")
 
   run_env <- orchestration_environment()
   run_env$PLOT.FIGS.ONLY <- TRUE
   rm("TD.ONLY", envir = run_env)
   execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c(
-    "libraries.R", file.path("indicators", "ts.R")
-  ))
+  testthat::expect_identical(run_env$scripts, "libraries.R")
   testthat::expect_identical(run_env$indicator_order, c("TS", "SR"))
   testthat::expect_identical(run_env$TD.ONLY, FALSE)
 })
