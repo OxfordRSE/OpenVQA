@@ -33,21 +33,32 @@ run_legacy_indicators <- function(run_env) {
     if (is.null(run_env$TD.ONLY)) run_env$TD.ONLY <- FALSE
     if (run_env$TD.ONLY) {
       cat("*** Running indicator TD only ***\n\n")
-      evalq(source(file.path("indicators", "td.R"), local = TRUE), envir = run_env)
+      run_taxonomic_distance(
+        load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+        run_env$analysis_config, run_env$analysis_paths
+      )
     } else {
       for (indicator in run_env$EI.vec) {
         run_env$EI <- indicator
-        if (indicator == "SR") {
-          run_species_richness(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else {
-          evalq(source(
-            file.path("indicators", paste0(tolower(EI), ".R")),
-            local = TRUE
-          ), envir = run_env)
-        }
+        runner <- switch(indicator,
+          SR = run_species_richness,
+          PCGF = run_pcgf,
+          PCS = run_pcs,
+          GC = run_gc,
+          PCESS = run_pcess,
+          PCES = run_pces,
+          BA = run_basal_area,
+          ASC = run_stem_abundance,
+          TS = run_taxonomic_similarity,
+          TD = run_taxonomic_distance,
+          CH = run_canopy_height,
+          BAES = run_exotic_basal_area,
+          stop("Unknown indicator: ", indicator, call. = FALSE)
+        )
+        runner(
+          load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+          run_env$analysis_config, run_env$analysis_paths
+        )
       }
     }
   }

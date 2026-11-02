@@ -37,21 +37,48 @@ testthat::test_that("TD-only and figures-only runs suppress summaries", {
     run_species_richness = function(inputs, config, output_paths) {
       run_env$indicator_order <- c(run_env$indicator_order, "SR")
     },
+    run_taxonomic_similarity = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "TS")
+    },
+    run_taxonomic_distance = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "TD")
+    },
     .env = environment(run_legacy_indicators)
   )
   run_env$TD.ONLY <- TRUE
   execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c("libraries.R", file.path("indicators", "td.R")))
+  testthat::expect_identical(run_env$scripts, "libraries.R")
+  testthat::expect_identical(run_env$indicator_order, "TD")
 
   run_env <- orchestration_environment()
   run_env$PLOT.FIGS.ONLY <- TRUE
   rm("TD.ONLY", envir = run_env)
   execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c(
-    "libraries.R", file.path("indicators", "ts.R")
-  ))
+  testthat::expect_identical(run_env$scripts, "libraries.R")
   testthat::expect_identical(run_env$indicator_order, c("TS", "SR"))
   testthat::expect_identical(run_env$TD.ONLY, FALSE)
+})
+
+testthat::test_that("PCS, CH and BAES dispatch callable workflows in configured order", {
+  run_env <- orchestration_environment()
+  run_env$EI.vec <- c("PCS", "CH", "BAES")
+  rlang::local_bindings(
+    run_pcs = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "PCS")
+    },
+    run_canopy_height = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "CH")
+    },
+    run_exotic_basal_area = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "BAES")
+    },
+    .env = environment(run_legacy_indicators)
+  )
+  run_legacy_indicators(run_env)
+  testthat::expect_identical(run_env$indicator_order, run_env$EI.vec)
+  testthat::expect_identical(run_env$scripts, character())
+  run_env$EI.vec <- "unknown"
+  testthat::expect_error(run_legacy_indicators(run_env), "Unknown indicator")
 })
 
 testthat::test_that("both fixed-quality methods bypass indicators and summaries", {

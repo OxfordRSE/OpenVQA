@@ -135,7 +135,8 @@ legacy_project_params <- function(config) {
     inputs <- c(
       SR = "speciesCover", TD = "speciesCover", TS = "speciesCover", PCGF = "coverByGrowthForm",
       GC = "groundCover", PCESS = "exoticCoverByStratum", PCES = "exoticCoverByStratum",
-      BA = "speciesStems", ASC = "speciesStems"
+      BA = "speciesStems", ASC = "speciesStems", PCS = "coverByStratum",
+      CH = "speciesCover", BAES = "speciesStems"
     )
     parameters$df.input <- if (parameters$ei.data.type == "ind") {
       "speciesStems"
