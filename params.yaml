@@ -150,6 +150,28 @@ indicator_settings:
     test_tail: both
     data_type: ind
     na_to_zero: no
+  PCS:
+    name: Percent Cover by Stratum
+    distribution: Bet
+    quality_method: empirical
+    has_stratum: yes
+    test_tail: both
+    scale_abundance: no
+  CH:
+    name: Canopy Height
+    distribution: gamma
+    quality_method: empirical
+    has_stratum: no
+    test_tail: both
+    data_type: ind
+  BAES:
+    name: Basal Area Exotic Species
+    distribution: gamma
+    quality_method: empirical
+    has_stratum: no
+    test_tail: upper
+    data_type: ind
+    multiplier: 100
 indicator_groups:
   SR: composition
   TD: composition
@@ -160,6 +182,9 @@ indicator_groups:
   PCES: integrity
   BA: structure
   ASC: structure
+  PCS: structure
+  CH: structure
+  BAES: integrity
 nmds:
   verbose: no
   seed_enabled: yes

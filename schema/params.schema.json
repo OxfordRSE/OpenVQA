@@ -371,7 +371,7 @@
         ]
       },
       "uniqueItems": true,
-      "description": "Indicator codes selected for the assessment."
+      "description": "Supported indicator codes selected for the assessment: SR, TD, TS, PCGF, PCS, GC, PCESS, PCES, BA, ASC, CH, and BAES."
     },
     "td_only": {
       "title": "Td only",
@@ -524,7 +524,10 @@
           "TS",
           "PCES",
           "BA",
-          "ASC"
+          "ASC",
+          "PCS",
+          "CH",
+          "BAES"
         ]
       },
       "uniqueItems": true
@@ -686,6 +689,21 @@
           "title": "Abundance by Size Class",
           "description": "Calculation settings for Abundance by Size Class.",
           "$ref": "#/definitions/indicator"
+        },
+        "PCS": {
+          "title": "Percent Cover by Stratum",
+          "description": "Cover by height stratum, with percentage conversion and truncation at one.",
+          "$ref": "#/definitions/indicator"
+        },
+        "CH": {
+          "title": "Canopy Height",
+          "description": "Mean of the tallest five recorded heights per plot in metres, plus one; requires height_m in the configured species input.",
+          "$ref": "#/definitions/indicator"
+        },
+        "BAES": {
+          "title": "Basal Area Exotic Species",
+          "description": "Exotic-species basal area, calculated as ba_m2 times the configured multiplier, summed per plot.",
+          "$ref": "#/definitions/indicator"
         }
       },
       "additionalProperties": false
@@ -786,6 +804,39 @@
         "ASC": {
           "title": "Asc",
           "description": "Functional group for Abundance by Size Class.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "PCS": {
+          "title": "PCS",
+          "description": "Functional group for Percent Cover by Stratum.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "CH": {
+          "title": "CH",
+          "description": "Functional group for Canopy Height.",
+          "type": "string",
+          "enum": [
+            "composition",
+            "structure",
+            "function",
+            "integrity"
+          ]
+        },
+        "BAES": {
+          "title": "BAES",
+          "description": "Functional group for Basal Area Exotic Species.",
           "type": "string",
           "enum": [
             "composition",

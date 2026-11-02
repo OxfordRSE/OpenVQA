@@ -1,0 +1,829 @@
+{
+  "PCS": {
+    "PCS_benchmark.csv": [
+      {
+        "EI": "PCS",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "n": 8,
+        "EI.mean": 0.673504867872045,
+        "EI.sd": 0.084772441975753,
+        "EI.med": 0.668984700973575,
+        "EI.max": 0.768428372739917,
+        "EI.min": 0.545201668984701
+      },
+      {
+        "EI": "PCS",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "n": 8,
+        "EI.mean": 0.00851877607788595,
+        "EI.sd": 0.0240947373283316,
+        "EI.med": 0,
+        "EI.max": 0.0681502086230876,
+        "EI.min": 0
+      }
+    ],
+    "PCS_boot.q.csv": [
+      {
+        "landCover": "focal",
+        "stratum": "Herbs & Subshrubs",
+        "boot.reps": 5,
+        "q": 0.0756012899567619,
+        "X1": 0.0768464310571252,
+        "X2": 0.0273883568054828,
+        "X3": 0.0250608840141717,
+        "X4": 0.00684778395687592,
+        "X5": 0.0393120823927237
+      }
+    ],
+    "PCS_focal.csv": [
+      {
+        "EI": "PCS",
+        "bm.vegetation": "W17",
+        "landcover": "focal",
+        "stratum": "Herbs & Subshrubs",
+        "dist": "Bet",
+        "test.tail": "both",
+        "q.method": "empirical",
+        "bm.val": null,
+        "f.n": 8,
+        "f.mean": 0.437778164116829,
+        "f.sd": 0.0551020872842395,
+        "f.med": 0.434840055632823,
+        "f.max": 0.499478442280946,
+        "f.min": 0.354381084840056,
+        "b.n": 8,
+        "b.mean": 0.673504867872045,
+        "b.sd": 0.084772441975753,
+        "b.med": 0.668984700973575,
+        "b.max": 0.768428372739917,
+        "b.min": 0.545201668984701,
+        "diff": -0.235726703755216,
+        "q.diff.raw": 0.65,
+        "p.diff": 1,
+        "q.diff": 0.237890914304246,
+        "ol": 0.0754181440749292,
+        "ol.lcl": null,
+        "ol.ucl": null,
+        "ol.w": 0.998872759530264,
+        "q.raw": 0.0756012899567619,
+        "q": 0.0756012899567619,
+        "q.lcl": 0.0491792762740915,
+        "q.ucl": 0.113603178502171,
+        "q.diff.method": "scaled",
+        "q.wt.method": "u.beta.buffered"
+      },
+      {
+        "EI": "PCS",
+        "bm.vegetation": "W17",
+        "landcover": "focal",
+        "stratum": "Shrubs",
+        "dist": "Bet",
+        "test.tail": "both",
+        "q.method": "empirical",
+        "bm.val": null,
+        "f.n": 8,
+        "f.mean": 0.00553720445062588,
+        "f.sd": 0.0156615792634155,
+        "f.med": 0,
+        "f.max": 0.044297635605007,
+        "f.min": 0,
+        "b.n": 8,
+        "b.mean": 0.00851877607788595,
+        "b.sd": 0.0240947373283316,
+        "b.med": 0,
+        "b.max": 0.0681502086230876,
+        "b.min": 0,
+        "diff": -0.00298157162726007,
+        "q.diff.raw": 0.996992810801333,
+        "p.diff": 1,
+        "q.diff": 0.990011156962223,
+        "ol": 0.817185749942553,
+        "ol.lcl": null,
+        "ol.ucl": null,
+        "ol.w": 0,
+        "q.raw": 0.990011156962223,
+        "q": 0.990011156962223,
+        "q.lcl": null,
+        "q.ucl": null,
+        "q.diff.method": "scaled",
+        "q.wt.method": "u.beta.buffered"
+      }
+    ],
+    "PCS_raw.csv": [
+      {
+        "plotCode": "PlotBm100",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.757997218358832,
+        "EI.tr": 0.757997218358832
+      },
+      {
+        "plotCode": "PlotBm101",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.67663421418637,
+        "EI.tr": 0.67663421418637
+      },
+      {
+        "plotCode": "PlotBm105",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.545201668984701,
+        "EI.tr": 0.545201668984701
+      },
+      {
+        "plotCode": "PlotBm102",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.661335187760779,
+        "EI.tr": 0.661335187760779
+      },
+      {
+        "plotCode": "PlotBm103",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.571627260083449,
+        "EI.tr": 0.571627260083449
+      },
+      {
+        "plotCode": "PlotBm104",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.768428372739917,
+        "EI.tr": 0.768428372739917
+      },
+      {
+        "plotCode": "f-PlotBm101",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.43981223922114,
+        "EI.tr": 0.43981223922114
+      },
+      {
+        "plotCode": "PlotBm106",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.651599443671766,
+        "EI.tr": 0.651599443671766
+      },
+      {
+        "plotCode": "PlotBm107",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.755215577190542,
+        "EI.tr": 0.755215577190542
+      },
+      {
+        "plotCode": "f-PlotBm100",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.492698191933241,
+        "EI.tr": 0.492698191933241
+      },
+      {
+        "plotCode": "f-PlotBm104",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.499478442280946,
+        "EI.tr": 0.499478442280946
+      },
+      {
+        "plotCode": "f-PlotBm105",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.354381084840056,
+        "EI.tr": 0.354381084840056
+      },
+      {
+        "plotCode": "f-PlotBm102",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.429867872044506,
+        "EI.tr": 0.429867872044506
+      },
+      {
+        "plotCode": "f-PlotBm103",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.371557719054242,
+        "EI.tr": 0.371557719054242
+      },
+      {
+        "plotCode": "f-PlotBm106",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.423539638386648,
+        "EI.tr": 0.423539638386648
+      },
+      {
+        "plotCode": "f-PlotBm107",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Herbs & Subshrubs",
+        "EI": 0.490890125173853,
+        "EI.tr": 0.490890125173853
+      },
+      {
+        "plotCode": "PlotBm101",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0.0681502086230876,
+        "EI.tr": 0.0681502086230876
+      },
+      {
+        "plotCode": "f-PlotBm101",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0.044297635605007,
+        "EI.tr": 0.044297635605007
+      },
+      {
+        "plotCode": "f-PlotBm100",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm102",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm103",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm104",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm105",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm106",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "f-PlotBm107",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm100",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm102",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm103",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm104",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm105",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm106",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      },
+      {
+        "plotCode": "PlotBm107",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "Shrubs",
+        "EI": 0,
+        "EI.tr": 0
+      }
+    ]
+  },
+  "CH": {
+    "CH_benchmark.csv": [
+      {
+        "EI": "CH",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "n": 8,
+        "EI.mean": 14.5,
+        "EI.sd": 2.53602613776526,
+        "EI.med": 15.3,
+        "EI.max": 17.3,
+        "EI.min": 9.6
+      }
+    ],
+    "CH_boot.q.csv": [
+      {
+        "landCover": "focal",
+        "stratum": "nostrata",
+        "boot.reps": 5,
+        "q": 0.575493951510135,
+        "X1": 0.553568675169883,
+        "X2": 0.543480316477088,
+        "X3": 0.6013850628164,
+        "X4": 0.475809822348506,
+        "X5": 0.510030057306361
+      }
+    ],
+    "CH_focal.csv": [
+      {
+        "EI": "CH",
+        "bm.vegetation": "W17",
+        "landcover": "focal",
+        "stratum": "nostrata",
+        "dist": "gamma",
+        "test.tail": "both",
+        "q.method": "empirical",
+        "bm.val": null,
+        "f.n": 8,
+        "f.mean": 11.355,
+        "f.sd": 1.378639909476,
+        "f.med": 11.452,
+        "f.max": 13.684,
+        "f.min": 8.912,
+        "b.n": 8,
+        "b.mean": 14.5,
+        "b.sd": 2.53602613776526,
+        "b.med": 15.3,
+        "b.max": 17.3,
+        "b.min": 9.6,
+        "diff": -3.145,
+        "q.diff.raw": null,
+        "p.diff": 1,
+        "q.diff": null,
+        "ol": 0.575493951510135,
+        "ol.lcl": 0.517871010530779,
+        "ol.ucl": 0.635242588738236,
+        "ol.w": 1,
+        "q.raw": 0.575493951510135,
+        "q": 0.575493951510135,
+        "q.lcl": 0.517871010530779,
+        "q.ucl": 0.635242588738236,
+        "q.diff.method": null,
+        "q.wt.method": null
+      }
+    ],
+    "CH_raw.csv": [
+      {
+        "plotCode": "f-PlotBm100",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 11.432,
+        "EI.tr": 11.432
+      },
+      {
+        "plotCode": "f-PlotBm101",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 11.472,
+        "EI.tr": 11.472
+      },
+      {
+        "plotCode": "f-PlotBm102",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 11.728,
+        "EI.tr": 11.728
+      },
+      {
+        "plotCode": "f-PlotBm103",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 11.412,
+        "EI.tr": 11.412
+      },
+      {
+        "plotCode": "f-PlotBm104",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 10.2,
+        "EI.tr": 10.2
+      },
+      {
+        "plotCode": "f-PlotBm105",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 13.684,
+        "EI.tr": 13.684
+      },
+      {
+        "plotCode": "f-PlotBm106",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 12,
+        "EI.tr": 12
+      },
+      {
+        "plotCode": "f-PlotBm107",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 8.912,
+        "EI.tr": 8.912
+      },
+      {
+        "plotCode": "PlotBm100",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 17.3,
+        "EI.tr": 17.3
+      },
+      {
+        "plotCode": "PlotBm101",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 16.4,
+        "EI.tr": 16.4
+      },
+      {
+        "plotCode": "PlotBm102",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 15.9,
+        "EI.tr": 15.9
+      },
+      {
+        "plotCode": "PlotBm103",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 14.7,
+        "EI.tr": 14.7
+      },
+      {
+        "plotCode": "PlotBm104",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 12.5,
+        "EI.tr": 12.5
+      },
+      {
+        "plotCode": "PlotBm105",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 16.1,
+        "EI.tr": 16.1
+      },
+      {
+        "plotCode": "PlotBm106",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 13.5,
+        "EI.tr": 13.5
+      },
+      {
+        "plotCode": "PlotBm107",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 9.6,
+        "EI.tr": 9.6
+      }
+    ]
+  },
+  "BAES": {
+    "BAES_benchmark.csv": [
+      {
+        "EI": "BAES",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "n": 8,
+        "EI.mean": 32.2081969332251,
+        "EI.sd": 11.0922544667345,
+        "EI.med": 29.7822983560312,
+        "EI.max": 48.1841773244335,
+        "EI.min": 13.7287598961874
+      }
+    ],
+    "BAES_boot.q.csv": [
+      {
+        "landCover": "focal",
+        "stratum": "nostrata",
+        "boot.reps": 5,
+        "q": 1,
+        "X1": 0.953222115016457,
+        "X2": 1,
+        "X3": 1,
+        "X4": 1,
+        "X5": 1
+      }
+    ],
+    "BAES_focal.csv": [
+      {
+        "EI": "BAES",
+        "bm.vegetation": "W17",
+        "landcover": "focal",
+        "stratum": "nostrata",
+        "dist": "gamma",
+        "test.tail": "upper",
+        "q.method": "empirical",
+        "bm.val": null,
+        "f.n": 8,
+        "f.mean": 24.2686854392567,
+        "f.sd": 6.08331666430988,
+        "f.med": 25.3562655460212,
+        "f.max": 32.7652405806148,
+        "f.min": 12.6304591044924,
+        "b.n": 8,
+        "b.mean": 32.2081969332251,
+        "b.sd": 11.0922544667345,
+        "b.med": 29.7822983560312,
+        "b.max": 48.1841773244335,
+        "b.min": 13.7287598961874,
+        "diff": -7.93951149396844,
+        "q.diff.raw": null,
+        "p.diff": 1,
+        "q.diff": null,
+        "ol": 1,
+        "ol.lcl": 0.96725548051152,
+        "ol.ucl": 1.00935557699671,
+        "ol.w": 1,
+        "q.raw": 1,
+        "q": 1,
+        "q.lcl": 0.96725548051152,
+        "q.ucl": 1.00935557699671,
+        "q.diff.method": null,
+        "q.wt.method": null
+      }
+    ],
+    "BAES_raw.csv": [
+      {
+        "plotCode": "f-PlotBm100",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 28.7518559656538,
+        "EI.tr": 28.7518559656538
+      },
+      {
+        "plotCode": "f-PlotBm101",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 32.7652405806148,
+        "EI.tr": 32.7652405806148
+      },
+      {
+        "plotCode": "f-PlotBm102",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 27.0132985911572,
+        "EI.tr": 27.0132985911572
+      },
+      {
+        "plotCode": "f-PlotBm103",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 21.5541530370142,
+        "EI.tr": 21.5541530370142
+      },
+      {
+        "plotCode": "f-PlotBm104",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 20.7219451430783,
+        "EI.tr": 20.7219451430783
+      },
+      {
+        "plotCode": "f-PlotBm105",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 26.2112499866957,
+        "EI.tr": 26.2112499866957
+      },
+      {
+        "plotCode": "f-PlotBm106",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 24.5012811053468,
+        "EI.tr": 24.5012811053468
+      },
+      {
+        "plotCode": "f-PlotBm107",
+        "focalOrBenchmark": "f",
+        "landCover": "focal",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 12.6304591044924,
+        "EI.tr": 12.6304591044924
+      },
+      {
+        "plotCode": "PlotBm100",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 44.924774946334,
+        "EI.tr": 44.924774946334
+      },
+      {
+        "plotCode": "PlotBm101",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 48.1841773244335,
+        "EI.tr": 48.1841773244335
+      },
+      {
+        "plotCode": "PlotBm102",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 37.5184702654961,
+        "EI.tr": 37.5184702654961
+      },
+      {
+        "plotCode": "PlotBm103",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 28.3607276802818,
+        "EI.tr": 28.3607276802818
+      },
+      {
+        "plotCode": "PlotBm104",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 25.9024314288478,
+        "EI.tr": 25.9024314288478
+      },
+      {
+        "plotCode": "PlotBm105",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 31.2038690317806,
+        "EI.tr": 31.2038690317806
+      },
+      {
+        "plotCode": "PlotBm106",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 27.8423648924395,
+        "EI.tr": 27.8423648924395
+      },
+      {
+        "plotCode": "PlotBm107",
+        "focalOrBenchmark": "b",
+        "landCover": "W17",
+        "vegClass": "W17",
+        "stratum": "nostrata",
+        "EI": 13.7287598961874,
+        "EI.tr": 13.7287598961874
+      }
+    ]
+  }
+}

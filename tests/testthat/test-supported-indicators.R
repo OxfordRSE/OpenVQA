@@ -1,0 +1,17 @@
+testthat::test_that("supported configuration and input mappings cover every accepted indicator", {
+  config <- supported_indicator_config()
+  testthat::expect_no_error(validate_analysis_params(config))
+  schema <- jsonlite::read_json(file.path(.params_root, "schema", "params.schema.json"))
+  codes <- unlist(schema$properties$active_indicators$items$enum)
+  testthat::expect_setequal(names(config$indicator_settings), codes)
+  testthat::expect_setequal(names(config$indicator_groups), codes)
+  testthat::expect_setequal(names(schema$properties$indicator_settings$properties), codes)
+  parameters <- legacy_project_params(config)
+  testthat::expect_identical(parameters$ei.params("PCS")$source.file, "coverByStratum.csv")
+  testthat::expect_identical(parameters$ei.params("BAES")$source.file, "speciesStems.csv")
+  source(file.path(.params_root, "validation", "requirements.R"), local = TRUE)
+  manifest <- validation_requirements()$indicators
+  testthat::expect_setequal(names(manifest), codes)
+  config$active_indicators <- list("unknown")
+  testthat::expect_error(validate_analysis_params(config), "validating json")
+})
