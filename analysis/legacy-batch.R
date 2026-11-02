@@ -52,6 +52,7 @@ run_legacy_indicators <- function(run_env) {
           TS = run_taxonomic_similarity,
           TD = run_taxonomic_distance,
           CH = run_canopy_height,
+          BAES = run_exotic_basal_area,
           stop("Unknown indicator: ", indicator, call. = FALSE)
         )
         runner(

@@ -20,6 +20,23 @@ testthat::test_that("CH retains five tallest rows, status handling and the plus-
   testthat::expect_error(canopy_height_data(inputs, config), "height_m")
 })
 
+testthat::test_that("BAES sums only exotic basal area and completes metadata-only plots", {
+  config <- supported_indicator_config()
+  inputs <- stem_test_inputs()
+  inputs$speciesStems.csv$ba_m2 <- 1:6
+  result <- exotic_basal_area_data(inputs, config)
+  testthat::expect_equal(result$EI, c(0, 400, 0, 0, 0))
+  testthat::expect_equal(result$EI.tr, result$EI)
+  config$indicator_settings$BAES$multiplier <- 2
+  testthat::expect_equal(exotic_basal_area_data(inputs, config)$EI, c(0, 8, 0, 0, 0))
+  config$missing_exotic_status_assume_native <- FALSE
+  testthat::expect_error(exotic_basal_area_data(inputs, config), "is_exotic")
+  inputs$speciesStems.csv$species[6] <- "native"
+  testthat::expect_equal(exotic_basal_area_data(inputs, config)$EI[2], 8)
+  inputs$speciesStems.csv$species <- "native"
+  testthat::expect_error(exotic_basal_area_data(inputs, config), "no rows to aggregate")
+})
+
 testthat::test_that("PCS drops missing cover and fills only included observed plot strata", {
   config <- supported_indicator_config()
   inputs <- supported_indicator_inputs()
