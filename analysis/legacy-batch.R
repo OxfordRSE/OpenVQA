@@ -40,57 +40,23 @@ run_legacy_indicators <- function(run_env) {
     } else {
       for (indicator in run_env$EI.vec) {
         run_env$EI <- indicator
-        if (indicator == "SR") {
-          run_species_richness(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "PCGF") {
-          run_pcgf(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "GC") {
-          run_gc(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "PCESS") {
-          run_pcess(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "PCES") {
-          run_pces(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "BA") {
-          run_basal_area(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "ASC") {
-          run_stem_abundance(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "TS") {
-          run_taxonomic_similarity(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else if (indicator == "TD") {
-          run_taxonomic_distance(
-            load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
-            run_env$analysis_config, run_env$analysis_paths
-          )
-        } else {
-          evalq(source(
-            file.path("indicators", paste0(tolower(EI), ".R")),
-            local = TRUE
-          ), envir = run_env)
-        }
+        runner <- switch(indicator,
+          SR = run_species_richness,
+          PCGF = run_pcgf,
+          PCS = run_pcs,
+          GC = run_gc,
+          PCESS = run_pcess,
+          PCES = run_pces,
+          BA = run_basal_area,
+          ASC = run_stem_abundance,
+          TS = run_taxonomic_similarity,
+          TD = run_taxonomic_distance,
+          stop("Unknown indicator: ", indicator, call. = FALSE)
+        )
+        runner(
+          load_assessment_inputs(build_file_map(run_env$INPUTDIR)),
+          run_env$analysis_config, run_env$analysis_paths
+        )
       }
     }
   }
