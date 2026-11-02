@@ -1,3 +1,62 @@
+testthat::test_that("PCS, CH and BAES retain their seeded output contracts", {
+  # Expected tables were captured from indicators at af8fbb2 with seed 42,
+  # using supported_indicator_inputs() and the original params.R defaults.
+  expected <- jsonlite::read_json(
+    file.path(.params_root, "tests", "testthat", "fixtures-supported-indicators.json"),
+    simplifyVector = TRUE
+  )
+  inputs <- supported_indicator_inputs()
+  original <- inputs
+  config <- supported_indicator_config()
+  config$seed <- 7L
+  runners <- list(PCS = run_pcs, CH = run_canopy_height, BAES = run_exotic_basal_area)
+  directory <- tempfile("supported-execution-")
+  dir.create(directory)
+  on.exit(unlink(directory, recursive = TRUE))
+  paths <- list(results = directory, figures = file.path(directory, "figs"))
+  old_directory <- getwd()
+  on.exit(setwd(old_directory), add = TRUE)
+  setwd(tempdir())
+  rlang::local_bindings(
+    source = function(...) stop("Execution must not source scripts"),
+    sys.source = function(...) stop("Execution must not source scripts"),
+    INPUTDIR = "missing-input-directory", RESULTSDIR = "missing-results-directory",
+    seed = -1L, dat = "caller-owned", .env = globalenv()
+  )
+  for (code in names(runners)) {
+    run <- runners[[code]]
+    first <- run(inputs, config, paths, seed = 42L)
+    for (file in names(expected[[code]])) {
+      testthat::expect_equal(read.csv(file.path(directory, file)), expected[[code]][[file]],
+        tolerance = 1e-12, info = file
+      )
+    }
+    if (code == "CH") {
+      cover_config <- config
+      cover_config$indicator_settings$CH$data_type <- "cover"
+      cover_inputs <- inputs
+      cover_inputs$speciesCover.csv <- cover_inputs$speciesStems.csv
+      cover_inputs$speciesStems.csv <- NULL
+      testthat::expect_equal(run(cover_inputs, cover_config, paths, seed = 42L), first)
+    }
+    boot_file <- file.path(directory, paste0(code, "_boot.q.csv"))
+    bootstrap <- read.csv(boot_file)
+    testthat::expect_equal(run(inputs, config, paths, seed = 42L), first)
+    testthat::expect_identical(read.csv(boot_file), bootstrap)
+    run(inputs, config, paths, seed = 43L)
+    testthat::expect_false(identical(read.csv(boot_file), bootstrap))
+    reuse <- config
+    reuse$force_prepare_raw <- FALSE
+    testthat::expect_equal(run(list(), reuse, paths, seed = 42L), first)
+    reuse$plot_figures_only <- TRUE
+    unlink(file.path(directory, paste0(code, "_benchmark.csv")))
+    testthat::expect_null(run(list(), reuse, paths))
+  }
+  testthat::expect_identical(inputs, original)
+  testthat::expect_identical(get("dat", globalenv()), "caller-owned")
+  testthat::expect_false(dir.exists(paths$figures))
+})
+
 testthat::test_that("CH retains five tallest rows, status handling and the plus-one offset", {
   config <- supported_indicator_config()
   inputs <- stem_test_inputs()

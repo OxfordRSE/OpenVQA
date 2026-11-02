@@ -59,6 +59,28 @@ testthat::test_that("TD-only and figures-only runs suppress summaries", {
   testthat::expect_identical(run_env$TD.ONLY, FALSE)
 })
 
+testthat::test_that("PCS, CH and BAES dispatch callable workflows in configured order", {
+  run_env <- orchestration_environment()
+  run_env$EI.vec <- c("PCS", "CH", "BAES")
+  rlang::local_bindings(
+    run_pcs = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "PCS")
+    },
+    run_canopy_height = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "CH")
+    },
+    run_exotic_basal_area = function(inputs, config, output_paths) {
+      run_env$indicator_order <- c(run_env$indicator_order, "BAES")
+    },
+    .env = environment(run_legacy_indicators)
+  )
+  run_legacy_indicators(run_env)
+  testthat::expect_identical(run_env$indicator_order, run_env$EI.vec)
+  testthat::expect_identical(run_env$scripts, character())
+  run_env$EI.vec <- "unknown"
+  testthat::expect_error(run_legacy_indicators(run_env), "Unknown indicator")
+})
+
 testthat::test_that("both fixed-quality methods bypass indicators and summaries", {
   for (method in c("assume.0", "assume.1")) {
     run_env <- orchestration_environment()
