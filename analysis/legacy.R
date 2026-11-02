@@ -16,6 +16,7 @@ source(file.path("analysis", "taxonomic-distance.R"), local = TRUE)
 source(file.path("indicators", "ts.R"), local = TRUE)
 source(file.path("indicators", "td.R"), local = TRUE)
 source(file.path("indicators", "pcs.R"), local = TRUE)
+source(file.path("indicators", "ch.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {

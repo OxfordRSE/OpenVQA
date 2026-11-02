@@ -51,6 +51,7 @@ run_legacy_indicators <- function(run_env) {
           ASC = run_stem_abundance,
           TS = run_taxonomic_similarity,
           TD = run_taxonomic_distance,
+          CH = run_canopy_height,
           stop("Unknown indicator: ", indicator, call. = FALSE)
         )
         runner(

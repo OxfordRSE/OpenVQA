@@ -1,3 +1,25 @@
+testthat::test_that("CH retains five tallest rows, status handling and the plus-one offset", {
+  config <- supported_indicator_config()
+  inputs <- stem_test_inputs()
+  inputs$speciesStems.csv$height_m <- c(100, 20, 10, 9, 8, 7)
+  result <- canopy_height_data(inputs, config)
+  testthat::expect_equal(result$EI[result$plotCode == "b1"], mean(c(100, 20, 10)) + 1)
+  testthat::expect_equal(result$EI[result$plotCode == "b2"], 10)
+  testthat::expect_equal(result$EI[result$plotCode == "f3"], 1)
+  config$indicator_settings$CH$exclude_exotics <- TRUE
+  testthat::expect_equal(canopy_height_data(inputs, config), result)
+  # Seven observations make a five-row mean distinct from a ten-percent rule.
+  inputs$speciesStems.csv <- inputs$speciesStems.csv[rep(1, 7), ]
+  inputs$speciesStems.csv$height_m <- 1:7
+  testthat::expect_equal(canopy_height_data(inputs, config)$EI[1], mean(3:7) + 1)
+  config$indicator_settings$CH$exclude_exotics <- TRUE
+  testthat::expect_equal(canopy_height_data(inputs, config)$EI[1], mean(3:7) + 1)
+  config$missing_exotic_status_assume_native <- FALSE
+  testthat::expect_error(canopy_height_data(inputs, config), "is_exotic")
+  inputs$speciesStems.csv$height_m <- NULL
+  testthat::expect_error(canopy_height_data(inputs, config), "height_m")
+})
+
 testthat::test_that("PCS drops missing cover and fills only included observed plot strata", {
   config <- supported_indicator_config()
   inputs <- supported_indicator_inputs()
