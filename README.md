@@ -334,6 +334,10 @@ These script import and filter the raw data. They will be specific to particular
 <a name="indicator-scripts"></a>
 ### Indicator scripts
 
+PCS, CH, and BAES remain supported indicators and have callable implementations with
+regression coverage. Select them through `active_indicators` in project or assessment
+YAML and run the analysis through `analyse.R`. None is deprecated.
+
 Each indicator script performs a complete quality calculation for an individual indicator, saving the indicator-specific results files to `data/PROJECT_CODE/ASSESSMENT_CODE/results/` and figures to `data/PROJECT_CODE/ASSESSMENT_CODE/figs/`. The name of an indicator script is always the abbreviation of the indicator, follow by extention ".R": `INDICATOR_CODE.R`, e.g., `sr.R`. 
 
 Examples:
