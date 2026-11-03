@@ -1,3 +1,4 @@
+source("includes/functions.R", local = TRUE)
 source(file.path("analysis", "legacy-batch.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
 source(file.path("analysis", "legacy-params.R"), local = TRUE)
