@@ -1,4 +1,7 @@
 plot_indicator_overlap <- function(state) {
+  if (identical(state$generate_figures, FALSE)) {
+    return(invisible(state))
+  }
   evalq(
     {
       fig.file.type <- "pdf"
@@ -313,6 +316,9 @@ plot_indicator_overlap <- function(state) {
 }
 
 plot_indicator_distributions <- function(state) {
+  if (identical(state$generate_figures, FALSE)) {
+    return(invisible(state))
+  }
   evalq(
     {
       cat("***************************************\n")
@@ -365,6 +371,9 @@ plot_indicator_distributions <- function(state) {
 }
 
 plot_indicator_distribution <- function(state) {
+  if (identical(state$generate_figures, FALSE)) {
+    return(invisible(state))
+  }
   evalq(
     {
       do.debug <- FALSE

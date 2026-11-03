@@ -162,7 +162,9 @@ execute_legacy_batch <- function(run_env) {
   ))
 }
 
-run_vqa_analysis <- function(context, config = context$config, seed = NULL) {
+run_vqa_analysis <- function(context, config = context$config, seed = NULL,
+                             generate_figures = TRUE) {
+  stopifnot(is.logical(generate_figures), length(generate_figures) == 1L, !is.na(generate_figures))
   if (!is.list(config)) stop("config must be a list.", call. = FALSE)
   settings <- config
   settings$seed <- NULL

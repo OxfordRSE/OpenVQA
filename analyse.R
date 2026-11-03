@@ -21,7 +21,8 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     option_list = list(
       make_option(c("-d", "--data-root"), type = "character"),
       make_option(c("-a", "--assessment"), type = "character"),
-      make_option("--seed", type = "character", help = "Randomization seed (integer).")
+      make_option("--seed", type = "character", help = "Randomization seed (integer)."),
+      make_option("--no-figures", action = "store_true", default = FALSE)
     ),
     description = "Prepare validated inputs and run the VQA analysis."
   )
@@ -33,24 +34,28 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   list(
     data_root = normalizePath(options$`data-root`, mustWork = TRUE),
     assessment = options$assessment,
-    seed = resolve_seed(options$seed)
+    seed = resolve_seed(options$seed),
+    generate_figures = !options$`no-figures`
   )
 }
 
-run_analysis <- function(data_root, assessment, seed = NULL) {
+run_analysis <- function(data_root, assessment, seed = NULL, generate_figures = TRUE) {
   context <- load_preprocessing_context(data_root, assessment, seed = seed)
   context <- prepare_analysis_inputs(context)
 
   run_vqa_analysis(
     context,
     config = context$config,
-    seed = context$config$seed
+    seed = context$config$seed, generate_figures = generate_figures
   )
 }
 
 main <- function() {
   cli <- parse_cli_args()
-  run_analysis(cli$data_root, cli$assessment, seed = cli$seed)
+  run_analysis(cli$data_root, cli$assessment,
+    seed = cli$seed,
+    generate_figures = cli$generate_figures
+  )
 }
 
 if (sys.nframe() == 0L) main()

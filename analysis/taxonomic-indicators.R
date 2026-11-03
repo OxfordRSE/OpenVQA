@@ -12,6 +12,7 @@ taxonomic_indicator_state <- local({
       environment(helper) <- state
       state[[name]] <- helper
     }
+    state$generate_figures <- output_paths$generate_figures
     state$fitdistr <- MASS::fitdistr
     state$RESULTSDIR <- paste0(output_paths$results, "/")
     state$FIGDIR <- state$FIGDIR_REL <- paste0(output_paths$figures, "/")

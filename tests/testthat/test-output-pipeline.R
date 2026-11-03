@@ -33,6 +33,14 @@ testthat::test_that("summary builders return tables without writing files", {
   testthat::expect_identical(tools::md5sum(files), before)
 })
 
+testthat::test_that("disabled figure stages do not read inputs or open devices", {
+  state <- list(generate_figures = FALSE)
+  devices <- grDevices::dev.list()
+  testthat::expect_identical(plot_indicator_overlap(state), state)
+  testthat::expect_identical(plot_indicator_distributions(state), state)
+  testthat::expect_identical(grDevices::dev.list(), devices)
+})
+
 testthat::test_that("report formatting preserves precision, missing values, and column order", {
   table <- data.frame(q = c(0.5, NA), qh = c(1.234, 0), notes = c("a", "b"))
   formatted <- format_table_columns(table, c(q = 2, qh = 1))
