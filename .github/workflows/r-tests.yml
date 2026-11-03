@@ -74,7 +74,7 @@ jobs:
             "validate.R",
             list.files(
               c(
-                "analysis", "pipeline", "preprocessing", "validation",
+                "analysis", "reporting", "pipeline", "preprocessing", "validation",
                 "tests/testthat", "tests/refactor/testthat"
               ),
               pattern = "[.]R$", recursive = TRUE, full.names = TRUE
@@ -132,7 +132,7 @@ jobs:
             "validate.R",
             list.files(
               c(
-                "analysis", "pipeline", "preprocessing", "validation",
+                "analysis", "reporting", "pipeline", "preprocessing", "validation",
                 "tests/testthat", "tests/refactor/testthat"
               ),
               pattern = "[.]R$", recursive = TRUE, full.names = TRUE
@@ -253,6 +253,7 @@ jobs:
 
       - name: Run refactor tests
         env:
+          VQA_GENERATE_FIGURES: false
           VQA_COMPARE_FIGURES: false
           VQA_COMPARE_GOLDEN: false
           VQA_NUMERIC_TOLERANCE: 1e-8
@@ -313,6 +314,7 @@ jobs:
 
       - name: Run refactor tests
         env:
+          VQA_GENERATE_FIGURES: false
           VQA_COMPARE_FIGURES: false
           VQA_COMPARE_GOLDEN: false
           VQA_NUMERIC_TOLERANCE: 1e-8

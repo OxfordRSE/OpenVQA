@@ -68,6 +68,7 @@ copy_analysis_application <- function() {
         "includes",
         "indicators",
         "vqa.summary",
+        "reporting",
         "schema",
         "validation"
       )

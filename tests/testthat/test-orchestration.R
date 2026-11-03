@@ -20,15 +20,17 @@ orchestration_environment <- function() {
   run_env
 }
 
-testthat::test_that("summary-only runs skip indicators and keep summary script order", {
+testthat::test_that("summary-only runs skip indicators and call summary outputs", {
   run_env <- orchestration_environment()
   run_env$VQA.SUMMARY.ONLY <- TRUE
+  rlang::local_bindings(
+    write_assessment_reports = function(config, output_paths) run_env$summary_called <- TRUE,
+    .env = environment(run_legacy_summaries)
+  )
+  run_env$analysis_paths <- list(results = "results")
   execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c(
-    "libraries.R", "vqa.summary.R",
-    file.path("vqa.summary", "vqa.summary.csv.R"),
-    file.path("vqa.summary", "vqa.summary.xl.R")
-  ))
+  testthat::expect_identical(run_env$scripts, "libraries.R")
+  testthat::expect_true(run_env$summary_called)
 })
 
 testthat::test_that("TD-only and figures-only runs suppress summaries", {

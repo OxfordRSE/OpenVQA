@@ -33,6 +33,21 @@ testthat::test_that("summary builders return tables without writing files", {
   testthat::expect_identical(tools::md5sum(files), before)
 })
 
+testthat::test_that("report formatting preserves precision, missing values, and column order", {
+  table <- data.frame(q = c(0.5, NA), qh = c(1.234, 0), notes = c("a", "b"))
+  formatted <- format_table_columns(table, c(q = 2, qh = 1))
+  testthat::expect_identical(formatted$q, c("0.50", NA_character_))
+  testthat::expect_identical(formatted$qh, c("1.2", "0.0"))
+  testthat::expect_identical(formatted$notes, table$notes)
+  testthat::expect_identical(names(formatted), names(table))
+  testthat::expect_identical(format_table_columns(table[0, ], c(q = 2)), table[0, ])
+  testthat::expect_identical(
+    format_quality_interval("0.50", "0.40", "0.60"), "0.50 [0.40, 0.60]"
+  )
+  testthat::expect_identical(
+    names(rename_workbook_headers(table)), c("Q", "QH", "notes")
+  )
+})
 
 testthat::test_that("bootstrap limits retain run-deviance direction and missing-value handling", {
   quality <- c(0.2, 0.4, NA, 0.8)

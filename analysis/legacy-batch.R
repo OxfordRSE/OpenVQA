@@ -65,14 +65,10 @@ run_legacy_indicators <- function(run_env) {
 }
 
 run_legacy_summaries <- function(run_env) {
-  evalq(
-    {
-      if (PLOT.FIGS.ONLY == FALSE && TD.ONLY == FALSE && QH.METHOD == "empirical") {
-        source("vqa.summary.R", local = TRUE)
-        source(file.path("vqa.summary", "vqa.summary.csv.R"), local = TRUE)
-        source(file.path("vqa.summary", "vqa.summary.xl.R"), local = TRUE)
-      }
-    },
-    envir = run_env
-  )
+  config <- run_env$analysis_config
+  if (!run_env$PLOT.FIGS.ONLY && !run_env$TD.ONLY && run_env$QH.METHOD == "empirical") {
+    paths <- run_env$analysis_paths
+    paths$input <- run_env$INPUTDIR
+    write_assessment_reports(config, paths)
+  }
 }

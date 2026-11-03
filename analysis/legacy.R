@@ -1,4 +1,5 @@
 source("includes/functions.R", local = TRUE)
+source(file.path("reporting", "main.R"), local = TRUE)
 source(file.path("analysis", "legacy-batch.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
 source(file.path("analysis", "legacy-params.R"), local = TRUE)
@@ -173,9 +174,9 @@ run_vqa_analysis <- function(context, config = context$config, seed = NULL) {
   seed <- resolve_seed(if (is.null(seed)) config$seed else seed)
   config$seed <- seed
   context$config <- config
-  output_paths <- execute_legacy_batch(
-    prepare_legacy_environment(context, config, seed)
-  )
+  run_env <- prepare_legacy_environment(context, config, seed)
+  run_env$analysis_paths$generate_figures <- generate_figures
+  output_paths <- execute_legacy_batch(run_env)
   metadata <- list(
     seed = seed, project = config$project,
     assessment = config$assessment, config = config
