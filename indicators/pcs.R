@@ -187,204 +187,202 @@ pcs_data <- function(inputs, config) {
 
 # Write raw, benchmark, focal and bootstrap results, then generate configured figures.
 run_pcs <- function(inputs, config, output_paths, seed = config$seed) {
-  state <- cover_indicator_state(inputs, config, output_paths, seed)
-  evalq(
-    {
-      curr.EI <- "PCS" # Short code
+  config$seed <- seed
+  nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
+  if (!length(nodata)) nodata <- ""
+  curr.EI <- "PCS" # Short code
 
-      ##############################
-      # Input file for this indicator
-      ##############################
-      inputFileName <- "coverByStratum.csv"
+  ##############################
+  # Input file for this indicator
+  ##############################
+  inputFileName <- "coverByStratum.csv"
 
-      ##############################
-      # Load attributes for this indicator
-      # (ei.params set in params file)
-      ##############################
+  ##############################
+  # Load attributes for this indicator
+  # (ei.params set in params file)
+  ##############################
 
-      # Import parameters set in params file
-      ei.pars <- ei.params(curr.EI)
+  # Import parameters set in params file
+  ei.pars <- indicator_parameters(curr.EI, config)
 
-      # Extract the indicator values
-      ei.name <- ei.pars$ei.name # Full name of this EI, for graphics
-      EI.name <- ei.name # Temporary, for backwards-compatibility
-      prepare.raw <- ei.pars$prepare.raw # Prepare raw data from scratch?
-      convert.percent <- ei.pars$convert.percent # Convert percent cover to proportions
-      distn <- ei.pars$distn # Distribution of the EI
-      q.method <- ei.pars$q.method # Quality method: "fixed" | "empirical" (overlap)
-      bm.val <- ei.pars$bm.val # Applies only if q.method="fixed"
-      test.tail <- ei.pars$test.tail # Test tail for this EI
-      has.strata <- ei.pars$has.stratum # True if this EI has strata, otherwise F
-      has.stratum <- has.strata # Hack for backward compatibility
-      remove.zero.cover.plots <- ei.pars$remove.zero.cover.plots
-      scale.abund <- ei.pars$scale.abund
-      logit <- ei.pars$logit
+  # Extract the indicator values
+  ei.name <- ei.pars$name # Full name of this EI, for graphics
 
-      if (has.strata == F) curr.stratum <- ""
+  prepare.raw <- ei.pars$prepare_raw # Prepare raw data from scratch?
+  convert.percent <- ei.pars$convert_percent # Convert percent cover to proportions
+  distn <- ei.pars$distribution # Distribution of the EI
+  q.method <- ei.pars$quality_method # Quality method: "fixed" | "empirical" (overlap)
+  bm.val <- ei.pars$benchmark_value # Applies only if q.method="fixed"
+  test.tail <- ei.pars$test_tail # Test tail for this EI
+  has.strata <- ei.pars$has_stratum # True if this EI has strata, otherwise F
+  has.stratum <- has.strata # Hack for backward compatibility
+  remove.zero.cover.plots <- ei.pars$remove_zero_cover_plots
+  scale.abund <- ei.pars$scale_abundance
+  logit <- ei.pars$logit
 
-      # Sample-size threshold used in the low-count warning messages.
-      n.min <- 6
+  if (has.strata == F) curr.stratum <- ""
 
-      ##############################
-      # Indicator-specific graphing parameters
-      ##############################
+  # Sample-size threshold used in the low-count warning messages.
+  n.min <- 6
 
-      allow.group.strata <- TRUE # Set to true to make extra set of figures grouping
-      # figures for different strata of same vegetation in
-      # single figure
+  ##############################
+  # Indicator-specific graphing parameters
+  ##############################
 
-      # Set to true to print sample size for each panel in grouped figures
-      # Ignored if allow.group.strata==FALSE
-      group.strata.print.all.n <- FALSE
+  allow.group.strata <- TRUE # Set to true to make extra set of figures grouping
+  # figures for different strata of same vegetation in
+  # single figure
 
-      # Minimum value for y axis
-      # Leave as empty string ("") to allow to vary automatically
-      y.axis.fixed.min <- 0
+  # Set to true to print sample size for each panel in grouped figures
+  # Ignored if allow.group.strata==FALSE
+  group.strata.print.all.n <- FALSE
 
-      # Include landcover in graph title?
-      # If true, title = landcover + stratum
-      # If false, title = stratum only
-      # Applies to single stratum graphs only
-      lc.in.title <- TRUE
+  # Minimum value for y axis
+  # Leave as empty string ("") to allow to vary automatically
+  y.axis.fixed.min <- 0
 
-      ##############################
-      # Names and locations output files
-      ##############################
-      rawFileName <- paste(curr.EI, "_raw.csv", sep = "") # Complete raw data with transformations
-      resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
-      resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
+  # Include landcover in graph title?
+  # If true, title = landcover + stratum
+  # If false, title = stratum only
+  # Applies to single stratum graphs only
+  lc.in.title <- TRUE
 
-      ##############################
-      # Transformation options
-      ##############################
+  ##############################
+  # Names and locations output files
+  ##############################
+  rawFileName <- paste(curr.EI, "_raw.csv", sep = "") # Complete raw data with transformations
+  resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
+  resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
 
-      # Must be TRUE for this indicator
-      proportions <- TRUE
+  ##############################
+  # Transformation options
+  ##############################
 
-      # Summed cover can exceed 100% within a stratum. PCS disables abundance
-      # scaling and truncates those values rather than rescaling the sample.
-      scale.abund <- FALSE
+  # Must be TRUE for this indicator
+  proportions <- TRUE
 
-      # Truncation above one keeps proportions in the beta-distribution domain.
-      truncate.at.one <- TRUE
+  # Summed cover can exceed 100% within a stratum. PCS disables abundance
+  # scaling and truncates those values rather than rescaling the sample.
+  scale.abund <- FALSE
 
-      # PCS disables logit transformation; EI.tr retains the truncated proportions.
-      logit <- FALSE
+  # Truncation above one keeps proportions in the beta-distribution domain.
+  truncate.at.one <- TRUE
 
-      #######################################################
-      # Main
-      #######################################################
+  # PCS disables logit transformation; EI.tr retains the truncated proportions.
+  logit <- FALSE
 
-      cat("\n##################################################\n")
-      cat("Operation: Calculating Quality for indicator group PCS\n")
-      cat("(Percent Cover by Height Class Stratum)\n")
-      cat("##################################################\n\n")
+  #######################################################
+  # Main
+  #######################################################
 
-      if (PLOT.FIGS.ONLY == FALSE) {
-        cat("************************\n")
-        cat("Preparing data\n")
-        cat("************************\n")
+  cat("\n##################################################\n")
+  cat("Operation: Calculating Quality for indicator group PCS\n")
+  cat("(Percent Cover by Height Class Stratum)\n")
+  cat("##################################################\n\n")
 
-        if (prepare.raw == TRUE || force.prepare.raw == TRUE) { # START prepare.raw
-          dat <- pcs_data(inputs, config)
-          write.csv(dat, paste0(RESULTSDIR, rawFileName), row.names = FALSE)
-        } # END prepare.raw
+  if (config$plot_figures_only == FALSE) {
+    cat("************************\n")
+    cat("Preparing data\n")
+    cat("************************\n")
 
-        #######################################################
-        # Calculate and save benchmark values
-        #######################################################
+    if (prepare.raw == TRUE || config$force_prepare_raw == TRUE) { # START prepare.raw
+      dat <- pcs_data(inputs, config)
+      write.csv(dat, paste0(paste0(output_paths$results, "/"), rawFileName), row.names = FALSE)
+    } # END prepare.raw
 
-        # Re-import prepared raw data
-        inputFile <- paste(RESULTSDIR, rawFileName, sep = "")
-        cat("inputFile=", inputFile)
-        dat <- read.csv(inputFile, header = T)
-        dat <- dat
+    #######################################################
+    # Calculate and save benchmark values
+    #######################################################
 
-        # Make data frame of moments for transformed cover
-        # aggregated by vegclass + stratum
-        EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
+    # Re-import prepared raw data
+    inputFile <- paste(paste0(output_paths$results, "/"), rawFileName, sep = "")
+    cat("inputFile=", inputFile)
+    dat <- read.csv(inputFile, header = T)
+    dat <- dat
 
-        EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass, stratum = stratum),
-          FUN = function(x) {
-            c(
-              n = length(x),
-              mean = mean(x),
-              med = median(x),
-              sd = sd(x),
-              max = max(x),
-              min = min(x)
-            )
-          }
-        ))
-        EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
-        colnames(EI.bm) <- c(
-          "vegClass", "stratum", "n", "EI.mean",
-          "EI.med", "EI.sd", "EI.max", "EI.min"
-        )
+    # Make data frame of moments for transformed cover
+    # aggregated by vegclass + stratum
+    EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
 
-        # Add EI & rearrange the columns
-        EI.bm$EI <- curr.EI # add indicator
-        EI.bm <- EI.bm[, c(
-          "EI", "vegClass", "stratum", "n",
-          "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min"
-        )]
-
-        # Make final, human-readable veg classes
-        EI.bm$vegClass <- human.readable(EI.bm$vegClass)
-
-        # Inspect the columns of EI.bm
-        sorted.EI.bm <- EI.bm[order(EI.bm$vegClass, EI.bm$stratum), ]
-        sorted.EI.bm[1:12, ]
-
-        # export benchmark site file
-        resultsFile <- paste(RESULTSDIR, resultsBm, sep = "")
-        write.csv(EI.bm, file = resultsFile, row.names = FALSE)
-
-        ####################################################
-        # Prepare (focal) results file, and populate basic summary stats
-        ####################################################
-
-        result <- prepare_indicator_results(read_indicator_output(
-          curr.EI, config,
-          output_paths, allow.group.strata
-        ), config, output_paths)
-
-        ####################################################
-        # Calculate quality
-        ####################################################
-
-        result <- calculate_indicator_quality(result, config, output_paths)
-      } else {
-        cat("************************\n")
-        cat("Generating figures\n")
-        cat("************************\n")
-      } # END PLOT.FIGS.ONLY
-
-      ####################################################
-      # Plot overlap
-      ####################################################
-
-      if (config$plot_figures_only) {
-        result <- read_indicator_output(
-          curr.EI, config,
-          output_paths, allow.group.strata
+    EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass, stratum = stratum),
+      FUN = function(x) {
+        c(
+          n = length(x),
+          mean = mean(x),
+          med = median(x),
+          sd = sd(x),
+          max = max(x),
+          min = min(x)
         )
       }
-      if (plot.overlap == T) plot_indicator_overlap(result, config, output_paths)
+    ))
+    EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
+    colnames(EI.bm) <- c(
+      "vegClass", "stratum", "n", "EI.mean",
+      "EI.med", "EI.sd", "EI.max", "EI.min"
+    )
 
-      ####################################################
-      # Graph the fitted distributions for each vegetation type
-      # Include model statistic and overlap scores on figures if requested
-      ####################################################
+    # Add EI & rearrange the columns
+    EI.bm$EI <- curr.EI # add indicator
+    EI.bm <- EI.bm[, c(
+      "EI", "vegClass", "stratum", "n",
+      "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min"
+    )]
 
-      plot_indicator_distributions(result, config, output_paths)
+    # Make final, human-readable veg classes
+    EI.bm$vegClass <- human.readable(EI.bm$vegClass)
 
-      cat("\n##################################################\n")
-      cat("Operation completed\n")
-      cat("##################################################\n\n")
-    },
-    envir = state
-  )
+    # Inspect the columns of EI.bm
+    sorted.EI.bm <- EI.bm[order(EI.bm$vegClass, EI.bm$stratum), ]
+    sorted.EI.bm[1:12, ]
+
+    # export benchmark site file
+    resultsFile <- paste(paste0(output_paths$results, "/"), resultsBm, sep = "")
+    write.csv(EI.bm, file = resultsFile, row.names = FALSE)
+
+    ####################################################
+    # Prepare (focal) results file, and populate basic summary stats
+    ####################################################
+
+    result <- prepare_indicator_results(read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    ), config, output_paths)
+
+    ####################################################
+    # Calculate quality
+    ####################################################
+
+    result <- calculate_indicator_quality(result, config, output_paths)
+  } else {
+    cat("************************\n")
+    cat("Generating figures\n")
+    cat("************************\n")
+  } # END PLOT.FIGS.ONLY
+
+  ####################################################
+  # Plot overlap
+  ####################################################
+
+  if (config$plot_figures_only) {
+    result <- read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    )
+  }
+  if (config$plot_overlap == T) plot_indicator_overlap(result, config, output_paths)
+
+  ####################################################
+  # Graph the fitted distributions for each vegetation type
+  # Include model statistic and overlap scores on figures if requested
+  ####################################################
+
+  plot_indicator_distributions(result, config, output_paths)
+
+  cat("\n##################################################\n")
+  cat("Operation completed\n")
+  cat("##################################################\n\n")
+
   if (config$plot_figures_only) {
     return(invisible(NULL))
   }
