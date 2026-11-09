@@ -39,14 +39,7 @@ testthat::test_that("parameter precedence preserves inputs and empty assessment 
   testthat::expect_error(resolve_params(project = "invalid"), "named list")
 })
 
-testthat::test_that("only known project labels map to legacy parameter scripts", {
-  testthat::expect_identical(legacy_project_name("vqa-demo1-min"), "vqa-demo1")
-  testthat::expect_identical(legacy_project_name("vqa-demo2-min"), "vqa-demo2")
-  testthat::expect_identical(legacy_project_name("custom-min"), "custom-min")
-  testthat::expect_error(legacy_project_name(NULL), "declare project")
-})
-
-testthat::test_that("seeds are integers and explicit seeds override the fallback", {
+testthat::test_that("seed arguments are integers and independent of environment variables", {
   old_seed <- Sys.getenv("VQA_TEST_SEED", unset = NA_character_)
   on.exit(if (is.na(old_seed)) {
     Sys.unsetenv("VQA_TEST_SEED")
@@ -65,10 +58,10 @@ testthat::test_that("seeds are integers and explicit seeds override the fallback
     testthat::expect_identical(resolve_seed(seed), as.integer(seed))
   }
   Sys.setenv(VQA_TEST_SEED = "20260810")
-  testthat::expect_identical(resolve_seed(), 20260810L)
+  testthat::expect_null(resolve_seed())
   testthat::expect_identical(resolve_seed(10L), 10L)
   Sys.setenv(VQA_TEST_SEED = "invalid")
-  testthat::expect_error(resolve_seed(), "integer")
+  testthat::expect_null(resolve_seed())
   testthat::expect_identical(resolve_seed(10L), 10L)
 })
 

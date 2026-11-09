@@ -163,9 +163,17 @@ f <- pbeta(xs, 0.1, 0.5) # left-skewed, mean near 1
 # Main
 #################################################
 
-source(paste0("includes/", "functions.R"), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
-qual <- boot.qual.beta(f = f, b = b, xs = xs, boot.reps = boot.reps, seed = seed, set.seed = set.seed, shape1 = shape1, shape2 = shape2, lowlim = lowlim)
+qual <- boot.qual.beta(
+  f = f, b = b, xs = xs, boot.reps = boot.reps, seed = seed,
+  set.seed = set.seed, shape1 = shape1, shape2 = shape2, lowlim = lowlim
+)
 
 qual[1:10]
 qual$method
@@ -294,15 +302,27 @@ if (rescale == T) {
 
   if (plot.fit == TRUE) {
     # Rescale fitted distribution density
-    if (plot.bm == TRUE && !(is.na(pdf.b))) pdf.b <- pdf.b / max(pdf.b[pdf.b < Inf]) * max(h.b$density) * 0.90
-    if (plot.f == TRUE && !(is.na(pdf.f))) pdf.f <- pdf.f / max(pdf.f[pdf.f < Inf]) * max(h.f$density) * 0.90
+    if (plot.bm == TRUE && !(is.na(pdf.b))) {
+      pdf.b <-
+        pdf.b / max(pdf.b[pdf.b < Inf]) * max(h.b$density) * 0.90
+    }
+    if (plot.f == TRUE && !(is.na(pdf.f))) {
+      pdf.f <-
+        pdf.f / max(pdf.f[pdf.f < Inf]) * max(h.f$density) * 0.90
+    }
   }
 } else {
   if (plot.fit == TRUE) {
     if (plot.hists == TRUE) {
       # Adjust fitted curve to scale of raw data
-      if (plot.bm == TRUE && !(is.na(pdf.b))) pdf.b <- pdf.b / max(pdf.b[pdf.b < Inf]) * max(h.b$counts) * 0.90
-      if (plot.f == TRUE && !(is.na(pdf.f))) pdf.f <- pdf.f / max(pdf.f[pdf.f < Inf]) * max(h.f$counts) * 0.90
+      if (plot.bm == TRUE && !(is.na(pdf.b))) {
+        pdf.b <-
+          pdf.b / max(pdf.b[pdf.b < Inf]) * max(h.b$counts) * 0.90
+      }
+      if (plot.f == TRUE && !(is.na(pdf.f))) {
+        pdf.f <-
+          pdf.f / max(pdf.f[pdf.f < Inf]) * max(h.f$counts) * 0.90
+      }
     } else {
       # Reset y axis limit
       if (is.na(pdf.b)) {

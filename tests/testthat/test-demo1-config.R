@@ -8,7 +8,7 @@ testthat::test_that("demo 1 assessments resolve the expected analysis parameters
   for (assessment in c("main_001_current", "offset_001_current")) {
     context <- load_preprocessing_context(root, assessment, seed = 7L)
     testthat::expect_no_error(validate_analysis_params(context$params))
-    env <- prepare_legacy_environment(context, context$config, 7L)
+    env <- fixture_environment(context, context$config, 7L)
     scalars <- setdiff(names(expected), c("indicators", "nmds"))
     testthat::expect_equal(mget(scalars, env), expected[scalars])
     for (code in env$EI.vec) {
@@ -28,7 +28,7 @@ testthat::test_that("demo 1 assessments resolve the expected analysis parameters
     )
   )
   context <- load_preprocessing_context(root, "renamed_assessment", seed = 7L)
-  testthat::expect_no_error(prepare_legacy_environment(context, context$config, 7L))
+  testthat::expect_no_error(fixture_environment(context, context$config, 7L))
 })
 
 testthat::test_that("nested calculation overrides preserve other resolved settings", {

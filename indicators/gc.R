@@ -71,103 +71,110 @@ gc_data <- function(inputs, config) {
 # then generate the configured overlap and distribution figures. Return the raw,
 # focal, and benchmark tables; figures-only runs use existing files and return NULL.
 run_gc <- function(inputs, config, output_paths, seed = config$seed) {
-  state <- cover_indicator_state(inputs, config, output_paths, seed)
-  evalq(
-    {
-      curr.EI <- "GC"
-      # Indicator attributes select the distribution, quality method, fixed value, and test tail.
-      ei.pars <- ei.params(curr.EI)
-      ei.name <- ei.pars$ei.name
-      EI.name <- ei.name
-      prepare.raw <- ei.pars$prepare.raw
-      distn <- ei.pars$distn
-      q.method <- ei.pars$q.method
-      bm.val <- ei.pars$bm.val
-      test.tail <- ei.pars$test.tail
-      has.strata <- ei.pars$has.stratum
-      has.stratum <- has.strata
-      if (has.strata == F) curr.stratum <- ""
-      # Plot different strata of the same vegetation class together in additional figures.
-      allow.group.strata <- TRUE
-      # Show sample sizes in every grouped panel when TRUE; ignored for ungrouped figures.
-      group.strata.print.all.n <- FALSE
-      # Minimum y-axis value; an empty string allows automatic limits.
-      y.axis.fixed.min <- 0
-      # Include land cover with the stratum in titles of single-stratum figures.
-      lc.in.title <- TRUE
-      # Single-figure legend offset: positive moves right, negative moves left.
-      leg.x.extra <- -0.1
-      # Established output filenames; the raw table includes EI and its transformed value EI.tr.
-      rawFileName <- paste(curr.EI, "_raw.csv", sep = "")
-      resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
-      resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
+  config$seed <- seed
+  nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
+  if (!length(nodata)) nodata <- ""
+  curr.EI <- "GC"
+  # Indicator attributes select the distribution, quality method, fixed value, and test tail.
+  ei.pars <- indicator_parameters(curr.EI, config)
+  ei.name <- ei.pars$name
+
+  prepare.raw <- ei.pars$prepare_raw
+  distn <- ei.pars$distribution
+  q.method <- ei.pars$quality_method
+  bm.val <- ei.pars$benchmark_value
+  test.tail <- ei.pars$test_tail
+  has.strata <- ei.pars$has_stratum
+  has.stratum <- has.strata
+  if (has.strata == F) curr.stratum <- ""
+  # Plot different strata of the same vegetation class together in additional figures.
+  allow.group.strata <- TRUE
+  # Show sample sizes in every grouped panel when TRUE; ignored for ungrouped figures.
+  group.strata.print.all.n <- FALSE
+  # Minimum y-axis value; an empty string allows automatic limits.
+  y.axis.fixed.min <- 0
+  # Include land cover with the stratum in titles of single-stratum figures.
+  lc.in.title <- TRUE
+  # Single-figure legend offset: positive moves right, negative moves left.
+  leg.x.extra <- -0.1
+  # Established output filenames; the raw table includes EI and its transformed value EI.tr.
+  rawFileName <- paste(curr.EI, "_raw.csv", sep = "")
+  resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
+  resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
 
 
-      cat("\n")
-      cat("#######################################################\n")
-      cat("Calculating Quality for indicator group GC (Ground Cover)\n")
-      cat("#######################################################\n")
-      cat("\n")
-      if (PLOT.FIGS.ONLY == FALSE) {
-        cat("************************\n")
-        cat("Preparing data\n")
-        cat("************************\n")
-        cat("Calculating indicator values from scratch")
-        if (prepare.raw || force.prepare.raw) {
-          dat <- gc_data(inputs, config)
-          write.csv(dat, paste0(RESULTSDIR, rawFileName), row.names = FALSE)
-        }
-        cat("Preparing benchmark indicator files...")
-        # Read back the prepared raw table, including when preparation is disabled.
-        inputFile <- paste(RESULTSDIR, rawFileName, sep = "")
-        dat <- read.csv(inputFile, header = T)
-        # Summarize transformed benchmark cover by vegetation class and stratum.
-        EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
-        EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass, stratum = stratum),
-          FUN = function(x) {
-            c(
-              n = length(x),
-              mean = mean(x),
-              med = median(x),
-              sd = sd(x),
-              max = max(x),
-              min = min(x)
-            )
-          }
-        ))
-        EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
-        colnames(EI.bm) <- c(
-          "vegClass", "stratum", "n", "EI.mean", "EI.med", "EI.sd",
-          "EI.max", "EI.min"
+  cat("\n")
+  cat("#######################################################\n")
+  cat("Calculating Quality for indicator group GC (Ground Cover)\n")
+  cat("#######################################################\n")
+  cat("\n")
+  if (config$plot_figures_only == FALSE) {
+    cat("************************\n")
+    cat("Preparing data\n")
+    cat("************************\n")
+    cat("Calculating indicator values from scratch")
+    if (prepare.raw || config$force_prepare_raw) {
+      dat <- gc_data(inputs, config)
+      write.csv(dat, paste0(paste0(output_paths$results, "/"), rawFileName), row.names = FALSE)
+    }
+    cat("Preparing benchmark indicator files...")
+    # Read back the prepared raw table, including when preparation is disabled.
+    inputFile <- paste(paste0(output_paths$results, "/"), rawFileName, sep = "")
+    dat <- read.csv(inputFile, header = T)
+    # Summarize transformed benchmark cover by vegetation class and stratum.
+    EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
+    EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass, stratum = stratum),
+      FUN = function(x) {
+        c(
+          n = length(x),
+          mean = mean(x),
+          med = median(x),
+          sd = sd(x),
+          max = max(x),
+          min = min(x)
         )
-        EI.bm$EI <- curr.EI # add indicator
-        EI.bm <- EI.bm[, c(
-          "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd", "EI.med", "EI.max",
-          "EI.min"
-        )]
-        # Use human-readable vegetation names in the exported benchmark table.
-        EI.bm$vegClass <- human.readable(EI.bm$vegClass)
-        resultsFile <- paste(RESULTSDIR, resultsBm, sep = "")
-        write.csv(EI.bm, file = resultsFile, row.names = FALSE)
-        cat("done\n")
-        cat("Preparing focal results files...")
-        # Prepare focal summary statistics, then calculate quality and bootstrap uncertainty.
-        prepare_indicator_results(environment())
-        cat("done\n")
-        calculate_indicator_quality(environment())
-      } # END PLOT.FIGS.ONLY
-      # Generate overlap figures and configured distribution figures for each vegetation type.
-      if (plot.overlap == T) plot_indicator_overlap(environment())
-      cat("************************\n")
-      cat("Generating figures\n")
-      cat("************************\n")
-      plot_indicator_distributions(environment())
-      cat("\n##################################################\n")
-      cat("Operation completed\n")
-      cat("##################################################\n\n")
-    },
-    envir = state
-  )
+      }
+    ))
+    EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
+    colnames(EI.bm) <- c(
+      "vegClass", "stratum", "n", "EI.mean", "EI.med", "EI.sd",
+      "EI.max", "EI.min"
+    )
+    EI.bm$EI <- curr.EI # add indicator
+    EI.bm <- EI.bm[, c(
+      "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd", "EI.med", "EI.max",
+      "EI.min"
+    )]
+    # Use human-readable vegetation names in the exported benchmark table.
+    EI.bm$vegClass <- human.readable(EI.bm$vegClass)
+    resultsFile <- paste(paste0(output_paths$results, "/"), resultsBm, sep = "")
+    write.csv(EI.bm, file = resultsFile, row.names = FALSE)
+    cat("done\n")
+    cat("Preparing focal results files...")
+    # Prepare focal summary statistics, then calculate quality and bootstrap uncertainty.
+    result <- prepare_indicator_results(read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    ), config, output_paths)
+    cat("done\n")
+    result <- calculate_indicator_quality(result, config, output_paths)
+  } # END PLOT.FIGS.ONLY
+  # Generate overlap figures and configured distribution figures for each vegetation type.
+  if (config$plot_figures_only) {
+    result <- read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    )
+  }
+  if (config$plot_overlap == T) plot_indicator_overlap(result, config, output_paths)
+  cat("************************\n")
+  cat("Generating figures\n")
+  cat("************************\n")
+  plot_indicator_distributions(result, config, output_paths)
+  cat("\n##################################################\n")
+  cat("Operation completed\n")
+  cat("##################################################\n\n")
+
   if (config$plot_figures_only) {
     return(invisible(NULL))
   }

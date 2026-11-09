@@ -1,4 +1,4 @@
-testthat::test_that("in-process analysis invocations do not leak legacy state", {
+testthat::test_that("in-process analysis invocations do not leak run settings", {
   selected_contract <- Sys.getenv("VQA_TEST_CONTRACT")
   if (nzchar(selected_contract) &&
     selected_contract != "vqa-demo1/main_001_current") {
@@ -16,14 +16,19 @@ testthat::test_that("in-process analysis invocations do not leak legacy state", 
   on.exit(cleanup_refactor_project(second_root), add = TRUE)
 
   old_seed <- Sys.getenv("VQA_TEST_SEED", unset = NA_character_)
-  on.exit(if (is.na(old_seed)) Sys.unsetenv("VQA_TEST_SEED") else
-    Sys.setenv(VQA_TEST_SEED = old_seed), add = TRUE)
+  on.exit(if (is.na(old_seed)) {
+    Sys.unsetenv("VQA_TEST_SEED")
+  } else {
+    Sys.setenv(VQA_TEST_SEED = old_seed)
+  }, add = TRUE)
   Sys.setenv(VQA_TEST_SEED = "invalid-fallback")
   first <- run_analysis(first_root, "main_001_current", seed = 20260810L)
   context <- load_preprocessing_context(second_root, "offset_baseline", seed = 1L)
   context <- prepare_analysis_inputs(context)
-  yaml::write_yaml(list(project = "changed-after-resolution"),
-                   file.path(second_root, "params.yaml"))
+  yaml::write_yaml(
+    list(project = "changed-after-resolution"),
+    file.path(second_root, "params.yaml")
+  )
   second <- run_vqa_analysis(context, seed = 20260810L)
 
   testthat::expect_named(first, c("context", "seed", "output_paths", "metadata"))

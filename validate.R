@@ -4,12 +4,12 @@ suppressPackageStartupMessages({
   library(optparse)
 })
 
-source(file.path("validation", "helpers.R"))
-source(file.path("pipeline", "io.R"))
-source(file.path("pipeline", "params.R"))
-source(file.path("validation", "requirements.R"))
-source(file.path("validation", "schema.R"))
-source(file.path("validation", "crossfile.R"))
+source(file.path("validation", "helpers.R"), local = TRUE)
+source(file.path("pipeline", "io.R"), local = TRUE)
+source(file.path("pipeline", "params.R"), local = TRUE)
+source(file.path("validation", "requirements.R"), local = TRUE)
+source(file.path("validation", "schema.R"), local = TRUE)
+source(file.path("validation", "crossfile.R"), local = TRUE)
 
 parse_cli_args <- function() {
   # optparse handles `-h/--help` for us and accepts both
@@ -341,7 +341,7 @@ main <- function() {
   invisible(report_df)
 }
 
-if (Sys.getenv("VQA_VALIDATE_NO_AUTORUN", "") != "1") {
+if (sys.nframe() == 0L) {
   # Allow sourcing the file without immediately running validation, which is
   # useful for debugging helpers and inspecting resolved schemas.
   main()

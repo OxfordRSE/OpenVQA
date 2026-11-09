@@ -37,10 +37,20 @@ wd
 source("params.R", local = TRUE)
 
 # load global functions
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 # load distribution-fitting and quality coefficient functions
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 # Current EI (ecological indicator)
 # Standard abbreviation for this EI; will be used for file names
@@ -195,7 +205,9 @@ for (i in 1:length(vegClasses)) {
   print(currVegClass)
 
   # Extract matrix of plots for this vegClass, fully identified species only
-  spCov <- subset(dat, !is.nan(species) & !(species == "<NA>") & vegClass == currVegClass, select = c(plotCode, EI.tr, species))
+  spCov <- subset(dat, !is.nan(species) & !(species == "<NA>") & vegClass == currVegClass,
+    select = c(plotCode, EI.tr, species)
+  )
 
   # Make another matrix to hold grouping of plot (b, f1, f2, etc.)
   plots <- subset(dat, vegClass == currVegClass, select = c(plotCode, focalOrBenchmark, vegClass))
@@ -206,7 +218,10 @@ for (i in 1:length(vegClasses)) {
   #############################
 
   # write the file with headers
-  write.table(spCov, file = "spCov.txt", quote = FALSE, sep = "\t", col.names = FALSE, row.names = FALSE)
+  write.table(spCov,
+    file = "spCov.txt", quote = FALSE, sep = "\t", col.names = FALSE,
+    row.names = FALSE
+  )
 
   # Read it back in using readsample function readsample to coerce into
   # format used by vegan
@@ -233,8 +248,12 @@ for (i in 1:length(vegClasses)) {
   }
 
   # The NMDS
-  # spCov.mds <- metaMDS(spCov, distance="euclidean", trymax=50, k=2, autotransform=FALSE, trace=TRUE)
-  spCov.mds <- metaMDS(spCov, distance = "bray", trymax = 50, k = 2, autotransform = FALSE, trace = TRUE)
+  # spCov.mds <- metaMDS(spCov, distance="euclidean", trymax=50, k=2, autotransform=FALSE,
+  # trace=TRUE)
+  spCov.mds <- metaMDS(spCov,
+    distance = "bray", trymax = 50, k = 2,
+    autotransform = FALSE, trace = TRUE
+  )
 
   # Get species scores
   sampleScores <- data.frame(spCov.mds$points)
@@ -296,13 +315,19 @@ td.plot$actualVegClass2 <- gsub("]", "", td.plot$actualVegClass2)
 # colnames(TdPlot) <- c('plotCode', 'focalOrBenchmark', 'vegClass', 'x', 'y', 'EI', 'landCover')
 names(td.plot)[names(td.plot) == "td"] <- "EI"
 td.plot$EI.tr <- td.plot$EI
-td.plot <- td.plot[, c("vegClass", "actualVegClass", "vegClass2", "actualVegClass2", "focalOrBenchmark", "plotCode", "x", "y", "EI", "EI.tr")]
+td.plot <- td.plot[, c(
+  "vegClass", "actualVegClass", "vegClass2", "actualVegClass2",
+  "focalOrBenchmark", "plotCode", "x", "y", "EI", "EI.tr"
+)]
 
 # Remove nasty outliers
 # Need better way to do this, but will do for now
 td.plot <- td.plot[td.plot$EI < 500, ]
 
-td.plot.saved <- td.plot[, c("vegClass2", "actualVegClass2", "focalOrBenchmark", "plotCode", "x", "y", "EI", "EI.tr")]
+td.plot.saved <- td.plot[, c(
+  "vegClass2", "actualVegClass2", "focalOrBenchmark",
+  "plotCode", "x", "y", "EI", "EI.tr"
+)]
 names(td.plot.saved)[names(td.plot.saved) == "vegClass2"] <- "vegClass"
 names(td.plot.saved)[names(td.plot.saved) == "actualVegClass2"] <- "actualVegClass"
 
@@ -317,7 +342,8 @@ write.csv(td.plot.saved, file = rawFile, row.names = FALSE)
 # Make data frame of moments for transformed exotic species cover
 # aggregated by vegclass + stratum
 td.bm <- subset(td.plot, td.plot$focalOrBenchmark == "b")
-# td.bm <- aggregate(td.bm $EI.tr, by=list(td.bm $actualVegClass), FUN = c("count","mean", "sd", "median", "max","min"))
+# td.bm <- aggregate(td.bm $EI.tr, by=list(td.bm $actualVegClass), FUN = c("count","mean", "sd",
+# "median", "max","min"))
 td.bm <- with(td.plot, aggregate(EI.tr, list(actualVegClass = actualVegClass),
   FUN = function(x) {
     c(
@@ -334,7 +360,8 @@ td.bm <- cbind(td.bm[-ncol(td.bm)], td.bm[[ncol(td.bm)]])
 colnames(td.bm) <- c("actualVegClass", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min")
 
 td.f1 <- subset(td.plot, td.plot$focalOrBenchmark == "f1")
-# td.f1 <- aggregate(td.f1 $EI.tr, by=list(td.f1 $actualVegClass), FUN = c("count","mean", "sd", "median", "max","min"))
+# td.f1 <- aggregate(td.f1 $EI.tr, by=list(td.f1 $actualVegClass), FUN = c("count","mean", "sd",
+# "median", "max","min"))
 td.f1 <- with(td.f1, aggregate(EI.tr, list(actualVegClass = actualVegClass),
   FUN = function(x) {
     c(
@@ -351,7 +378,8 @@ td.f1 <- cbind(td.f1[-ncol(td.f1)], td.f1[[ncol(td.f1)]])
 colnames(td.f1) <- c("actualVegClass", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min")
 
 td.f2 <- subset(td.plot, td.plot$focalOrBenchmark == "f2")
-# td.f2 <- aggregate(td.f2 $EI.tr, by=list(td.f2 $actualVegClass), FUN = c("count","mean", "sd", "median", "max","min"))
+# td.f2 <- aggregate(td.f2 $EI.tr, by=list(td.f2 $actualVegClass), FUN = c("count","mean", "sd",
+# "median", "max","min"))
 td.f2 <- with(td.f2, aggregate(EI.tr, list(actualVegClass = actualVegClass),
   FUN = function(x) {
     c(
@@ -368,7 +396,8 @@ td.f2 <- cbind(td.f2[-ncol(td.f2)], td.f2[[ncol(td.f2)]])
 colnames(td.f2) <- c("actualVegClass", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min")
 
 td.f3 <- subset(td.plot, td.plot$focalOrBenchmark == "f3")
-# td.f3 <- aggregate(td.f3 $EI.tr, by=list(td.f3 $actualVegClass), FUN = c("count","mean", "sd", "median", "max","min"))
+# td.f3 <- aggregate(td.f3 $EI.tr, by=list(td.f3 $actualVegClass), FUN = c("count","mean", "sd",
+# "median", "max","min"))
 td.f3 <- with(td.f3, aggregate(EI.tr, list(actualVegClass = actualVegClass),
   FUN = function(x) {
     c(
@@ -387,7 +416,10 @@ colnames(td.f3) <- c("actualVegClass", "n", "EI.mean", "EI.sd", "EI.med", "EI.ma
 td.temp <- rbind(td.bm, td.f1, td.f2, td.f3)
 td <- merge(td.temp, df.actualVegClasses, by = "actualVegClass")
 td$targetVegClass <- bm.vegClass
-td <- td[, c("actualVegClass", "targetVegClass", "focalOrBenchmark", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min")]
+td <- td[, c(
+  "actualVegClass", "targetVegClass", "focalOrBenchmark", "n", "EI.mean",
+  "EI.sd", "EI.med", "EI.max", "EI.min"
+)]
 
 # Add column with human-readable veg classes
 td$targetVegClass2 <- gsub("v\\[", "", td$targetVegClass)
@@ -399,7 +431,10 @@ td$actualVegClass2 <- gsub("v\\[", "", td$actualVegClass)
 td$actualVegClass2 <- gsub("]\\+s\\[", ", ", td$actualVegClass2)
 td$actualVegClass2 <- gsub("]", "", td$actualVegClass2)
 
-td <- td[, c("actualVegClass2", "targetVegClass2", "focalOrBenchmark", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min")]
+td <- td[, c(
+  "actualVegClass2", "targetVegClass2", "focalOrBenchmark", "n", "EI.mean",
+  "EI.sd", "EI.med", "EI.max", "EI.min"
+)]
 
 names(td)[names(td) == "targetVegClass2"] <- "vegClass"
 names(td)[names(td) == "actualVegClass2"] <- "actualVegClass"

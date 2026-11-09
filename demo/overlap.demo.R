@@ -8,7 +8,12 @@
 ###################################################
 
 
-source("../includes/functions.R")
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("../includes/", helper_module, "-functions.R"), local = TRUE)
+}
 source("../params.R")
 # load(file = "overlap.demo.data.Rdata")
 load("overlap.demo.ws.Rdata")
@@ -247,7 +252,12 @@ q.lt.txt <- specify_decimal(ol.lt, 2)
 ol.ucl.txt <- specify_decimal(boot.ol.cls[2] * 100, 1)
 ol.lcl.txt <- specify_decimal(boot.ol.cls[1] * 100, 1)
 legendText <- paste0("Overlap: \n", ol.txt, "%")
-if (display.overlap.cls == T) legendText <- paste0(legendText, " (", ol.lcl.txt, "-", ol.ucl.txt, "%)")
+if (display.overlap.cls == T) {
+  legendText <- paste0(
+    legendText, " (", ol.lcl.txt, "-",
+    ol.ucl.txt, "%)"
+  )
+}
 if (compare.overlap) {
   if (test.tail == "lower") {
     legendText <- paste0(

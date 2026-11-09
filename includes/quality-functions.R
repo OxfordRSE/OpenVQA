@@ -388,7 +388,8 @@ qual.prop.fixed <- function(f, b) {
   return(q)
 }
 
-qual.prop.fixed.f <- function(f, b) {
+qual.prop.fixed.f <- function(f, b, xs = NULL, shape1 = 0.1, shape2 = 0.1,
+                              lowlim = 0.0000001) {
   ###################################################
   # Calculates quality of a fixed focal value (f) relative to a beta-
   # distribution vector of benchmark values (b). f must be
@@ -526,7 +527,10 @@ qual.beta.zoib <- function(f, b, xs = NULL, shape1 = 0.1, shape2 = 0.1, lowlim =
       b.fixed <- as.numeric(unique(b.bet))
       q.f.bet <- qual.prop.fixed(f.fixed, b.fixed)
     } else {
-      q.f.bet <- qual.prop.fixed.f(f.fixed, b.bet)
+      q.f.bet <- qual.prop.fixed.f(f.fixed, b.bet,
+        xs = xs, shape1 = shape1,
+        shape2 = shape2, lowlim = lowlim
+      )
     }
   } else if (vals.b.bet == 1) {
     # Fixed beta value

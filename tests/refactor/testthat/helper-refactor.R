@@ -19,22 +19,16 @@ copy_refactor_project <- function(project) {
 run_refactor_command <- function(script, data_root, assessment = NULL,
                                  seed = NULL) {
   args <- c(script, "--data-root", data_root)
+  if (script == "analyse.R" && Sys.getenv("VQA_GENERATE_FIGURES", "true") == "false") {
+    args <- c(args, "--no-figures")
+  }
   if (!is.null(assessment)) {
     args <- c(args, "--assessment", assessment)
   }
-  environment <- c(
-    paste0(
-      "R_LIBS_USER=",
-      paste(.libPaths(), collapse = .Platform$path.sep)
-    ),
-    if (is.null(seed)) {
-      character()
-    } else {
-      paste0(
-        "VQA_TEST_SEED=", as.integer(seed)
-      )
-    }
-  )
+  if (script == "analyse.R" && !is.null(seed)) {
+    args <- c(args, "--seed", as.character(as.integer(seed)))
+  }
+  environment <- paste0("R_LIBS_USER=", paste(.libPaths(), collapse = .Platform$path.sep))
   output <- system2(
     refactor_rscript, args,
     stdout = TRUE, stderr = TRUE,
@@ -53,11 +47,7 @@ copy_analysis_application <- function() {
   application_root <- tempfile("analysis-application-")
   dir.create(application_root)
   files <- c(
-    list.files(
-      refactor_project_root,
-      pattern = "\\.R$",
-      full.names = TRUE
-    ),
+    file.path(refactor_project_root, c("analyse.R", "validate.R")),
     file.path(
       refactor_project_root,
       c(
@@ -67,7 +57,7 @@ copy_analysis_application <- function() {
         "preprocessing",
         "includes",
         "indicators",
-        "vqa.summary",
+        "reporting",
         "schema",
         "validation"
       )
@@ -75,6 +65,8 @@ copy_analysis_application <- function() {
   )
   testthat::expect_true(all(file.copy(files, application_root, recursive = TRUE)))
   testthat::expect_false(dir.exists(file.path(application_root, "params")))
+  testthat::expect_false(file.exists(file.path(application_root, "params.R")))
+  testthat::expect_false(file.exists(file.path(application_root, "includes", "functions.R")))
   application_root
 }
 

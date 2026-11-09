@@ -35,7 +35,7 @@ validate_params_schema <- function(params) {
 
 validate_analysis_params <- function(params) {
   validate_params_schema(params)
-  if (isTRUE(params$project %in% c("vqa-demo1", "vqa-demo1-min", "vqa-demo2", "vqa-demo2-min"))) {
+  if (!is.null(params$active_indicators)) {
     active <- unlist(params$active_indicators, use.names = FALSE)
     if ((identical(params$qh_method, "empirical") && !length(active)) ||
       !all(active %in% names(params$indicator_settings)) ||
@@ -152,11 +152,7 @@ resolve_params <- function(defaults = list(), project = list(),
 
 resolve_seed <- function(seed = NULL) {
   if (is.null(seed)) {
-    fallback <- Sys.getenv("VQA_TEST_SEED", "")
-    if (!nzchar(fallback)) {
-      return(NULL)
-    }
-    seed <- fallback
+    return(NULL)
   }
   if (length(seed) != 1L || is.na(seed) ||
     !(is.numeric(seed) || is.character(seed))) {

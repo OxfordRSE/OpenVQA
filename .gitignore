@@ -24,3 +24,6 @@ tests/refactor/rv/
 
 __MACOSX/
 .DS_Store
+
+# Generated coverage report
+coverage.xml

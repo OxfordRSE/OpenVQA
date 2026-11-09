@@ -12,7 +12,12 @@
 ##########################################
 
 require(openxlsx2)
-if (!exists("functions.loaded", mode = "function")) source(paste0(SRCDIR, "includes/functions.R"))
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
 ##########################################
 # Set local parameters
@@ -98,7 +103,10 @@ if (INCLUDE.OFFSET) {
   df.meta <- rbind(
     df.meta,
     data.frame(
-      head = c("Project:", "Baseline assessment:", "Current assessment:", "Offset assessment:", "Analysis date:"),
+      head = c(
+        "Project:", "Baseline assessment:", "Current assessment:",
+        "Offset assessment:", "Analysis date:"
+      ),
       value = c(PROJ, ASSESS.BASELINE, ASSESS, ASSESS.OFFSET, latest.run),
       stringsAsFactors = FALSE
     )
@@ -244,32 +252,47 @@ xl.col.wj(curr.wb = wb, curr.ws = ws, curr.df = df.qh.net)
 # Special handling for formatted column qh0.full
 col.idx <- which(names(df.qh.net) == col.qh0.full)
 col.idx.xl <- xlcolconv(col.idx)
-cmd <- paste0("wb$add_cell_style(sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl, "500', horizontal='right' )")
+cmd <- paste0(
+  "wb$add_cell_style(sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl,
+  "500', horizontal='right' )"
+)
 eval(parse(text = cmd))
 
 # Special handling for formatted column qh1.full
 col.idx <- which(names(df.qh.net) == col.qh1.full)
 col.idx.xl <- xlcolconv(col.idx)
-cmd <- paste0("wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl, "500', horizontal='right' )")
+cmd <- paste0(
+  "wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl,
+  "500', horizontal='right' )"
+)
 eval(parse(text = cmd))
 
 # Special handling for formatted column qh.net.full
 col.idx <- which(names(df.qh.net) == col.qh.net.full)
 col.idx.xl <- xlcolconv(col.idx)
-cmd <- paste0("wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl, "500', horizontal='right' )")
+cmd <- paste0(
+  "wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl,
+  "500', horizontal='right' )"
+)
 eval(parse(text = cmd))
 
 if (INCLUDE.OFFSET) {
   # Special handling for formatted column qh1.full
   col.idx <- which(names(df.qh.net) == col.qh.off.full)
   col.idx.xl <- xlcolconv(col.idx)
-  cmd <- paste0("wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl, "500', horizontal='right' )")
+  cmd <- paste0(
+    "wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl,
+    "500', horizontal='right' )"
+  )
   eval(parse(text = cmd))
 
   # Special handling for formatted column qh.net.full
   col.idx <- which(names(df.qh.net) == col.qh.net.final.full)
   col.idx.xl <- xlcolconv(col.idx)
-  cmd <- paste0("wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl, "500', horizontal='right' )")
+  cmd <- paste0(
+    "wb$add_cell_style( sheet=ws, dims='", col.idx.xl, "1:", col.idx.xl,
+    "500', horizontal='right' )"
+  )
   eval(parse(text = cmd))
 }
 

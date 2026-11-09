@@ -1,8 +1,10 @@
+source("includes/functions.R", local = TRUE)
+source(file.path("reporting", "main.R"), local = TRUE)
 source(file.path("analysis", "legacy-batch.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
 source(file.path("analysis", "legacy-params.R"), local = TRUE)
 source(file.path("analysis", "fixed-quality.R"), local = TRUE)
-source(file.path("analysis", "species-richness.R"), local = TRUE)
+source(file.path("indicators", "sr.R"), local = TRUE)
 source(file.path("analysis", "cover-indicators.R"), local = TRUE)
 source(file.path("indicators", "pcgf.R"), local = TRUE)
 source(file.path("indicators", "gc.R"), local = TRUE)
@@ -18,6 +20,7 @@ source(file.path("indicators", "td.R"), local = TRUE)
 source(file.path("indicators", "pcs.R"), local = TRUE)
 source(file.path("indicators", "ch.R"), local = TRUE)
 source(file.path("indicators", "baes.R"), local = TRUE)
+source(file.path("analysis", "indicator-settings.R"), local = TRUE)
 
 legacy_project_name <- function(project) {
   if (!is.character(project) || length(project) != 1L || is.na(project) || !nzchar(project)) {
@@ -160,7 +163,9 @@ execute_legacy_batch <- function(run_env) {
   ))
 }
 
-run_vqa_analysis <- function(context, config = context$config, seed = NULL) {
+run_vqa_analysis <- function(context, config = context$config, seed = NULL,
+                             generate_figures = TRUE) {
+  stopifnot(is.logical(generate_figures), length(generate_figures) == 1L, !is.na(generate_figures))
   if (!is.list(config)) stop("config must be a list.", call. = FALSE)
   settings <- config
   settings$seed <- NULL
@@ -172,9 +177,9 @@ run_vqa_analysis <- function(context, config = context$config, seed = NULL) {
   seed <- resolve_seed(if (is.null(seed)) config$seed else seed)
   config$seed <- seed
   context$config <- config
-  output_paths <- execute_legacy_batch(
-    prepare_legacy_environment(context, config, seed)
-  )
+  run_env <- prepare_legacy_environment(context, config, seed)
+  run_env$analysis_paths$generate_figures <- generate_figures
+  output_paths <- execute_legacy_batch(run_env)
   metadata <- list(
     seed = seed, project = config$project,
     assessment = config$assessment, config = config

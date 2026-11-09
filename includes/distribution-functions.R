@@ -476,7 +476,7 @@ uni.fit.beta <- function(vec, shape1 = NULL, shape2 = NULL, lowlim = NULL) {
   if (is.null(lowlim)) lowlim <- 0.0001
 
   # Fit the distribution
-  mod <- fitdistr(vec, "beta",
+  mod <- MASS::fitdistr(vec, "beta",
     lower = c(lowlim, lowlim),
     start = list(shape1 = 0.1, shape2 = 0.1)
   )
@@ -958,7 +958,7 @@ fit.beta <- function(
   )
 
   # Construct the fitdistr command
-  fit <- paste0("fitdistr(vec, densfun='beta'", opt.args, ")")
+  fit <- paste0("MASS::fitdistr(vec, densfun='beta'", opt.args, ")")
 
   ###########################################
   # Fit pdf

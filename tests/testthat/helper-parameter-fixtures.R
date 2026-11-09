@@ -1,5 +1,6 @@
+# Compare fixed fixture field names with resolved catalogue values.
 # Map application settings to the parameter names used by analysis scripts.
-legacy_common_symbols <- c(
+fixture_common_symbols <- c(
   library_load_silent = "LIB.LOAD.SILENT",
   logfile_basename = "LOGFILE.BASENAME",
   replace_log = "REPLACE.LOG",
@@ -60,13 +61,13 @@ legacy_common_symbols <- c(
   plot_dists_fitted_rescaled_nofit = "plot.dists_fitted_rescaled_nofit"
 )
 
-legacy_common_params <- function(config) {
-  values <- config[names(legacy_common_symbols)]
-  names(values) <- unname(legacy_common_symbols)
+fixture_common_params <- function(config) {
+  values <- config[names(fixture_common_symbols)]
+  names(values) <- unname(fixture_common_symbols)
   values
 }
 
-legacy_project_symbols <- c(
+fixture_project_symbols <- c(
   data_type = "DATA.TYPE", min_plots = "N.MIN.ABS",
   source_plot_data_filename = "RAW_PLOTDATA_FILENAME",
   missing_exotic_status_assume_native = "IS.EXOTIC.MISSING.ASSUME.NATIVE",
@@ -83,7 +84,7 @@ legacy_project_symbols <- c(
   plot_dists_fitted_rescaled = "plot.dists_fitted_rescaled", pcess_herbs_only = "pcess.herbs.only"
 )
 
-legacy_indicator_symbols <- c(
+fixture_indicator_symbols <- c(
   name = "ei.name", distribution = "distn", quality_method = "q.method",
   has_stratum = "has.stratum", test_tail = "test.tail", benchmark_value = "bm.val",
   prepare_raw = "prepare.raw", convert_percent = "convert.percent", logit = "logit",
@@ -93,9 +94,9 @@ legacy_indicator_symbols <- c(
   multiplier = "ei.multiplier", normalize_area_m2 = "normalize.m2"
 )
 
-legacy_project_params <- function(config) {
-  values <- config[names(legacy_project_symbols)]
-  names(values) <- unname(legacy_project_symbols)
+fixture_project_params <- function(config) {
+  values <- config[names(fixture_project_symbols)]
+  names(values) <- unname(fixture_project_symbols)
   active <- as.character(unlist(config$active_indicators, use.names = FALSE))
   if (config$td_only) active <- "TD"
   values$EI.vec <- active
@@ -116,34 +117,16 @@ legacy_project_params <- function(config) {
   nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
   values$veg.nodata <- if (length(nodata)) nodata else ""
   values$ei.params <- function(ei_code) {
-    settings <- config$indicator_settings[[ei_code]]
-    if (is.null(settings)) stop("Unknown indicator: ", ei_code, call. = FALSE)
-    settings <- resolve_params(config$indicator_defaults, settings)
-    parameters <- settings[names(legacy_indicator_symbols)]
-    names(parameters) <- unname(legacy_indicator_symbols)
+    settings <- indicator_parameters(ei_code, config)
+    parameters <- settings[names(fixture_indicator_symbols)]
+    names(parameters) <- unname(fixture_indicator_symbols)
     if (is.null(parameters$bm.val)) parameters$bm.val <- NA
     if (is.null(parameters$td.multiplier)) parameters$td.multiplier <- NA
     omit <- unlist(parameters$td.multiplier.omit, use.names = FALSE)
     parameters$td.multiplier.omit <- if (length(omit)) omit else ""
-    parameters$ei.data.type <- if (!is.null(settings$data_type)) {
-      settings$data_type
-    } else if (ei_code %in% c("SR", "TD", "TS")) {
-      config$data_type
-    } else {
-      "cover"
-    }
-    inputs <- c(
-      SR = "speciesCover", TD = "speciesCover", TS = "speciesCover", PCGF = "coverByGrowthForm",
-      GC = "groundCover", PCESS = "exoticCoverByStratum", PCES = "exoticCoverByStratum",
-      BA = "speciesStems", ASC = "speciesStems", PCS = "coverByStratum",
-      CH = "speciesCover", BAES = "speciesStems"
-    )
-    parameters$df.input <- if (parameters$ei.data.type == "ind") {
-      "speciesStems"
-    } else {
-      unname(inputs[[ei_code]])
-    }
-    parameters$source.file <- paste0(parameters$df.input, ".csv")
+    parameters$ei.data.type <- settings$data_type
+    parameters$df.input <- settings$input_table
+    parameters$source.file <- settings$source_file
     parameters
   }
   values$nmds.params <- function(land_cover) {
@@ -157,17 +140,13 @@ legacy_project_params <- function(config) {
   }
   if (!is.null(config$stem_sampling)) {
     values$dbh.ba.scaled <- function(dbh, target_area_m2 = NULL) {
-      sampling <- config$stem_sampling
       if (is.null(target_area_m2)) target_area_m2 <- 10000
-      dplyr::case_when(
-        dbh >= sampling$min_dbh_cm & dbh < sampling$split_dbh_cm ~
-          pi * ((dbh / 2)^2) / 10000 * target_area_m2 / sampling$small_plot_area_m2,
-        dbh >= sampling$split_dbh_cm ~
-          pi * ((dbh / 2)^2) / 10000 * target_area_m2 / sampling$large_plot_area_m2,
-        is.na(dbh) ~ NA,
-        .default = NA
-      )
+      scaled_basal_area(dbh, config, target_area_m2)
     }
   }
   values
+}
+
+fixture_environment <- function(context, config, seed) {
+  list2env(c(fixture_common_params(config), fixture_project_params(config)))
 }

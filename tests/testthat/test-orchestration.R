@@ -1,156 +1,64 @@
-orchestration_environment <- function() {
-  run_env <- list2env(list(
-    QH.METHOD = "empirical", VQA.SUMMARY.ONLY = FALSE,
-    PLOT.FIGS.ONLY = FALSE, TD.ONLY = FALSE, EI.vec = c("TS", "SR"),
-    REPLACE.LOG = TRUE, LOGDIR = tempdir(),
-    LOGFILE.BASENAME = basename(tempfile("orchestration-")),
-    RESULTSDIR = "results", FIGDIR = "figs",
-    INPUTDIR = tempdir(), DF.LANDCOVER = character(),
-    DF.PLOTMETADATA = "plotMetadata", DF.SPECIES = "species",
-    input_file_list = function(...) character(), stop_quietly = base::stop,
-    gmean = base::mean, generalized_mean = base::mean,
-    scripts = character(), indicator_order = character()
-  ))
-  run_env$source <- function(file, ...) {
-    run_env$scripts <- c(run_env$scripts, file)
-    if (dirname(file) == "indicators") {
-      run_env$indicator_order <- c(run_env$indicator_order, run_env$EI)
-    }
-  }
-  run_env
-}
-
-testthat::test_that("summary-only runs skip indicators and keep summary script order", {
-  run_env <- orchestration_environment()
-  run_env$VQA.SUMMARY.ONLY <- TRUE
-  execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, c(
-    "libraries.R", "vqa.summary.R",
-    file.path("vqa.summary", "vqa.summary.csv.R"),
-    file.path("vqa.summary", "vqa.summary.xl.R")
-  ))
-})
-
-testthat::test_that("TD-only and figures-only runs suppress summaries", {
-  run_env <- orchestration_environment()
+testthat::test_that("indicators dispatch in configured order and summary-only skips them", {
+  calls <- character()
   rlang::local_bindings(
-    run_species_richness = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "SR")
-    },
-    run_taxonomic_similarity = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "TS")
-    },
-    run_taxonomic_distance = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "TD")
-    },
-    .env = environment(run_legacy_indicators)
+    run_pcs = function(...) calls <<- c(calls, "PCS"),
+    run_canopy_height = function(...) calls <<- c(calls, "CH"),
+    run_exotic_basal_area = function(...) calls <<- c(calls, "BAES"),
+    .env = environment(run_analysis_indicators)
   )
-  run_env$TD.ONLY <- TRUE
-  execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, "libraries.R")
-  testthat::expect_identical(run_env$indicator_order, "TD")
-
-  run_env <- orchestration_environment()
-  run_env$PLOT.FIGS.ONLY <- TRUE
-  rm("TD.ONLY", envir = run_env)
-  execute_legacy_batch(run_env)
-  testthat::expect_identical(run_env$scripts, "libraries.R")
-  testthat::expect_identical(run_env$indicator_order, c("TS", "SR"))
-  testthat::expect_identical(run_env$TD.ONLY, FALSE)
+  config <- list(
+    summary_only = FALSE, td_only = FALSE,
+    active_indicators = c("PCS", "CH", "BAES")
+  )
+  run_analysis_indicators(list(), config, list())
+  testthat::expect_identical(calls, config$active_indicators)
+  config$summary_only <- TRUE
+  run_analysis_indicators(list(), config, list())
+  testthat::expect_length(calls, 3)
+  config$summary_only <- FALSE
+  config$active_indicators <- "unknown"
+  testthat::expect_error(run_analysis_indicators(list(), config, list()), "Unknown indicator")
 })
 
-testthat::test_that("PCS, CH and BAES dispatch callable workflows in configured order", {
-  run_env <- orchestration_environment()
-  run_env$EI.vec <- c("PCS", "CH", "BAES")
+testthat::test_that("TD-only dispatch overrides the configured indicator list", {
+  calls <- character()
   rlang::local_bindings(
-    run_pcs = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "PCS")
-    },
-    run_canopy_height = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "CH")
-    },
-    run_exotic_basal_area = function(inputs, config, output_paths) {
-      run_env$indicator_order <- c(run_env$indicator_order, "BAES")
-    },
-    .env = environment(run_legacy_indicators)
+    run_taxonomic_distance = function(...) calls <<- c(calls, "TD"),
+    .env = environment(run_analysis_indicators)
   )
-  run_legacy_indicators(run_env)
-  testthat::expect_identical(run_env$indicator_order, run_env$EI.vec)
-  testthat::expect_identical(run_env$scripts, character())
-  run_env$EI.vec <- "unknown"
-  testthat::expect_error(run_legacy_indicators(run_env), "Unknown indicator")
+  run_analysis_indicators(list(), list(summary_only = FALSE, td_only = TRUE), list())
+  testthat::expect_identical(calls, "TD")
 })
 
-testthat::test_that("both fixed-quality methods bypass indicators and summaries", {
-  for (method in c("assume.0", "assume.1")) {
-    run_env <- orchestration_environment()
-    run_env$QH.METHOD <- method
-    rlang::local_bindings(
-      run_fixed_quality = function(inputs, config, output_paths) run_env$fixed_called <- TRUE,
-      .env = environment(run_legacy_fixed_quality)
-    )
-    run_env$VQA.SUMMARY.ONLY <- TRUE
-    run_env$input_file_list <- function(...) stop("Empirical check must be skipped")
-    execute_legacy_batch(run_env)
-    testthat::expect_identical(run_env$scripts, "libraries.R")
-    testthat::expect_true(run_env$fixed_called)
-  }
-})
-
-testthat::test_that("input checks accept directories without a trailing separator", {
-  run_env <- orchestration_environment()
-  run_env$INPUTDIR <- tempfile("orchestration-inputs-")
-  dir.create(run_env$INPUTDIR)
-  on.exit(unlink(run_env$INPUTDIR, recursive = TRUE))
-  run_env$DF.LANDCOVER <- "landCover"
-  file.create(file.path(run_env$INPUTDIR, "landCover.csv"))
-  run_env$QH.METHOD <- "assume.1"
-  testthat::expect_no_error(check_legacy_inputs(run_env))
-  run_env$QH.METHOD <- "empirical"
-  run_env$input_file_list <- function(...) c("landCover", "species")
-  testthat::expect_error(check_legacy_inputs(run_env), "required input files missing")
-  file.create(file.path(run_env$INPUTDIR, "species.csv"))
-  testthat::expect_no_error(check_legacy_inputs(run_env))
-})
-
-testthat::test_that("missing inputs stop dispatch and preserve caller sinks and connections", {
-  caller_log <- file(tempfile(), open = "w")
-  caller_message_log <- file(tempfile(), open = "w")
-  old_message_sink <- sink.number(type = "message")
-  sink(caller_log)
-  sink(caller_message_log, type = "message")
-  on.exit({
-    sink(type = "message")
-    if (old_message_sink != 2L) sink(old_message_sink, type = "message")
-    sink()
-    close(caller_log)
-    close(caller_message_log)
-  })
-  caller_depth <- sink.number()
-  connections <- showConnections(all = TRUE)
-  run_env <- orchestration_environment()
-  run_env$input_file_list <- function(...) "missing-orchestration-input"
-  testthat::expect_error(execute_legacy_batch(run_env), "required input files missing")
-  testthat::expect_identical(run_env$scripts, character())
-  testthat::expect_identical(sink.number(), caller_depth)
-  testthat::expect_identical(sink.number(type = "message"), as.integer(caller_message_log))
-  testthat::expect_identical(showConnections(all = TRUE), connections)
-  cat("Caller sink still open\n")
-  flush(caller_log)
-})
-
-testthat::test_that("script failures close the run log and restore temporary global functions", {
-  run_env <- orchestration_environment()
-  run_env$source <- function(...) stop("Script failed")
+testthat::test_that("failed analyses restore caller sinks and connections", {
+  caller <- file(tempfile(), open = "w")
+  sink(caller)
+  on.exit(
+    {
+      sink()
+      close(caller)
+    },
+    add = TRUE
+  )
   depth <- sink.number()
   connections <- showConnections(all = TRUE)
-  globals <- lapply(c("gmean", "generalized_mean"), function(name) {
-    if (exists(name, envir = .GlobalEnv, inherits = FALSE)) get(name, envir = .GlobalEnv)
-  })
-  testthat::expect_error(execute_legacy_batch(run_env), "Script failed")
+  config <- list(replace_log = TRUE, logfile_basename = "analysis-test")
+  testthat::expect_error(with_analysis_log(config, list(log = tempdir()), {
+    stop("Calculation failed")
+  }), "Calculation failed")
   testthat::expect_identical(sink.number(), depth)
   testthat::expect_identical(showConnections(all = TRUE), connections)
-  testthat::expect_identical(lapply(c("gmean", "generalized_mean"), function(name) {
-    if (exists(name, envir = .GlobalEnv, inherits = FALSE)) get(name, envir = .GlobalEnv)
-  }), globals)
+})
+
+testthat::test_that("required inputs are checked before indicator dispatch", {
+  config <- list(qh_method = "assume.1")
+  testthat::expect_error(check_analysis_inputs(list(), config), "landCover.csv")
+  inputs <- list(landCover.csv = data.frame())
+  testthat::expect_no_error(check_analysis_inputs(inputs, config))
+  config <- resolve_params(load_default_params(), list(
+    active_indicators = "SR",
+    data_type = "cover"
+  ))
+  config$qh_method <- "empirical"
+  testthat::expect_error(check_analysis_inputs(inputs, config), "plotMetadata.csv")
 })

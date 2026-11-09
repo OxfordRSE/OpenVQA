@@ -1,85 +1,83 @@
 # Common configuration inventory
 
-The inventory follows the six assessment fixtures through indicator scripts, quality and
-distribution includes, summaries, workbook output, and figure dispatch. It excludes unused
-functions in `includes/functions.R` and standalone diagnostics. The expected common script
-parameters for these assessments are recorded in
-`tests/testthat/fixtures-common-params.R`.
+This inventory lists resolved settings consumed by callable indicator calculations,
+quality summaries, workbooks and figures. Expected values for the six demo assessments
+are recorded in the fixed parameter fixtures under `tests/testthat/`.
 
 ## Application defaults
 
 These settings have no project-specific assignments. Values live in root
 `params.yaml`; definitions and descriptions live in `schema/params.schema.json`.
-The explicit symbol mapping is in `analysis/legacy-params.R`. A disabled feature's switch
-counts as a consumer because it decides which calculations or outputs run.
+Settings are passed explicitly to their consumers. A disabled feature switch is still a
+consumer because it decides which calculations or outputs run.
 
-| Resolved key | Script parameter | Consumers |
-| --- | --- | --- |
-| `library_load_silent` | `LIB.LOAD.SILENT` | `libraries.R` |
-| `logfile_basename` | `LOGFILE.BASENAME` | `analysis/legacy.R` |
-| `replace_log` | `REPLACE.LOG` | `analysis/legacy.R` |
-| `beta_algorithm` | `beta.algorithm` | `includes/quality.R`, `includes/graph.dists.R` |
-| `use_quality_difference_raw` | `use.q.diff.raw` | `includes/quality.R` |
-| `quality_discount_method` | `discount.method` | `includes/quality.R` |
-| `beta_weight_method` | `wt.method` | `includes/quality.R` |
-| `beta_buffer` | `buffer` | `includes/quality.R` |
-| `test_difference_bootstrap` | `test.diff.boot` | `includes/quality.R` |
-| `permutation_reps` | `perm.reps` | `includes/quality.R` |
-| `infer_missing_cls` | `infer.missing.cls` | `vqa.summary.R` |
-| `infer_missing_cls_strict` | `infer.missing.cls.strict` | `vqa.summary.R` |
-| `td_outliers_append` | `TD.OUTLIERS.APPEND` | `indicators/td.R` |
-| `td_outlier_upper_threshold` | `TD.OUTLIER.UPPER.THRESHOLD` | `indicators/td.R` |
-| `td_bm_plots_deduplicate` | `TD.BM.PLOTS.DEDUPLICATE` | `indicators/td.R` |
-| `remove_ba_outliers` | `REMOVE.BA.OUTLIERS` | `indicators/ba.R` |
-| `ba_outliers_stdevs` | `BA.OUTLIERS.STDEVS` | `indicators/ba.R` |
-| `ba_outliers_append` | `BA.OUTLIERS.APPEND` | `indicators/ba.R` |
-| `ba_outliers_upper_threshold` | `BA.OUTLIERS.UPPER.THRESHOLD` | `indicators/ba.R` |
-| `quality_inverse_logit` | `q.tr.logit.inverse` | `includes/quality.R` |
-| `inverse_logit_beta` | `logit.inverse.beta` | `includes/quality.R` |
-| `zero_to_one` | `zero_to_one` | `indicators/sr.R`, `indicators/asc.R` |
-| `plot_overlap` | `plot.overlap` | `indicators/sr.R`, `indicators/td.R`, `indicators/ts.R`, `indicators/gc.R`, `indicators/pcess.R`, `indicators/pces.R`, `indicators/pcgf.R`, `indicators/ba.R`, `indicators/asc.R` |
-| `plot_hist` | `plot.hist` | `includes/call.graph.dists.R` |
-| `quality_legend_only` | `quality.legend.only` | `includes/graph.dists.R` |
-| `quality_legend_percent` | `Q.LEGEND.PERCENT` | `includes/graph.dists.R` |
-| `boot_graph_subsample` | `boot.graph.subsample` | `includes/overlap.R` |
-| `show_overlap` | `show.overlap` | `includes/graph.dists.R` |
-| `plot_boot_pdfs` | `plot.boot.pdfs` | `includes/overlap.R` |
-| `plot_pdf` | `plot.pdf` | `includes/call.graph.dists.R` |
-| `no_fit_keep_separate` | `no.fit.keep.separate` | `includes/graph.dists.R` |
-| `group_mtext_line` | `GROUP.MTEXT.LINE` | `includes/graph.dists.R` |
-| `workbook_drop_notes` | `VQA.XLS.DROP.NOTES` | `vqa.summary/vqa.summary.xl.R` |
-| `workbook_remove_missing_quality` | `VQA.XLS.REMOVE.Q.NA` | `vqa.summary/vqa.summary.xl.R` |
-| `workbook_drop_excluded` | `VQA.XLS.DROP.INCLUDE.FALSE` | `vqa.summary/vqa.summary.xl.R` |
-| `summary_pluralize_strata` | `VQA.SUMMARY.PLURALIZE.STRATA` | `vqa.summary/vqa.summary.xl.R` |
-| `plot_dists_fitted` | `plot.dists_fitted` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm` | `plot.dists_fitted_bm` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_grouped` | `plot.dists_fitted_bm_grouped` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_grouped_nofit` | `plot.dists_fitted_bm_grouped_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_grouped_rescaled` | `plot.dists_fitted_bm_grouped_rescaled` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_grouped_rescaled_nofit` | `plot.dists_fitted_bm_grouped_rescaled_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_nofit` | `plot.dists_fitted_bm_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_rescaled` | `plot.dists_fitted_bm_rescaled` | `includes/graph.dists.R` |
-| `plot_dists_fitted_bm_rescaled_nofit` | `plot.dists_fitted_bm_rescaled_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal` | `plot.dists_fitted_focal` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_grouped` | `plot.dists_fitted_focal_grouped` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_grouped_nofit` | `plot.dists_fitted_focal_grouped_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_grouped_rescaled` | `plot.dists_fitted_focal_grouped_rescaled` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_grouped_rescaled_nofit` | `plot.dists_fitted_focal_grouped_rescaled_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_nofit` | `plot.dists_fitted_focal_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_rescaled` | `plot.dists_fitted_focal_rescaled` | `includes/graph.dists.R` |
-| `plot_dists_fitted_focal_rescaled_nofit` | `plot.dists_fitted_focal_rescaled_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_grouped` | `plot.dists_fitted_grouped` | `includes/graph.dists.R` |
-| `plot_dists_fitted_grouped_nofit` | `plot.dists_fitted_grouped_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_grouped_rescaled_nofit` | `plot.dists_fitted_grouped_rescaled_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_nofit` | `plot.dists_fitted_nofit` | `includes/graph.dists.R` |
-| `plot_dists_fitted_rescaled_nofit` | `plot.dists_fitted_rescaled_nofit` | `includes/graph.dists.R` |
+| Resolved key | Consumers |
+| --- | --- |
+| `library_load_silent` | `analysis/libraries.R` |
+| `logfile_basename` | `analysis/main.R` |
+| `replace_log` | `analysis/main.R` |
+| `beta_algorithm` | `includes/indicator-results-functions.R`, `includes/indicator-figure-functions.R` |
+| `use_quality_difference_raw` | `includes/indicator-results-functions.R` |
+| `quality_discount_method` | `includes/indicator-results-functions.R` |
+| `beta_weight_method` | `includes/indicator-results-functions.R` |
+| `beta_buffer` | `includes/indicator-results-functions.R` |
+| `test_difference_bootstrap` | `includes/indicator-results-functions.R` |
+| `permutation_reps` | `includes/indicator-results-functions.R` |
+| `infer_missing_cls` | `analysis/quality-summary.R` |
+| `infer_missing_cls_strict` | `analysis/quality-summary.R` |
+| `td_outliers_append` | `indicators/td.R` |
+| `td_outlier_upper_threshold` | `indicators/td.R` |
+| `td_bm_plots_deduplicate` | `indicators/td.R` |
+| `remove_ba_outliers` | `indicators/ba.R` |
+| `ba_outliers_stdevs` | `indicators/ba.R` |
+| `ba_outliers_append` | `indicators/ba.R` |
+| `ba_outliers_upper_threshold` | `indicators/ba.R` |
+| `quality_inverse_logit` | `includes/indicator-results-functions.R` |
+| `inverse_logit_beta` | `includes/indicator-results-functions.R` |
+| `zero_to_one` | `indicators/sr.R`, `indicators/asc.R` |
+| `plot_overlap` | `indicators/sr.R`, `indicators/td.R`, `indicators/ts.R`, `indicators/gc.R`, `indicators/pcess.R`, `indicators/pces.R`, `indicators/pcgf.R`, `indicators/ba.R`, `indicators/asc.R` |
+| `plot_hist` | `includes/indicator-figure-functions.R` |
+| `quality_legend_only` | `includes/indicator-figure-functions.R` |
+| `quality_legend_percent` | `includes/indicator-figure-functions.R` |
+| `boot_graph_subsample` | `includes/indicator-figure-functions.R` |
+| `show_overlap` | `includes/indicator-figure-functions.R` |
+| `plot_boot_pdfs` | `includes/indicator-figure-functions.R` |
+| `plot_pdf` | `includes/indicator-figure-functions.R` |
+| `no_fit_keep_separate` | `includes/indicator-figure-functions.R` |
+| `group_mtext_line` | `includes/indicator-figure-functions.R` |
+| `workbook_drop_notes` | `reporting/workbook-tables.R` |
+| `workbook_remove_missing_quality` | `reporting/workbook-tables.R` |
+| `workbook_drop_excluded` | `reporting/workbook-tables.R` |
+| `summary_pluralize_strata` | `reporting/workbook-tables.R` |
+| `plot_dists_fitted` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_grouped` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_grouped_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_grouped_rescaled` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_grouped_rescaled_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_rescaled` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_bm_rescaled_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_grouped` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_grouped_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_grouped_rescaled` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_grouped_rescaled_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_rescaled` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_focal_rescaled_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_grouped` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_grouped_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_grouped_rescaled_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_nofit` | `includes/indicator-figure-functions.R` |
+| `plot_dists_fitted_rescaled_nofit` | `includes/indicator-figure-functions.R` |
 
 ## Project analysis configuration
 
 Both demo projects use root defaults plus their project `params.yaml` files.
-`legacy_project_symbols` and `legacy_indicator_symbols` in `analysis/legacy-params.R`
-map resolved settings to script parameters. The adapter derives indicator lists, groups,
-input filenames, and the `ei.params()` and `nmds.params()` functions from that configuration.
+Indicator settings and input filenames are derived by `indicator_parameters()` in
+`analysis/indicator-settings.R`. NMDS receives `config$nmds` directly. Indicator groups,
+active indicators and aggregate indicator lists come from the resolved configuration.
 
 | Settings | Consumers |
 | --- | --- |
@@ -110,18 +108,19 @@ patterns. Baseline/offset relationships for net-quality calculations are not rea
 assessment analysis workflow.
 
 Standalone commands such as `import.R` and `qh.net.R` load project parameter scripts through
-`params.R`. Callable analysis supplies resolved project settings directly to that wrapper.
+`params.R`. Callable analysis receives resolved configuration directly and does not load
+that script or project parameter scripts.
 
 ## Runtime and file conventions
 
 Runtime arguments select the data root, assessment, and seed. Analysis operations reset
 RNG seeds individually; NMDS has its own seed settings. Paths, input and output filenames,
-and indicator lists are constructed in code. `params.R` defines application file conventions.
+and indicator lists are constructed in code by the pipeline and analysis modules.
 
 Raw-data loading, import filters, include-file replacement, taxonomy/TNRS settings, and
 net-quality calculations are separate from assessment analysis. Parameters such as
 `allow.discrete`, `plot.mean`, `remove.grid`, and `VQA.XLS.NO.AREA` have no reads in the
-active scripts and are retained for standalone caller compatibility.
+supported functions and are retained for standalone caller compatibility.
 
 Root defaults are loaded by module location, then project, assessment, and explicit
 overrides are merged and validated. Named objects merge by field; arrays replace previous

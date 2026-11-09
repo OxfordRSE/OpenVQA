@@ -113,53 +113,11 @@ wd
 # compatibility (for now). Do not delete!
 params.loaded <- function() {}
 global.params.loaded <- ""
-legacy.run.env <- if (exists("VQA_RUN_ENV")) VQA_RUN_ENV else topenv()
-
-# Load separate parameter file specifying
-# project and assessment to be analyzed. The environment bridge is temporary:
-# Phase 2 replaces this legacy edge with an in-process runner.
-legacy.data.root <- if (exists("VQA_DATA_ROOT")) VQA_DATA_ROOT else Sys.getenv("VQA_DATA_ROOT", "")
-legacy.project <- if (exists("VQA_PROJECT")) VQA_PROJECT else Sys.getenv("VQA_PROJECT", "")
-legacy.assessment <- if (exists("VQA_ASSESSMENT")) {
-  VQA_ASSESSMENT
-} else {
-  Sys.getenv("VQA_ASSESSMENT", "")
-}
-legacy.selection <- c(legacy.data.root, legacy.project, legacy.assessment)
-
-if (any(nzchar(legacy.selection))) {
-  if (!all(nzchar(legacy.selection))) {
-    stop_quietly(paste0(
-      "ERROR: VQA_DATA_ROOT, VQA_PROJECT, and ",
-      "VQA_ASSESSMENT must be supplied together.\n"
-    ))
-  }
-  if (any(!grepl("^[[:alnum:]_-]+$", legacy.selection[-1L]))) {
-    stop_quietly(paste0(
-      "ERROR: VQA_PROJECT and VQA_ASSESSMENT ",
-      "may contain only letters, numbers, '_' and '-'.\n"
-    ))
-  }
-  if (!exists("VQA_PROJECT_PARAMS", envir = legacy.run.env, inherits = FALSE) &&
-    !file.exists(file.path(SRCDIR, "params", paste0("params.", legacy.project, ".R")))) {
-    stop_quietly("ERROR: VQA_PROJECT has no project parameter file.\n")
-  }
-  legacy.data.root <- normalizePath(legacy.data.root, mustWork = TRUE)
-  if (!dir.exists(file.path(legacy.data.root, legacy.assessment))) {
-    stop_quietly("ERROR: VQA_ASSESSMENT directory is not present in VQA_DATA_ROOT.\n")
-  }
-  PROJ <- legacy.project
-  ASSESS <- legacy.assessment
-  PARAMS.USE.ASSESS <- FALSE
-  IMPORT.USE.ASSESS <- FALSE
-  BASEDIR_PSFILES <- SRCDIR
-} else {
-  params.pa.file <- paste0(BASEDIR_PSFILES, "params.pa.R")
-  sys.source(params.pa.file, envir = legacy.run.env)
-}
+parameter_environment <- topenv()
+sys.source(paste0(BASEDIR_PSFILES, "params.pa.R"), envir = parameter_environment)
 
 # Throw intelligible error if PROJ or ASSESS not properly set
-if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists))) {
+if (!all(sapply(c("PROJ", "ASSESS"), exists))) {
   msg.err <- "ERROR: One or both parameters PROJ and ASSESS are undefined!\n"
   msg.err <- paste0(msg.err, "Please set both in 'params.pa.R' before proceeding.\n")
   stop_quietly(msg.err)
@@ -169,15 +127,75 @@ if (!any(nzchar(legacy.selection)) && !all(sapply(c("PROJ", "ASSESS"), exists)))
   stop_quietly(msg.err)
 }
 
-# Standalone scripts load application defaults; callable analysis supplies resolved settings.
-if (!exists("VQA_COMMON_PARAMS", envir = legacy.run.env, inherits = FALSE)) {
-  common.loader <- new.env(parent = baseenv())
-  sys.source(file.path(SRCDIR, "pipeline", "io.R"), envir = common.loader)
-  sys.source(file.path(SRCDIR, "pipeline", "params.R"), envir = common.loader)
-  sys.source(file.path(SRCDIR, "analysis", "legacy-params.R"), envir = common.loader)
-  VQA_COMMON_PARAMS <- common.loader$legacy_common_params(common.loader$load_default_params())
-}
-list2env(VQA_COMMON_PARAMS, envir = legacy.run.env)
+# Standalone research commands use the same YAML defaults as the callable analysis.
+common_parameter_names <- c(
+  library_load_silent = "LIB.LOAD.SILENT",
+  logfile_basename = "LOGFILE.BASENAME",
+  replace_log = "REPLACE.LOG",
+  beta_algorithm = "beta.algorithm",
+  use_quality_difference_raw = "use.q.diff.raw",
+  quality_discount_method = "discount.method",
+  beta_weight_method = "wt.method",
+  beta_buffer = "buffer",
+  test_difference_bootstrap = "test.diff.boot",
+  permutation_reps = "perm.reps",
+  infer_missing_cls = "infer.missing.cls",
+  infer_missing_cls_strict = "infer.missing.cls.strict",
+  td_outliers_append = "TD.OUTLIERS.APPEND",
+  td_outlier_upper_threshold = "TD.OUTLIER.UPPER.THRESHOLD",
+  td_bm_plots_deduplicate = "TD.BM.PLOTS.DEDUPLICATE",
+  remove_ba_outliers = "REMOVE.BA.OUTLIERS",
+  ba_outliers_stdevs = "BA.OUTLIERS.STDEVS",
+  ba_outliers_append = "BA.OUTLIERS.APPEND",
+  ba_outliers_upper_threshold = "BA.OUTLIERS.UPPER.THRESHOLD",
+  quality_inverse_logit = "q.tr.logit.inverse",
+  inverse_logit_beta = "logit.inverse.beta",
+  zero_to_one = "zero_to_one",
+  plot_overlap = "plot.overlap",
+  plot_hist = "plot.hist",
+  quality_legend_only = "quality.legend.only",
+  quality_legend_percent = "Q.LEGEND.PERCENT",
+  boot_graph_subsample = "boot.graph.subsample",
+  show_overlap = "show.overlap",
+  plot_boot_pdfs = "plot.boot.pdfs",
+  plot_pdf = "plot.pdf",
+  no_fit_keep_separate = "no.fit.keep.separate",
+  group_mtext_line = "GROUP.MTEXT.LINE",
+  workbook_drop_notes = "VQA.XLS.DROP.NOTES",
+  workbook_remove_missing_quality = "VQA.XLS.REMOVE.Q.NA",
+  workbook_drop_excluded = "VQA.XLS.DROP.INCLUDE.FALSE",
+  summary_pluralize_strata = "VQA.SUMMARY.PLURALIZE.STRATA",
+  plot_dists_fitted = "plot.dists_fitted",
+  plot_dists_fitted_bm = "plot.dists_fitted_bm",
+  plot_dists_fitted_bm_grouped = "plot.dists_fitted_bm_grouped",
+  plot_dists_fitted_bm_grouped_nofit = "plot.dists_fitted_bm_grouped_nofit",
+  plot_dists_fitted_bm_grouped_rescaled = "plot.dists_fitted_bm_grouped_rescaled",
+  plot_dists_fitted_bm_grouped_rescaled_nofit = "plot.dists_fitted_bm_grouped_rescaled_nofit",
+  plot_dists_fitted_bm_nofit = "plot.dists_fitted_bm_nofit",
+  plot_dists_fitted_bm_rescaled = "plot.dists_fitted_bm_rescaled",
+  plot_dists_fitted_bm_rescaled_nofit = "plot.dists_fitted_bm_rescaled_nofit",
+  plot_dists_fitted_focal = "plot.dists_fitted_focal",
+  plot_dists_fitted_focal_grouped = "plot.dists_fitted_focal_grouped",
+  plot_dists_fitted_focal_grouped_nofit = "plot.dists_fitted_focal_grouped_nofit",
+  plot_dists_fitted_focal_grouped_rescaled = "plot.dists_fitted_focal_grouped_rescaled",
+  plot_dists_fitted_focal_grouped_rescaled_nofit = "plot.dists_fitted_focal_grouped_rescaled_nofit",
+  plot_dists_fitted_focal_nofit = "plot.dists_fitted_focal_nofit",
+  plot_dists_fitted_focal_rescaled = "plot.dists_fitted_focal_rescaled",
+  plot_dists_fitted_focal_rescaled_nofit = "plot.dists_fitted_focal_rescaled_nofit",
+  plot_dists_fitted_grouped = "plot.dists_fitted_grouped",
+  plot_dists_fitted_grouped_nofit = "plot.dists_fitted_grouped_nofit",
+  plot_dists_fitted_grouped_rescaled_nofit = "plot.dists_fitted_grouped_rescaled_nofit",
+  plot_dists_fitted_nofit = "plot.dists_fitted_nofit",
+  plot_dists_fitted_rescaled_nofit = "plot.dists_fitted_rescaled_nofit"
+)
+
+common_loader <- new.env(parent = baseenv())
+sys.source(file.path(SRCDIR, "pipeline", "io.R"), envir = common_loader)
+sys.source(file.path(SRCDIR, "pipeline", "params.R"), envir = common_loader)
+common_values <- common_loader$load_default_params()[names(common_parameter_names)]
+names(common_values) <- unname(common_parameter_names)
+list2env(common_values, envir = parameter_environment)
+
 
 ######################################
 ######################################
@@ -197,11 +215,7 @@ list2env(VQA_COMMON_PARAMS, envir = legacy.run.env)
 
 # Project base data directory
 # This is used mostly by qh.net.R to build qh.net input directory paths
-if (nzchar(legacy.data.root)) {
-  DATA_BASEDIR_PROJ <- paste0(legacy.data.root, "/")
-} else {
-  DATA_BASEDIR_PROJ <- paste0(DATA_BASEDIR_FINAL, PROJ, "/")
-}
+DATA_BASEDIR_PROJ <- paste0(DATA_BASEDIR_FINAL, PROJ, "/")
 
 # Main data base directory (= assessment data directory)
 # In general, everthing live here
@@ -1443,10 +1457,8 @@ if (exists("PARAMS.USE.ASSESS")) {
 params.proj.file <- paste0(BASEDIR_PSFILES, "params/", params.proj.filename)
 
 # Apply supplied settings or load the project parameter script.
-if (exists("VQA_PROJECT_PARAMS", envir = legacy.run.env, inherits = FALSE)) {
-  list2env(VQA_PROJECT_PARAMS, envir = legacy.run.env)
-} else if (file.exists(params.proj.file)) {
-  sys.source(params.proj.file, envir = legacy.run.env)
+if (file.exists(params.proj.file)) {
+  sys.source(params.proj.file, envir = parameter_environment)
 } else {
   # Warn file doesn't exist & continue, using default parameters
   cat(
@@ -1463,4 +1475,4 @@ if (exists("VQA_PROJECT_PARAMS", envir = legacy.run.env, inherits = FALSE)) {
 #####################################
 #####################################
 
-sys.source(paste0(SRCDIR, "params.conf.general.R"), envir = legacy.run.env)
+sys.source(paste0(SRCDIR, "params.conf.general.R"), envir = parameter_environment)

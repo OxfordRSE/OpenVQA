@@ -142,7 +142,7 @@ testthat::test_that("supported configuration and input mappings cover every acce
   testthat::expect_setequal(names(config$indicator_settings), codes)
   testthat::expect_setequal(names(config$indicator_groups), codes)
   testthat::expect_setequal(names(schema$properties$indicator_settings$properties), codes)
-  parameters <- legacy_project_params(config)
+  parameters <- fixture_project_params(config)
   testthat::expect_identical(parameters$ei.params("PCS")$source.file, "coverByStratum.csv")
   testthat::expect_identical(parameters$ei.params("BAES")$source.file, "speciesStems.csv")
   source(file.path(.params_root, "validation", "requirements.R"), local = TRUE)

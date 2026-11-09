@@ -48,7 +48,12 @@ params.file <- paste0("params.", proj, ".R")
 
 # Get global parameters & functions
 source(params.file)
-source(paste0(INCLUDESDIR, "functions.R"), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 ########################
 # File and directory names
@@ -254,12 +259,16 @@ if (no.legend == FALSE) {
 
 plot.power.logistic.multi.veg <- function(df.pwr,
                                           no.legend = FALSE,
-                                          leg.pos.manual = FALSE, leg.pos.x = NULL, leg.pos.y = NULL,
-                                          n.min.minmaxonly = NULL, n.min.min.fixed = NULL, n.min.max.fixed = NULL,
+                                          leg.pos.manual = FALSE, leg.pos.x = NULL,
+                                          leg.pos.y = NULL,
+                                          n.min.minmaxonly = NULL, n.min.min.fixed = NULL,
+                                          n.min.max.fixed = NULL,
                                           n.min.txt.pos.left = NULL, n.min.txt.pos.right = NULL,
-                                          n.min.omit = FALSE, x.max.fixed = NULL, n.min.txt.right = NULL,
+                                          n.min.omit = FALSE, x.max.fixed = NULL,
+                                          n.min.txt.right = NULL,
                                           title.main = NULL, x.title = NULL, y.title = NULL,
-                                          p.text.pos = NULL, n.text.pos = NULL, veg.text.pos.x = NULL, veg.text.pos.y = NULL,
+                                          p.text.pos = NULL, n.text.pos = NULL,
+                                          veg.text.pos.x = NULL, veg.text.pos.y = NULL,
                                           leg.text.fontsize = NULL, leg.ti = NULL,
                                           jitter.val = NULL) {
   ###################################################
@@ -366,7 +375,9 @@ plot.power.logistic.multi.veg <- function(df.pwr,
   # Set horizontal placement of text label for conventional power line
   if (is.null(p.text.pos)) {
     p.text.pos.fixed <- FALSE
-    if (min(n.mins, na.rm = TRUE) > min(all.n, na.rm = TRUE) + 0.75 * ((max(all.n, na.rm = TRUE)) - (min(all.n, na.rm = TRUE)))) {
+    if (min(n.mins, na.rm = TRUE) > min(all.n, na.rm = TRUE) + 0.75 * ((max(all.n,
+      na.rm = TRUE
+    )) - (min(all.n, na.rm = TRUE)))) {
       # Place legend at left of graph
       p.text.pos <- min(all.n) + 6
     } else {
@@ -475,22 +486,47 @@ plot.power.logistic.multi.veg <- function(df.pwr,
 
   # Add horizontal line at target power or precision & label it
   p <- p + geom_hline(aes(yintercept = pwr.target), colour = "black", linetype = "dotted")
-  p <- p + geom_text(aes(p.text.pos - 1, pwr.target, label = p.text, vjust = -1), size = 5, colour = "black", show.legend = FALSE)
+  p <- p + geom_text(aes(p.text.pos - 1, pwr.target, label = p.text, vjust = -1),
+    size = 5, colour = "black", show.legend = FALSE
+  )
 
   # Add vertical lines for n.min @ target power, and label them
   if (n.min.minmaxonly == TRUE) {
     p <- p + geom_vline(aes(xintercept = n.min.min), colour = "black", linetype = "dotted")
     p <- p + geom_vline(aes(xintercept = n.min.max), colour = "black", linetype = "dotted")
   } else {
-    p <- p + geom_vline(data = df.pwr, aes(xintercept = n.min, colour = landcover), linetype = "dashed", show.legend = FALSE)
+    p <- p + geom_vline(
+      data = df.pwr, aes(xintercept = n.min, colour = landcover),
+      linetype = "dashed", show.legend = FALSE
+    )
   }
 
   # Label the n.min lines
   if (n.min.minmaxonly == TRUE) {
-    p <- p + geom_text(aes(n.min.min - 1.7, 0, label = n.min.min.text, vjust = -1, fontface = "plain", family = "sans"), size = n.min.text.size, colour = "black", show.legend = FALSE)
-    p <- p + geom_text(aes(n.min.max - 1.7, 0.1, label = n.min.max.text, vjust = -1, fontface = "plain", family = "sans"), size = n.min.text.size, colour = "black", show.legend = FALSE)
+    p <- p + geom_text(
+      aes(n.min.min - 1.7, 0,
+        label = n.min.min.text, vjust = -1,
+        fontface = "plain", family = "sans"
+      ),
+      size = n.min.text.size, colour = "black",
+      show.legend = FALSE
+    )
+    p <- p + geom_text(
+      aes(n.min.max - 1.7, 0.1,
+        label = n.min.max.text, vjust = -1,
+        fontface = "plain", family = "sans"
+      ),
+      size = n.min.text.size, colour = "black",
+      show.legend = FALSE
+    )
   } else {
-    p <- p + geom_text(data = df.pwr, aes(n.min.txt.pos, 0, label = n.min.txt, vjust = -1, fontface = "plain", family = "sans"), size = n.min.text.size, colour = "black", show.legend = FALSE)
+    p <- p + geom_text(
+      data = df.pwr, aes(n.min.txt.pos, 0,
+        label = n.min.txt, vjust = -1,
+        fontface = "plain", family = "sans"
+      ), size = n.min.text.size, colour = "black",
+      show.legend = FALSE
+    )
   }
 
   # eliminates background, gridlines, and chart border
@@ -577,8 +613,12 @@ if (fit.recalc == TRUE) {
 
         if (fit.save == TRUE) {
           # Save the revised calculations
-          results[results$landcover == curr.veg & results$e.size == curr.es, c("fit")] <- fit$pwr.fit
-          results[results$landcover == curr.veg & results$e.size == curr.es, c("n.min")] <- n.min.target
+          results[results$landcover == curr.veg & results$e.size == curr.es, c("fit")] <-
+            fit$pwr.fit
+          results[
+            results$landcover == curr.veg & results$e.size == curr.es,
+            c("n.min")
+          ] <- n.min.target
           write.csv(results, file = results.file, row.names = FALSE)
         } # END if ( fit.save==TRUE )
       } # END if ( !fit[1]=='fail' )
@@ -665,7 +705,10 @@ if (replace.fig == F) {
 # dev.new(width=7, height=6)
 if (save.fig == T) {
   # 	dev.copy(png, fig.file, width=fig.width, height=fig.height)
-  ggsave(fig.file, width = fig.width, height = fig.height, dev = fig.file.type, dpi = res, bg = "white")
+  ggsave(fig.file,
+    width = fig.width, height = fig.height, dev = fig.file.type, dpi = res,
+    bg = "white"
+  )
 }
 
 cat("Run completed\n")

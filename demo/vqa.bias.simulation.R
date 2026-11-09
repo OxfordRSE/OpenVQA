@@ -62,7 +62,12 @@ setwd(wd)
 source("params.R", local = TRUE)
 
 # Load functions
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 ##############################
 # Reset global parameters
@@ -94,7 +99,8 @@ test.diff.boot <- TRUE # Bootstrap quality
 # w/o replacement. MUST specify subsample.n.prop
 # if choose this option
 # sim.method<-"subsample.nr.range" # Randomly sample f from b over range values
-# sim.method<-"subsample.nr.range.repl" # Randomly sample f from b over range values, with replacement
+# sim.method<-"subsample.nr.range.repl" # Randomly sample f from b over range values, with
+# replacement
 sim.method <- "subsample.nr.range.n.bm.fixed" # Randomly sample f from b over range values
 # f with replacement, b fixed at actual sample
 
@@ -241,7 +247,10 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
     curr.ei.raw <- read.csv(raw.file, header = T)
 
     # Special handling to remove any non-matching columns
-    curr.ei.raw <- curr.ei.raw[, c("plotCode", "focalOrBenchmark", "landCover", "vegClass", "stratum", "EI")]
+    curr.ei.raw <- curr.ei.raw[, c(
+      "plotCode", "focalOrBenchmark", "landCover",
+      "vegClass", "stratum", "EI"
+    )]
     colnames(curr.ei.raw) <- c(
       "plotCode", "focalOrBenchmark", "landcover",
       "bm.vegetation", "stratum", "ei.val"
@@ -263,13 +272,19 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
   ##############################################
 
   dat.raw <- merge(x = dat.raw, y = all.ind.list, by = c("EI", "stratum"), all.x = TRUE)
-  dat.raw <- merge(x = dat.raw, y = whitelist, by = c("EI", "stratum", "bm.vegetation"), all.x = TRUE)
+  dat.raw <- merge(
+    x = dat.raw, y = whitelist, by = c("EI", "stratum", "bm.vegetation"),
+    all.x = TRUE
+  )
   dat.raw <- transform(dat.raw, include = ifelse(is.na(include.y),
     include.x, as.character(include.y)
   ))
 
   # Drop the blacklisted classes and reorder columns
-  dat.raw <- dat.raw[dat.raw$include == TRUE, c("EI", "landcover", "bm.vegetation", "stratum", "category", "plotCode", "focalOrBenchmark", "ei.val")]
+  dat.raw <- dat.raw[dat.raw$include == TRUE, c(
+    "EI", "landcover", "bm.vegetation",
+    "stratum", "category", "plotCode", "focalOrBenchmark", "ei.val"
+  )]
 
   ##############################################
   # Select subset of data for current land cover class &
@@ -283,10 +298,13 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
   ei.full <- unique(paste(dat$landcover, dat$stratum, dat$EI, sep = "+"))
   n.classes <- length(ei.full)
 
-  ei.all <- with(dat, aggregate(ei.val, list(EI = EI, landcover = landcover, stratum = stratum, category = category, focalOrBenchmark = focalOrBenchmark),
-    FUN = function(x) {
-      c(n = length(x))
-    }
+  ei.all <- with(dat, aggregate(ei.val, list(
+    EI = EI, landcover = landcover,
+    stratum = stratum, category = category, focalOrBenchmark = focalOrBenchmark
+  ),
+  FUN = function(x) {
+    c(n = length(x))
+  }
   ))
   names(ei.all)[names(ei.all) == "x"] <- "n"
 
@@ -426,7 +444,9 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
 
       # Get actual samples for this indicator
       # focal comes from benchmark as well!
-      b <- dat[dat$ei.full == curr.ei.full & dat$focalOrBenchmark == "b" & !is.na(dat$ei.val), c("ei.val")]
+      b <-
+        dat[dat$ei.full == curr.ei.full & dat$focalOrBenchmark == "b" &
+          !is.na(dat$ei.val), c("ei.val")]
       n.b.actual <- length(b)
 
       # Pull the simulation samples using the chosen method
@@ -613,7 +633,8 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
       # Name columns again because stupid R loses names when append
       # to empty data frame
       colnames(df.ei.sims) <- c(
-        "method", "veg", "ei", "boot.reps", "reps", "n.b.actual", "n.b", "n.f", "rep", "q", "q.lcl", "q.ucl", "q.adj", "e.size", "diff.min", "sig.diff"
+        "method", "veg", "ei", "boot.reps", "reps", "n.b.actual", "n.b", "n.f", "rep",
+        "q", "q.lcl", "q.ucl", "q.adj", "e.size", "diff.min", "sig.diff"
       )
       # write.csv(df.ei.sims, file=q.ei.sims.file, row.names=FALSE)
 
@@ -707,7 +728,10 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
 
       # Get quality for current sample
       if (distn == "NBin" || distn == "gamma") {
-        qual <- q.overlap.no.cls(distn, test.tail = test.tail, f = boot.samp.f, b = boot.samp.b, xs = xs)
+        qual <- q.overlap.no.cls(distn,
+          test.tail = test.tail, f = boot.samp.f,
+          b = boot.samp.b, xs = xs
+        )
         q.ei <- qual$ol.obs
       } else if (distn == "Bet") {
         if (q.method == "fixed") {
@@ -841,7 +865,8 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
   # Name columns again because stupid R loses names when append
   # to empty data frame
   colnames(df.sims) <- c(
-    "method", "veg", "boot.reps", "reps", "n.b.actual", "n.b", "n.f", "rep", "q", "q.lcl", "q.ucl", "e.size", "diff.min", "sig.diff"
+    "method", "veg", "boot.reps", "reps", "n.b.actual", "n.b", "n.f", "rep", "q", "q.lcl",
+    "q.ucl", "e.size", "diff.min", "sig.diff"
   )
   # write.csv(df.sims, file=q.sims.file, row.names=FALSE)
 

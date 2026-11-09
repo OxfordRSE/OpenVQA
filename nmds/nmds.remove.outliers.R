@@ -48,7 +48,12 @@ f.sample.size <- "focal_summary.csv"
 # Functions
 ####################################
 
-source("includes/functions.R", local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
 ####################################
 # Main
