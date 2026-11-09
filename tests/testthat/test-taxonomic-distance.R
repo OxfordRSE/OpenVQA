@@ -54,4 +54,11 @@ testthat::test_that("TD preparation keeps ordination and outlier objects local a
   testthat::expect_identical(get("td.outliers", globalenv()), "caller-owned")
   testthat::expect_identical(inputs, original)
   testthat::expect_error(prepare_taxonomic_distance(list(), config, paths_a), "requires")
+  omit_all <- config
+  omit_all$indicator_settings$TD$td_multiplier <- 10
+  omit_all$indicator_settings$TD$td_multiplier_omit <- unique(plots$landCover)
+  # The exclusion loop's first-row error is retained pending scientific review.
+  testthat::expect_error(
+    prepare_taxonomic_distance(inputs, omit_all, paths_a, seed = 42L), "EI.tr.i_scaled"
+  )
 })
