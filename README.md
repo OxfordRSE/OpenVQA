@@ -4,6 +4,8 @@
 
 ## Run an assessment
 
+**New to R or the command line?** Start with the [installation guide](INSTALLATION_GUIDE.md).
+
 Install dependencies with `rv sync` from the repository root, then run:
 
 ```sh
