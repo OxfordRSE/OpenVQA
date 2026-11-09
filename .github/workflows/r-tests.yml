@@ -142,6 +142,49 @@ jobs:
           print(lints)
           quit(status = as.integer(length(lints) > 0L))
 
+  coverage:
+    name: Standard-suite coverage
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+
+      - name: Install rv
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/rv-bin"
+          curl -fsSL \
+            "https://github.com/A2-ai/rv/releases/download/v${RV_VERSION}/rv-v${RV_VERSION}-aarch64-apple-darwin.tar.gz" \
+            -o "$RUNNER_TEMP/rv.tar.gz"
+          echo "626e3205a123bbb275017799e63a1548dcd7b8f42f37d09b8df57f9956ecf956  $RUNNER_TEMP/rv.tar.gz" | shasum -a 256 --check
+          tar -xzf "$RUNNER_TEMP/rv.tar.gz" -C "$RUNNER_TEMP/rv-bin"
+          echo "$RUNNER_TEMP/rv-bin" >> "$GITHUB_PATH"
+
+      - name: Restore R package library
+        uses: actions/cache@v6
+        with:
+          path: rv/library
+          key: rv-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('rproject.toml') }}
+
+      - name: Sync R dependencies
+        run: rv sync
+
+      - name: Measure standard-suite coverage
+        run: Rscript tests/coverage.R
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standard-suite-coverage
+          path: coverage.xml
+      - uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+
   # macOS 26 reproduces the reviewed fixtures and is the required refactor platform.
   # It runs every contract with strict numerical and decoded-figure parity. See
   # tests/refactor/README.md#why-ci-is-intentionally-asymmetric.
