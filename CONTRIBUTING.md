@@ -66,8 +66,12 @@ are disabled pending Windows-safe fixture filenames; set `ENABLE_WINDOWS_REFACTO
 after correcting those names. See the
 [platform rationale and restoration criteria](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
 
+The coverage job authenticates to Codecov using GitHub OIDC, with `id-token: write`
+permission scoped to that job. It uploads only `coverage.xml` and does not require a
+`CODECOV_TOKEN` secret.
+
 On repository transfer, update the README's GitHub Actions badge and links to the receiving
-owner. Install or authorize the Codecov GitHub App for that owner, configure `CODECOV_TOKEN`
-if required by its upload policy, verify an upload, then update the Codecov badge URL.
+owner. Install or authorize the Codecov GitHub App for that owner, verify an upload from
+the new repository identity, then update the Codecov badge URL.
 The current badge owner is `OxfordRSE/OpenVQA`. Add a coverage badge only after the first
 successful CI upload and verification of its badge URL.

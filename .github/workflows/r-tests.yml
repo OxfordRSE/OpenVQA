@@ -146,6 +146,9 @@ jobs:
     name: Standard-suite coverage
     runs-on: macos-26
     timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v6
 
@@ -182,7 +185,8 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           files: coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+          disable_search: true
+          use_oidc: true
           fail_ci_if_error: true
 
   # macOS 26 reproduces the reviewed fixtures and is the required refactor platform.
