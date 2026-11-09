@@ -40,9 +40,9 @@ taxonomic_similarity_data <- local({
     if (any(vapply(inputs[required], is.null, logical(1)))) {
       stop("Taxonomic similarity requires: ", paste(required, collapse = ", "), call. = FALSE)
     }
-    IS.EXOTIC.MISSING.ASSUME.NATIVE <- config$missing_exotic_status_assume_native
-    veg.nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
-    if (!length(veg.nodata)) veg.nodata <- ""
+
+    nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
+    if (!length(nodata)) nodata <- ""
     cat("Loading input files:\n")
 
     #######################################################
@@ -72,7 +72,7 @@ taxonomic_similarity_data <- local({
     cat("done\n")
 
     cat("- Checking for missing species native status...", sep = "")
-    if (IS.EXOTIC.MISSING.ASSUME.NATIVE == TRUE) {
+    if (config$missing_exotic_status_assume_native == TRUE) {
       cat("setting unknown native status to 'is_exotic=0'...", sep = "")
       # Will also mark "indet_sp." as native, but not a problem
       spp.dat$is_exotic[is.na(spp.dat$is_exotic)] <- 0
@@ -116,8 +116,8 @@ taxonomic_similarity_data <- local({
     if (exists("veg.nodata")) {
       # Exclude vegetation with no data
       # Resolved vegetation_without_data exclusions
-      plots <- plots[!plots$landCover %in% veg.nodata &
-        !plots$vegClass %in% veg.nodata, ]
+      plots <- plots[!plots$landCover %in% nodata &
+        !plots$vegClass %in% nodata, ]
     }
     cat("done\n")
 
@@ -256,196 +256,195 @@ taxonomic_similarity_data <- local({
 # Calculate and export raw similarities, benchmark/focal quality, and configured figures.
 # Seed handling remains per quality operation; preparation itself uses no randomness.
 run_taxonomic_similarity <- function(inputs, config, output_paths, seed = config$seed) {
-  state <- taxonomic_indicator_state(inputs, config, output_paths, seed)
-  evalq(
-    {
-      # EI code
-      curr.EI <- "TS"
+  config$seed <- seed
+  nodata <- unlist(config$vegetation_without_data, use.names = FALSE)
+  if (!length(nodata)) nodata <- ""
+  # EI code
+  curr.EI <- "TS"
 
-      ##############################
-      # Input file(s) for this indicator
-      ##############################
+  ##############################
+  # Input file(s) for this indicator
+  ##############################
 
-      # Load attributes for this indicator (set in params file)
-      ei.pars <- ei.params(curr.EI)
-      ei.name <- ei.pars$ei.name # Full name of this EI, for graphics
-      EI.name <- ei.name # Name used by shared quality and plotting stages
-      source.file <- ei.pars$source.file # Species occurrence input filename
-      prepare.raw <- ei.pars$prepare.raw # Prepare raw data from scratch?
-      ei.data.type <- ei.pars$ei.data.type # Data type for this EI (cover|ind)
-      distn <- ei.pars$distn # Distribution of the EI
-      q.method <- ei.pars$q.method # Quality method: "fixed" (fixed bm) | "empirical" (overlap)
-      bm.val <- ei.pars$bm.val # Fixed bm value. Applies only if q.method="fixed"
-      test.tail <- ei.pars$test.tail # Test tail for this EI
-      has.strata <- ei.pars$has.stratum # True if this EI has strata, otherwise F
-      has.stratum <- has.strata # Hack for backward compatibility
-      if (has.strata == F) curr.stratum <- ""
-      exclude.exotics <- ei.pars$exclude.exotics
+  # Load attributes for this indicator (set in params file)
+  ei.pars <- indicator_parameters(curr.EI, config)
+  ei.name <- ei.pars$name # Full name of this EI, for graphics
 
-      ##############################
-      # Indicator-specific graphing parameters
-      ##############################
+  source.file <- ei.pars$source_file # Species occurrence input filename
+  prepare.raw <- ei.pars$prepare_raw # Prepare raw data from scratch?
+  ei.data.type <- ei.pars$data_type # Data type for this EI (cover|ind)
+  distn <- ei.pars$distribution # Distribution of the EI
+  q.method <-
+    ei.pars$quality_method # Quality method: "fixed" (fixed bm) | "empirical" (overlap)
+  bm.val <- ei.pars$benchmark_value # Fixed bm value. Applies only if q.method="fixed"
+  test.tail <- ei.pars$test_tail # Test tail for this EI
+  has.strata <- ei.pars$has_stratum # True if this EI has strata, otherwise F
+  has.stratum <- has.strata # Hack for backward compatibility
+  if (has.strata == F) curr.stratum <- ""
+  exclude.exotics <- ei.pars$exclude_exotics
 
-      # Group strata in single figure?
-      # Set to true to make extra set of figures grouping
-      # figures for different strata of same vegetation in
-      # single figure. MUST be FALSE for indicators without
-      # strata
-      allow.group.strata <- FALSE
+  ##############################
+  # Indicator-specific graphing parameters
+  ##############################
 
-      # Minimum value for y axis
-      # Leave as empty string ("") to allow to vary automatically
-      y.axis.fixed.min <- 0
+  # Group strata in single figure?
+  # Set to true to make extra set of figures grouping
+  # figures for different strata of same vegetation in
+  # single figure. MUST be FALSE for indicators without
+  # strata
+  allow.group.strata <- FALSE
 
-      # Include landcover in graph title?
-      # If true, title = landcover + stratum
-      # If false, title = stratum only
-      # Applies to single stratum graphs only
-      lc.in.title <- TRUE
+  # Minimum value for y axis
+  # Leave as empty string ("") to allow to vary automatically
+  y.axis.fixed.min <- 0
 
-      # Single figure legend additional offset
-      # Positive: move to right, negative: move to left
-      # Comment out or set to "" or NA to use defaults
-      leg.x.extra <- -0.2
-      leg.y.extra <- NA
+  # Include landcover in graph title?
+  # If true, title = landcover + stratum
+  # If false, title = stratum only
+  # Applies to single stratum graphs only
+  lc.in.title <- TRUE
 
-      # Grouped figure legend additional offset NOT YET IMPLEMENTED!
-      # Positive: move to right, negative: move to left
-      # Comment out or set to "" or NA to use defaults
-      leg.x.extra.g <- -0.2
-      leg.y.extra.g <- NA
+  # Single figure legend additional offset
+  # Positive: move to right, negative: move to left
+  # Comment out or set to "" or NA to use defaults
+  leg.x.extra <- -0.2
+  leg.y.extra <- NA
 
-      ##############################
-      # Names and locations of output files
-      ##############################
-      rawFileName <- paste(curr.EI, "_raw.csv", sep = "") # Complete raw data with transformations
-      resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
-      resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
+  # Grouped figure legend additional offset NOT YET IMPLEMENTED!
+  # Positive: move to right, negative: move to left
+  # Comment out or set to "" or NA to use defaults
+  leg.x.extra.g <- -0.2
+  leg.y.extra.g <- NA
 
-      ##############################
-      # Transformation options
-      ##############################
+  ##############################
+  # Names and locations of output files
+  ##############################
+  rawFileName <- paste(curr.EI, "_raw.csv", sep = "") # Complete raw data with transformations
+  resultsFocal <- paste(curr.EI, "_focal.csv", sep = "")
+  resultsBm <- paste(curr.EI, "_benchmark.csv", sep = "")
 
-      # TRUE if data are proportions or percent, otherwise false
-      # If NA set to FALSE
-      proportions <- TRUE
+  ##############################
+  # Transformation options
+  ##############################
 
-      cat("\n##################################################\n")
-      cat("Calculating Quality for indicator TS (Taxonomic Similarity)\n")
-      cat("##################################################\n\n")
+  # TRUE if data are proportions or percent, otherwise false
+  # If NA set to FALSE
+  proportions <- TRUE
 
-      if (PLOT.FIGS.ONLY == FALSE) {
-        cat("************************\n")
-        cat("Preparing data\n")
-        cat("************************\n")
+  cat("\n##################################################\n")
+  cat("Calculating Quality for indicator TS (Taxonomic Similarity)\n")
+  cat("##################################################\n\n")
 
-        if (prepare.raw == TRUE || force.prepare.raw == TRUE) { # START prepare.raw
+  if (config$plot_figures_only == FALSE) {
+    cat("************************\n")
+    cat("Preparing data\n")
+    cat("************************\n")
 
-          dat <- taxonomic_similarity_data(inputs, config)
+    if (prepare.raw == TRUE || config$force_prepare_raw == TRUE) { # START prepare.raw
 
-          ################################
-          # Save prepared raw data
-          ################################
+      dat <- taxonomic_similarity_data(inputs, config)
 
-          cat("Saving prepared raw indicator values to 'results/", rawFileName, "'...", sep = "")
-          rawFile <- paste(RESULTSDIR, rawFileName, sep = "")
-          write.csv(dat, file = rawFile, row.names = FALSE)
-          cat("done\n\n")
-        } # END prepare.raw
+      ################################
+      # Save prepared raw data
+      ################################
 
-        #######################################################
-        # Calculate and save benchmark values
-        #######################################################
+      cat("Saving prepared raw indicator values to 'results/", rawFileName, "'...", sep = "")
+      rawFile <- paste(paste0(output_paths$results, "/"), rawFileName, sep = "")
+      write.csv(dat, file = rawFile, row.names = FALSE)
+      cat("done\n\n")
+    } # END prepare.raw
 
-        # Re-import prepared raw data
-        inputFile <- paste(RESULTSDIR, rawFileName, sep = "")
-        cat("inputFile=", inputFile)
-        dat <- read.csv(inputFile, header = T)
+    #######################################################
+    # Calculate and save benchmark values
+    #######################################################
 
-        # Summarize benchmark-pair similarity by benchmark vegetation class.
-        EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
+    # Re-import prepared raw data
+    inputFile <- paste(paste0(output_paths$results, "/"), rawFileName, sep = "")
+    cat("inputFile=", inputFile)
+    dat <- read.csv(inputFile, header = T)
 
-        EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass),
-          FUN = function(x) {
-            c(
-              n = length(x),
-              mean = mean(x),
-              med = median(x),
-              sd = sd(x),
-              max = max(x),
-              min = min(x)
-            )
-          }
-        ))
-        EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
-        colnames(EI.bm) <- c("vegClass", "n", "EI.mean", "EI.med", "EI.sd", "EI.max", "EI.min")
+    # Summarize benchmark-pair similarity by benchmark vegetation class.
+    EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
 
-        # Add dummy stratum column
-        EI.bm$stratum <- "nostrata"
-
-        # Add EI & rearrange the columns
-        EI.bm$EI <- curr.EI # add indicator
-        EI.bm <- EI.bm[, c(
-          "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd",
-          "EI.med", "EI.max", "EI.min"
-        )]
-
-        # Make final, human-readable veg classes
-        EI.bm$vegClass <- human.readable(EI.bm$vegClass)
-
-        # Inspect the columns of EI.bm
-        sorted.EI.bm <- EI.bm[order(EI.bm$vegClass), ]
-        head(sorted.EI.bm)
-
-        # save benchmark results file
-        resultsFile <- paste(RESULTSDIR, resultsBm, sep = "")
-        write.csv(EI.bm, file = resultsFile, row.names = FALSE)
-
-        ####################################################
-        # Prepare (focal) results file, and populate basic summary stats
-        ####################################################
-
-        result <- prepare_indicator_results(read_indicator_output(
-          curr.EI, config,
-          output_paths, allow.group.strata
-        ), config, output_paths)
-
-        ####################################################
-        # Calculate quality
-        ####################################################
-
-        result <- calculate_indicator_quality(result, config, output_paths)
-      } else {
-        cat("************************\n")
-        cat("Generating figures\n")
-        cat("************************\n")
-      } # END PLOT.FIGS.ONLY
-
-      ####################################################
-      # Plot overlap
-      ####################################################
-
-      if (config$plot_figures_only) {
-        result <- read_indicator_output(
-          curr.EI, config,
-          output_paths, allow.group.strata
+    EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass),
+      FUN = function(x) {
+        c(
+          n = length(x),
+          mean = mean(x),
+          med = median(x),
+          sd = sd(x),
+          max = max(x),
+          min = min(x)
         )
       }
-      if (plot.overlap == T) plot_indicator_overlap(result, config, output_paths)
+    ))
+    EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
+    colnames(EI.bm) <- c("vegClass", "n", "EI.mean", "EI.med", "EI.sd", "EI.max", "EI.min")
 
-      ####################################################
-      # Graph the distributions for each vegetation type
-      # Include model statistic and overlap scores on figures if requested
-      ####################################################
+    # Add dummy stratum column
+    EI.bm$stratum <- "nostrata"
 
-      plot_indicator_distributions(result, config, output_paths)
+    # Add EI & rearrange the columns
+    EI.bm$EI <- curr.EI # add indicator
+    EI.bm <- EI.bm[, c(
+      "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd",
+      "EI.med", "EI.max", "EI.min"
+    )]
 
-      cat("\n##################################################\n")
-      cat("Operation completed\n")
-      cat("##################################################\n\n")
-    },
-    envir = state
-  )
+    # Make final, human-readable veg classes
+    EI.bm$vegClass <- human.readable(EI.bm$vegClass)
+
+    # Inspect the columns of EI.bm
+    sorted.EI.bm <- EI.bm[order(EI.bm$vegClass), ]
+    head(sorted.EI.bm)
+
+    # save benchmark results file
+    resultsFile <- paste(paste0(output_paths$results, "/"), resultsBm, sep = "")
+    write.csv(EI.bm, file = resultsFile, row.names = FALSE)
+
+    ####################################################
+    # Prepare (focal) results file, and populate basic summary stats
+    ####################################################
+
+    result <- prepare_indicator_results(read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    ), config, output_paths)
+
+    ####################################################
+    # Calculate quality
+    ####################################################
+
+    result <- calculate_indicator_quality(result, config, output_paths)
+  } else {
+    cat("************************\n")
+    cat("Generating figures\n")
+    cat("************************\n")
+  } # END PLOT.FIGS.ONLY
+
+  ####################################################
+  # Plot overlap
+  ####################################################
+
+  if (config$plot_figures_only) {
+    result <- read_indicator_output(
+      curr.EI, config,
+      output_paths, allow.group.strata
+    )
+  }
+  if (config$plot_overlap == T) plot_indicator_overlap(result, config, output_paths)
+
+  ####################################################
+  # Graph the distributions for each vegetation type
+  # Include model statistic and overlap scores on figures if requested
+  ####################################################
+
+  plot_indicator_distributions(result, config, output_paths)
+
+  cat("\n##################################################\n")
+  cat("Operation completed\n")
+  cat("##################################################\n\n")
+
   if (config$plot_figures_only) {
     return(invisible(NULL))
   }
