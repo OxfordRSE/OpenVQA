@@ -10,7 +10,7 @@ pre-commit install
 ```
 
 If the `pre-commit` command is unavailable, install it first with
-`pipx install pre-commit`.
+`pipx install pre-commit`, or `python -m pip install --user pre-commit`.
 
 Run `pre-commit install` once for **each clone**. The tracked configuration
 does not enable the Git hook automatically; this command installs it into
@@ -23,3 +23,51 @@ the commit. `lintr` blocks commits containing lines over 100 characters;
 editing.
 
 To run the checks on staged files without committing, use `pre-commit run`.
+
+`rv sync` enforces the root manifest and can remove undeclared packages. Close R sessions
+and IDE language servers before syncing packages they have loaded. Keep IDE tooling in a
+separate user library or explicitly declare it if it belongs in the project environment.
+
+## Code organisation
+
+| Location | Responsibility |
+| --- | --- |
+| `analyse.R`, `validate.R` | Analysis and validation entry points. |
+| `pipeline/` | File loading and resolved configuration. |
+| `validation/` | Input schemas, required files and cross-file checks. |
+| `preprocessing/` | Input filtering, standardisation and land-cover summaries. |
+| `indicators/` | Callable calculations for individual ecological indicators. |
+| `analysis/` | Analysis orchestration, fixed quality and quality aggregation. |
+| `reporting/` | Summary tables and workbook generation. |
+| `includes/` | Focused mathematical, plotting and output helpers. |
+| `tests/testthat/`, `tests/refactor/` | Standard tests and assessment output contracts. |
+
+## Tests and coverage
+
+Run `Rscript tests/testthat.R` for standard checks and `Rscript tests/refactor/testthat.R`
+for assessment output contracts. Use the root R environment; the test-specific dependency
+manifest is for CI. `Rscript tests/coverage.R` measures production functions exercised
+in-process by the standard suite and creates the ignored `coverage.xml` report.
+The separate coverage CI job uploads that report using the
+[Codecov Action](https://github.com/codecov/codecov-action).
+
+## Continuous integration
+
+[GitHub Actions](.github/workflows/r-tests.yml) runs on pull requests, pushes to `main`,
+and manual dispatch. It validates both minimal demo projects, runs the standard suite,
+lints selected R source and test files, and checks all six golden output contracts on
+macOS 26, including same-seed repeatability and distinct-seed behaviour. A separate job
+measures standard-suite coverage and uploads it to Codecov.
+
+Ubuntu output diagnostics are disabled by default while parametric `fitdistr()` failures
+on sparse, zero-heavy and extreme inputs are investigated. Set the repository variable
+`ENABLE_UBUNTU_REFACTOR=true` to enable all six non-blocking Ubuntu shards. Windows checks
+are disabled pending Windows-safe fixture filenames; set `ENABLE_WINDOWS_REFACTOR=true`
+after correcting those names. See the
+[platform rationale and restoration criteria](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
+
+On repository transfer, update the README's GitHub Actions badge and links to the receiving
+owner. Install or authorize the Codecov GitHub App for that owner, configure `CODECOV_TOKEN`
+if required by its upload policy, verify an upload, then update the Codecov badge URL.
+The current badge owner is `OxfordRSE/OpenVQA`. Add a coverage badge only after the first
+successful CI upload and verification of its badge URL.
