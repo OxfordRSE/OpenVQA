@@ -354,9 +354,9 @@ functional_group_quality <- function(results.focal, boot.q.ei, config) {
   ################################
   cat("  Indicator group quality...")
   if (config$functional_group_method == "arithmetic") {
-    mean_func <- "mean" # Arithmetic mean function
+    mean_func <- mean # Arithmetic mean function
   } else if (config$functional_group_method == "generalized_mean") {
-    mean_func <- "generalized_mean" # Generalized mean function
+    mean_func <- generalized_mean # Generalized mean function
   } else {
     stop_quietly(
       "ERROR: '", config$functional_group_method,
@@ -367,7 +367,7 @@ functional_group_quality <- function(results.focal, boot.q.ei, config) {
   q.ig <- aggregate(
     results.focal$q[!results.focal$q == Inf],
     by = list(results.focal$lc.ig[!results.focal$q == Inf]),
-    FUN = c(mean_func) # ,  # [gmean change]
+    FUN = mean_func # ,  # [gmean change]
     # FUN=c('gmean'),  # [gmean change]
     # na.rm=TRUE # [gmean change]
   )
@@ -395,7 +395,7 @@ functional_group_quality <- function(results.focal, boot.q.ei, config) {
     q.fg <- aggregate(
       results.focal$q[!results.focal$q == Inf],
       by = list(results.focal$lc.fg[!results.focal$q == Inf]),
-      FUN = c(mean_func), # [gmean change]
+      FUN = mean_func, # [gmean change]
       # FUN=c('gmean'),  # [gmean change]
       na.rm = TRUE
     )
@@ -405,7 +405,7 @@ functional_group_quality <- function(results.focal, boot.q.ei, config) {
     q.fg <- aggregate(
       q.ig$q.ig[!q.ig$q.ig == Inf],
       by = list(q.ig$lc.fg[!q.ig$q.ig == Inf]),
-      FUN = c(mean_func) # ,  # [gmean change]
+      FUN = mean_func # ,  # [gmean change]
       # FUN=c('gmean'),  # [gmean change]
       # na.rm=TRUE   # [gmean change]
     )
@@ -575,14 +575,14 @@ functional_group_quality <- function(results.focal, boot.q.ei, config) {
     q.lcl.fg.missing <- aggregate(
       q.lcl ~ lc.fg,
       data = results.focal.missing,
-      FUN = c("mean"),
+      FUN = mean,
       na.rm = TRUE
     )
     colnames(q.lcl.fg.missing) <- c("lc.fg", "q.lcl.missing")
     q.ucl.fg.missing <- aggregate(
       q.ucl ~ lc.fg,
       data = results.focal.missing,
-      FUN = c("mean"),
+      FUN = mean,
       na.rm = TRUE
     )
     colnames(q.ucl.fg.missing) <- c("lc.fg", "q.ucl.missing")
@@ -627,7 +627,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     q.overall <- aggregate(
       q.fg$q.fg,
       by = list(q.fg$landcover),
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
   } else if (config$overall_quality_method == "prod") {
@@ -635,7 +635,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     q.overall <- aggregate(
       q.fg$q.fg,
       by = list(q.fg$landcover),
-      FUN = c("prod"),
+      FUN = prod,
       na.rm = TRUE
     )
   } else if (config$overall_quality_method == "mixed") {
@@ -644,14 +644,14 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     q.overall.ni <- aggregate(
       q.fg ~ landcover,
       data = q.fg[!q.fg$f.group == "integrity", ],
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
     names(q.overall.ni)[names(q.overall.ni) == "q.fg"] <- "q.fg.ni"
     q.overall.i <- aggregate(
       q.fg ~ landcover,
       data = q.fg[q.fg$f.group == "integrity", ],
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
     names(q.overall.i)[names(q.overall.i) == "q.fg"] <- "q.fg.i"
@@ -685,7 +685,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
   boot.q.fg <- aggregate(
     boot.q.ei[, c(cols)],
     by = list(boot.q.ei$lc.fg),
-    FUN = c(mean_func) # ,  # [gmean change]
+    FUN = mean_func # ,  # [gmean change]
     # FUN=c('gmean'),   # [gmean change]
     # na.rm=TRUE  # [gmean change]
   )
@@ -702,7 +702,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     lc.fg.n <- aggregate(
       f.n ~ lc.fg,
       data = results.focal,
-      FUN = c("mean"),
+      FUN = mean,
       na.rm = TRUE
     )
     colnames(lc.fg.n) <- c("lc.fg", "q.fg.n")
@@ -731,14 +731,14 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     boot.q.overall <- aggregate(
       boot.q.fg[, c(cols)],
       by = list(boot.q.fg$landcover),
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
   } else if (config$overall_quality_method == "prod") {
     boot.q.overall <- aggregate(
       boot.q.fg[, c(cols)],
       by = list(boot.q.fg$landcover),
-      FUN = c("prod"),
+      FUN = prod,
       na.rm = TRUE
     )
   } else if (config$overall_quality_method == "mixed") {
@@ -746,7 +746,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     boot.q.overall.ni <- aggregate(
       boot.q.fg.ni[, c(cols)],
       by = list(boot.q.fg.ni$landcover),
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
     names(boot.q.overall.ni)[names(boot.q.overall.ni) == "q.fg"] <- "q.fg.ni"
@@ -757,7 +757,7 @@ overall_landcover_quality <- function(results.focal, boot.q.ei, q.fg, lc.fg,
     boot.q.overall.i <- aggregate(
       boot.q.fg.i[, c(cols)],
       by = list(boot.q.fg.i$landcover),
-      FUN = c("gmean"),
+      FUN = gmean,
       na.rm = TRUE
     )
     names(boot.q.overall.i)[names(boot.q.overall.i) == "q.fg"] <- "q.fg.i"
@@ -891,7 +891,7 @@ landcover_quality_hectares <- function(landcover, q.overall.lc, boot.q.overall, 
   lc.area <- aggregate(
     landcover$area_ha,
     by = list(landcover$landcoverFinal),
-    FUN = c("sum")
+    FUN = sum
   )
   colnames(lc.area) <- c("landcoverFinal", "area_ha")
   landcover.tmp <- unique(landcover[, c("landcoverFinal", "q", "q.ucl", "q.lcl")])
@@ -1001,7 +1001,7 @@ landcover_quality_hectares <- function(landcover, q.overall.lc, boot.q.overall, 
   boot.qh.bm <- aggregate(
     boot.qh.lc[, c(cols)],
     by = list(boot.qh.lc$bm.veg),
-    FUN = c("sum"),
+    FUN = sum,
     na.rm = TRUE
   )
   names(boot.qh.bm)[names(boot.qh.bm) == "Group.1"] <- "bm.veg"

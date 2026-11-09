@@ -4,16 +4,16 @@ suppressPackageStartupMessages({
   library(optparse)
 })
 
-source(file.path("pipeline", "io.R"))
-source(file.path("pipeline", "params.R"))
-source(file.path("preprocessing", "helpers.R"))
-source(file.path("preprocessing", "prune.R"))
-source(file.path("preprocessing", "allowlists.R"))
-source(file.path("preprocessing", "standardise.R"))
-source(file.path("preprocessing", "export.R"))
-source(file.path("preprocessing", "land-cover-summaries.R"))
-source(file.path("preprocessing", "workflow.R"))
-source(file.path("analysis", "legacy.R"))
+source(file.path("pipeline", "io.R"), local = TRUE)
+source(file.path("pipeline", "params.R"), local = TRUE)
+source(file.path("preprocessing", "helpers.R"), local = TRUE)
+source(file.path("preprocessing", "prune.R"), local = TRUE)
+source(file.path("preprocessing", "allowlists.R"), local = TRUE)
+source(file.path("preprocessing", "standardise.R"), local = TRUE)
+source(file.path("preprocessing", "export.R"), local = TRUE)
+source(file.path("preprocessing", "land-cover-summaries.R"), local = TRUE)
+source(file.path("preprocessing", "workflow.R"), local = TRUE)
+source(file.path("analysis", "main.R"), local = TRUE)
 
 parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   parser <- OptionParser(
