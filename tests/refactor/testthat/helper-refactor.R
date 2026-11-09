@@ -47,11 +47,7 @@ copy_analysis_application <- function() {
   application_root <- tempfile("analysis-application-")
   dir.create(application_root)
   files <- c(
-    list.files(
-      refactor_project_root,
-      pattern = "\\.R$",
-      full.names = TRUE
-    ),
+    file.path(refactor_project_root, c("analyse.R", "validate.R")),
     file.path(
       refactor_project_root,
       c(
@@ -61,7 +57,6 @@ copy_analysis_application <- function() {
         "preprocessing",
         "includes",
         "indicators",
-        "vqa.summary",
         "reporting",
         "schema",
         "validation"
@@ -70,6 +65,8 @@ copy_analysis_application <- function() {
   )
   testthat::expect_true(all(file.copy(files, application_root, recursive = TRUE)))
   testthat::expect_false(dir.exists(file.path(application_root, "params")))
+  testthat::expect_false(file.exists(file.path(application_root, "params.R")))
+  testthat::expect_false(file.exists(file.path(application_root, "includes", "functions.R")))
   application_root
 }
 
