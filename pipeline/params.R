@@ -152,11 +152,7 @@ resolve_params <- function(defaults = list(), project = list(),
 
 resolve_seed <- function(seed = NULL) {
   if (is.null(seed)) {
-    fallback <- Sys.getenv("VQA_TEST_SEED", "")
-    if (!nzchar(fallback)) {
-      return(NULL)
-    }
-    seed <- fallback
+    return(NULL)
   }
   if (length(seed) != 1L || is.na(seed) ||
     !(is.numeric(seed) || is.character(seed))) {

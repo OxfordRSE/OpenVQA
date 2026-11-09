@@ -25,19 +25,10 @@ run_refactor_command <- function(script, data_root, assessment = NULL,
   if (!is.null(assessment)) {
     args <- c(args, "--assessment", assessment)
   }
-  environment <- c(
-    paste0(
-      "R_LIBS_USER=",
-      paste(.libPaths(), collapse = .Platform$path.sep)
-    ),
-    if (is.null(seed)) {
-      character()
-    } else {
-      paste0(
-        "VQA_TEST_SEED=", as.integer(seed)
-      )
-    }
-  )
+  if (script == "analyse.R" && !is.null(seed)) {
+    args <- c(args, "--seed", as.character(as.integer(seed)))
+  }
+  environment <- paste0("R_LIBS_USER=", paste(.libPaths(), collapse = .Platform$path.sep))
   output <- system2(
     refactor_rscript, args,
     stdout = TRUE, stderr = TRUE,
