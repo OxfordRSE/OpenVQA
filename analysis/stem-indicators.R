@@ -1,17 +1,12 @@
-# Local parameter bindings for the shared quality and plotting stages used by stem indicators.
+# Local parameter bindings for stem indicator calculations.
 stem_indicator_state <- local({
   helpers <- new.env(parent = environment())
   sys.source(file.path("includes", "functions.R"), envir = helpers)
   function(inputs, config, output_paths, seed = config$seed) {
-    # shortcut: shared stages need local parameter names; remove bindings when stages accept config.
+    # Indicator calculations still consume local parameter names.
     state <- list2env(c(legacy_common_params(config), legacy_project_params(config)),
       parent = helpers
     )
-    for (name in ls(helpers)) {
-      helper <- helpers[[name]]
-      environment(helper) <- state
-      state[[name]] <- helper
-    }
     state$generate_figures <- output_paths$generate_figures
     state$fitdistr <- MASS::fitdistr
     state$RESULTSDIR <- paste0(output_paths$results, "/")
