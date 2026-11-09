@@ -47,7 +47,7 @@ copy_analysis_application <- function() {
   application_root <- tempfile("analysis-application-")
   dir.create(application_root)
   files <- c(
-    file.path(refactor_project_root, c("analyse.R", "validate.R")),
+    file.path(refactor_project_root, c("analyse.R", "validate.R", "VERSION")),
     file.path(
       refactor_project_root,
       c(
