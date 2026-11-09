@@ -35,7 +35,7 @@ validate_params_schema <- function(params) {
 
 validate_analysis_params <- function(params) {
   validate_params_schema(params)
-  if (isTRUE(params$project %in% c("vqa-demo1", "vqa-demo1-min", "vqa-demo2", "vqa-demo2-min"))) {
+  if (!is.null(params$active_indicators)) {
     active <- unlist(params$active_indicators, use.names = FALSE)
     if ((identical(params$qh_method, "empirical") && !length(active)) ||
       !all(active %in% names(params$indicator_settings)) ||

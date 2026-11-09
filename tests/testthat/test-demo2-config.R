@@ -109,3 +109,17 @@ testthat::test_that("demo 2 rejects incomplete or inconsistent indicator and sam
     ))
   }
 })
+
+testthat::test_that("scientific consistency checks also apply to custom project labels", {
+  root <- fixture_root("vqa-demo2")
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  testthat::expect_no_error(load_preprocessing_context(root, "project_current",
+    explicit = list(project = "custom-project")
+  ))
+  testthat::expect_error(
+    load_preprocessing_context(root, "project_current",
+      explicit = list(project = "custom-project", stem_sampling = list(split_dbh_cm = 2.5))
+    ),
+    "split must exceed"
+  )
+})
