@@ -21,12 +21,19 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     option_list = list(
       make_option(c("-d", "--data-root"), type = "character"),
       make_option(c("-a", "--assessment"), type = "character"),
+      make_option("--version",
+        action = "store_true", default = FALSE,
+        help = "Print the OpenVQA version and exit."
+      ),
       make_option("--seed", type = "character", help = "Randomization seed (integer)."),
       make_option("--no-figures", action = "store_true", default = FALSE)
     ),
     description = "Prepare validated inputs and run the VQA analysis."
   )
   options <- parse_args(parser, args = args)
+  if (isTRUE(options$version)) {
+    return(list(version = readLines("VERSION", n = 1L, warn = FALSE)))
+  }
   if (is.null(options$`data-root`) || !nzchar(options$`data-root`) ||
     is.null(options$assessment) || !nzchar(options$assessment)) {
     stop("Both --data-root and --assessment are required.", call. = FALSE)
@@ -52,6 +59,10 @@ run_analysis <- function(data_root, assessment, seed = NULL, generate_figures = 
 
 main <- function() {
   cli <- parse_cli_args()
+  if (!is.null(cli$version)) {
+    cat("OpenVQA ", cli$version, "\n", sep = "")
+    return(invisible(NULL))
+  }
   run_analysis(cli$data_root, cli$assessment,
     seed = cli$seed,
     generate_figures = cli$generate_figures

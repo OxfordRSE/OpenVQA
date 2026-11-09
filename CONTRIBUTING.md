@@ -1,5 +1,26 @@
 # Developer setup
 
+## Versioning and releases
+
+The root `VERSION` file is the single source of the OpenVQA application version.
+Run `Rscript analyse.R --version` from the repository root to display it.
+Keep `rproject.toml` for the R environment: rv 0.22.2 and 0.23.3 do not accept an
+application `version` field.
+
+During pre-1.0 development, increment the patch version for compatible fixes and
+documentation releases, and the minor version for new capabilities or deliberately
+incompatible public interface/configuration/output changes. Explain changes in
+`CHANGELOG.md`. A scientific behaviour change requires explicit review of its output
+contract even when the interface is unchanged.
+
+For a release, update `VERSION` and the changelog, run both minimal-project validations,
+the standard suite and all six strict output contracts on the reference CI platform,
+and ensure required checks pass for the exact main commit. Create an annotated
+`v<version>` tag on that commit and publish matching GitHub release notes with setup
+links, tested R/rv versions and known limitations. Tagged releases are immutable;
+main continues development and corrections receive a new version. Never move a
+published release tag to include a later fix.
+
 ## Enable checks before committing
 
 After cloning the repository, run these commands from the repository root:
