@@ -23,7 +23,9 @@ cover_indicator_state <- local({
     state$set.seed <- !is.null(seed)
     state$seed <- if (is.null(seed)) 123 else seed
     state$inputs <- inputs
+    config$seed <- seed
     state$config <- config
+    state$output_paths <- output_paths
     state
   }
 })

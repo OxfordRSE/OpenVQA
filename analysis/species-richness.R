@@ -1,3 +1,16 @@
+for (helper_file in c(
+  "quality-functions.R",
+  "distribution-functions.R",
+  "overlap-functions.R",
+  "bootstrap-functions.R",
+  "utility-functions.R",
+  "formatting-functions.R",
+  "indicator-results-functions.R",
+  "indicator-figure-functions.R"
+)) {
+  source(file.path("includes", helper_file), local = TRUE)
+}
+
 species_richness_data <- function(inputs, config) {
   settings <- resolve_params(config$indicator_defaults, config$indicator_settings$SR)
   data_type <- if (is.null(settings$data_type)) config$data_type else settings$data_type
@@ -50,88 +63,40 @@ species_richness_data <- function(inputs, config) {
   data
 }
 
-run_species_richness <- local({
-  helpers <- new.env(parent = environment())
-  sys.source(file.path("includes", "functions.R"), envir = helpers)
-
-  function(inputs, config, output_paths) {
-    # shortcut: shared stages need local parameter names; remove bindings when stages accept config.
-    state <- list2env(c(legacy_common_params(config), legacy_project_params(config)),
-      parent = helpers
-    )
-    for (name in ls(helpers)) {
-      helper <- helpers[[name]]
-      environment(helper) <- state
-      state[[name]] <- helper
+run_species_richness <- function(inputs, config, output_paths) {
+  settings <- resolve_params(config$indicator_defaults, config$indicator_settings$SR)
+  cat("Calculating Quality for indicator SR (Species Richness)\n")
+  if (!config$plot_figures_only) {
+    if (settings$prepare_raw || config$force_prepare_raw) {
+      raw <- species_richness_data(inputs, config)
+      write.csv(raw, file.path(output_paths$results, "SR_raw.csv"), row.names = FALSE)
     }
-    state$generate_figures <- output_paths$generate_figures
-    state$fitdistr <- MASS::fitdistr
-    state$RESULTSDIR <- paste0(output_paths$results, "/")
-    state$FIGDIR <- paste0(output_paths$figures, "/")
-    state$FIGDIR_REL <- paste0(output_paths$figures, "/")
-    state$FILENAME.EI.SUMMARY <- "ei.summary.csv"
-    state$set.seed <- !is.null(config$seed)
-    # Permutation tests also receive the historical seed when bootstrap seeding is disabled.
-    state$seed <- if (is.null(config$seed)) 123 else config$seed
-    state$curr.EI <- "SR"
-    parameters <- state$ei.params("SR")
-    state$ei.name <- state$EI.name <- parameters$ei.name
-    state$distn <- parameters$distn
-    state$q.method <- parameters$q.method
-    state$bm.val <- parameters$bm.val
-    state$test.tail <- parameters$test.tail
-    state$has.strata <- state$has.stratum <- parameters$has.stratum
-    if (!parameters$has.stratum) state$curr.stratum <- ""
-    state$allow.group.strata <- FALSE
-    state$y.axis.fixed.min <- 0
-    state$lc.in.title <- TRUE
-    state$leg.x.extra <- state$leg.x.extra.g <- -0.2
-    state$leg.y.extra <- state$leg.y.extra.g <- NA
-    state$rawFileName <- "SR_raw.csv"
-    state$resultsFocal <- "SR_focal.csv"
-    state$resultsBm <- "SR_benchmark.csv"
-    state$proportions <- FALSE
-
-    cat("Calculating Quality for indicator SR (Species Richness)\n")
-    if (!config$plot_figures_only) {
-      if (parameters$prepare.raw || config$force_prepare_raw) {
-        raw <- species_richness_data(inputs, config)
-        write.csv(raw, file.path(output_paths$results, "SR_raw.csv"), row.names = FALSE)
+    dat <- read.csv(file.path(output_paths$results, "SR_raw.csv"))
+    EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
+    EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass),
+      FUN = function(x) {
+        c(n = length(x), mean = mean(x), med = median(x), sd = sd(x), max = max(x), min = min(x))
       }
-      evalq(
-        {
-          dat <- read.csv(paste0(RESULTSDIR, rawFileName), header = TRUE)
-          EI.bm <- subset(dat, dat$focalOrBenchmark == "b")
-          EI.bm <- with(EI.bm, aggregate(EI.tr, list(vegClass = vegClass),
-            FUN = function(x) {
-              c(
-                n = length(x), mean = mean(x), med = median(x), sd = sd(x), max = max(x),
-                min = min(x)
-              )
-            }
-          ))
-          EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
-          colnames(EI.bm) <- c("vegClass", "n", "EI.mean", "EI.med", "EI.sd", "EI.max", "EI.min")
-          EI.bm$stratum <- "nostrata"
-          EI.bm$EI <- curr.EI
-          EI.bm <- EI.bm[, c(
-            "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd", "EI.med",
-            "EI.max", "EI.min"
-          )]
-          EI.bm$vegClass <- human.readable(EI.bm$vegClass)
-          write.csv(EI.bm, paste0(RESULTSDIR, resultsBm), row.names = FALSE)
-          prepare_indicator_results(environment())
-          calculate_indicator_quality(environment())
-        },
-        envir = state
-      )
-    }
-    if (config$plot_overlap) state$plot_indicator_overlap(state)
-    state$plot_indicator_distributions(state)
-    invisible(list(
-      raw = file.path(output_paths$results, "SR_raw.csv"),
-      focal = file.path(output_paths$results, "SR_focal.csv"),
-      benchmark = file.path(output_paths$results, "SR_benchmark.csv")
     ))
+    EI.bm <- cbind(EI.bm[-ncol(EI.bm)], EI.bm[[ncol(EI.bm)]])
+    colnames(EI.bm) <- c("vegClass", "n", "EI.mean", "EI.med", "EI.sd", "EI.max", "EI.min")
+    EI.bm$stratum <- "nostrata"
+    EI.bm$EI <- "SR"
+    EI.bm <- EI.bm[, c(
+      "EI", "vegClass", "stratum", "n", "EI.mean", "EI.sd", "EI.med", "EI.max", "EI.min"
+    )]
+    EI.bm$vegClass <- human.readable(EI.bm$vegClass)
+    write.csv(EI.bm, file.path(output_paths$results, "SR_benchmark.csv"), row.names = FALSE)
+    result <- read_indicator_output("SR", config, output_paths)
+    result <- prepare_indicator_results(result, config, output_paths)
+    result <- calculate_indicator_quality(result, config, output_paths)
   }
-})
+  if (config$plot_figures_only) result <- read_indicator_output("SR", config, output_paths)
+  if (config$plot_overlap) plot_indicator_overlap(result, config, output_paths)
+  plot_indicator_distributions(result, config, output_paths)
+  invisible(list(
+    raw = file.path(output_paths$results, "SR_raw.csv"),
+    focal = file.path(output_paths$results, "SR_focal.csv"),
+    benchmark = file.path(output_paths$results, "SR_benchmark.csv")
+  ))
+}
