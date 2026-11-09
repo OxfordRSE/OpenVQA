@@ -1,32 +1,16 @@
 core_functions_environment <- function() {
   env <- new.env(parent = globalenv())
-  sys.source(file.path("..", "..", "includes", "functions.R"), envir = env)
+  for (module in c(
+    "quality", "distribution", "overlap", "bootstrap", "utility", "formatting",
+    "spreadsheet", "plotting", "indicator-results", "indicator-figure"
+  )) {
+    sys.source(file.path("..", "..", "includes", paste0(module, "-functions.R")), envir = env)
+  }
   # Numerical helpers use the same package functions as the analysis libraries.
   env$boot.ci <- boot::boot.ci
   env
 }
 
-testthat::test_that("the compatibility loader works outside the repository root", {
-  loader <- normalizePath(file.path("..", "..", "includes", "functions.R"))
-  old_directory <- getwd()
-  on.exit(setwd(old_directory))
-  setwd(tempdir())
-  for (load in list(
-    function(env) base::source(loader, local = env),
-    function(env) sys.source(loader, envir = env)
-  )) {
-    env <- new.env(parent = globalenv())
-    before <- ls(globalenv(), all.names = TRUE)
-    load(env)
-    testthat::expect_identical(ls(globalenv(), all.names = TRUE), before)
-    testthat::expect_true(is.function(env$functions.loaded))
-    for (name in ls(env)) {
-      testthat::expect_identical(environment(env[[name]]), env)
-    }
-    testthat::expect_equal(env$q.linear(5, 10, 0), 0.5)
-    testthat::expect_false(any(c("includes_dir", "frame", "path", "file") %in% ls(env)))
-  }
-})
 
 testthat::test_that("quality transformations preserve endpoints and validation", {
   env <- core_functions_environment()

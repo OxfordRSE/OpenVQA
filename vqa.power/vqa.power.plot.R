@@ -30,7 +30,12 @@ if (!exists("global.params.loaded", mode = "function")) source("params.R")
 
 # get global parameters & functions
 # source(paste0(INCLUDESDIR, "functions.R", local=TRUE))
-source("includes/functions.R", local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
 # Create power figures directory if missing
 dir.create(file.path(FIGDIR, "power"), showWarnings = F)
@@ -205,8 +210,12 @@ for (x in 1:1) { # FOR TESTING
 
         if (fit.save == TRUE) {
           # Save the revised calculations
-          results[results$landcover == curr.veg & results$e.size == curr.es, c("fit")] <- fit$pwr.fit
-          results[results$landcover == curr.veg & results$e.size == curr.es, c("n.min")] <- n.min.target
+          results[results$landcover == curr.veg & results$e.size == curr.es, c("fit")] <-
+            fit$pwr.fit
+          results[
+            results$landcover == curr.veg & results$e.size == curr.es,
+            c("n.min")
+          ] <- n.min.target
           write.csv(results, file = results.file, row.names = FALSE)
         } # END if ( fit.save==TRUE )
       } # END if ( !fit[1]=='fail' )

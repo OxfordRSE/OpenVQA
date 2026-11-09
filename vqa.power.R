@@ -133,7 +133,10 @@ df.veg <- data.frame(veg = c(
 
 # teck-pom
 df.veg <- data.frame(veg = c(
-  "Western Hemlock - Western Red-cedar Cool-Mesic Central Rocky Mountain Forest & Woodland Alliance, Mature"
+  paste0(
+    "Western Hemlock - Western Red-cedar Cool-Mesic Central Rocky Mountain ",
+    "Forest & Woodland Alliance, Mature"
+  )
 ))
 
 ########################
@@ -220,7 +223,12 @@ for (i in 1:length(f.groups)) {
 }
 
 # load functions
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 # Seed for bootstrap repeatability
 # NOTE: it matters where you place set.seed!
@@ -483,7 +491,10 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
     curr.ei.raw <- read.csv(raw.file, header = T)
 
     # Special handling to remove any non-matching columns
-    curr.ei.raw <- curr.ei.raw[, c("plotCode", "focalOrBenchmark", "landCover", "vegClass", "stratum", "EI")]
+    curr.ei.raw <- curr.ei.raw[, c(
+      "plotCode", "focalOrBenchmark", "landCover",
+      "vegClass", "stratum", "EI"
+    )]
     colnames(curr.ei.raw) <- c(
       "plotCode", "focalOrBenchmark", "landcover",
       "bm.vegetation", "stratum", "ei.val"
@@ -505,13 +516,19 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
   ##############################################
 
   dat.raw <- merge(x = dat.raw, y = all.ind.list, by = c("EI", "stratum"), all.x = TRUE)
-  dat.raw <- merge(x = dat.raw, y = whitelist, by = c("EI", "stratum", "bm.vegetation"), all.x = TRUE)
+  dat.raw <- merge(
+    x = dat.raw, y = whitelist, by = c("EI", "stratum", "bm.vegetation"),
+    all.x = TRUE
+  )
   dat.raw <- transform(dat.raw, include = ifelse(is.na(include.y),
     include.x, as.character(include.y)
   ))
 
   # Drop the blacklisted classes and reorder columns
-  dat.raw <- dat.raw[dat.raw$include == TRUE, c("EI", "landcover", "bm.vegetation", "stratum", "category", "plotCode", "focalOrBenchmark", "ei.val")]
+  dat.raw <- dat.raw[dat.raw$include == TRUE, c(
+    "EI", "landcover", "bm.vegetation",
+    "stratum", "category", "plotCode", "focalOrBenchmark", "ei.val"
+  )]
 
   ##############################################
   # Select subset of data for current land cover class &
@@ -579,7 +596,10 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
   # Restructure ei.all to make it a bit easier to use
   cols <- c("EI", "stratum")
   ei.all$ei.full <- apply(ei.all[, cols], 1, paste, collapse = "-")
-  ei.all.f <- ei.all[ei.all$focalOrBenchmark == "f", c("ei.full", "landcover", "EI", "stratum", "category", "n")]
+  ei.all.f <- ei.all[ei.all$focalOrBenchmark == "f", c(
+    "ei.full", "landcover", "EI",
+    "stratum", "category", "n"
+  )]
   names(ei.all.f)[names(ei.all.f) == "n"] <- "n.f"
   ei.all.b <- ei.all[ei.all$focalOrBenchmark == "b", c("ei.full", "n")]
   names(ei.all.b)[names(ei.all.b) == "n"] <- "n.b"
@@ -915,16 +935,25 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
 
             # Get quality for current sample
             if (distn == "NBin" || distn == "gamma") {
-              qual <- q.overlap.no.cls(distn, test.tail = test.tail, f = boot.samp.f, b = boot.samp.b, xs = xs)
+              qual <- q.overlap.no.cls(distn,
+                test.tail = test.tail, f = boot.samp.f,
+                b = boot.samp.b, xs = xs
+              )
               q.ei <- qual$ol.obs
             } else if (distn == "Bet") {
               if (q.method == "fixed") {
                 # Fixed benchmark method
                 bm.val <- df.ei[df.ei$ei == curr.ei, c("bm.val")]
-                qual <- qual.beta.fixed(f = boot.samp.f, b.fixed = bm.val, test.diff = test.diff.boot)
+                qual <- qual.beta.fixed(
+                  f = boot.samp.f, b.fixed = bm.val,
+                  test.diff = test.diff.boot
+                )
               } else {
                 # Empirical overlap-based method
-                qual <- qual.beta(f = boot.samp.f, b = boot.samp.b, xs = xs, test.diff = test.diff.boot)
+                qual <- qual.beta(
+                  f = boot.samp.f, b = boot.samp.b, xs = xs,
+                  test.diff = test.diff.boot
+                )
               }
               q.ei <- qual$q
             }
@@ -936,7 +965,8 @@ for (v in 1:nrow(df.veg)) { ### Begin veg loop
             # TESTING
             if (is.na(q.ei) || q.ei == "") {
               # # Error; do not increment i
-              # print( paste0( "Boot q.ei for ", curr.ei, ": FAILED! Discarding results for this ei..." ) )
+              # print( paste0( "Boot q.ei for ", curr.ei, ": FAILED! Discarding results for this
+              # ei..." ) )
               # flush.console()
             } else {
               # print( paste0( "Boot q.ei for ", curr.ei, ": ", q.ei ) )

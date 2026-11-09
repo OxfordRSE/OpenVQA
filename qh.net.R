@@ -27,7 +27,12 @@ if (!exists("params.loaded", mode = "function")) {
 # Set job so params.R know which parameters to load
 job <- "qh.net"
 
-source("includes/functions.R", local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 # source("params.R")
 source(paste0(SRCDIR, "params.R"))
 
@@ -557,7 +562,10 @@ if (PREPARE.QH.NET.P) { # BEGIN PREPARE.QH.NET.P
 
   # Calculate df qh.boot.current.p
   qh.boot.current.p <- qh.boot.current
-  qh.boot.current.p[, 2:ncol(qh.boot.current.p)] <- 1 - qh.boot.current.p[, 2:ncol(qh.boot.current.p)]
+  qh.boot.current.p[, 2:ncol(qh.boot.current.p)] <- 1 - qh.boot.current.p[
+    ,
+    2:ncol(qh.boot.current.p)
+  ]
 
   # Calculate current bootstrapped QHs, reusing veg.shared
   qh.boot.current.p <- qh.boot.transform(
@@ -711,7 +719,10 @@ qh.net.main.csv <- fileandpath # Save for later for converting to Excel
 cat(paste0("- Saving qh.net.main (1:1 compensation) to file \"", filename, "\"\n"))
 suppressMessages(write_excel_csv(qh.net.main, file = fileandpath))
 
-qh.net.boot.main.file.basename <- paste0("qh.net_", assess.current, "_boot") # Save for naming Excel file
+qh.net.boot.main.file.basename <- paste0(
+  "qh.net_", assess.current,
+  "_boot"
+) # Save for naming Excel file
 filename <- paste0(qh.net.boot.main.file.basename, ".csv")
 fileandpath <- paste0(qh.net.resultsdir, filename)
 qh.net.main.csv <- fileandpath # Save for later for converting to Excel
@@ -719,7 +730,10 @@ cat(paste0("- Saving qh.net.boot.main to file \"", filename, "\"\n"))
 suppressMessages(write_excel_csv(qh.net.boot.main, file = fileandpath))
 
 if (INCLUDE.OFFSET) {
-  qh.net.off.file.basename <- paste0("qh.net_", assess.current, "_with_offsets") # Save for naming Excel file
+  qh.net.off.file.basename <- paste0(
+    "qh.net_", assess.current,
+    "_with_offsets"
+  ) # Save for naming Excel file
   filename <- paste0(qh.net.off.file.basename, ".csv")
   fileandpath <- paste0(qh.net.resultsdir, filename)
   qh.net.off.csv <- fileandpath # Save for later for converting to Excel

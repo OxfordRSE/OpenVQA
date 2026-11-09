@@ -33,7 +33,12 @@ if (!exists("params.loaded", mode = "function")) {
 job <- "import"
 
 # Load functions
-source("includes/functions.R", local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
 # Load parameters if not already loaded
 # Also loads project-specific parameters
@@ -52,7 +57,10 @@ if (exists("IMPORT.USE.ASSESS")) {
 }
 
 # Display parameters & confirm operation
-cat(paste0("Import raw data for project '", PROJ, "', assessment '", ASSESS, "' using the following settings: \n", sep = ""))
+cat(paste0("Import raw data for project '", PROJ, "', assessment '", ASSESS,
+  "' using the following settings: \n",
+  sep = ""
+))
 cat(paste0(MSG.CONF.START, MSG.CONF.IMP))
 
 if (interactive() == FALSE) {
@@ -231,18 +239,23 @@ if (QH.METHOD == "empirical") { # START QH.METHOD=="empirical" #2
     # Remove focal plots by landCover & make vector of focal plots to keep
     cat("- Dropping plots from 'plotMetadata':\n")
     cat("-- Dropping focal plots by landCover class...")
-    plotMetadata <- plotMetadata[(plotMetadata$landCover %in% lc.keep & plotMetadata$focalOrBenchmark == "f") | plotMetadata$focalOrBenchmark == "b", ]
+    plotMetadata <-
+      plotMetadata[(plotMetadata$landCover %in% lc.keep &
+        plotMetadata$focalOrBenchmark == "f") | plotMetadata$focalOrBenchmark == "b", ]
     f.plots.keep <- unique(plotMetadata$plotCode[plotMetadata$focalOrBenchmark == "f"])
     cat("done\n")
 
     # Now identify and drop orphan benchmark plots
     cat("-- Dropping orphan benchmark plots...")
     bm.plots.all <- plotMetadata[plotMetadata$focalOrBenchmark == "b", c("plotCode", "vegClass")]
-    f.vegClasses <- as.data.frame(unique(plotMetadata$vegClass[plotMetadata$focalOrBenchmark == "f"]))
+    f.vegClasses <-
+      as.data.frame(unique(plotMetadata$vegClass[plotMetadata$focalOrBenchmark == "f"]))
     colnames(f.vegClasses) <- "vegClass"
     df.bm.plots.keep <- merge(bm.plots.all, f.vegClasses)
     bm.plots.keep <- df.bm.plots.keep$plotCode
-    plotMetadata <- plotMetadata[(plotMetadata$plotCode %in% bm.plots.keep & plotMetadata$focalOrBenchmark == "b") | plotMetadata$focalOrBenchmark == "f", ]
+    plotMetadata <-
+      plotMetadata[(plotMetadata$plotCode %in% bm.plots.keep &
+        plotMetadata$focalOrBenchmark == "b") | plotMetadata$focalOrBenchmark == "f", ]
     cat("done\n")
 
     # Make vector of all plots to keep
@@ -329,7 +342,10 @@ if (QH.METHOD == "empirical") { # START QH.METHOD=="empirical" #2
         cmd <- paste0("veg.ei <- unique(", df.input, "$vegClass)")
         eval(parse(text = cmd))
         reps <- length(veg.ei)
-        df.whitelist.ei <- cbind(as.data.frame(rep(ei, reps)), as.data.frame(rep("nostrata", reps)), as.data.frame(veg.ei))
+        df.whitelist.ei <- cbind(
+          as.data.frame(rep(ei, reps)),
+          as.data.frame(rep("nostrata", reps)), as.data.frame(veg.ei)
+        )
         colnames(df.whitelist.ei) <- c("EI", "stratum", "bm.vegetation")
 
         # Default for 'include' is blank. Only set to true (T) if restoring
@@ -341,7 +357,10 @@ if (QH.METHOD == "empirical") { # START QH.METHOD=="empirical" #2
         cmd <- paste0("ei.strata <- unique(", df.input, "$stratum)")
         eval(parse(text = cmd))
         reps <- length(ei.strata)
-        df.blacklist.ei <- cbind(as.data.frame(rep(ei, reps)), ei.strata, as.data.frame(rep(fg.ei, reps)))
+        df.blacklist.ei <- cbind(
+          as.data.frame(rep(ei, reps)), ei.strata,
+          as.data.frame(rep(fg.ei, reps))
+        )
         colnames(df.blacklist.ei) <- c("EI", "stratum", "f.group")
         df.blacklist.ei$include <- "T" # Include all
         df.blacklist.ei$edit.notes <- ""

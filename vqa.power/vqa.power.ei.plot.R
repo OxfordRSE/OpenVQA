@@ -41,7 +41,12 @@ params.file <- paste0("params.", proj, ".R")
 source(params.file)
 
 # Load general functions
-source(paste0(INCLUDESDIR, "functions.R"), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 # Create power figures directory if missing
 dir.create(file.path(FIGDIR, "power"), showWarnings = F)
@@ -302,7 +307,10 @@ h.line <- "------------------------------------------------"
 results <- read.csv(results.file, header = T, stringsAsFactors = FALSE)
 
 # Extract all land cover classes, EIs and strata
-sample.strata <- results[results$landcover == curr.veg & results$EI == ei, c("landcover", "EI", "stratum")]
+sample.strata <- results[results$landcover == curr.veg & results$EI == ei, c(
+  "landcover",
+  "EI", "stratum"
+)]
 sample.strata <- sample.strata[!duplicated(sample.strata), ]
 n.strata <- nrow(sample.strata)
 

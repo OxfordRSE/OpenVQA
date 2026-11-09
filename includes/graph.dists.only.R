@@ -20,7 +20,12 @@
 
 # Load external parameters and functions
 source("params.R", local = TRUE)
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 ############################################
 # Parameters for development only
@@ -220,9 +225,13 @@ for (j in 1:n.lc) { # START land cover loop
     curr.results <- f.results[f.results$landcover == curr.lc & f.results$stratum == curr.stratum, ]
 
     # Load dfs of raw data
-    curr.dat.f <- dat.ei[dat.ei$landcover == curr.lc & dat.ei$stratum == curr.stratum & dat.ei$focalOrBenchmark == "f", ]
+    curr.dat.f <-
+      dat.ei[dat.ei$landcover == curr.lc & dat.ei$stratum == curr.stratum &
+        dat.ei$focalOrBenchmark == "f", ]
     curr.veg <- unique(curr.dat.f$bm.vegetation)
-    curr.dat.b <- dat.ei[dat.ei$bm.vegetation == curr.veg & dat.ei$stratum == curr.stratum & dat.ei$focalOrBenchmark == "b", ]
+    curr.dat.b <-
+      dat.ei[dat.ei$bm.vegetation == curr.veg & dat.ei$stratum == curr.stratum &
+        dat.ei$focalOrBenchmark == "b", ]
 
     # Vectors of the raw EI values
     f <- curr.dat.f$EI
@@ -386,12 +395,24 @@ for (j in 1:n.lc) { # START land cover loop
       ylim.max <- min(1, highestDensity + 0.1)
 
       # Rescale fitted distribution density
-      if (nrow(pdf.b) > 0) pdf.b <- pdf.b / max(pdf.b[pdf.b < Inf & !is.na(pdf.b)]) * max(h.b$density) * 0.90
-      if (nrow(pdf.f) > 0) pdf.f <- pdf.f / max(pdf.f[pdf.f < Inf & !is.na(pdf.f)]) * max(h.f$density) * 0.90
+      if (nrow(pdf.b) > 0) {
+        pdf.b <-
+          pdf.b / max(pdf.b[pdf.b < Inf & !is.na(pdf.b)]) * max(h.b$density) * 0.90
+      }
+      if (nrow(pdf.f) > 0) {
+        pdf.f <-
+          pdf.f / max(pdf.f[pdf.f < Inf & !is.na(pdf.f)]) * max(h.f$density) * 0.90
+      }
     } else {
       # Adjust fitted curve to scale of raw data
-      if (nrow(pdf.b) > 0) pdf.b <- pdf.b / max(pdf.b[pdf.b < Inf & !is.na(pdf.b)]) * max(h.b$counts) * 0.90
-      if (nrow(pdf.f) > 0) pdf.f <- pdf.f / max(pdf.f[pdf.f < Inf & !is.na(pdf.f)]) * max(h.f$counts) * 0.90
+      if (nrow(pdf.b) > 0) {
+        pdf.b <-
+          pdf.b / max(pdf.b[pdf.b < Inf & !is.na(pdf.b)]) * max(h.b$counts) * 0.90
+      }
+      if (nrow(pdf.f) > 0) {
+        pdf.f <-
+          pdf.f / max(pdf.f[pdf.f < Inf & !is.na(pdf.f)]) * max(h.f$counts) * 0.90
+      }
     }
 
     if (has.stratum == T && group.strata == T && n.strata > 1) {

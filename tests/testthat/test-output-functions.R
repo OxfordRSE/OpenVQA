@@ -1,6 +1,11 @@
 output_functions_environment <- function() {
   env <- new.env(parent = globalenv())
-  sys.source(file.path("..", "..", "includes", "functions.R"), envir = env)
+  for (module in c(
+    "quality", "distribution", "overlap", "bootstrap", "utility", "formatting",
+    "spreadsheet", "plotting", "indicator-results", "indicator-figure"
+  )) {
+    sys.source(file.path("..", "..", "includes", paste0(module, "-functions.R")), envir = env)
+  }
   env
 }
 

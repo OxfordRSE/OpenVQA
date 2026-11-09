@@ -16,7 +16,12 @@ x <- 0.098
 y <- 0.706
 
 # Load functions
-source("includes/functions.R")
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0("includes/", helper_module, "-functions.R"), local = TRUE)
+}
 
 #################
 # Set x, y values

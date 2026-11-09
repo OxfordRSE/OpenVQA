@@ -140,7 +140,12 @@ cat("done\n\n")
 source(params.file, local = TRUE)
 
 # load functions
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 # Create power figures directory if missing
 dir.create(file.path(FIGDIR, "power"), showWarnings = F)
@@ -524,12 +529,18 @@ for (es in 1:length(e.sizes)) { # Start effect size loop
         boot.samp.b <- sample(b.samp, n.b, replace = T)
 
         if (distn == "NBin" || distn == "gamma") {
-          qual <- q.overlap.no.cls(distn, test.tail = test.tail, f = boot.samp.f, b = boot.samp.b, xs = xs)
+          qual <- q.overlap.no.cls(distn,
+            test.tail = test.tail, f = boot.samp.f,
+            b = boot.samp.b, xs = xs
+          )
           boot.q.curr <- qual$ol.obs # overlap used directly as quality
         } else if (distn == "Bet") {
           if (q.method == "fixed") {
             # Fixed benchmark method
-            qual <- qual.beta.fixed(f = boot.samp.f, b.fixed = bm.val, test.diff = FALSE, boot.reps = boot.reps)
+            qual <- qual.beta.fixed(
+              f = boot.samp.f, b.fixed = bm.val, test.diff = FALSE,
+              boot.reps = boot.reps
+            )
           } else {
             # Empirical overlap-based method
             qual <- qual.beta(f = boot.samp.f, b = boot.samp.b, xs = xs, test.diff = FALSE)

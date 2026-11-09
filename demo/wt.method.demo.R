@@ -6,7 +6,12 @@ rm(list = ls())
 # Load functions
 BASEDIR <- "/Users/bboyle/Documents/hga/teck/vqa_publication/analysis/scripts/"
 INCLUDESDIR <- paste0(BASEDIR, "scripts/includes/")
-source(paste(INCLUDESDIR, "functions.R", sep = ""), local = TRUE)
+for (helper_module in c(
+  "quality", "distribution", "overlap", "bootstrap", "utility",
+  "formatting", "spreadsheet", "plotting"
+)) {
+  source(paste0(INCLUDESDIR, helper_module, "-functions.R"), local = TRUE)
+}
 
 #################################
 # Parameters & functions
