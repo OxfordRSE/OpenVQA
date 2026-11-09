@@ -231,16 +231,25 @@ run_pcgf <- function(inputs, config, output_paths, seed = config$seed) {
         resultsFile <- paste(RESULTSDIR, resultsBm, sep = "")
         write.csv(EI.bm, file = resultsFile, row.names = FALSE)
         # Prepare focal summary statistics, then calculate quality and bootstrap uncertainty.
-        prepare_indicator_results(environment())
-        calculate_indicator_quality(environment())
+        result <- prepare_indicator_results(read_indicator_output(
+          curr.EI, config,
+          output_paths, allow.group.strata
+        ), config, output_paths)
+        result <- calculate_indicator_quality(result, config, output_paths)
       } else {
         cat("************************\n")
         cat("Generating figures\n")
         cat("************************\n")
       } # END PLOT.FIGS.ONLY
       # Generate overlap figures and configured distribution figures for each vegetation type.
-      if (plot.overlap == T) plot_indicator_overlap(environment())
-      plot_indicator_distributions(environment())
+      if (config$plot_figures_only) {
+        result <- read_indicator_output(
+          curr.EI, config,
+          output_paths, allow.group.strata
+        )
+      }
+      if (plot.overlap == T) plot_indicator_overlap(result, config, output_paths)
+      plot_indicator_distributions(result, config, output_paths)
       cat("\n##################################################\n")
       cat("Operation completed\n")
       cat("##################################################\n\n")

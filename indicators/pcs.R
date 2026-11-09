@@ -344,13 +344,16 @@ run_pcs <- function(inputs, config, output_paths, seed = config$seed) {
         # Prepare (focal) results file, and populate basic summary stats
         ####################################################
 
-        prepare_indicator_results(environment())
+        result <- prepare_indicator_results(read_indicator_output(
+          curr.EI, config,
+          output_paths, allow.group.strata
+        ), config, output_paths)
 
         ####################################################
         # Calculate quality
         ####################################################
 
-        calculate_indicator_quality(environment())
+        result <- calculate_indicator_quality(result, config, output_paths)
       } else {
         cat("************************\n")
         cat("Generating figures\n")
@@ -361,14 +364,20 @@ run_pcs <- function(inputs, config, output_paths, seed = config$seed) {
       # Plot overlap
       ####################################################
 
-      if (plot.overlap == T) plot_indicator_overlap(environment())
+      if (config$plot_figures_only) {
+        result <- read_indicator_output(
+          curr.EI, config,
+          output_paths, allow.group.strata
+        )
+      }
+      if (plot.overlap == T) plot_indicator_overlap(result, config, output_paths)
 
       ####################################################
       # Graph the fitted distributions for each vegetation type
       # Include model statistic and overlap scores on figures if requested
       ####################################################
 
-      plot_indicator_distributions(environment())
+      plot_indicator_distributions(result, config, output_paths)
 
       cat("\n##################################################\n")
       cat("Operation completed\n")
