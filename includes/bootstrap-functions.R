@@ -1,6 +1,7 @@
 boot.overlap <- function(
   distn, v1, v2, xs = NULL, boot.reps = NULL, seed = NULL,
-  set.seed = F, ...
+  set.seed = F, shape1 = 0.1, shape2 = 0.1, lowlim = 0.0000001,
+  uplim = NULL, shape = 1, rate = 1, ...
 ) {
   ###################################################
   # Calculates overlap (ol) & bootstrapped 95% CLs between two
@@ -12,7 +13,7 @@ boot.overlap <- function(
   # 		3. v2					Vector 2
   # 		4. xs					Vector of x values for generating predicted probabilities
   # 									[Default=0 -> highest value of v1, v2, plus 10]
-  # 		5. boot.reps		Number of bootstap replicates [Default=1000]
+  # 		5. boot.reps		Number of bootstap replicates [Default=100]
   # 		6. seed				Randomization seed for fixed results [Default=no seed]
   # 		7. Standard optional arguments specific to fitdistr():
   # 			(a) nbin: no additional arguments needed
@@ -33,7 +34,7 @@ boot.overlap <- function(
 
   # Set default values for optional parameters & check for errors
   if (is.null(xs)) {
-    xs <- seq(0, max(max(f), max(b)) + 10)
+    xs <- seq(0, max(max(v1), max(v2)) + 10)
   }
 
   if (is.null(boot.reps)) {
@@ -66,6 +67,7 @@ boot.overlap <- function(
     predpar1 <- "shape1"
     predpar2 <- "shape2"
   } else if (distn == "gamma") {
+    if (is.null(uplim)) uplim <- max(c(v1, v2)) + 0.1 * max(c(v1, v2))
     # Distribution fitting parameters
     densfun <- "gamma"
 
@@ -101,12 +103,12 @@ boot.overlap <- function(
   }
 
   # Construct the final commands
-  fit.v1 <- paste0("fitdistr(v1, densfun='", densfun, "'", opt.args, ")")
-  fit.v2 <- paste0("fitdistr(v2, densfun='", densfun, "'", opt.args, ")")
+  fit.v1 <- paste0("MASS::fitdistr(v1, densfun='", densfun, "'", opt.args, ")")
+  fit.v2 <- paste0("MASS::fitdistr(v2, densfun='", densfun, "'", opt.args, ")")
 
   pdf <- paste0(predfun, "(xs, ", predpar1, "= mod$estimate[1], ", predpar2, "= mod$estimate[2])")
 
-  fit.boot <- paste0("fitdistr(boot.samp, densfun='", densfun, "'", opt.args, ")")
+  fit.boot <- paste0("MASS::fitdistr(boot.samp, densfun='", densfun, "'", opt.args, ")")
 
   ################################
   # Transformations
@@ -136,10 +138,10 @@ boot.overlap <- function(
   # Fix for special case of NBin only
   # Adds explicit lower bound to avoid negative value errors
   if (mod[1] == "FAIL" && distn == "NBin") {
-    if (min(unique(b)) >= 1) {
-      fit.v1 <- paste0("fitdistr(v1, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
+    if (min(unique(v1)) >= 1) {
+      fit.v1 <- paste0("MASS::fitdistr(v1, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
     } else {
-      fit.v1 <- paste0("fitdistr(v1, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
+      fit.v1 <- paste0("MASS::fitdistr(v1, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
     }
 
     # Try again
@@ -178,10 +180,10 @@ boot.overlap <- function(
   # Fix for special case of NBin only
   # Adds explicit lower bound to avoid negative value errors
   if (mod[1] == "FAIL" && distn == "NBin") {
-    if (min(unique(b)) >= 1) {
-      fit.v2 <- paste0("fitdistr(v2, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
+    if (min(unique(v1)) >= 1) {
+      fit.v2 <- paste0("MASS::fitdistr(v2, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
     } else {
-      fit.v2 <- paste0("fitdistr(2, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
+      fit.v2 <- paste0("MASS::fitdistr(2, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
     }
 
     # Try again
@@ -240,12 +242,12 @@ boot.overlap <- function(
     if (mod[1] == "FAIL" && distn == "NBin") {
       if (min(unique(v1)) >= 1) {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb1, ")"
         )
       } else {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb0, ")"
         )
       }
@@ -287,12 +289,12 @@ boot.overlap <- function(
     if (mod[1] == "FAIL" && distn == "NBin") {
       if (min(unique(v2)) >= 1) {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb1, ")"
         )
       } else {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb0, ")"
         )
       }
@@ -354,7 +356,8 @@ boot.overlap <- function(
 
 boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
                               q.tr.logit.inverse = TRUE, logit.inverse.beta = 2,
-                              boot.reps = NULL, seed = NULL, set.seed = F, ...) {
+                              boot.reps = NULL, seed = NULL, set.seed = F,
+                              lowlim = 0.0000001, uplim = NULL, shape = 1, rate = 1, ...) {
   ###################################################
   # Calculates overlap (ol) & bootstrapped 95% CLs between two
   # probability distributions, as fit to two input vectors. Includes correction
@@ -397,7 +400,6 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
   if (is.null(test.tail)) test.tail <- "both"
   if (is.null(xs)) xs <- seq(0, 1, length.out = 100)
   if (is.null(boot.reps)) boot.reps <- 1000
-  if (is.null(perm.reps)) perm.reps <- 10000
   if ((set.seed == T) && !(is.null(seed))) set.seed(seed)
 
   # Compose fitdistr optional arguments
@@ -405,6 +407,7 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
   if (distn == "Bet") {
     stop(paste0("ERROR: wrong function for beta distribution!"))
   } else if (distn == "gamma") {
+    if (is.null(uplim)) uplim <- max(c(f, b)) + 0.1 * max(c(f, b))
     densfun <- "gamma"
 
     # Predicted pdf parameters
@@ -444,12 +447,12 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
   }
 
   # Construct the final commands
-  fit.f <- paste0("fitdistr(f, densfun='", densfun, "'", opt.args, ")")
-  fit.b <- paste0("fitdistr(b, densfun='", densfun, "'", opt.args, ")")
+  fit.f <- paste0("MASS::fitdistr(f, densfun='", densfun, "'", opt.args, ")")
+  fit.b <- paste0("MASS::fitdistr(b, densfun='", densfun, "'", opt.args, ")")
 
   pdf <- paste0(predfun, "(xs, ", predpar1, "= mod$estimate[1], ", predpar2, "= mod$estimate[2])")
 
-  fit.boot <- paste0("fitdistr(boot.samp, densfun='", densfun, "'", opt.args, ")")
+  fit.boot <- paste0("MASS::fitdistr(boot.samp, densfun='", densfun, "'", opt.args, ")")
 
   # Get benchmark mean, used for one-tail overlap
   b.mean <- mean(b, na.rm = T)
@@ -484,9 +487,9 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
     # Adds explicit lower bound to avoid negative value errors
 
     if (min(unique(f)) >= 1) {
-      fit.f <- paste0("fitdistr(f, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
+      fit.f <- paste0("MASS::fitdistr(f, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
     } else {
-      fit.f <- paste0("fitdistr(f, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
+      fit.f <- paste0("MASS::fitdistr(f, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
     }
 
     # Try again
@@ -500,7 +503,7 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
     )
   } else if (mod[1] == "FAIL" && distn == "gamma") {
     # Fix for gamma: remove upper bounds
-    fit.f <- paste0("fitdistr(f, densfun='", densfun, "'", opt.args.no.ub, ")")
+    fit.f <- paste0("MASS::fitdistr(f, densfun='", densfun, "'", opt.args.no.ub, ")")
 
     cat("    [fitdistr(f) failed, repeating without upper bounds...")
 
@@ -545,9 +548,9 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
 
   if (mod[1] == "FAIL" && distn == "NBin") {
     if (min(unique(b)) >= 1) {
-      fit.b <- paste0("fitdistr(b, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
+      fit.b <- paste0("MASS::fitdistr(b, densfun='", densfun, "'", opt.args.nbin.lb1, ")")
     } else {
-      fit.b <- paste0("fitdistr(b, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
+      fit.b <- paste0("MASS::fitdistr(b, densfun='", densfun, "'", opt.args.nbin.lb0, ")")
     }
 
     # Try again
@@ -560,7 +563,7 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
       }
     )
   } else if (mod[1] == "FAIL" && distn == "gamma") {
-    fit.b <- paste0("fitdistr(b, densfun='", densfun, "'", opt.args.no.ub, ")")
+    fit.b <- paste0("MASS::fitdistr(b, densfun='", densfun, "'", opt.args.no.ub, ")")
 
     cat("b failed (gamma): Using opt.args.no.ub\n")
 
@@ -607,12 +610,12 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
     if (mod[1] == "FAIL" && distn == "NBin") {
       if (min(unique(f)) >= 1) {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb1, ")"
         )
       } else {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb0, ")"
         )
       }
@@ -651,12 +654,12 @@ boot.overlap.diff <- function(distn, test.tail = NULL, f, b, xs = NULL,
     if (mod[1] == "FAIL" && distn == "NBin") {
       if (min(unique(b)) >= 1) {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb1, ")"
         )
       } else {
         fit.boot <- paste0(
-          "fitdistr(boot.samp, densfun='",
+          "MASS::fitdistr(boot.samp, densfun='",
           densfun, "'", opt.args.nbin.lb0, ")"
         )
       }

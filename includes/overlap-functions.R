@@ -119,8 +119,8 @@ q.overlap.no.cls <- function(distn, test.tail = NULL, f, b, xs = NULL, ...) {
   }
 
   # Construct the final commands
-  fit.f <- paste0("fitdistr(f, densfun='", densfun, "'", opt.args, ")")
-  fit.b <- paste0("fitdistr(b, densfun='", densfun, "'", opt.args, ")")
+  fit.f <- paste0("MASS::fitdistr(f, densfun='", densfun, "'", opt.args, ")")
+  fit.b <- paste0("MASS::fitdistr(b, densfun='", densfun, "'", opt.args, ")")
 
   pdf <- paste0(predfun, "(xs, ", predpar1, "= mod$estimate[1], ", predpar2, "= mod$estimate[2])")
 
