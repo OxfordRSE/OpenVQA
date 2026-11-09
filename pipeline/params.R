@@ -9,10 +9,6 @@
   normalizePath(file.path(dirname(path), ".."), mustWork = TRUE)
 })
 
-openvqa_version <- function() {
-  readLines(file.path(.params_root, "VERSION"), n = 1L, warn = FALSE)
-}
-
 validate_params_schema <- function(params) {
   schema <- jsonlite::read_json(file.path(.params_root, "schema", "params.schema.json"))
   json_value <- function(value, definition) {

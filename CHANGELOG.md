@@ -10,8 +10,8 @@ Initial versioned release of the callable assessment backend.
   `schema/params.schema.json` through `pipeline/params.R`.
 - Six assessment output contracts check numerical tables, workbook contents, decoded
   figures and seeded repeatability against reviewed results.
-- `VERSION` is the authoritative application version. Read it with `openvqa_version()`
-  after sourcing `analyse.R`, or run `Rscript analyse.R --version`.
+- `VERSION` records the authoritative application version; `Rscript analyse.R --version`
+  displays it.
 
 ### Support and reproducibility
 
@@ -32,8 +32,8 @@ byte-identical workbook archives or identical floating-point results on every pl
 Workbook analysis timestamps are excluded from comparisons.
 
 The assessment implementation is based on commit
-`da144bff8e073af9f5f6a80938f7a465d362de7e`. Release metadata, version reporting and their
-tests were added afterwards without changing scientific calculations or fixtures.
+`da144bff8e073af9f5f6a80938f7a465d362de7e`. Release metadata and CLI version reporting
+were added afterwards without changing scientific calculations or fixtures.
 
 See the [assessment quick-start](README.md#run-an-assessment),
 [developer setup](CONTRIBUTING.md) and

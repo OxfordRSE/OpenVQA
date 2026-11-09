@@ -3,9 +3,9 @@
 ## Versioning and releases
 
 The root `VERSION` file is the single source of the OpenVQA application version.
-`openvqa_version()` reads it after sourcing `analyse.R`; the CLI exposes it through
-`Rscript analyse.R --version`. Keep `rproject.toml` for the R environment: rv 0.22.2
-and 0.23.3 do not accept an application `version` field.
+Run `Rscript analyse.R --version` from the repository root to display it.
+Keep `rproject.toml` for the R environment: rv 0.22.2 and 0.23.3 do not accept an
+application `version` field.
 
 During pre-1.0 development, increment the patch version for compatible fixes and
 documentation releases, and the minor version for new capabilities or deliberately

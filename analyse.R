@@ -32,7 +32,7 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   )
   options <- parse_args(parser, args = args)
   if (isTRUE(options$version)) {
-    return(list(version = openvqa_version()))
+    return(list(version = readLines("VERSION", n = 1L, warn = FALSE)))
   }
   if (is.null(options$`data-root`) || !nzchar(options$`data-root`) ||
     is.null(options$assessment) || !nzchar(options$assessment)) {

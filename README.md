@@ -19,8 +19,8 @@ assessment. Add `--no-figures` for numerical output alone. Sourcing `analyse.R` 
 `run_analysis()` without executing it.
 
 Use a [tagged release](https://github.com/OxfordRSE/OpenVQA/releases) for a named
-software version. Run `Rscript analyse.R --version` to check it. The root `VERSION`
-file supplies the application version; `rproject.toml` configures R and dependencies.
+software version. The root `VERSION` file records the application version;
+run `Rscript analyse.R --version` to display it. `rproject.toml` configures R and dependencies.
 See the [changelog](CHANGELOG.md) for release scope and known limitations.
 
 The minimal demo projects contain validated inputs and declarative settings. Standalone
