@@ -8,7 +8,7 @@ testthat::test_that("demo 2 assessments resolve the expected analysis parameters
   for (assessment in names(expected$assessments)) {
     context <- load_preprocessing_context(root, assessment, seed = 7L)
     testthat::expect_no_error(validate_analysis_params(context$params))
-    env <- prepare_legacy_environment(context, context$config, 7L)
+    env <- fixture_environment(context, context$config, 7L)
     settings <- expected$assessments[[assessment]]
     testthat::expect_equal(mget(names(settings), env), settings)
     testthat::expect_false(exists("scope", envir = env, inherits = FALSE))
@@ -37,7 +37,7 @@ testthat::test_that("basal-area normalization preserves sampling boundaries and 
   root <- fixture_root("vqa-demo2")
   on.exit(unlink(root, recursive = TRUE))
   context <- load_preprocessing_context(root, "project_current", seed = 7L)
-  parameters <- legacy_project_params(context$config)
+  parameters <- fixture_project_params(context$config)
   testthat::expect_equal(
     parameters$dbh.ba.scaled(expected$dbh),
     expected$per_hectare,
@@ -52,7 +52,7 @@ testthat::test_that("basal-area normalization preserves sampling boundaries and 
     seed = 7L,
     explicit = list(stem_sampling = list(small_plot_area_m2 = 96))
   )
-  changed_parameters <- legacy_project_params(changed$config)
+  changed_parameters <- fixture_project_params(changed$config)
   testthat::expect_equal(changed_parameters$dbh.ba.scaled(2.5), parameters$dbh.ba.scaled(2.5) / 2)
   testthat::expect_equal(changed_parameters$dbh.ba.scaled(10), parameters$dbh.ba.scaled(10))
 })
@@ -71,7 +71,7 @@ testthat::test_that("assumed quality and source labels are selected by configura
   on.exit(setwd(old_directory), add = TRUE)
   setwd(.params_root)
   context <- load_preprocessing_context(root, "renamed_assessment", seed = 7L)
-  env <- prepare_legacy_environment(context, context$config, 7L)
+  env <- fixture_environment(context, context$config, 7L)
   testthat::expect_identical(env$QH.METHOD, "assume.0")
   testthat::expect_identical(env$RAW_PLOTDATA_FILENAME, "Demo_data_offsets.xlsx")
   testthat::expect_length(env$EI.vec, 0L)
@@ -84,7 +84,7 @@ testthat::test_that("assumed quality and source labels are selected by configura
     )
   )
   testthat::expect_identical(
-    prepare_legacy_environment(changed, changed$config, 7L)$QH.METHOD,
+    fixture_environment(changed, changed$config, 7L)$QH.METHOD,
     "empirical"
   )
 })
