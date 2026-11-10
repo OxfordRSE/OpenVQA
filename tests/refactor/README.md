@@ -48,6 +48,11 @@ different, explicit responsibility:
 Windows PowerShell defines `rv` as an alias for `Remove-Variable`. The Windows
 dependency-install step calls `rv.exe` explicitly to run the package manager.
 
+Runtime paths use `normalizePath(..., winslash = "/")` for consistent comparisons.
+Test subprocesses inherit temporarily scoped environment variables and receive quoted
+arguments, including project paths containing spaces. Relative output names are obtained
+by removing a literal normalized directory prefix, without interpreting paths as regexes.
+
 Restore Ubuntu as a required portability check only after the legacy parametric-fitting
 methodology has been made robust for sparse, zero-heavy, and extreme-value inputs.
 The distinct-seed assertion remains active in the macOS 26

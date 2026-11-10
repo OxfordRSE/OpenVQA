@@ -79,7 +79,7 @@ testthat::test_that("context resolution applies assessment overrides and derives
   testthat::expect_identical(context$config$seed, 7L)
   testthat::expect_identical(
     context$paths$results,
-    file.path(normalizePath(root), "offset_baseline", "results")
+    file.path(normalizePath(root, winslash = "/"), "offset_baseline", "results")
   )
   context$params$qh_method <- "changed"
   testthat::expect_identical(context$config$qh_method, "assume.0")

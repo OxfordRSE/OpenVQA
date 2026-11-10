@@ -42,12 +42,9 @@ detect_test_workers <- function(contract_count) {
 }
 
 run_contract <- function(contract, script, rscript) {
-  output <- suppressWarnings(system2(
-    rscript,
-    shQuote(script),
-    stdout = TRUE,
-    stderr = TRUE,
-    env = paste0("VQA_TEST_CONTRACT=", contract)
+  output <- suppressWarnings(withr::with_envvar(
+    c(VQA_TEST_CONTRACT = contract),
+    system2(rscript, shQuote(script), stdout = TRUE, stderr = TRUE)
   ))
   status <- attr(output, "status")
   if (is.null(status)) status <- 0L

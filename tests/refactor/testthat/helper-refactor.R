@@ -28,11 +28,9 @@ run_refactor_command <- function(script, data_root, assessment = NULL,
   if (script == "analyse.R" && !is.null(seed)) {
     args <- c(args, "--seed", as.character(as.integer(seed)))
   }
-  environment <- paste0("R_LIBS_USER=", paste(.libPaths(), collapse = .Platform$path.sep))
-  output <- system2(
-    refactor_rscript, args,
-    stdout = TRUE, stderr = TRUE,
-    env = environment
+  output <- withr::with_envvar(
+    c(R_LIBS_USER = paste(.libPaths(), collapse = .Platform$path.sep)),
+    system2(refactor_rscript, shQuote(args), stdout = TRUE, stderr = TRUE)
   )
   status <- attr(output, "status")
   if (is.null(status)) status <- 0L
@@ -109,9 +107,11 @@ read_refactor_tables <- function(directory) {
 }
 
 relative_file_names <- function(files, root) {
-  root <- normalizePath(root, mustWork = TRUE)
-  files <- normalizePath(files, mustWork = TRUE)
-  sub(paste0("^", root, "[/\\\\]?"), "", files)
+  root <- normalizePath(root, winslash = "/", mustWork = TRUE)
+  files <- normalizePath(files, winslash = "/", mustWork = TRUE)
+  prefix <- paste0(sub("/+$", "", root), "/")
+  stopifnot(all(startsWith(files, prefix)))
+  substring(files, nchar(prefix) + 1L)
 }
 
 compare_named_table_sets <- function(actual, expected, tolerance = 1e-12) {
