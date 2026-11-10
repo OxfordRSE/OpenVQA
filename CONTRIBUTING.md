@@ -80,7 +80,7 @@ lints selected R source and test files, and checks all six golden output contrac
 macOS 26, including same-seed repeatability and distinct-seed behaviour. A separate job
 measures standard-suite coverage and uploads it to Codecov.
 
-Ubuntu standard checks and all six Ubuntu and Windows output-contract shards run
+Ubuntu and Windows standard checks and all six Ubuntu and Windows output-contract shards run
 without repository-variable gates. Ubuntu output diagnostics remain non-blocking while
 parametric `fitdistr()` failures on sparse, zero-heavy and extreme inputs are investigated.
 macOS retains strict golden numerical and figure comparisons; Ubuntu and Windows check
