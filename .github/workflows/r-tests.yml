@@ -352,7 +352,7 @@ jobs:
           key: rv-refactor-${{ env.RV_VERSION }}-${{ runner.os }}-${{ runner.arch }}-r-${{ env.R_VERSION }}-${{ hashFiles('tests/refactor/rproject.toml', 'tests/refactor/rv.lock') }}
 
       - name: Sync R dependencies
-        run: rv --config-file tests/refactor/rproject.toml sync --locked
+        run: rv.exe --config-file tests/refactor/rproject.toml sync --locked
 
       - name: Run refactor tests
         env:

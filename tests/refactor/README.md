@@ -45,6 +45,9 @@ different, explicit responsibility:
 | macOS 26 | All six contracts: strict tables, decoded figures, and repeatability | This runner reproduces the reviewed golden fixtures and is the temporary canonical parity environment. |
 | Windows 2025 | Automatic numerical portability and repeatability checks across six assessments | Figure filenames use the same Windows-safe substitutions on every platform. |
 
+Windows PowerShell defines `rv` as an alias for `Remove-Variable`. The Windows
+dependency-install step calls `rv.exe` explicitly to run the package manager.
+
 Restore Ubuntu as a required portability check only after the legacy parametric-fitting
 methodology has been made robust for sparse, zero-heavy, and extreme-value inputs.
 The distinct-seed assertion remains active in the macOS 26
