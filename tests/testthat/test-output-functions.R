@@ -12,6 +12,13 @@ output_functions_environment <- function() {
 testthat::test_that("labels and filename formatting preserve existing substitutions", {
   env <- output_functions_environment()
   testthat::expect_equal(env$unix.friendly("Wet / Forest (A), [B]"), "wet___forest_a_b")
+  testthat::expect_equal(env$unix.friendly("Stems >=10 cm DBH"), "stems_geq10_cm_dbh")
+  testthat::expect_equal(env$unix.friendly("Stems <10 cm DBH"), "stems_lt10_cm_dbh")
+  testthat::expect_equal(env$unix.friendly(':"|?*'), "_____")
+  testthat::expect_equal(
+    env$filename_symbols(c("<10", "<=10", ">10", ">=10", "\u226410", "\u226510", "=10")),
+    c("lt10", "leq10", "gt10", "geq10", "leq10", "geq10", "=10")
+  )
   testthat::expect_equal(env$human.readable("v[forest]+s[canopy]"), "forest, canopy]")
   testthat::expect_equal(
     env$human.readable.landcover("v[forest]+d[mine]+r[r.pl]"), "forest] (reclaimed)"

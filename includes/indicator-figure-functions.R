@@ -90,6 +90,7 @@ plot_indicator_overlap <- function(indicator, config, output_paths) {
     veg.fname <- gsub(" ", "_", curr.veg)
     veg.fname <- gsub("/", "_", veg.fname)
     veg.fname <- gsub(",", "", veg.fname)
+    veg.fname <- filename_symbols(veg.fname)
 
     cat("\n")
     cat("====================================\n")
@@ -117,6 +118,7 @@ plot_indicator_overlap <- function(indicator, config, output_paths) {
       stratum.fname <- gsub(" ", "_", curr.stratum)
       stratum.fname <- gsub("/", "_", stratum.fname)
       stratum.fname <- gsub(",", "", stratum.fname)
+      stratum.fname <- filename_symbols(stratum.fname)
       stratum.fname <- tolower(stratum.fname)
       if (!indicator$has_stratum) stratum.fname == ""
 
