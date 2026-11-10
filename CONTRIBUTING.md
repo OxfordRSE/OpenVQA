@@ -80,12 +80,12 @@ lints selected R source and test files, and checks all six golden output contrac
 macOS 26, including same-seed repeatability and distinct-seed behaviour. A separate job
 measures standard-suite coverage and uploads it to Codecov.
 
-Ubuntu output diagnostics are disabled by default while parametric `fitdistr()` failures
-on sparse, zero-heavy and extreme inputs are investigated. Set the repository variable
-`ENABLE_UBUNTU_REFACTOR=true` to enable all six non-blocking Ubuntu shards. Windows checks
-are disabled pending Windows-safe fixture filenames; set `ENABLE_WINDOWS_REFACTOR=true`
-after correcting those names. See the
-[platform rationale and restoration criteria](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
+Ubuntu standard checks and all six Ubuntu and Windows output-contract shards run
+without repository-variable gates. Ubuntu output diagnostics remain non-blocking while
+parametric `fitdistr()` failures on sparse, zero-heavy and extreme inputs are investigated.
+macOS retains strict golden numerical and figure comparisons; Ubuntu and Windows check
+numerical portability and same-seed repeatability. See the
+[platform rationale](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
 
 The coverage job authenticates to Codecov using GitHub OIDC, with `id-token: write`
 permission scoped to that job. It uploads only `coverage.xml` and does not require a

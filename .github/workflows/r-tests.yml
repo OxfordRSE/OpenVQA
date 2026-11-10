@@ -19,10 +19,9 @@ env:
   RV_SHA256: '9805dbad14eb049265c0052635873c9b7891bc7334d445662c13fbad61cb269c'
 
 jobs:
-  # Retain the Ubuntu setup for fitting portability diagnostics; standard CI runs on macOS.
+  # Standard checks run on both Ubuntu and the reference macOS platform.
   tests:
     name: Demo and tests
-    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -245,11 +244,10 @@ jobs:
         run: Rscript tests/refactor/testthat.R
 
   # Linux fitting is currently diagnostic: poor-quality inputs can make the legacy
-  # fitdistr path abort before parity is evaluated. Enable it explicitly while
-  # investigating with the repository variable ENABLE_UBUNTU_REFACTOR=true.
+  # fitdistr path abort before parity is evaluated. Keep failures non-blocking
+  # while those numerical cases are investigated.
   refactor-ubuntu:
     name: Refactor diagnostic (ubuntu-24.04, ${{ matrix.contract }})
-    if: ${{ vars.ENABLE_UBUNTU_REFACTOR == 'true' }}
     continue-on-error: true
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -308,12 +306,9 @@ jobs:
           VQA_TEST_DISTINCT_SEED: false
         run: Rscript tests/refactor/testthat.R
 
-  # Keep the Windows runner definition executable, but do not allocate runners by default.
-  # Existing fixture names containing '>' cannot be checked out on Windows. Once renamed,
-  # set the repository variable ENABLE_WINDOWS_REFACTOR=true to restore all six shards.
+  # Windows checks numerical portability and same-seed repeatability.
   refactor-windows:
     name: Refactor portability (windows-2025, ${{ matrix.contract }})
-    if: ${{ vars.ENABLE_WINDOWS_REFACTOR == 'true' }} # GH repo variable
     runs-on: windows-2025
     timeout-minutes: 30
     env:
