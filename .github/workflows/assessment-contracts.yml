@@ -1,0 +1,120 @@
+name: Assessment contracts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: r-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refactor-macos:
+    name: Refactor parity (macos-26, ${{ matrix.contract }})
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+        with:
+          config-file: tests/refactor/rproject.toml
+          locked: 'true'
+
+      - name: Run refactor tests
+        env:
+          VQA_COMPARE_FIGURES: true
+          VQA_COMPARE_GOLDEN: true
+          VQA_NUMERIC_TOLERANCE: 1e-12
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
+        run: Rscript tests/refactor/testthat.R
+
+  refactor-ubuntu:
+    name: Refactor diagnostic (ubuntu-24.04, ${{ matrix.contract }})
+    continue-on-error: true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+        with:
+          config-file: tests/refactor/rproject.toml
+          locked: 'true'
+
+      - name: Run refactor tests
+        env:
+          VQA_GENERATE_FIGURES: false
+          VQA_COMPARE_FIGURES: false
+          VQA_COMPARE_GOLDEN: false
+          VQA_NUMERIC_TOLERANCE: 1e-8
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: false
+        run: Rscript tests/refactor/testthat.R
+
+  refactor-windows:
+    name: Refactor portability (windows-2025, ${{ matrix.contract }})
+    runs-on: windows-2025
+    timeout-minutes: 30
+    env:
+      RV_CONFIG_FILE: tests/refactor/rproject.toml
+    strategy:
+      fail-fast: false
+      matrix:
+        contract:
+          - vqa-demo1/main_001_current
+          - vqa-demo1/offset_001_current
+          - vqa-demo2/offset_baseline
+          - vqa-demo2/offset_current
+          - vqa-demo2/project_baseline
+          - vqa-demo2/project_current
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+        with:
+          config-file: tests/refactor/rproject.toml
+          locked: 'true'
+
+      - name: Run refactor tests
+        env:
+          VQA_GENERATE_FIGURES: false
+          VQA_COMPARE_FIGURES: false
+          VQA_COMPARE_GOLDEN: false
+          VQA_NUMERIC_TOLERANCE: 1e-8
+          VQA_TEST_CONTRACT: ${{ matrix.contract }}
+          VQA_TEST_DISTINCT_SEED: ${{ matrix.contract == 'vqa-demo2/project_current' }}
+        run: Rscript tests/refactor/testthat.R
