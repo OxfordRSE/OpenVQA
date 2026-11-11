@@ -82,3 +82,8 @@ Figure filename components use `lt`, `leq`, `gt` and `geq` for `<`, `<=` (or `â‰
 `>` and `>=` (or `â‰¥`), respectively, on all platforms. Other reserved symbols
 (`:`, `"`, `|`, `?` and `*`) become `_`. For example, `Stems >=10 cm DBH` produces
 `stems_geq10_cm_dbh`. Scientific labels in tables and figures retain their original text.
+
+[Assessment CI](../../.github/workflows/assessment-contracts.yml) defines the platform
+matrices and comparison settings. [Standard CI](../../.github/workflows/standard-tests.yml)
+and [coverage](../../.github/workflows/coverage.yml) run separately. All use the shared
+[R environment action](../../.github/actions/setup-r-environment/action.yml).
