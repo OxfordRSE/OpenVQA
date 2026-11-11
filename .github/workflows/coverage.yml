@@ -1,0 +1,41 @@
+name: Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: r-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Standard-suite coverage
+    runs-on: macos-26
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+
+      - name: Measure standard-suite coverage
+        run: Rscript tests/coverage.R
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standard-suite-coverage
+          path: coverage.xml
+      - uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          disable_search: true
+          use_oidc: true
+          fail_ci_if_error: true

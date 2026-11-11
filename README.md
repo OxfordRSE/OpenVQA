@@ -1,6 +1,6 @@
 # OpenVQA
 
-[![R CI](https://github.com/OxfordRSE/OpenVQA/actions/workflows/r-tests.yml/badge.svg)](https://github.com/OxfordRSE/OpenVQA/actions/workflows/r-tests.yml)
+[![Standard tests](https://github.com/OxfordRSE/OpenVQA/actions/workflows/standard-tests.yml/badge.svg)](https://github.com/OxfordRSE/OpenVQA/actions/workflows/standard-tests.yml)
 
 ## Run an assessment
 
