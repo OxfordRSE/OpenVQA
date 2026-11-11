@@ -1,3 +1,11 @@
+filename_symbols <- function(text) {
+  text <- gsub("<=|\u2264", "leq", text)
+  text <- gsub(">=|\u2265", "geq", text)
+  text <- gsub("<", "lt", text, fixed = TRUE)
+  text <- gsub(">", "gt", text, fixed = TRUE)
+  gsub('[:"|?*]', "_", text)
+}
+
 unix.friendly <- function(sometext) {
   #################################
   # Turn text into a unix-friendly file name
@@ -12,9 +20,7 @@ unix.friendly <- function(sometext) {
   str <- gsub("_-_", "-", str) # Remove redundant underscores+hyphens
   str <- gsub("]", "", str) # Remove square brackets
   str <- gsub("\\[", "", str) # Remove square brackets
-  if (.Platform$OS.type == "windows") {
-    str <- gsub('[<>:"|?*]', "_", str)
-  }
+  str <- filename_symbols(str)
   friendly <- tolower(str)
 
   return(friendly)

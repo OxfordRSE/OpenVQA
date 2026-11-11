@@ -176,11 +176,13 @@ testthat::test_that("nonzero empirical SR fitting works in a fresh session witho
     'stopifnot(all(is.finite(unlist(bootstrap[paste0("X", 1:5)]))))',
     'stopifnot(!"package:MASS" %in% search())'
   ), script)
-  output <- suppressWarnings(system2(
-    file.path(R.home("bin"), "Rscript"),
-    c("--vanilla", shQuote(script), shQuote(root), shQuote(payload)),
-    stdout = TRUE, stderr = TRUE,
-    env = paste0("R_LIBS_USER=", shQuote(paste(.libPaths(), collapse = .Platform$path.sep)))
+  output <- suppressWarnings(withr::with_envvar(
+    c(R_LIBS_USER = paste(.libPaths(), collapse = .Platform$path.sep)),
+    system2(
+      file.path(R.home("bin"), "Rscript"),
+      c("--vanilla", shQuote(script), shQuote(root), shQuote(payload)),
+      stdout = TRUE, stderr = TRUE
+    )
   ))
   status <- attr(output, "status")
   if (is.null(status)) status <- 0L

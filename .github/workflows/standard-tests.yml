@@ -1,0 +1,123 @@
+name: Standard tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: r-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Demo and tests (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+
+      - name: Run standard tests
+        run: Rscript tests/testthat.R
+
+      - name: Validate minimal demo inputs
+        run: |
+          Rscript validate.R --data-root data/vqa-demo1-min
+          Rscript validate.R --data-root data/vqa-demo2-min
+
+      - name: Run lintr
+        shell: Rscript {0}
+        run: |
+          files <- c(
+            "analyse.R",
+            "validate.R",
+            list.files(
+              c(
+                "analysis", "reporting", "pipeline", "preprocessing", "validation",
+                "tests/testthat", "tests/refactor/testthat"
+              ),
+              pattern = "[.]R$", recursive = TRUE, full.names = TRUE
+            )
+          )
+          lints <- unlist(lapply(files, lintr::lint), recursive = FALSE)
+          print(lints)
+          quit(status = as.integer(length(lints) > 0L))
+
+  tests-macos:
+    name: Demo and tests (macos-26)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+
+      - name: Run standard tests
+        run: Rscript tests/testthat.R
+
+      - name: Validate minimal demo inputs
+        run: |
+          Rscript validate.R --data-root data/vqa-demo1-min
+          Rscript validate.R --data-root data/vqa-demo2-min
+
+      - name: Run lintr
+        shell: Rscript {0}
+        run: |
+          files <- c(
+            "analyse.R",
+            "validate.R",
+            list.files(
+              c(
+                "analysis", "reporting", "pipeline", "preprocessing", "validation",
+                "tests/testthat", "tests/refactor/testthat"
+              ),
+              pattern = "[.]R$", recursive = TRUE, full.names = TRUE
+            )
+          )
+          lints <- unlist(lapply(files, lintr::lint), recursive = FALSE)
+          print(lints)
+          quit(status = as.integer(length(lints) > 0L))
+
+  tests-windows:
+    name: Demo and tests (windows-2025)
+    runs-on: windows-2025
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up R environment
+        uses: ./.github/actions/setup-r-environment
+
+      - name: Run standard tests
+        run: Rscript tests/testthat.R
+
+      - name: Validate minimal demo inputs
+        run: |
+          Rscript validate.R --data-root data/vqa-demo1-min
+          Rscript validate.R --data-root data/vqa-demo2-min
+
+      - name: Run lintr
+        shell: Rscript {0}
+        run: |
+          files <- c(
+            "analyse.R",
+            "validate.R",
+            list.files(
+              c(
+                "analysis", "reporting", "pipeline", "preprocessing", "validation",
+                "tests/testthat", "tests/refactor/testthat"
+              ),
+              pattern = "[.]R$", recursive = TRUE, full.names = TRUE
+            )
+          )
+          lints <- unlist(lapply(files, lintr::lint), recursive = FALSE)
+          print(lints)
+          quit(status = as.integer(length(lints) > 0L))

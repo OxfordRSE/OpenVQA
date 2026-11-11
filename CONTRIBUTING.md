@@ -74,18 +74,30 @@ The separate coverage CI job uploads that report using the
 
 ## Continuous integration
 
-[GitHub Actions](.github/workflows/r-tests.yml) runs on pull requests, pushes to `main`,
+- [Standard tests](.github/workflows/standard-tests.yml): standard suite, demo validation
+  and lint on Ubuntu, macOS and Windows.
+- [Assessment contracts](.github/workflows/assessment-contracts.yml): all six assessments
+  on each platform, with comparison settings defined in the jobs.
+- [Coverage](.github/workflows/coverage.yml): standard-suite coverage and Codecov upload.
+
+All workflows use [shared R environment setup](.github/actions/setup-r-environment/action.yml).
+This action owns the R/rv version pins, platform-specific archive checksums, dependency
+caches and installation. Standard and coverage jobs use root dependencies; assessment
+jobs use the committed test manifest and lock. Each workflow has its own concurrency
+scope, and Codecov's OIDC permission is granted only to the coverage job.
+
+[GitHub Actions](.github/workflows/standard-tests.yml) runs on pull requests, pushes to `main`,
 and manual dispatch. It validates both minimal demo projects, runs the standard suite,
 lints selected R source and test files, and checks all six golden output contracts on
 macOS 26, including same-seed repeatability and distinct-seed behaviour. A separate job
 measures standard-suite coverage and uploads it to Codecov.
 
-Ubuntu output diagnostics are disabled by default while parametric `fitdistr()` failures
-on sparse, zero-heavy and extreme inputs are investigated. Set the repository variable
-`ENABLE_UBUNTU_REFACTOR=true` to enable all six non-blocking Ubuntu shards. Windows checks
-are disabled pending Windows-safe fixture filenames; set `ENABLE_WINDOWS_REFACTOR=true`
-after correcting those names. See the
-[platform rationale and restoration criteria](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
+Ubuntu and Windows standard checks and all six Ubuntu and Windows output-contract shards run
+without repository-variable gates. Ubuntu output diagnostics remain non-blocking while
+parametric `fitdistr()` failures on sparse, zero-heavy and extreme inputs are investigated.
+macOS retains strict golden numerical and figure comparisons; Ubuntu and Windows check
+numerical portability and same-seed repeatability. See the
+[platform rationale](tests/refactor/README.md#why-ci-is-intentionally-asymmetric).
 
 The coverage job authenticates to Codecov using GitHub OIDC, with `id-token: write`
 permission scoped to that job. It uploads only `coverage.xml` and does not require a

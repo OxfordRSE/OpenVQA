@@ -173,7 +173,7 @@ resolve_runtime_config <- function(data_root, assessment, seed = NULL,
     is.na(data_root) || !dir.exists(data_root)) {
     stop("data_root must be an existing directory.", call. = FALSE)
   }
-  data_root <- normalizePath(data_root, mustWork = TRUE)
+  data_root <- normalizePath(data_root, winslash = "/", mustWork = TRUE)
   if (!is.character(assessment) || length(assessment) != 1L ||
     is.na(assessment) || !grepl("^[[:alnum:]_-]+$", assessment)) {
     stop("assessment must be one directory name within data_root.", call. = FALSE)
@@ -182,7 +182,7 @@ resolve_runtime_config <- function(data_root, assessment, seed = NULL,
   if (!dir.exists(assessment_dir)) {
     stop("Assessment directory does not exist within data_root.", call. = FALSE)
   }
-  assessment_dir <- normalizePath(assessment_dir, mustWork = TRUE)
+  assessment_dir <- normalizePath(assessment_dir, winslash = "/", mustWork = TRUE)
   if (!identical(dirname(assessment_dir), data_root)) {
     stop("Assessment directory must belong to data_root.", call. = FALSE)
   }

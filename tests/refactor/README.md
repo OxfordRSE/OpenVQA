@@ -41,17 +41,24 @@ different, explicit responsibility:
 
 | Environment | Current check | Reason |
 | --- | --- | --- |
-| Ubuntu 24.04 | Disabled, with the complete six-shard diagnostic retained | Poor-quality inputs can make the legacy `fitdistr()` path abort before output comparison; set `ENABLE_UBUNTU_REFACTOR=true` to investigate without blocking required checks. |
+| Ubuntu 24.04 | Automatic, non-blocking numerical diagnostics across six assessments | Poor-quality inputs can make the legacy `fitdistr()` path abort before output comparison. |
 | macOS 26 | All six contracts: strict tables, decoded figures, and repeatability | This runner reproduces the reviewed golden fixtures and is the temporary canonical parity environment. |
-| Windows 2025 | Disabled, with the complete six-shard job retained | Existing fixture names containing `>` fail during checkout before R starts. |
+| Windows 2025 | Automatic numerical portability and repeatability checks across six assessments | Figure filenames use the same Windows-safe substitutions on every platform. |
+
+Windows PowerShell defines `rv` as an alias for `Remove-Variable`. The Windows
+dependency-install step calls `rv.exe` explicitly to run the package manager.
+
+Runtime paths use `normalizePath(..., winslash = "/")` for consistent comparisons.
+Test subprocesses inherit temporarily scoped environment variables and receive quoted
+arguments, including project paths containing spaces. Relative output names are obtained
+by removing a literal normalized directory prefix, without interpreting paths as regexes.
 
 Restore Ubuntu as a required portability check only after the legacy parametric-fitting
-methodology has been made robust for sparse, zero-heavy, and extreme-value inputs. Restore
-Windows by renaming incompatible fixtures and setting the repository variable
-`ENABLE_WINDOWS_REFACTOR=true`. The distinct-seed assertion remains active in the macOS 26
+methodology has been made robust for sparse, zero-heavy, and extreme-value inputs.
+The distinct-seed assertion remains active in the macOS 26
 `vqa-demo2/project_current` shard.
 
-CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`. The optional
+CI selects one assessment per job with `VQA_TEST_CONTRACT=project/assessment`. The automatic
 Ubuntu diagnostic uses `VQA_COMPARE_GOLDEN=false`: it requires the golden result-file
 manifest, then compares two same-seed runs on Linux. macOS 26 retains strict golden
 numerical and figure parity.
@@ -70,3 +77,13 @@ inputs or automatically regenerate fixtures from tests or CI.
 Compare new results with the recorded source revision and explain the intended differences.
 After review, replace only the approved `results` and `figs` files and record the seed in
 `seed.yaml`. Keep logs and temporary inputs out of the fixture set.
+
+Figure filename components use `lt`, `leq`, `gt` and `geq` for `<`, `<=` (or `≤`),
+`>` and `>=` (or `≥`), respectively, on all platforms. Other reserved symbols
+(`:`, `"`, `|`, `?` and `*`) become `_`. For example, `Stems >=10 cm DBH` produces
+`stems_geq10_cm_dbh`. Scientific labels in tables and figures retain their original text.
+
+[Assessment CI](../../.github/workflows/assessment-contracts.yml) defines the platform
+matrices and comparison settings. [Standard CI](../../.github/workflows/standard-tests.yml)
+and [coverage](../../.github/workflows/coverage.yml) run separately. All use the shared
+[R environment action](../../.github/actions/setup-r-environment/action.yml).
