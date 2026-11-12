@@ -89,17 +89,38 @@ rv.exe --version
 
 Always write **`rv.exe`** in PowerShell: `rv` is also the name of an unrelated built-in command.
 
-## 4. Download OpenVQA and open its folder
+## 4. Install Git and download OpenVQA
 
-1. Open [OpenVQA on GitHub](https://github.com/OxfordRSE/OpenVQA), then choose
-   **Code → Download ZIP**. No GitHub account or Git installation is needed.
-2. Extract the ZIP: double-click it in Finder on macOS; use **Extract All** in File Explorer on Windows. Keep the whole extracted folder.
-3. Select that folder in your command window:
-   - **macOS:** type `cd` followed by a space, drag the extracted folder from Finder into Terminal, then press Return.
-   - **Windows:** copy the extracted folder's path from File Explorer's address bar, then run `cd "C:\path\to\OpenVQA-main"`, replacing the example path with yours. Keep the quotes.
-4. Run `ls` on macOS or `dir` on Windows. The listing should include `analyse.R` and `rproject.toml`.
+Git downloads OpenVQA and lets you update it later. You do not need a GitHub account. First check whether Git is installed:
 
-Repeat step 3 whenever you open a new command window to use OpenVQA.
+```sh
+git --version
+```
+
+If it does not print a Git version number:
+
+- **macOS:** run `xcode-select --install`, follow the installation dialog, then reopen Terminal. See [Git's macOS instructions](https://git-scm.com/install/mac) if needed.
+- **Windows:** download the [Git for Windows x64 installer](https://git-scm.com/install/windows), run it with the default settings, then reopen PowerShell.
+
+Run `git --version` again to check the installation.
+
+Choose a folder to hold the software, such as Documents, and select it in your command window:
+
+- **macOS:** type `cd` followed by a space, drag that folder from Finder into Terminal, then press Return.
+- **Windows:** copy the folder's path from File Explorer's address bar, then run `cd "C:\path\to\Documents"`, replacing the example path with yours. Keep the quotes.
+
+Run these commands once to download the latest code from `main` into a new **OpenVQA** subfolder and enter it:
+
+```sh
+git clone --branch main https://github.com/OxfordRSE/OpenVQA.git
+cd OpenVQA
+```
+
+Run `ls` on macOS or `dir` on Windows. The listing should include `analyse.R` and `rproject.toml`.
+
+If you previously downloaded a ZIP, keep that old folder and clone into a different location. ZIP downloads cannot use the Git update commands below.
+
+Whenever you open a new command window, use the same folder-selection instructions to enter the **OpenVQA** folder itself. You only need to clone once; use step 7 for updates.
 
 ## 5. Install dependencies and check OpenVQA
 
@@ -137,5 +158,39 @@ Rscript analyse.R --data-root data/vqa-demo2-min --assessment project_current --
 Wait for the analysis to finish. In Finder or File Explorer, open `data/vqa-demo2-min/project_current/`: tables and `vqa_summary.xlsx` are in **results**, figures in **figs**, and logs in **log**. The project's settings are in `data/vqa-demo2-min/params.yaml`; assessment inputs are in `project_current/inputs/`. Rerunning an assessment can replace its generated outputs. Add `--no-figures` to the analysis command to try numerical output alone, as in Windows CI.
 
 See [Run an assessment](README.md#run-an-assessment) for the other demo and [Configuration contract](README.md#configuration-contract) for settings.
+
+For your own work, keep project data and settings outside the OpenVQA software folder. You can copy a demo project there using Finder or File Explorer and pass its quoted folder path to `--data-root`. This keeps your settings separate from software updates.
+
+## 7. Update OpenVQA
+
+From your existing **OpenVQA** folder, run:
+
+```sh
+git pull --ff-only
+```
+
+This downloads the latest code on `main`, rather than selecting a fixed release. After a successful update, refresh the dependencies and check the version:
+
+```sh
+rv sync
+Rscript analyse.R --version
+```
+
+On Windows, use `rv.exe sync` instead of `rv sync`.
+
+If Git reports **"Your local changes to the following files would be overwritten by merge"**, you have edited files included with OpenVQA. Temporarily save those edits, then retry:
+
+```sh
+git stash
+git pull --ff-only
+```
+
+If the stash reported **"Saved working directory"** and the pull succeeded, restore your edits:
+
+```sh
+git stash pop
+```
+
+Then refresh dependencies and check the version as above. A stash saves edits to files Git already tracks; it leaves new, untracked files in place. If any command fails or reports **CONFLICT**, stop and ask for help with the message. A conflicting `stash pop` keeps the saved stash, but the affected files need resolving before you run an analysis. Do not discard your changes to force an update.
 
 If a command fails, stop and keep its error message. `command not found` or `not recognized` usually means the tool is not installed, its folder is missing from Path, or the command window needs reopening. An error about `analyse.R` not being found means you need to select the OpenVQA folder again.
