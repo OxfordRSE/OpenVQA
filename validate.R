@@ -7,7 +7,9 @@ suppressPackageStartupMessages({
 source(file.path("validation", "helpers.R"), local = TRUE)
 source(file.path("pipeline", "io.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
+source(file.path("pipeline", "run-report.R"), local = TRUE)
 source(file.path("validation", "requirements.R"), local = TRUE)
+source(file.path("validation", "snapshot.R"), local = TRUE)
 source(file.path("validation", "schema.R"), local = TRUE)
 source(file.path("validation", "crossfile.R"), local = TRUE)
 
@@ -216,6 +218,127 @@ build_assessment_file_plan <- function(
   }
 
   unique(required)
+}
+
+# Each assessment is a complete report so callers can retain it independently of the project run.
+run_assessment_validation <- function(data_root, assessment, schema_root, verbose = FALSE) {
+  result <- new_run_report("validate", list(
+    type = "assessment", data_root = data_root, requested_assessment = assessment,
+    assessments = I(assessment), excluded_dirs = I(character())
+  ))
+  result$report_type <- "assessment"
+  rows <- list()
+  stages <- data.frame(
+    assessment = assessment, stage = c("schema", "crossfile"),
+    status = "not_run", reason = "Validation stopped before this stage."
+  )
+  inputs <- list(algorithm = "csv-md5-v1", captured_at = NULL, stable = NULL, files = list())
+  stage <- "setup"
+  stage_index <- NULL
+  # Store completed fragments outside the try block so a later exception cannot discard them.
+  record <- function(fragment) rows[[length(rows) + 1L]] <<- fragment
+  set_stage <- function(status, reason = NA_character_) {
+    stages$status[stage_index] <<- status
+    stages$reason[stage_index] <<- reason
+  }
+  execution_error <- tryCatch(
+    {
+      assessment_dir <- normalizePath(file.path(data_root, assessment),
+        winslash = "/", mustWork = TRUE
+      )
+      if (!dir.exists(assessment_dir) || !identical(dirname(assessment_dir), data_root)) {
+        stop("Assessment directory must belong to data_root.", call. = FALSE)
+      }
+      stage <- "configuration"
+      assessment_params <- read_project_params(data_root, assessment)
+      inputs_dir <- file.path(assessment_dir, "inputs")
+      stage <- "input_snapshot"
+      before <- snapshot_validation_inputs(inputs_dir)
+      inputs$captured_at <- before$captured_at
+      inputs$files <- before$files
+      file_map <- build_file_map(inputs_dir)
+      stage <- "file_plan"
+      input_files <- build_assessment_file_plan(
+        active_indicators = assessment_params$active_indicators,
+        data_type = assessment_params$data_type, available_files = names(file_map),
+        qh_method = assessment_params$qh_method
+      )
+      cat(sprintf(
+        "Assessment: %s\n  Inputs: %s\n",
+        assessment, paste(input_files, collapse = ", ")
+      ))
+      if ("coverByStratum.csv" %in% input_files) {
+        cat("  Note: coverByStratum.csv schema is provisional.\n")
+      }
+      stage <- "schema"
+      stage_index <- match(stage, stages$stage)
+      assessment_report <- run_schema_validation(
+        assessment, inputs_dir, input_files, schema_root,
+        on_result = record
+      )
+      if (!nrow(assessment_report)) stop("Schema stage returned no checks.", call. = FALSE)
+      set_stage("completed")
+      cat("  Schema\n")
+      print_validation_report(assessment_report, verbose = verbose, prefix = "schema")
+
+      stage <- "crossfile"
+      stage_index <- match(stage, stages$stage)
+      if (any(assessment_report$status != "pass")) {
+        set_stage("skipped", "Schema validation failed.")
+        cat("  Crossfile: skipped because schema validation failed.\n\n")
+      } else if (identical(assessment_params$qh_method, "assume.0")) {
+        set_stage("not_applicable", "Assumed-zero assessment.")
+        cat("  Crossfile: not applicable to an assumed-zero assessment.\n\n")
+      } else {
+        crossfile_report <- run_crossfile_validation(
+          data_root, assessment, assessment_params$active_indicators,
+          file_map, assessment_params,
+          on_result = record
+        )
+        if (!nrow(crossfile_report)) stop("Crossfile stage returned no checks.", call. = FALSE)
+        set_stage("completed")
+        cat("  Crossfile\n")
+        print_validation_report(crossfile_report, verbose = verbose, prefix = "crossfile")
+        cat("\n")
+      }
+      NULL
+    },
+    error = function(e) {
+      if (!is.null(stage_index)) set_stage("error", conditionMessage(e))
+      list(message = conditionMessage(e), assessment = assessment, stage = stage)
+    }
+  )
+  if (!is.null(inputs$captured_at)) {
+    # shortcut: endpoint hashes miss reverted edits; use immutable inputs for stronger guarantees.
+    snapshot_error <- tryCatch(
+      {
+        after <- snapshot_validation_inputs(inputs_dir)
+        inputs$stable <- identical(inputs$files, after$files)
+        if (!inputs$stable) stop("Input files changed during validation.", call. = FALSE)
+        NULL
+      },
+      error = function(e) {
+        list(message = conditionMessage(e), assessment = assessment, stage = "input_snapshot")
+      }
+    )
+    if (!is.null(snapshot_error)) {
+      inputs$stable <- FALSE
+      if (is.null(execution_error)) execution_error <- snapshot_error
+    }
+  }
+  # Single-bracket assignment retains a required null instead of deleting the error field.
+  result["error"] <- list(execution_error)
+  report <- bind_validation_reports(rows)
+  result$validation <- list(rows = report, stages = stages, inputs = inputs)
+  result$outcome <- if (!is.null(execution_error)) {
+    "execution_error"
+  } else if (any(report$status != "pass")) {
+    "invalid_data"
+  } else {
+    "success"
+  }
+  result$ended_at <- run_report_time()
+  result
 }
 
 main <- function() {

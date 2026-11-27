@@ -218,3 +218,78 @@ testthat::test_that("snapshot read failures preserve returned checks and remain 
     Sys.chmod(inputs, "0755")
   }
 })
+
+
+assessment_result <- function(root) {
+  result <- NULL
+  capture.output(result <- withr::with_dir(report_repo, validator$run_assessment_validation(
+    normalizePath(root, winslash = "/"), "assessment", file.path(report_repo, "schema")
+  )))
+  result
+}
+
+testthat::test_that("standalone assessments retain outcomes, stages and input identity", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  before <- tools::md5sum(list.files(root, recursive = TRUE, full.names = TRUE))
+  withr::local_seed(10)
+  seed <- .Random.seed
+  result <- assessment_result(root)
+  testthat::expect_identical(result$report_type, "assessment")
+  testthat::expect_identical(result$outcome, "success")
+  testthat::expect_identical(result$validation$stages$status, c("completed", "not_applicable"))
+  testthat::expect_true(result$validation$inputs$stable)
+  testthat::expect_identical(result$validation$inputs$algorithm, "csv-md5-v1")
+  testthat::expect_identical(.Random.seed, seed)
+  testthat::expect_identical(tools::md5sum(names(before)), before)
+  destination <- tempfile(fileext = ".json")
+  on.exit(unlink(destination), add = TRUE)
+  validator$write_run_report(result, destination)
+  expect_report_schema(destination)
+  unlink(file.path(root, "assessment", "inputs", "landCover.csv"))
+  result <- assessment_result(root)
+  testthat::expect_identical(result$outcome, "invalid_data")
+  testthat::expect_identical(result$validation$stages$status, c("completed", "skipped"))
+  validator$write_run_report(result, paste0(destination, "-invalid"))
+  on.exit(unlink(paste0(destination, "-invalid")), add = TRUE)
+  expect_report_schema(paste0(destination, "-invalid"))
+  yaml::write_yaml(list(qh_method = "bad"), file.path(root, "params.yaml"))
+  result <- assessment_result(root)
+  testthat::expect_identical(result$outcome, "execution_error")
+  testthat::expect_identical(result$error$stage, "configuration")
+  testthat::expect_identical(result$validation$stages$status, c("not_run", "not_run"))
+})
+
+testthat::test_that("standalone assessment failures preserve earlier schema rows", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  original <- validator$validate_schema_file
+  rlang::local_bindings(
+    build_assessment_file_plan = function(...) c("landCover.csv", "species.csv"),
+    validate_schema_file = function(file_name, ...) {
+      if (file_name == "species.csv") stop("second CSV failed")
+      original(file_name, ...)
+    }, .env = validator
+  )
+  result <- assessment_result(root)
+  testthat::expect_identical(result$outcome, "execution_error")
+  testthat::expect_match(result$error$message, "second CSV")
+  testthat::expect_identical(result$validation$rows$check_id, "landCover.csv")
+  testthat::expect_identical(result$validation$stages$status, c("error", "not_run"))
+})
+
+testthat::test_that("standalone assessments reject input changes detected after checks finish", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  original <- validator$run_schema_validation
+  rlang::local_bindings(run_schema_validation = function(assessment, inputs_dir, ...) {
+    result <- original(assessment = assessment, inputs_dir = inputs_dir, ...)
+    cat("\n", file = file.path(inputs_dir, "landCover.csv"), append = TRUE)
+    result
+  }, .env = validator)
+  result <- assessment_result(root)
+  testthat::expect_identical(result$outcome, "execution_error")
+  testthat::expect_identical(result$error$stage, "input_snapshot")
+  testthat::expect_false(result$validation$inputs$stable)
+  testthat::expect_true(all(result$validation$rows$status == "pass"))
+})
