@@ -36,7 +36,7 @@ make_result <- function(
   )
 }
 
-#' Create an informational passing result
+#' Create a passing result without an issue severity
 #'
 #' A dedicated constructor keeps successful checks identical to failures in
 #' structure, so callers can append results without special cases while still
@@ -46,7 +46,7 @@ make_result <- function(
 #' @return One-row passing report data frame.
 #' @keywords internal
 pass_result <- function(check_id, message, file = NULL, details = NULL) {
-  make_result(check_id, "info", "pass", message, file = file, details = details)
+  make_result(check_id, NA_character_, "pass", message, file = file, details = details)
 }
 
 #' Create a warning-severity result

@@ -26,9 +26,9 @@ testthat::test_that("callable validation returns results and preserves caller st
   testthat::expect_identical(result$outcome, "success")
   testthat::expect_null(result$error)
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status, c("completed", "not_applicable")
+    assessment_stage_statuses(result), c("completed", "not_applicable")
   )
-  testthat::expect_equal(nrow(result$validation$assessments[[1]]$validation$rows), 1)
+  testthat::expect_equal(nrow(assessment_rows(result)), 1)
   testthat::expect_identical(result$backend$version, readLines(file.path(report_repo, "VERSION")))
   testthat::expect_identical(.Random.seed, rng)
   testthat::expect_identical(getwd(), directory)
@@ -49,7 +49,9 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
   report <- jsonlite::fromJSON(success, simplifyVector = FALSE)
   testthat::expect_length(report$scope$assessments, 1)
   testthat::expect_null(report$error)
-  testthat::expect_null(report$validation$assessments[[1]]$validation$rows[[1]]$details)
+  testthat::expect_null(
+    report$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$details
+  )
   testthat::expect_identical(validation_command(c("--data-root", root))$status, 0L)
 
   unlink(file.path(root, "assessment", "inputs", "landCover.csv"))
@@ -64,7 +66,7 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
     report$validation$assessments[[1]]$validation$stages, `[[`, character(1), "status"
   ), c("completed", "skipped"))
   testthat::expect_match(
-    report$validation$assessments[[1]]$validation$rows[[1]]$message, "Missing input"
+    report$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$message, "Missing input"
   )
   testthat::expect_identical(validation_command(c("--data-root", root))$status, 1L)
 
@@ -101,7 +103,7 @@ testthat::test_that("empty scope, empty stages and file-plan failures cannot pas
     result$validation$assessments[[1]]$error$stage, "file_plan"
   )
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status, rep("not_run", 2)
+    assessment_stage_statuses(result), rep("not_run", 2)
   )
   result <- validation_result(root, exclude_dirs = "assessment")
   testthat::expect_identical(result$outcome, "execution_error")
@@ -113,7 +115,7 @@ testthat::test_that("empty scope, empty stages and file-plan failures cannot pas
   yaml::write_yaml(list(qh_method = "assume.0"), file.path(root, "params.yaml"))
   result <- validation_result(root)
   testthat::expect_identical(result$outcome, "invalid_data")
-  testthat::expect_identical(result$validation$assessments[[1]]$validation$rows$status, "fail")
+  testthat::expect_identical(assessment_rows(result)$status, "fail")
   rlang::local_bindings(
     run_schema_validation = function(...) validator$bind_validation_reports(), .env = validator
   )
@@ -122,7 +124,7 @@ testthat::test_that("empty scope, empty stages and file-plan failures cannot pas
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_match(result$validation$assessments[[1]]$error$message, "no checks")
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status, c("error", "not_run")
+    assessment_stage_statuses(result), c("error", "not_run")
   )
 })
 
@@ -152,10 +154,10 @@ testthat::test_that("completed schema files survive a later exception", {
   result <- validation_result(root)
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$rows$check_id, "landCover.csv"
+    assessment_rows(result)$check_id, "landCover.csv"
   )
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status,
+    assessment_stage_statuses(result),
     c("error", "not_run")
   )
   destination <- tempfile(fileext = ".json")
@@ -175,11 +177,11 @@ testthat::test_that("assessment errors preserve results and allow later assessme
   result <- validation_result(root)
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_null(result$error)
-  testthat::expect_identical(result$validation$assessments[[2]]$error$assessment, "second")
+  testthat::expect_identical(result$validation$assessments[[2]]$scope$assessment, "second")
   testthat::expect_identical(result$validation$assessments[[2]]$error$stage, "configuration")
-  testthat::expect_equal(nrow(result$validation$assessments[[1]]$validation$rows), 1)
+  testthat::expect_equal(nrow(assessment_rows(result)), 1)
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status,
+    assessment_stage_statuses(result),
     c("completed", "not_applicable")
   )
 })
@@ -196,18 +198,18 @@ testthat::test_that("real warning and cross-file results keep their scientific s
   result <- validation_result(root)
   testthat::expect_identical(result$outcome, "success")
   testthat::expect_true(
-    any(result$validation$assessments[[1]]$validation$rows$severity == "warning")
+    any(assessment_rows(result)$severity == "warning")
   )
-  testthat::expect_true(all(result$validation$assessments[[1]]$validation$rows$status == "pass"))
+  testthat::expect_true(all(assessment_rows(result)$status == "pass"))
   metadata <- file.path(root, "main_001_current", "inputs", "plotMetadata.csv")
   table <- validator$read_csv_table(metadata)
   write.csv(rbind(table, table[1, ]), metadata, row.names = FALSE)
   result <- validation_result(root)
   testthat::expect_identical(result$outcome, "invalid_data")
-  rows <- result$validation$assessments[[1]]$validation$rows
+  rows <- assessment_rows(result)
   testthat::expect_true(any(rows$stage == "crossfile" & rows$status == "fail"))
   testthat::expect_true(
-    all(result$validation$assessments[[1]]$validation$stages$status == "completed")
+    all(assessment_stage_statuses(result) == "completed")
   )
 
   rlang::local_bindings(
@@ -218,10 +220,10 @@ testthat::test_that("real warning and cross-file results keep their scientific s
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_match(result$validation$assessments[[1]]$error$message, "cross-file exception")
   testthat::expect_identical(
-    result$validation$assessments[[1]]$validation$stages$status, c("completed", "error")
+    assessment_stage_statuses(result), c("completed", "error")
   )
   testthat::expect_true(
-    any(result$validation$assessments[[1]]$validation$rows$stage == "crossfile")
+    any(assessment_rows(result)$stage == "crossfile")
   )
 })
 
@@ -232,15 +234,21 @@ testthat::test_that("publication preserves Unicode, nulls, arrays and caller RNG
   on.exit(unlink(c(root, directory), recursive = TRUE), add = TRUE)
   result <- validation_result(root, exclude_dirs = character())
   text <- "café \"quoted\" \\ path\nnext line"
-  result$validation$assessments[[1]]$validation$rows$message <- text
-  result$validation$assessments[[1]]$validation$rows$details <- ""
+  result$validation$assessments[[1]]$validation$stages[[1]]$checks$message <- text
+  result$validation$assessments[[1]]$validation$stages[[1]]$checks$details <- ""
   destination <- file.path(directory, "résultat.json")
   validator$write_run_report(result, destination)
   expect_report_schema(destination)
   loaded <- jsonlite::fromJSON(destination, simplifyVector = FALSE)
-  testthat::expect_identical(loaded$validation$assessments[[1]]$validation$rows[[1]]$message, text)
-  testthat::expect_identical(loaded$validation$assessments[[1]]$validation$rows[[1]]$details, "")
-  testthat::expect_null(loaded$validation$assessments[[1]]$validation$rows[[1]]$extra_columns)
+  testthat::expect_identical(
+    loaded$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$message, text
+  )
+  testthat::expect_identical(
+    loaded$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$details, ""
+  )
+  testthat::expect_null(
+    loaded$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$extra_columns
+  )
   testthat::expect_length(loaded$scope$excluded_dirs, 0)
   testthat::expect_length(list.files(directory, all.files = TRUE, no.. = TRUE), 1)
   testthat::expect_match(loaded$started_at, "Z$")
@@ -458,7 +466,7 @@ testthat::test_that("input changes prevent success and do not stop other assessm
   first <- result$validation$assessments[[1]]
   testthat::expect_identical(first$error$stage, "input_snapshot")
   testthat::expect_false(first$validation$inputs$stable)
-  testthat::expect_true(all(first$validation$rows$status == "pass"))
+  testthat::expect_true(all(validator$validation_report_rows(first)$status == "pass"))
   testthat::expect_identical(result$validation$assessments[[2]]$outcome, "success")
   destination <- tempfile(fileext = ".json")
   on.exit(unlink(destination), add = TRUE)
@@ -501,5 +509,36 @@ testthat::test_that("snapshot read failures preserve returned checks and remain 
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_match(child$error$message, "recheck failed")
   testthat::expect_false(child$validation$inputs$stable)
-  testthat::expect_equal(nrow(child$validation$rows), 1)
+  testthat::expect_equal(nrow(validator$validation_report_rows(child)), 1)
+})
+
+testthat::test_that("completed reports inherit context and keep warnings separate from failure", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  result <- validation_result(root)
+  child <- result$validation$assessments[[1]]
+  testthat::expect_identical(result$report_version, "2.0")
+  testthat::expect_named(child$scope, c("data_root", "assessment"))
+  testthat::expect_named(child$validation, c("stages", "inputs"))
+  for (stage in child$validation$stages) {
+    testthat::expect_named(stage, c("stage", "status", "reason", "checks"))
+    testthat::expect_false(any(c("assessment", "stage") %in% names(stage$checks)))
+  }
+  checks <- child$validation$stages[[1]]$checks
+  testthat::expect_identical(checks$status, "pass")
+  testthat::expect_true(all(is.na(checks$severity)))
+  rows <- validator$validation_report_rows(child)
+  testthat::expect_identical(rows$assessment, "assessment")
+  testthat::expect_identical(rows$stage, "schema")
+
+  land_cover <- data.frame(vegClass = "forest", lc.type = "vegetated/forest")
+  vegetation <- land_cover
+  agree <- validator$check_vegetation_type_consistency(land_cover, vegetation)
+  testthat::expect_identical(agree$severity, "warning")
+  testthat::expect_identical(agree$status, "pass")
+  testthat::expect_true(is.na(validator$pass_result("ok", "No issue")$severity))
+  vegetation$lc.type <- "changed"
+  warning <- validator$check_vegetation_type_consistency(land_cover, vegetation)
+  testthat::expect_identical(warning$severity, "warning")
+  testthat::expect_identical(warning$status, "pass")
 })

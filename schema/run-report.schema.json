@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "OpenVQA validation run or standalone assessment report 1.x",
+  "title": "OpenVQA validation run or standalone assessment report 2.x",
   "oneOf": [
     {
       "$ref": "#/definitions/runReport"
@@ -27,7 +27,7 @@
       "properties": {
         "report_version": {
           "type": "string",
-          "pattern": "^1\\.[0-9]+$"
+          "pattern": "^2\\.[0-9]+$"
         },
         "report_type": {
           "enum": [
@@ -43,77 +43,7 @@
           "minLength": 1
         },
         "scope": {
-          "type": "object",
-          "required": [
-            "type",
-            "data_root",
-            "requested_assessment",
-            "assessments",
-            "excluded_dirs"
-          ],
-          "properties": {
-            "type": {
-              "enum": [
-                "project",
-                "assessment"
-              ]
-            },
-            "data_root": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "requested_assessment": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "assessments": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "minLength": 1
-              },
-              "uniqueItems": true
-            },
-            "excluded_dirs": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "type": {
-                    "const": "assessment"
-                  }
-                },
-                "type": "object"
-              },
-              "then": {
-                "properties": {
-                  "assessments": {
-                    "maxItems": 1,
-                    "type": "array"
-                  }
-                },
-                "type": "object"
-              },
-              "else": {
-                "properties": {
-                  "requested_assessment": {
-                    "type": "null"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          ]
+          "type": "object"
         },
         "backend": {
           "type": "object",
@@ -158,19 +88,12 @@
               "type": "object",
               "required": [
                 "message",
-                "assessment",
                 "stage"
               ],
               "properties": {
                 "message": {
                   "type": "string",
                   "minLength": 1
-                },
-                "assessment": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
                 },
                 "stage": {
                   "type": "string",
@@ -191,7 +114,8 @@
           "type": "object",
           "required": [
             "report_type",
-            "validation"
+            "validation",
+            "scope"
           ],
           "properties": {
             "report_type": {
@@ -210,6 +134,79 @@
                   }
                 }
               }
+            },
+            "scope": {
+              "type": "object",
+              "required": [
+                "type",
+                "data_root",
+                "requested_assessment",
+                "assessments",
+                "excluded_dirs"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "project",
+                    "assessment"
+                  ]
+                },
+                "data_root": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "requested_assessment": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "assessments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "excluded_dirs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "assessment"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "then": {
+                    "properties": {
+                      "assessments": {
+                        "maxItems": 1,
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "else": {
+                    "properties": {
+                      "requested_assessment": {
+                        "type": "null"
+                      }
+                    },
+                    "type": "object"
+                  }
+                }
+              ]
             }
           }
         },
@@ -383,33 +380,80 @@
           "type": "object",
           "required": [
             "report_type",
+            "scope",
             "validation"
           ],
           "properties": {
             "report_type": {
               "const": "assessment"
             },
+            "scope": {
+              "type": "object",
+              "required": [
+                "data_root",
+                "assessment"
+              ],
+              "properties": {
+                "data_root": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assessment": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
             "validation": {
               "type": "object",
               "required": [
-                "rows",
                 "stages",
                 "inputs"
               ],
               "properties": {
-                "rows": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/validationRow"
-                  }
-                },
                 "stages": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/validationStage"
-                  },
                   "minItems": 2,
-                  "maxItems": 2
+                  "maxItems": 2,
+                  "items": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/validationStage"
+                        },
+                        {
+                          "properties": {
+                            "stage": {
+                              "const": "schema"
+                            },
+                            "status": {
+                              "enum": [
+                                "completed",
+                                "error",
+                                "not_run"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/validationStage"
+                        },
+                        {
+                          "properties": {
+                            "stage": {
+                              "const": "crossfile"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 "inputs": {
                   "type": "object",
@@ -477,32 +521,6 @@
           }
         },
         {
-          "properties": {
-            "scope": {
-              "properties": {
-                "type": {
-                  "const": "assessment"
-                },
-                "data_root": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "requested_assessment": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "assessments": {
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "type": "array"
-                }
-              },
-              "type": "object"
-            }
-          },
-          "type": "object"
-        },
-        {
           "if": {
             "properties": {
               "outcome": {
@@ -526,10 +544,6 @@
               },
               "validation": {
                 "properties": {
-                  "rows": {
-                    "minItems": 1,
-                    "type": "array"
-                  },
                   "inputs": {
                     "properties": {
                       "stable": {
@@ -561,17 +575,6 @@
             "properties": {
               "validation": {
                 "properties": {
-                  "rows": {
-                    "items": {
-                      "properties": {
-                        "status": {
-                          "const": "pass"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "type": "array"
-                  },
                   "stages": {
                     "items": {
                       "properties": {
@@ -580,6 +583,17 @@
                             "completed",
                             "not_applicable"
                           ]
+                        },
+                        "checks": {
+                          "items": {
+                            "properties": {
+                              "status": {
+                                "const": "pass"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -606,18 +620,23 @@
             "properties": {
               "validation": {
                 "properties": {
-                  "rows": {
+                  "stages": {
                     "contains": {
                       "properties": {
-                        "status": {
-                          "const": "fail"
+                        "checks": {
+                          "contains": {
+                            "properties": {
+                              "status": {
+                                "const": "fail"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
                         }
                       },
                       "type": "object"
                     },
-                    "type": "array"
-                  },
-                  "stages": {
                     "items": {
                       "properties": {
                         "status": {
@@ -646,11 +665,9 @@
       "format": "date-time",
       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
     },
-    "validationRow": {
+    "validationCheck": {
       "type": "object",
       "required": [
-        "assessment",
-        "stage",
         "check_id",
         "severity",
         "status",
@@ -660,25 +677,15 @@
         "extra_columns"
       ],
       "properties": {
-        "assessment": {
-          "type": "string",
-          "minLength": 1
-        },
-        "stage": {
-          "enum": [
-            "schema",
-            "crossfile"
-          ]
-        },
         "check_id": {
           "type": "string",
           "minLength": 1
         },
         "severity": {
           "enum": [
-            "error",
+            null,
             "warning",
-            "info"
+            "error"
           ]
         },
         "status": {
@@ -709,21 +716,48 @@
             "null"
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "pass"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "enum": [
+                  null,
+                  "warning"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "severity": {
+                "const": "error"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
     },
     "validationStage": {
       "type": "object",
       "required": [
-        "assessment",
         "stage",
         "status",
-        "reason"
+        "reason",
+        "checks"
       ],
       "properties": {
-        "assessment": {
-          "type": "string",
-          "minLength": 1
-        },
         "stage": {
           "enum": [
             "schema",
@@ -744,6 +778,12 @@
             "string",
             "null"
           ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/validationCheck"
+          }
         }
       },
       "allOf": [
@@ -769,6 +809,48 @@
               "reason": {
                 "type": "string",
                 "minLength": 1
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "checks": {
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "skipped",
+                  "not_applicable",
+                  "not_run"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "checks": {
+                "maxItems": 0,
+                "type": "array"
               }
             },
             "type": "object"

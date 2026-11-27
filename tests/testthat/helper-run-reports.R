@@ -38,3 +38,11 @@ expect_report_schema <- function(path) {
     engine = "ajv", strict = TRUE, error = TRUE
   ))
 }
+
+assessment_rows <- function(result) {
+  validator$validation_report_rows(result$validation$assessments[[1]])
+}
+
+assessment_stage_statuses <- function(result) {
+  vapply(result$validation$assessments[[1]]$validation$stages, `[[`, character(1), "status")
+}

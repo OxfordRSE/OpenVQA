@@ -27,7 +27,7 @@ new_run_report <- function(operation, scope) {
     error = function(e) NULL
   )
   list(
-    report_version = "1.0",
+    report_version = "2.0",
     report_type = "run",
     operation = operation,
     # tempfile supplies uniqueness without consuming the scientific random-number stream.

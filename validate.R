@@ -229,13 +229,12 @@ build_assessment_file_plan <- function(
 # Each assessment is a complete report so callers can retain it independently of the project run.
 run_assessment_validation <- function(data_root, assessment, schema_root, verbose = FALSE) {
   result <- new_run_report("validate", list(
-    type = "assessment", data_root = data_root, requested_assessment = assessment,
-    assessments = I(assessment), excluded_dirs = I(character())
+    data_root = data_root, assessment = assessment
   ))
   result$report_type <- "assessment"
   rows <- list()
   stages <- data.frame(
-    assessment = assessment, stage = c("schema", "crossfile"),
+    stage = c("schema", "crossfile"),
     status = "not_run", reason = "Validation stopped before this stage."
   )
   inputs <- list(algorithm = "csv-md5-v1", captured_at = NULL, stable = NULL, files = list())
@@ -311,7 +310,7 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
     },
     error = function(e) {
       if (!is.null(stage_index)) set_stage("error", conditionMessage(e))
-      list(message = conditionMessage(e), assessment = assessment, stage = stage)
+      list(message = conditionMessage(e), stage = stage)
     }
   )
   if (!is.null(inputs$captured_at)) {
@@ -324,7 +323,7 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
         NULL
       },
       error = function(e) {
-        list(message = conditionMessage(e), assessment = assessment, stage = "input_snapshot")
+        list(message = conditionMessage(e), stage = "input_snapshot")
       }
     )
     if (!is.null(snapshot_error)) {
@@ -335,7 +334,17 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
   # Single-bracket assignment retains a required null instead of deleting the error field.
   result["error"] <- list(execution_error)
   report <- bind_validation_reports(rows)
-  result$validation <- list(rows = report, stages = stages, inputs = inputs)
+  # Assessment and stage context belongs to the enclosing groups, not every check.
+  groups <- lapply(seq_len(nrow(stages)), function(i) {
+    list(
+      stage = stages$stage[i], status = stages$status[i], reason = stages$reason[i],
+      checks = report[report$stage == stages$stage[i],
+        setdiff(names(report), c("assessment", "stage")),
+        drop = FALSE
+      ]
+    )
+  })
+  result$validation <- list(stages = groups, inputs = inputs)
   result$outcome <- if (!is.null(execution_error)) {
     "execution_error"
   } else if (any(report$status != "pass")) {
@@ -399,7 +408,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
       NULL
     },
     error = function(e) {
-      list(message = conditionMessage(e), assessment = NULL, stage = stage)
+      list(message = conditionMessage(e), stage = stage)
     }
   )
   result["error"] <- list(execution_error)
@@ -415,9 +424,26 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
   result
 }
 
+# Reconstruct transient flat rows so the existing console renderer can keep its context labels.
+validation_report_rows <- function(result) {
+  children <- if (result$report_type == "assessment") {
+    list(result)
+  } else {
+    result$validation$assessments
+  }
+  bind_validation_reports(lapply(children, function(child) {
+    bind_validation_reports(lapply(child$validation$stages, function(group) {
+      checks <- group$checks
+      checks$assessment <- rep(child$scope$assessment, nrow(checks))
+      checks$stage <- rep(group$stage, nrow(checks))
+      checks[names(bind_validation_reports())]
+    }))
+  }))
+}
+
 print_validation_summary <- function(result, verbose = FALSE) {
   children <- result$validation$assessments
-  report <- bind_validation_reports(lapply(children, function(child) child$validation$rows))
+  report <- validation_report_rows(result)
   counts <- report_counts(report)
   cat("Summary\n")
   cat(sprintf(
@@ -430,7 +456,7 @@ print_validation_summary <- function(result, verbose = FALSE) {
     print_validation_report(failures, verbose = verbose, prefix = "failed")
   }
   for (child in children) {
-    cat("  Assessment ", child$scope$requested_assessment, ": ", child$outcome, "\n", sep = "")
+    cat("  Assessment ", child$scope$assessment, ": ", child$outcome, "\n", sep = "")
   }
   cat("  Outcome: ", result$outcome, "\n", sep = "")
 }
@@ -442,10 +468,12 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
       destination <- if (!is.null(cli$report)) prepare_report_destination(cli$report) else NULL
       result <- run_validation(cli$data_root, cli$exclude_dirs, cli$verbose, cli$assessment)
       print_validation_summary(result)
-      errors <- c(list(result$error), lapply(
-        result$validation$assessments, function(child) child$error
-      ))
-      for (error in errors) if (!is.null(error)) message("Validation error: ", error$message)
+      if (!is.null(result$error)) message("Validation error: ", result$error$message)
+      for (child in result$validation$assessments) {
+        if (!is.null(child$error)) {
+          message("Assessment ", child$scope$assessment, ": ", child$error$message)
+        }
+      }
       if (!is.null(destination)) write_run_report(result, destination)
       run_report_exit_status(result)
     },

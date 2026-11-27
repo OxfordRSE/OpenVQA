@@ -367,7 +367,7 @@ validate_schema_file <- function(file_name, file_path, schema_path, schema_resol
         stage = "schema",
         check_id = file_name,
         status = "pass",
-        severity = "error",
+        severity = NA_character_,
         message = "ok",
         extra_columns = extra_columns,
         file = file_name
