@@ -9,16 +9,43 @@
 Install dependencies with `rv sync` from the repository root, then run:
 
 ```sh
-Rscript validate.R --data-root data/vqa-demo1-min
-Rscript validate.R --data-root data/vqa-demo2-min
-Rscript analyse.R --data-root data/vqa-demo1-min --assessment main_001_current --seed 20260810
-Rscript analyse.R --data-root data/vqa-demo2-min --assessment project_current --seed 20260810
+Rscript validate.R --project-root data/vqa-demo1-min
+Rscript validate.R --project-root data/vqa-demo2-min
+Rscript analyse.R --project-root data/vqa-demo1-min --assessment main_001_current --seed 20260810
+Rscript analyse.R --project-root data/vqa-demo2-min --assessment project_current --seed 20260810
 ```
 
 `analyse.R` is the supported analysis entry point. It validates and prepares inputs,
 calculates indicators, and writes CSV tables, the workbook, and figures under the selected
 assessment. Add `--no-figures` for numerical output alone. Sourcing `analyse.R` defines
 `run_analysis()` without executing it.
+
+`validate.R` can also export a versioned JSON run report:
+
+```sh
+Rscript validate.R --project-root /work/project --report /work/project/report.json
+Rscript validate.R --project-root /work/project --assessment baseline --report /work/project/report.json --update-report
+```
+
+Omit `--assessment` to validate the whole project. Reports contain independently
+usable assessment reports, including check messages, stage states, timestamps and
+input CSV and project `params.yaml` hashes. Assessment-local errors do not stop the remaining assessments.
+Report version 0.1 groups checks by stage; ordinary passes have null severity and
+only failed checks have error severity. Existing warnings remain visible and
+non-blocking. Completed return values and exports pass
+schema validation. Settings hashes identify exact project file bytes; resolved
+settings/code identity remains deferred.
+
+Existing files require explicit `--overwrite` (replace the entire report) or
+`--assessment NAME --update-report` (replace/append only that assessment). Updates
+retain other outcomes/timestamps/hashes and produce a collection without a new
+project verdict; differing stored settings hashes trigger a non-blocking warning.
+The flags are mutually exclusive and require `--report`. Exit codes are **0** for successful validation, **1** for invalid
+inputs and **2** for execution/export errors. No assessments is an execution error.
+Without `--report`, console output remains available with the same exit rules.
+See the [run-report contract](docs/run-reports.md) for schema, examples, stage status,
+partial failures and callable `run_validation()` use. Analysis JSON reporting is
+not yet supported.
 
 Use a [tagged release](https://github.com/OxfordRSE/OpenVQA/releases) for a named
 software version. The root `VERSION` file records the application version;
@@ -31,7 +58,7 @@ parameter-script interfaces and are outside the supported analysis workflow.
 
 ## Project data
 
-`--data-root` selects a project directory, which may be inside or outside this repository.
+`--project-root` selects a project directory, which may be inside or outside this repository.
 `--assessment` selects one assessment subdirectory. A project can contain a baseline,
 later assessments and offset assessments, each with its own inputs and outputs:
 
@@ -138,7 +165,7 @@ You can read more about VQA in detail in this open access [publication](https://
 
 <a name="results"></a>
 ### Results
-Results are saved as CSV files under `results/` in the assessment selected by `--data-root`
+Results are saved as CSV files under `results/` in the assessment selected by `--project-root`
 and `--assessment`. The analysis creates this directory automatically.
 
 * Each indicator script produces the following output files:

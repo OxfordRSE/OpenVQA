@@ -17,9 +17,9 @@ source(file.path("analysis", "main.R"), local = TRUE)
 
 parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   parser <- OptionParser(
-    usage = "usage: %prog --data-root <path> --assessment <name> [--seed <integer>]",
+    usage = "usage: %prog --project-root <path> --assessment <name> [--seed <integer>]",
     option_list = list(
-      make_option(c("-d", "--data-root"), type = "character"),
+      make_option(c("-d", "--project-root"), type = "character"),
       make_option(c("-a", "--assessment"), type = "character"),
       make_option("--version",
         action = "store_true", default = FALSE,
@@ -34,12 +34,12 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   if (isTRUE(options$version)) {
     return(list(version = readLines("VERSION", n = 1L, warn = FALSE)))
   }
-  if (is.null(options$`data-root`) || !nzchar(options$`data-root`) ||
+  if (is.null(options$`project-root`) || !nzchar(options$`project-root`) ||
     is.null(options$assessment) || !nzchar(options$assessment)) {
-    stop("Both --data-root and --assessment are required.", call. = FALSE)
+    stop("Both --project-root and --assessment are required.", call. = FALSE)
   }
   list(
-    data_root = normalizePath(options$`data-root`, mustWork = TRUE),
+    data_root = normalizePath(options$`project-root`, mustWork = TRUE),
     assessment = options$assessment,
     seed = resolve_seed(options$seed),
     generate_figures = !options$`no-figures`

@@ -18,7 +18,7 @@ copy_refactor_project <- function(project) {
 
 run_refactor_command <- function(script, data_root, assessment = NULL,
                                  seed = NULL) {
-  args <- c(script, "--data-root", data_root)
+  args <- c(script, "--project-root", data_root)
   if (script == "analyse.R" && Sys.getenv("VQA_GENERATE_FIGURES", "true") == "false") {
     args <- c(args, "--no-figures")
   }

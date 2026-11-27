@@ -74,7 +74,7 @@ duplicate_rows <- function(df, keys) {
 #' @param assessment Assessment name.
 #' @param stage Validation stage name.
 #' @param check_id Stable check identifier.
-#' @param severity Severity label.
+#' @param severity Issue severity, or `NA_character_` for an ordinary pass.
 #' @param status `pass` or `fail`.
 #' @param message Human-readable result message.
 #' @param file Related contract file.

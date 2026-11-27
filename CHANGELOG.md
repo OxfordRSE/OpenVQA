@@ -1,5 +1,33 @@
 # Changelog
 
+## Unreleased
+
+- Rename `--data-root` to `--project-root` in both supported CLIs, retaining `-d`.
+  Update commands and CI callers; the old long option is no longer accepted.
+
+- Add opt-in `validate.R --report PATH` JSON run reports with independent report
+  version 0.1, explicit stage status, partial results and execution-error context.
+  Existing destinations require explicit `--overwrite` or assessment-only
+  `--update-report`; updates preserve other children in a collection without an
+  overall verdict. Checked replacement shares a short-lived report-file lock.
+- Add `validate.R --assessment NAME` using project/assessment overrides, while
+  omitting the option validates the project. Continue after assessment-local errors.
+- Define independently schema-valid assessment reports inside each run, with
+  per-assessment outcomes, partial checks, timestamps and CSV input hashes.
+  Record raw project `params.yaml` hashes per child and warn on mixed stored hashes.
+  Detect input/settings changes during validation; resolved settings/code identity
+  remains deferred. This replaces the earlier unreleased flat report draft.
+- Report version 0.1 groups checks within stages and records assessment context
+  once per child. Ordinary error/info-labelled passes now have null severity;
+  failed checks are errors. Existing warning classifications/counts remain visible
+  and non-blocking. Earlier development report drafts must be regenerated.
+- Schema-validate completed assessment/run objects before returning them, and
+  revalidate exports before creating files. Malformed output is never published.
+- Expose callable `run_validation()` without terminating the caller's R process.
+- Validation now exits 0 for success, 1 for invalid inputs and 2 for ordinary
+  execution/export errors. Empty assessment scope and empty applicable stages
+  are execution errors. Scientific checks and non-blocking warnings are unchanged.
+
 ## 0.1.0 — 2026-11-09
 
 Initial versioned release of the callable assessment backend.

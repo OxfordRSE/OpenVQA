@@ -29,8 +29,8 @@ jobs:
 
       - name: Validate minimal demo inputs
         run: |
-          Rscript validate.R --data-root data/vqa-demo1-min
-          Rscript validate.R --data-root data/vqa-demo2-min
+          Rscript validate.R --project-root data/vqa-demo1-min
+          Rscript validate.R --project-root data/vqa-demo2-min
 
       - name: Run lintr
         shell: Rscript {0}
@@ -65,8 +65,8 @@ jobs:
 
       - name: Validate minimal demo inputs
         run: |
-          Rscript validate.R --data-root data/vqa-demo1-min
-          Rscript validate.R --data-root data/vqa-demo2-min
+          Rscript validate.R --project-root data/vqa-demo1-min
+          Rscript validate.R --project-root data/vqa-demo2-min
 
       - name: Run lintr
         shell: Rscript {0}
@@ -101,8 +101,8 @@ jobs:
 
       - name: Validate minimal demo inputs
         run: |
-          Rscript validate.R --data-root data/vqa-demo1-min
-          Rscript validate.R --data-root data/vqa-demo2-min
+          Rscript validate.R --project-root data/vqa-demo1-min
+          Rscript validate.R --project-root data/vqa-demo2-min
 
       - name: Run lintr
         shell: Rscript {0}

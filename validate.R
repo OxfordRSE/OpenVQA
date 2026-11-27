@@ -7,18 +7,26 @@ suppressPackageStartupMessages({
 source(file.path("validation", "helpers.R"), local = TRUE)
 source(file.path("pipeline", "io.R"), local = TRUE)
 source(file.path("pipeline", "params.R"), local = TRUE)
+source(file.path("pipeline", "run-report.R"), local = TRUE)
 source(file.path("validation", "requirements.R"), local = TRUE)
+source(file.path("validation", "snapshot.R"), local = TRUE)
+source(file.path("validation", "project-report.R"), local = TRUE)
 source(file.path("validation", "schema.R"), local = TRUE)
 source(file.path("validation", "crossfile.R"), local = TRUE)
 
-parse_cli_args <- function() {
+parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   # optparse handles `-h/--help` for us and accepts both
-  # `--data-root /path` and `--data-root=/path`.
+  # `--project-root /path` and `--project-root=/path`.
   option_list <- list(
     make_option(
-      c("-d", "--data-root"),
+      c("-d", "--project-root"),
       type = "character",
       help = "Root data directory that contains the assessment folders."
+    ),
+    make_option(
+      c("-a", "--assessment"),
+      type = "character",
+      help = "Validate one assessment directory within the project; omit to validate the project."
     ),
     make_option(
       c("-x", "--exclude-dirs"),
@@ -28,6 +36,19 @@ parse_cli_args <- function() {
         "Directory name to exclude from assessment scanning.",
         "Additional trailing arguments are also treated as excluded dirs."
       )
+    ),
+    make_option(
+      "--report",
+      type = "character",
+      help = "Write a JSON report to PATH (may be at the project data root)."
+    ),
+    make_option("--overwrite",
+      action = "store_true", default = FALSE,
+      help = "Replace the complete existing report at --report PATH."
+    ),
+    make_option("--update-report",
+      action = "store_true", default = FALSE,
+      help = "With --assessment, replace/add only that assessment in an existing report."
     ),
     make_option(
       c("-v", "--verbose"),
@@ -42,25 +63,35 @@ parse_cli_args <- function() {
     option_list = option_list,
     description = paste(
       "Validate processed CSV inputs against the modular JSON Schemas.",
-      "Use --data-root to point at a project data root.",
-      "By default, raw/ is excluded from assessment scanning."
+      "Use --project-root to point at a project data root.",
+      "By default, raw/ is excluded from assessment scanning.",
+      "Exit codes: 0 success, 1 invalid data, 2 execution or report export error."
     )
   )
 
-  parsed <- parse_args(parser, positional_arguments = TRUE)
-  data_root <- parsed$options[["data-root"]]
-  if (is.null(data_root) || !nzchar(data_root)) {
-    stop(
-      "Please provide --data-root pointing to the root of the data folder.",
-      call. = FALSE
-    )
+  parsed <- parse_args(parser, args = args, positional_arguments = TRUE)
+  options <- parsed$options
+  if (isTRUE(options$overwrite) && isTRUE(options$`update-report`)) {
+    stop("--overwrite and --update-report are mutually exclusive.", call. = FALSE)
   }
-
+  if ((isTRUE(options$overwrite) || isTRUE(options$`update-report`)) &&
+    (is.null(options$report) || !nzchar(options$report))) {
+    stop("--overwrite and --update-report require --report PATH.", call. = FALSE)
+  }
+  if (isTRUE(options$`update-report`) &&
+    (is.null(options$assessment) || !nzchar(options$assessment))) {
+    stop("--update-report requires --assessment NAME.", call. = FALSE)
+  }
+  data_root <- parsed$options[["project-root"]]
   exclude_dirs <- c("raw", parsed$options[["exclude-dirs"]], parsed$args)
   exclude_dirs <- unique(stats::na.omit(exclude_dirs))
 
   list(
-    data_root = normalizePath(data_root, mustWork = TRUE),
+    data_root = data_root,
+    assessment = parsed$options$assessment,
+    report = parsed$options$report,
+    overwrite = isTRUE(options$overwrite),
+    update_report = isTRUE(options$`update-report`),
     exclude_dirs = exclude_dirs,
     verbose = isTRUE(parsed$options$verbose)
   )
@@ -218,131 +249,307 @@ build_assessment_file_plan <- function(
   unique(required)
 }
 
-main <- function() {
-  # Check script is being run from the VQA root by verifying the expected schema path exists
-  cwd <- getwd()
-  schema_root <- file.path(cwd, "schema")
-  if (!check_dir_exist(schema_root)) {
-    sprintf("Schema directory does not exist: %s", schema_root)
-    stop("Run `validate.R` from VQA root.", call. = FALSE)
+# Each assessment is a complete report so callers can retain it independently of the project run.
+run_assessment_validation <- function(data_root, assessment, schema_root, verbose = FALSE) {
+  result <- new_run_report("validate", list(
+    data_root = data_root, assessment = assessment
+  ))
+  result$report_type <- "assessment"
+  rows <- list()
+  stages <- data.frame(
+    stage = c("schema", "crossfile"),
+    status = "not_run", reason = "Validation stopped before this stage."
+  )
+  inputs <- list(algorithm = "csv-md5-v1", captured_at = NULL, stable = NULL, files = list())
+  settings <- list(
+    path = "params.yaml", algorithm = "md5", hash = NULL,
+    captured_at = NULL, stable = NULL
+  )
+  stage <- "setup"
+  stage_index <- NULL
+  # Store completed fragments outside the try block so a later exception cannot discard them.
+  record <- function(fragment) rows[[length(rows) + 1L]] <<- fragment
+  set_stage <- function(status, reason = NA_character_) {
+    stages$status[stage_index] <<- status
+    stages$reason[stage_index] <<- reason
   }
+  execution_error <- tryCatch(
+    {
+      assessment_dir <- normalizePath(file.path(data_root, assessment),
+        winslash = "/", mustWork = TRUE
+      )
+      if (!dir.exists(assessment_dir) || !identical(dirname(assessment_dir), data_root)) {
+        stop("Assessment directory must belong to data_root.", call. = FALSE)
+      }
+      stage <- "settings_snapshot"
+      settings <- snapshot_project_settings(data_root)
+      stage <- "configuration"
+      assessment_params <- read_project_params(data_root, assessment)
+      inputs_dir <- file.path(assessment_dir, "inputs")
+      stage <- "input_snapshot"
+      before <- snapshot_validation_inputs(inputs_dir)
+      inputs$captured_at <- before$captured_at
+      inputs$files <- before$files
+      file_map <- build_file_map(inputs_dir)
+      stage <- "file_plan"
+      input_files <- build_assessment_file_plan(
+        active_indicators = assessment_params$active_indicators,
+        data_type = assessment_params$data_type, available_files = names(file_map),
+        qh_method = assessment_params$qh_method
+      )
+      cat(sprintf(
+        "Assessment: %s\n  Inputs: %s\n",
+        assessment, paste(input_files, collapse = ", ")
+      ))
+      if ("coverByStratum.csv" %in% input_files) {
+        cat("  Note: coverByStratum.csv schema is provisional.\n")
+      }
+      stage <- "schema"
+      stage_index <- match(stage, stages$stage)
+      assessment_report <- run_schema_validation(
+        assessment, inputs_dir, input_files, schema_root,
+        on_result = record
+      )
+      if (!nrow(assessment_report)) stop("Schema stage returned no checks.", call. = FALSE)
+      set_stage("completed")
+      cat("  Schema\n")
+      print_validation_report(assessment_report, verbose = verbose, prefix = "schema")
 
-  cli <- parse_cli_args()
-  data_root <- cli$data_root
-  if (!check_dir_exist(data_root)) {
-    stop(sprintf("Data directory does not exist: %s", data_root), call. = FALSE)
+      stage <- "crossfile"
+      stage_index <- match(stage, stages$stage)
+      if (any(assessment_report$status != "pass")) {
+        set_stage("skipped", "Schema validation failed.")
+        cat("  Crossfile: skipped because schema validation failed.\n\n")
+      } else if (identical(assessment_params$qh_method, "assume.0")) {
+        set_stage("not_applicable", "Assumed-zero assessment.")
+        cat("  Crossfile: not applicable to an assumed-zero assessment.\n\n")
+      } else {
+        crossfile_report <- run_crossfile_validation(
+          data_root, assessment, assessment_params$active_indicators,
+          file_map, assessment_params,
+          on_result = record
+        )
+        if (!nrow(crossfile_report)) stop("Crossfile stage returned no checks.", call. = FALSE)
+        set_stage("completed")
+        cat("  Crossfile\n")
+        print_validation_report(crossfile_report, verbose = verbose, prefix = "crossfile")
+        cat("\n")
+      }
+      NULL
+    },
+    error = function(e) {
+      if (!is.null(stage_index)) set_stage("error", conditionMessage(e))
+      list(message = conditionMessage(e), stage = stage)
+    }
+  )
+  if (!is.null(inputs$captured_at)) {
+    # shortcut: endpoint hashes miss reverted edits; use immutable inputs for stronger guarantees.
+    snapshot_error <- tryCatch(
+      {
+        after <- snapshot_validation_inputs(inputs_dir)
+        inputs$stable <- identical(inputs$files, after$files)
+        if (!inputs$stable) stop("Input files changed during validation.", call. = FALSE)
+        NULL
+      },
+      error = function(e) {
+        list(message = conditionMessage(e), stage = "input_snapshot")
+      }
+    )
+    if (!is.null(snapshot_error)) {
+      inputs$stable <- FALSE
+      if (is.null(execution_error)) execution_error <- snapshot_error
+    }
   }
-
-  project_params <- read_project_params(data_root)
-
-  # Explore the assessment folders in the data root
-  assessments <- list.dirs(data_root, full.names = FALSE, recursive = FALSE)
-  assessments <- setdiff(assessments, cli$exclude_dirs)
-  report <- list()
-
-  cat("Validating processed inputs with jsonvalidate (ajv engine)\n")
-  cat(sprintf("Schema root: %s\n", schema_root))
-  cat(sprintf("Data root: %s\n\n", data_root))
-  cat(sprintf("Params source: %s\n", project_params$path))
-  cat(sprintf("Params mode: %s\n", project_params$mode))
-  if (length(project_params$active_indicators) > 0) {
-    cat(sprintf(
-      "Active indicators: %s\n\n",
-      paste(project_params$active_indicators, collapse = ", ")
-    ))
+  if (!is.null(settings$captured_at)) {
+    settings_error <- tryCatch(
+      {
+        after <- snapshot_project_settings(data_root)
+        settings$stable <- identical(settings$hash, after$hash)
+        if (!settings$stable) stop("Project params.yaml changed during validation.", call. = FALSE)
+        NULL
+      },
+      error = function(e) {
+        list(message = conditionMessage(e), stage = "settings_snapshot")
+      }
+    )
+    if (!is.null(settings_error)) {
+      settings$stable <- FALSE
+      if (is.null(execution_error)) execution_error <- settings_error
+    }
+  }
+  # Single-bracket assignment retains a required null instead of deleting the error field.
+  result["error"] <- list(execution_error)
+  report <- bind_validation_reports(rows)
+  # Assessment and stage context belongs to the enclosing groups, not every check.
+  groups <- lapply(seq_len(nrow(stages)), function(i) {
+    list(
+      stage = stages$stage[i], status = stages$status[i], reason = stages$reason[i],
+      checks = report[report$stage == stages$stage[i],
+        setdiff(names(report), c("assessment", "stage")),
+        drop = FALSE
+      ]
+    )
+  })
+  result$validation <- list(stages = groups, inputs = inputs, settings = settings)
+  result$outcome <- if (!is.null(execution_error)) {
+    "execution_error"
+  } else if (any(report$status != "pass")) {
+    "invalid_data"
   } else {
-    cat("\n")
+    "success"
   }
-  cat("Excluded directories:\n")
-  for (dir_name in cli$exclude_dirs) {
-    cat(sprintf(" - %s\n", dir_name))
+  result$ended_at <- run_report_time()
+  validated_run_report_json(result)
+  result
+}
+
+# Only the CLI exits; callers retain shared errors and independently completed assessment reports.
+run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, assessment = NULL) {
+  valid_data_root <- is.character(data_root) && length(data_root) == 1L &&
+    !is.na(data_root) && nzchar(data_root)
+  assessment_name <- is.character(assessment) && length(assessment) == 1L && !is.na(assessment)
+  valid_assessment <- assessment_name && grepl("^[[:alnum:]_-]+$", assessment)
+  # I() keeps empty and singleton scope collections as JSON arrays.
+  result <- new_run_report("validate", list(
+    type = if (is.null(assessment)) "project" else "assessment",
+    data_root = if (valid_data_root) data_root else NULL,
+    requested_assessment = if (assessment_name) assessment else NULL,
+    assessments = I(character()), excluded_dirs = I(exclude_dirs)
+  ))
+  result$validation <- list(assessments = list())
+  stage <- "setup"
+  execution_error <- tryCatch(
+    {
+      if (!valid_data_root) {
+        stop("Please provide --project-root pointing to the project directory.", call. = FALSE)
+      }
+      if (!dir.exists(data_root)) stop("Data directory does not exist: ", data_root, call. = FALSE)
+      data_root <- normalizePath(data_root, winslash = "/", mustWork = TRUE)
+      result$scope$data_root <- data_root
+      schema_root <- file.path(getwd(), "schema")
+      if (!dir.exists(schema_root)) stop("Run `validate.R` from VQA root.", call. = FALSE)
+      stage <- "selection"
+      assessments <- list_assessments(data_root, exclude_dirs)
+      if (!is.null(assessment)) {
+        if (!valid_assessment) {
+          stop("assessment must be one directory name within data_root.", call. = FALSE)
+        }
+        if (assessment %in% exclude_dirs) stop("Requested assessment is excluded.", call. = FALSE)
+        if (!assessment %in% assessments) {
+          stop("Requested assessment does not exist.", call. = FALSE)
+        }
+        assessments <- assessment
+      }
+      result$scope$assessments <- I(assessments)
+      if (!length(assessments)) stop("No assessments found in the selected scope.", call. = FALSE)
+      stage <- "configuration"
+      # Catch shared YAML parse errors before assessment-local resolution and validation.
+      if (is.null(assessment)) load_project_config(data_root, required = FALSE)
+      cat("Validating processed inputs with jsonvalidate (ajv engine)\n")
+      cat(sprintf("Schema root: %s\nData root: %s\n\n", schema_root, data_root))
+      stage <- "assessment_reporting"
+      for (name in assessments) {
+        # Each child catches its own execution errors so later assessments still get checked.
+        result$validation$assessments[[length(result$validation$assessments) + 1L]] <-
+          run_assessment_validation(data_root, name, schema_root, verbose)
+      }
+      NULL
+    },
+    error = function(e) {
+      list(message = conditionMessage(e), stage = stage)
+    }
+  )
+  result["error"] <- list(execution_error)
+  result$settings <- validation_settings_summary(result$validation$assessments)
+  outcomes <- vapply(result$validation$assessments, function(child) child$outcome, character(1))
+  result$outcome <- if (!is.null(execution_error) || "execution_error" %in% outcomes) {
+    "execution_error"
+  } else if ("invalid_data" %in% outcomes) {
+    "invalid_data"
+  } else {
+    "success"
   }
-  cat("\n")
+  result$ended_at <- run_report_time()
+  validated_run_report_json(result)
+  result
+}
 
-  for (assessment in assessments) {
-    assessment_params <- read_project_params(data_root, assessment)
-    # Keep the report grouped by assessment so failures are easy to scan.
-    inputs_dir <- file.path(data_root, assessment, "inputs")
-    file_map <- build_file_map(inputs_dir)
-    available_files <- names(file_map)
-    input_files <- build_assessment_file_plan(
-      active_indicators = assessment_params$active_indicators,
-      data_type = assessment_params$data_type,
-      available_files = available_files,
-      qh_method = assessment_params$qh_method
-    )
-
-    cat(sprintf("Assessment: %s\n", assessment))
-    cat(sprintf("  Inputs: %s\n", paste(input_files, collapse = ", ")))
-    if ("coverByStratum.csv" %in% input_files) {
-      cat("  Note: coverByStratum.csv schema is provisional.\n")
-    }
-
-    assessment_report <- run_schema_validation(
-      assessment = assessment,
-      inputs_dir = inputs_dir,
-      input_files = input_files,
-      schema_root = schema_root
-    )
-    report[[length(report) + 1L]] <- assessment_report
-
-    cat("  Schema\n")
-    print_validation_report(
-      assessment_report[assessment_report$stage == "schema", , drop = FALSE],
-      verbose = cli$verbose,
-      prefix = "schema"
-    )
-
-    if (any(assessment_report$status != "pass")) {
-      cat("  Crossfile: skipped because schema validation failed.\n\n")
-      next
-    }
-
-    if (identical(assessment_params$qh_method, "assume.0")) {
-      cat("  Crossfile: not applicable to an assumed-zero assessment.\n\n")
-      next
-    }
-
-    crossfile_report <- run_crossfile_validation(
-      data_root = data_root,
-      assessment_path = assessment,
-      active_indicators = assessment_params$active_indicators,
-      file_map = file_map,
-      project_params = assessment_params
-    )
-    if (nrow(crossfile_report) > 0) {
-      report[[length(report) + 1L]] <- crossfile_report
-    }
-    cat("  Crossfile\n")
-    print_validation_report(
-      crossfile_report,
-      verbose = cli$verbose,
-      prefix = "crossfile"
-    )
-    cat("\n")
+# Reconstruct transient flat rows so the existing console renderer can keep its context labels.
+validation_report_rows <- function(result) {
+  children <- if (result$report_type == "assessment") {
+    list(result)
+  } else {
+    result$validation$assessments
   }
+  bind_validation_reports(lapply(children, function(child) {
+    bind_validation_reports(lapply(child$validation$stages, function(group) {
+      checks <- group$checks
+      checks$assessment <- rep(child$scope$assessment, nrow(checks))
+      checks$stage <- rep(group$stage, nrow(checks))
+      checks[names(bind_validation_reports())]
+    }))
+  }))
+}
 
-  report_df <- bind_validation_reports(report)
-  failures <- report_df[report_df$status != "pass", , drop = FALSE]
-  summary_counts <- report_counts(report_df)
-
+print_validation_summary <- function(result, verbose = FALSE) {
+  children <- result$validation$assessments
+  report <- validation_report_rows(result)
+  counts <- report_counts(report)
   cat("Summary\n")
-  cat(sprintf("  Passed: %d\n", summary_counts$pass))
-  cat(sprintf("  Failed: %d\n", summary_counts$fail))
-  cat(sprintf("  Warnings: %d\n", summary_counts$warn))
-
-  if (nrow(failures) > 0) {
-    # Non-zero exit keeps this usable in shell scripts and CI.
+  cat(sprintf(
+    "  Passed: %d\n  Failed: %d\n  Warnings: %d\n",
+    counts$pass, counts$fail, counts$warn
+  ))
+  failures <- report[report$status != "pass", , drop = FALSE]
+  if (nrow(failures)) {
     cat("\nFailed checks\n")
-    print_validation_report(failures, verbose = FALSE, prefix = "failed")
-    quit(status = 1)
+    print_validation_report(failures, verbose = verbose, prefix = "failed")
   }
+  for (child in children) {
+    cat("  Assessment ", child$scope$assessment, ": ", child$outcome, "\n", sep = "")
+  }
+  cat("  Outcome: ", result$outcome, "\n", sep = "")
+  if (!is.null(result$settings$warning)) message("Report warning: ", result$settings$warning)
+}
 
-  invisible(report_df)
+main <- function(args = commandArgs(trailingOnly = TRUE)) {
+  tryCatch(
+    {
+      cli <- parse_cli_args(args)
+      destination <- if (!is.null(cli$report)) {
+        prepare_report_destination(cli$report, overwrite = cli$overwrite || cli$update_report)
+      } else {
+        NULL
+      }
+      if (cli$update_report) read_validation_collection(destination, cli$data_root)
+      result <- run_validation(cli$data_root, cli$exclude_dirs, cli$verbose, cli$assessment)
+      print_validation_summary(result)
+      if (!is.null(result$error)) message("Validation error: ", result$error$message)
+      for (child in result$validation$assessments) {
+        if (!is.null(child$error)) {
+          message("Assessment ", child$scope$assessment, ": ", child$error$message)
+        }
+      }
+      if (!is.null(destination)) {
+        if (cli$update_report) {
+          stored <- update_assessment_report(result, destination)
+          if (!is.null(stored$settings$warning)) {
+            message("Report warning: ", stored$settings$warning)
+          }
+        } else {
+          write_run_report(result, destination, overwrite = cli$overwrite)
+        }
+      }
+      run_report_exit_status(result)
+    },
+    error = function(e) {
+      message("Validation/export error: ", conditionMessage(e))
+      2L
+    }
+  )
 }
 
 if (sys.nframe() == 0L) {
-  # Allow sourcing the file without immediately running validation, which is
-  # useful for debugging helpers and inspecting resolved schemas.
-  main()
+  # Sourcing defines the callable workflow without running it or exiting R.
+  quit(status = main())
 }

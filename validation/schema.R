@@ -367,7 +367,7 @@ validate_schema_file <- function(file_name, file_path, schema_path, schema_resol
         stage = "schema",
         check_id = file_name,
         status = "pass",
-        severity = "error",
+        severity = NA_character_,
         message = "ok",
         extra_columns = extra_columns,
         file = file_name
@@ -427,9 +427,11 @@ schema_validate_report <- function(assessment, file_name, result) {
 #' @param inputs_dir Assessment `inputs/` directory.
 #' @param input_files Planned contract filenames.
 #' @param schema_root Root `schema/` directory.
+#' @param on_result Optional callback receiving each completed result fragment.
 #' @return Schema-stage validation report.
 #' @keywords internal
-run_schema_validation <- function(assessment, inputs_dir, input_files, schema_root) {
+run_schema_validation <- function(assessment, inputs_dir, input_files, schema_root,
+                                  on_result = NULL) {
   schema_resolver <- build_schema_resolver(schema_root)
   report <- list()
   idx <- 0L
@@ -440,6 +442,7 @@ run_schema_validation <- function(assessment, inputs_dir, input_files, schema_ro
     schema_path <- resolve_schema_for_file(file_name, schema_root)
     result <- validate_schema_file(file_name, file_path, schema_path, schema_resolver)
     report[[idx]] <- schema_validate_report(assessment, file_name, result)
+    if (!is.null(on_result)) on_result(report[[idx]])
   }
 
   bind_validation_reports(report)

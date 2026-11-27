@@ -4,6 +4,16 @@ This directory contains a modular JSON Schema design for VQA2 import outputs, fo
 
 - `data/*/inputs/*.csv`
 
+The separate [`run-report.schema.json`](run-report.schema.json) validates CLI run
+reports, standalone assessment sub-reports and stored assessment collections, not
+input tables. The reusable
+`assessmentReport` definition is also used inside run reports. Report version 0.1
+groups checks by stage, validates status/severity combinations, records raw project
+settings identity and supports collections without a project verdict. The schema
+is enforced at return and export boundaries. It accepts exactly the experimental
+0.1 contract and uses draft-07 for the installed AJV validator; see
+[the run-report contract](../docs/run-reports.md) and its examples.
+
 ## Indicator Dependencies
 
 This matrix summarizes the main input files each indicator module reads.
