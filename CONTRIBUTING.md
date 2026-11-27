@@ -68,8 +68,13 @@ Validation JSON reports follow [the run-report contract](docs/run-reports.md) an
 results before the CLI chooses its exit. `pipeline/run-report.R` owns the shared
 envelope and publication, while `reporting/` retains scientific summary generation.
 Each run contains independently valid assessment reports. `validation/snapshot.R`
-records the versioned CSV manifest; settings/code fingerprints remain deferred.
-Keep validation rules and row semantics separate from reporting changes.
+records the CSV manifest and raw project `params.yaml` identity; resolved-settings/code
+fingerprints remain deferred. `validation/project-report.R` retains unchanged child
+evidence when merging assessment-only updates; collections carry no overall verdict.
+Checks are grouped by stage with inherited assessment context. Completed results
+and exports are checked by `validated_run_report_json()` before exposure; reuse
+that helper rather than duplicating serialization or AJV setup. Keep scientific
+check rules separate from report structure and issue-label changes.
 
 ## Tests and coverage
 
