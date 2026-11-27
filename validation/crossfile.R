@@ -1,7 +1,7 @@
 # Stage 2 cross-file validation helpers.
 
-source(file.path("pipeline", "io.R"))
-source(file.path("validation", "requirements.R"))
+source(file.path("pipeline", "io.R"), local = TRUE)
+source(file.path("validation", "requirements.R"), local = TRUE)
 
 #' Construct a cross-file validation result
 #'
@@ -1066,6 +1066,7 @@ validate_ground_cover <- function(ground_cover, plot_metadata) {
 #' @param active_indicators Indicators selected for the assessment.
 #' @param file_map Named input-file map for the assessment.
 #' @param project_params Project parameters used by dependency validation.
+#' @param on_result Optional callback receiving each completed result fragment.
 #' @return Cross-file validation report with an assessment column.
 #' @keywords internal
 run_crossfile_validation <- function(
@@ -1073,18 +1074,23 @@ run_crossfile_validation <- function(
   assessment_path,
   active_indicators,
   file_map,
-  project_params
+  project_params,
+  on_result = NULL
 ) {
   inputs <- load_assessment_inputs(file_map)
   results <- list()
-  idx <- 0L
+  record <- function(fragment) {
+    fragment$assessment <- assessment_path
+    fragment$extra_columns <- NA_character_
+    results[[length(results) + 1L]] <<- fragment
+    if (!is.null(on_result)) on_result(fragment)
+  }
 
-  idx <- idx + 1L
-  results[[idx]] <- validate_indicator_dependencies(
+  record(validate_indicator_dependencies(
     active_indicators = active_indicators,
     file_map = file_map,
     project_params = project_params
-  )
+  ))
 
   plot_metadata <- load_input(inputs, "plotMetadata.csv")
   species_df <- load_input(inputs, "species.csv")
@@ -1092,69 +1098,53 @@ run_crossfile_validation <- function(
   vegetation <- load_input(inputs, "vegetation.csv")
 
   if (!is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_plot_metadata(plot_metadata)
+    record(validate_plot_metadata(plot_metadata))
   }
 
   if (!is.null(species_df)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_species_lookup(species_df)
+    record(validate_species_lookup(species_df))
   }
 
   if (!is.null(land_cover) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_land_cover(land_cover, plot_metadata)
+    record(validate_land_cover(land_cover, plot_metadata))
   }
 
   if (!is.null(vegetation)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_vegetation_lookup(
+    record(validate_vegetation_lookup(
       vegetation = vegetation,
       plot_metadata = plot_metadata,
       land_cover = land_cover
-    )
+    ))
   }
 
   species_cover <- load_input(inputs, "speciesCover.csv")
   if (!is.null(species_cover) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_species_cover(species_cover, plot_metadata, species_df)
+    record(validate_species_cover(species_cover, plot_metadata, species_df))
   }
 
   cover_by_growth_form <- load_input(inputs, "coverByGrowthForm.csv")
   if (!is.null(cover_by_growth_form) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_cover_by_growth_form(cover_by_growth_form, plot_metadata)
+    record(validate_cover_by_growth_form(cover_by_growth_form, plot_metadata))
   }
 
   exotic_cover_by_stratum <- load_input(inputs, "exoticCoverByStratum.csv")
   if (!is.null(exotic_cover_by_stratum) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_exotic_cover_by_stratum(
+    record(validate_exotic_cover_by_stratum(
       exotic_cover_by_stratum,
       plot_metadata,
       inputs
-    )
+    ))
   }
 
   ground_cover <- load_input(inputs, "groundCover.csv")
   if (!is.null(ground_cover) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_ground_cover(ground_cover, plot_metadata)
+    record(validate_ground_cover(ground_cover, plot_metadata))
   }
 
   species_stems <- load_input(inputs, "speciesStems.csv")
   if (!is.null(species_stems) && !is.null(plot_metadata)) {
-    idx <- idx + 1L
-    results[[idx]] <- validate_species_stems(species_stems, plot_metadata, species_df)
+    record(validate_species_stems(species_stems, plot_metadata, species_df))
   }
 
-  report <- bind_validation_reports(results)
-  if (nrow(report) == 0) {
-    return(report)
-  }
-
-  report$assessment <- assessment_path
-  report$extra_columns <- NA_character_
-  report
+  bind_validation_reports(results)
 }

@@ -128,3 +128,38 @@ testthat::test_that("completed schema files survive a later exception", {
   testthat::expect_length(fragments, 1)
   testthat::expect_identical(fragments[[1]]$status, "pass")
 })
+
+
+testthat::test_that("cross-file callbacks retain complete fragments before a later exception", {
+  root <- tempfile("crossfile-fragments-")
+  dir.create(root)
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  demo <- file.path(report_repo, "data", "vqa-demo1-min")
+  testthat::expect_true(all(file.copy(file.path(demo, c("params.yaml", "main_001_current")),
+    root,
+    recursive = TRUE
+  )))
+  map <- validator$build_file_map(file.path(root, "main_001_current", "inputs"))
+  params <- withr::with_dir(report_repo, validator$read_project_params(root, "main_001_current"))
+  fragments <- list()
+  record <- function(fragment) fragments[[length(fragments) + 1L]] <<- fragment
+  report <- validator$run_crossfile_validation(root, "main_001_current",
+    params$active_indicators, map, params,
+    on_result = record
+  )
+  testthat::expect_identical(report, validator$bind_validation_reports(fragments))
+  testthat::expect_true(all(report$assessment == "main_001_current"))
+  testthat::expect_true(any(report$severity == "warning" & report$status == "pass"))
+  fragments <- list()
+  rlang::local_bindings(
+    validate_species_lookup = function(...) stop("cross-file exception"),
+    .env = validator
+  )
+  testthat::expect_error(validator$run_crossfile_validation(root, "main_001_current",
+    params$active_indicators, map, params,
+    on_result = record
+  ), "cross-file exception")
+  testthat::expect_length(fragments, 2)
+  testthat::expect_true(all(validator$bind_validation_reports(fragments)$assessment ==
+    "main_001_current"))
+})
