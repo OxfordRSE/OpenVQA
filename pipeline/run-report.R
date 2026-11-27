@@ -50,17 +50,30 @@ new_run_report <- function(operation, scope) {
   )
 }
 
-prepare_report_destination <- function(path) {
+prepare_report_destination <- function(path, overwrite = FALSE) {
   if (length(path) != 1L || is.na(path) || !nzchar(path) || dir.exists(path)) {
     stop("Report destination must be a new file in an existing directory.", call. = FALSE)
   }
   path <- file.path(normalizePath(dirname(path), winslash = "/", mustWork = TRUE), basename(path))
-  # file.exists() misses dangling symlinks, which must also be protected from replacement.
-  if (file.exists(path) || !is.na(Sys.readlink(path)) && nzchar(Sys.readlink(path))) {
-    stop(paste(
-      "Report destination already exists; no report was written.",
-      "The existing file is not this invocation's report:", path
-    ), call. = FALSE)
+  # Never follow a report symlink when replacement is explicitly requested.
+  link <- Sys.readlink(path)
+  if (!is.na(link) && nzchar(link)) {
+    stop("Report destination already exists as a symlink.", call. = FALSE)
+  }
+  if (file.exists(path)) {
+    if (!overwrite) {
+      stop(paste(
+        "Report destination already exists; no report was written.",
+        "The existing file is not this invocation's report:", path
+      ), call. = FALSE)
+    }
+    existing <- tryCatch(jsonlite::fromJSON(path, simplifyVector = FALSE), error = function(e) NULL)
+    if (!is.list(existing) || !identical(existing$operation, "validate") ||
+      length(existing$report_type) != 1L ||
+      !existing$report_type %in% c("run", "assessment", "collection") ||
+      !is.character(existing$report_version) || length(existing$report_version) != 1L) {
+      stop("Refusing to overwrite a file that is not an OpenVQA validation report.", call. = FALSE)
+    }
   }
   path
 }
@@ -76,18 +89,48 @@ validated_run_report_json <- function(report) {
   json
 }
 
-write_run_report <- function(report, path) {
-  # Validate in memory before creating even a temporary file; callers may have edited the object.
-  json <- validated_run_report_json(report)
-  # Recheck because the destination may have appeared while validation was running.
-  path <- prepare_report_destination(path)
-  # Hard-link publication requires the temporary file to share the destination filesystem.
+# Keep the read/merge/publish critical section short; validation itself needs no report lock.
+with_report_lock <- function(path, code) {
+  temporary <- tempfile(".openvqa-report-lock-", tmpdir = dirname(path))
+  lock <- paste0(path, ".lock")
+  on.exit(unlink(temporary), add = TRUE)
+  writeLines(paste("pid", Sys.getpid(), run_report_time()), temporary)
+  if (!isTRUE(suppressWarnings(file.link(temporary, lock)))) {
+    stop("Could not acquire report lock: ", lock, call. = FALSE)
+  }
+  on.exit(unlink(lock), add = TRUE)
+  force(code)
+}
+
+# Internal publication accepts only JSON already checked by validated_run_report_json().
+.publish_run_report_json <- function(json, path, overwrite = FALSE) {
+  path <- prepare_report_destination(path, overwrite = overwrite)
+  previous <- if (file.exists(path)) unname(tools::md5sum(path)) else NULL
+  if (anyNA(previous)) stop("Cannot read the existing report.", call. = FALSE)
   temporary <- tempfile(".openvqa-report-", tmpdir = dirname(path))
   on.exit(unlink(temporary), add = TRUE)
   writeLines(json, temporary, useBytes = TRUE)
-  # A hard link publishes complete bytes atomically and refuses concurrent destination creation.
-  if (!isTRUE(suppressWarnings(file.link(temporary, path)))) {
-    stop(paste("Could not publish report without overwriting:", path), call. = FALSE)
+  if (overwrite) {
+    # Refuse concurrent external edits; cooperating update/overwrite writers share the lock.
+    current <- if (file.exists(path)) unname(tools::md5sum(path)) else NULL
+    if (!identical(previous, current)) stop("Report changed before publication.", call. = FALSE)
+    published <- suppressWarnings(file.rename(temporary, path))
+  } else {
+    # A hard link creates a new destination atomically without clobbering a concurrent writer.
+    published <- suppressWarnings(file.link(temporary, path))
+  }
+  if (!isTRUE(published)) stop("Could not publish report: ", path, call. = FALSE)
+  invisible(path)
+}
+
+write_run_report <- function(report, path, overwrite = FALSE) {
+  # Revalidate edited objects before creating any temporary output or lock file.
+  json <- validated_run_report_json(report)
+  path <- prepare_report_destination(path, overwrite = overwrite)
+  if (overwrite) {
+    with_report_lock(path, .publish_run_report_json(json, path, overwrite = TRUE))
+  } else {
+    .publish_run_report_json(json, path)
   }
   invisible(path)
 }

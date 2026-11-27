@@ -16,6 +16,25 @@ write_project_report <- function(root) {
   path
 }
 
+testthat::test_that("failed replacement preserves bytes and cleans up owned files", {
+  root <- update_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  result <- validation_result(root, assessment = "assessment")
+  before <- readBin(path, "raw", n = file.info(path)$size)
+  files <- list.files(root, all.files = TRUE)
+  rlang::local_bindings(file.rename = function(...) FALSE, .env = validator)
+  testthat::expect_error(
+    validator$write_run_report(result, path, overwrite = TRUE), "Could not publish"
+  )
+  testthat::expect_identical(readBin(path, "raw", n = file.info(path)$size), before)
+  testthat::expect_identical(list.files(root, all.files = TRUE), files)
+  writeLines("another writer", paste0(path, ".lock"))
+  testthat::expect_error(validator$write_run_report(result, path, overwrite = TRUE), "lock")
+  testthat::expect_identical(readLines(paste0(path, ".lock")), "another writer")
+  testthat::expect_identical(readBin(path, "raw", n = file.info(path)$size), before)
+})
+
 testthat::test_that("params hashes use exact bytes and detect mid-run changes", {
   root <- validation_project()
   on.exit(unlink(root, recursive = TRUE), add = TRUE)
@@ -35,6 +54,30 @@ testthat::test_that("params hashes use exact bytes and detect mid-run changes", 
   testthat::expect_identical(result$outcome, "execution_error")
   testthat::expect_identical(child$error$stage, "settings_snapshot")
   testthat::expect_false(child$validation$settings$stable)
+})
+
+testthat::test_that("report replacement protects source CSVs and refuses external edits", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  result <- validation_result(root)
+  source <- file.path(root, "assessment", "inputs", "landCover.csv")
+  before <- tools::md5sum(source)
+  testthat::expect_error(
+    validator$write_run_report(result, source, overwrite = TRUE), "not an OpenVQA"
+  )
+  testthat::expect_identical(tools::md5sum(source), before)
+  original <- base::writeLines
+  rlang::local_bindings(writeLines = function(text, con, ...) {
+    original(text, con, ...)
+    if (grepl(".openvqa-report-", basename(con), fixed = TRUE) &&
+      !grepl("lock-", basename(con), fixed = TRUE)) {
+      original("external edit", path)
+    }
+  }, .env = validator)
+  testthat::expect_error(validator$write_run_report(result, path, overwrite = TRUE), "changed")
+  testthat::expect_identical(readLines(path), "external edit")
+  testthat::expect_false(file.exists(paste0(path, ".lock")))
 })
 
 testthat::test_that("version-2.1 reports require valid settings evidence at publication", {
