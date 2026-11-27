@@ -94,3 +94,37 @@ testthat::test_that("shared publication preserves JSON values and protects desti
     fixed = TRUE
   )))
 })
+
+validation_project <- function(method = "assume.0") {
+  root <- tempfile("validation project café-")
+  dir.create(file.path(root, "assessment", "inputs"), recursive = TRUE)
+  yaml::write_yaml(
+    list(project = "test", qh_method = method, active_indicators = "SR"),
+    file.path(root, "params.yaml")
+  )
+  land_cover <- validator$read_csv_table(file.path(
+    report_repo, "data", "vqa-demo1-min", "main_001_current", "inputs", "landCover.csv"
+  ))[1, ]
+  write.csv(land_cover, file.path(root, "assessment", "inputs", "landCover.csv"), row.names = FALSE)
+  root
+}
+
+testthat::test_that("completed schema files survive a later exception", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  original <- validator$validate_schema_file
+  rlang::local_bindings(validate_schema_file = function(file_name, ...) {
+    if (file_name == "species.csv") stop("cannot read second CSV")
+    original(file_name, ...)
+  }, .env = validator)
+  fragments <- list()
+  testthat::expect_error(validator$run_schema_validation(
+    "assessment", file.path(root, "assessment", "inputs"), c("landCover.csv", "species.csv"),
+    file.path(report_repo, "schema"),
+    on_result = function(row) {
+      fragments[[length(fragments) + 1L]] <<- row
+    }
+  ), "second CSV")
+  testthat::expect_length(fragments, 1)
+  testthat::expect_identical(fragments[[1]]$status, "pass")
+})
