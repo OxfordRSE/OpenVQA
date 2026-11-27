@@ -1,5 +1,5 @@
 {
-  "report_version": "2.0",
+  "report_version": "2.1",
   "operation": "validate",
   "run_id": "example-success",
   "scope": {
@@ -24,7 +24,7 @@
   "validation": {
     "assessments": [
       {
-        "report_version": "2.0",
+        "report_version": "2.1",
         "operation": "validate",
         "run_id": "example-assessment-success",
         "scope": {
@@ -75,11 +75,22 @@
                 "modified_at": null
               }
             ]
+          },
+          "settings": {
+            "path": "params.yaml",
+            "algorithm": "md5",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "captured_at": "2026-11-27T12:00:00.000Z",
+            "stable": true
           }
         },
         "report_type": "assessment"
       }
     ]
   },
-  "report_type": "run"
+  "report_type": "run",
+  "settings": {
+    "hashes_match": true,
+    "warning": null
+  }
 }

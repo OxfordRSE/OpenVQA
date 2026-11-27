@@ -238,6 +238,10 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
     status = "not_run", reason = "Validation stopped before this stage."
   )
   inputs <- list(algorithm = "csv-md5-v1", captured_at = NULL, stable = NULL, files = list())
+  settings <- list(
+    path = "params.yaml", algorithm = "md5", hash = NULL,
+    captured_at = NULL, stable = NULL
+  )
   stage <- "setup"
   stage_index <- NULL
   # Store completed fragments outside the try block so a later exception cannot discard them.
@@ -254,6 +258,8 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
       if (!dir.exists(assessment_dir) || !identical(dirname(assessment_dir), data_root)) {
         stop("Assessment directory must belong to data_root.", call. = FALSE)
       }
+      stage <- "settings_snapshot"
+      settings <- snapshot_project_settings(data_root)
       stage <- "configuration"
       assessment_params <- read_project_params(data_root, assessment)
       inputs_dir <- file.path(assessment_dir, "inputs")
@@ -331,6 +337,23 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
       if (is.null(execution_error)) execution_error <- snapshot_error
     }
   }
+  if (!is.null(settings$captured_at)) {
+    settings_error <- tryCatch(
+      {
+        after <- snapshot_project_settings(data_root)
+        settings$stable <- identical(settings$hash, after$hash)
+        if (!settings$stable) stop("Project params.yaml changed during validation.", call. = FALSE)
+        NULL
+      },
+      error = function(e) {
+        list(message = conditionMessage(e), stage = "settings_snapshot")
+      }
+    )
+    if (!is.null(settings_error)) {
+      settings$stable <- FALSE
+      if (is.null(execution_error)) execution_error <- settings_error
+    }
+  }
   # Single-bracket assignment retains a required null instead of deleting the error field.
   result["error"] <- list(execution_error)
   report <- bind_validation_reports(rows)
@@ -344,7 +367,7 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
       ]
     )
   })
-  result$validation <- list(stages = groups, inputs = inputs)
+  result$validation <- list(stages = groups, inputs = inputs, settings = settings)
   result$outcome <- if (!is.null(execution_error)) {
     "execution_error"
   } else if (any(report$status != "pass")) {
@@ -414,6 +437,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
     }
   )
   result["error"] <- list(execution_error)
+  result$settings <- validation_settings_summary(result$validation$assessments)
   outcomes <- vapply(result$validation$assessments, function(child) child$outcome, character(1))
   result$outcome <- if (!is.null(execution_error) || "execution_error" %in% outcomes) {
     "execution_error"
@@ -462,6 +486,7 @@ print_validation_summary <- function(result, verbose = FALSE) {
     cat("  Assessment ", child$scope$assessment, ": ", child$outcome, "\n", sep = "")
   }
   cat("  Outcome: ", result$outcome, "\n", sep = "")
+  if (!is.null(result$settings$warning)) message("Report warning: ", result$settings$warning)
 }
 
 main <- function(args = commandArgs(trailingOnly = TRUE)) {

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "OpenVQA validation run or standalone assessment report 2.x",
+  "title": "OpenVQA validation run or assessment report 2.x",
   "oneOf": [
     {
       "$ref": "#/definitions/runReport"
@@ -207,6 +207,9 @@
                   }
                 }
               ]
+            },
+            "settings": {
+              "$ref": "#/definitions/settingsSummary"
             }
           }
         },
@@ -368,6 +371,29 @@
               }
             ]
           }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "report_version": {
+                "not": {
+                  "const": "2.0"
+                }
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/definitions/settingsSummary"
+              }
+            }
+          }
         }
       ]
     },
@@ -515,6 +541,9 @@
                       }
                     }
                   }
+                },
+                "settings": {
+                  "$ref": "#/definitions/projectSettings"
                 }
               }
             }
@@ -545,6 +574,17 @@
               "validation": {
                 "properties": {
                   "inputs": {
+                    "properties": {
+                      "stable": {
+                        "const": true
+                      },
+                      "captured_at": {
+                        "$ref": "#/definitions/utcTimestamp"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "settings": {
                     "properties": {
                       "stable": {
                         "const": true
@@ -656,6 +696,34 @@
               }
             },
             "type": "object"
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "report_version": {
+                "not": {
+                  "const": "2.0"
+                }
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "validation": {
+                "type": "object",
+                "required": [
+                  "settings"
+                ],
+                "properties": {
+                  "settings": {
+                    "$ref": "#/definitions/projectSettings"
+                  }
+                }
+              }
+            }
           }
         }
       ]
@@ -854,6 +922,111 @@
               }
             },
             "type": "object"
+          }
+        }
+      ]
+    },
+    "projectSettings": {
+      "type": "object",
+      "required": [
+        "path",
+        "algorithm",
+        "hash",
+        "captured_at",
+        "stable"
+      ],
+      "properties": {
+        "path": {
+          "const": "params.yaml"
+        },
+        "algorithm": {
+          "const": "md5"
+        },
+        "hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "captured_at": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/utcTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stable": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "settingsSummary": {
+      "type": "object",
+      "required": [
+        "hashes_match",
+        "warning"
+      ],
+      "properties": {
+        "hashes_match": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "warning": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "hashes_match": {
+                "const": false
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "warning": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "if": {
+              "type": "object",
+              "properties": {
+                "hashes_match": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "type": "object",
+              "properties": {
+                "warning": {
+                  "type": "null"
+                }
+              }
+            }
           }
         }
       ]
