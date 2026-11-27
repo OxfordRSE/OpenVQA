@@ -163,3 +163,58 @@ testthat::test_that("cross-file callbacks retain complete fragments before a lat
   testthat::expect_true(all(validator$bind_validation_reports(fragments)$assessment ==
     "main_001_current"))
 })
+
+withr::with_dir(report_repo, sys.source("validation/snapshot.R", envir = validator))
+
+testthat::test_that("input manifests detect changed, added and removed CSV bytes", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  inputs <- file.path(root, "assessment", "inputs")
+  file <- file.path(inputs, "landCover.csv")
+  first <- validator$snapshot_validation_inputs(inputs)
+  second <- validator$snapshot_validation_inputs(inputs)
+  testthat::expect_identical(first$files, second$files)
+  testthat::expect_identical(first$files$path, "inputs/landCover.csv")
+  testthat::expect_identical(first$files$hash, unname(tools::md5sum(file)))
+  Sys.setFileTime(file, Sys.time() + 10)
+  touched <- validator$snapshot_validation_inputs(inputs)
+  testthat::expect_identical(first$files$hash, touched$files$hash)
+  table <- validator$read_csv_table(file)
+  table$area_ha <- table$area_ha + 1
+  write.csv(table, file, row.names = FALSE)
+  changed <- validator$snapshot_validation_inputs(inputs)
+  testthat::expect_false(identical(first$files$hash, changed$files$hash))
+  writeLines("ignored output", file.path(inputs, "log.txt"))
+  testthat::expect_identical(changed$files, validator$snapshot_validation_inputs(inputs)$files)
+  write.csv(data.frame(x = 1), file.path(inputs, "additional.csv"), row.names = FALSE)
+  added <- validator$snapshot_validation_inputs(inputs)
+  testthat::expect_identical(added$files$path, c("inputs/additional.csv", "inputs/landCover.csv"))
+  unlink(file.path(inputs, "additional.csv"))
+  testthat::expect_identical(changed$files, validator$snapshot_validation_inputs(inputs)$files)
+  unlink(file)
+  testthat::expect_equal(nrow(validator$snapshot_validation_inputs(inputs)$files), 0)
+})
+
+testthat::test_that("snapshot read failures preserve returned checks and remain errors", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  inputs <- file.path(root, "assessment", "inputs")
+  file <- file.path(inputs, "landCover.csv")
+  if (.Platform$OS.type != "windows") {
+    Sys.chmod(file, "0000")
+    on.exit(Sys.chmod(file, "0644"), add = TRUE, after = FALSE)
+    if (file.access(file, 4) != 0L) {
+      testthat::expect_error(
+        suppressWarnings(validator$snapshot_validation_inputs(inputs)),
+        "Cannot hash"
+      )
+    }
+    Sys.chmod(file, "0644")
+    Sys.chmod(inputs, "0000")
+    on.exit(Sys.chmod(inputs, "0755"), add = TRUE, after = FALSE)
+    if (file.access(inputs, 5) != 0L) {
+      testthat::expect_error(validator$snapshot_validation_inputs(inputs), "Cannot read")
+    }
+    Sys.chmod(inputs, "0755")
+  }
+})
