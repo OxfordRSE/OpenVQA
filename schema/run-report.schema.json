@@ -1,0 +1,780 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenVQA validation run or standalone assessment report 1.x",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/runReport"
+    },
+    {
+      "$ref": "#/definitions/assessmentReport"
+    }
+  ],
+  "definitions": {
+    "commonReport": {
+      "type": "object",
+      "required": [
+        "report_version",
+        "report_type",
+        "operation",
+        "run_id",
+        "scope",
+        "backend",
+        "started_at",
+        "ended_at",
+        "outcome",
+        "error"
+      ],
+      "properties": {
+        "report_version": {
+          "type": "string",
+          "pattern": "^1\\.[0-9]+$"
+        },
+        "report_type": {
+          "enum": [
+            "run",
+            "assessment"
+          ]
+        },
+        "operation": {
+          "const": "validate"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "object",
+          "required": [
+            "type",
+            "data_root",
+            "requested_assessment",
+            "assessments",
+            "excluded_dirs"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "project",
+                "assessment"
+              ]
+            },
+            "data_root": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requested_assessment": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "assessments": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "excluded_dirs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "type": {
+                    "const": "assessment"
+                  }
+                },
+                "type": "object"
+              },
+              "then": {
+                "properties": {
+                  "assessments": {
+                    "maxItems": 1,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "else": {
+                "properties": {
+                  "requested_assessment": {
+                    "type": "null"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "backend": {
+          "type": "object",
+          "required": [
+            "version",
+            "revision"
+          ],
+          "properties": {
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "started_at": {
+          "$ref": "#/definitions/utcTimestamp"
+        },
+        "ended_at": {
+          "$ref": "#/definitions/utcTimestamp"
+        },
+        "outcome": {
+          "enum": [
+            "success",
+            "invalid_data",
+            "execution_error"
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "message",
+                "assessment",
+                "stage"
+              ],
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assessment": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "stage": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "runReport": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/commonReport"
+        },
+        {
+          "type": "object",
+          "required": [
+            "report_type",
+            "validation"
+          ],
+          "properties": {
+            "report_type": {
+              "const": "run"
+            },
+            "validation": {
+              "type": "object",
+              "required": [
+                "assessments"
+              ],
+              "properties": {
+                "assessments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/assessmentReport"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "success",
+                  "invalid_data"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              },
+              "scope": {
+                "properties": {
+                  "data_root": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "assessments": {
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "validation": {
+                "properties": {
+                  "assessments": {
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "success"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "validation": {
+                "properties": {
+                  "assessments": {
+                    "items": {
+                      "properties": {
+                        "outcome": {
+                          "const": "success"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "invalid_data"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "validation": {
+                "properties": {
+                  "assessments": {
+                    "contains": {
+                      "properties": {
+                        "outcome": {
+                          "const": "invalid_data"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "items": {
+                      "properties": {
+                        "outcome": {
+                          "enum": [
+                            "success",
+                            "invalid_data"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "execution_error"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "anyOf": [
+              {
+                "properties": {
+                  "error": {
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "validation": {
+                    "properties": {
+                      "assessments": {
+                        "contains": {
+                          "properties": {
+                            "outcome": {
+                              "const": "execution_error"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "assessmentReport": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/commonReport"
+        },
+        {
+          "type": "object",
+          "required": [
+            "report_type",
+            "validation"
+          ],
+          "properties": {
+            "report_type": {
+              "const": "assessment"
+            },
+            "validation": {
+              "type": "object",
+              "required": [
+                "rows",
+                "stages",
+                "inputs"
+              ],
+              "properties": {
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validationRow"
+                  }
+                },
+                "stages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validationStage"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "inputs": {
+                  "type": "object",
+                  "required": [
+                    "algorithm",
+                    "captured_at",
+                    "stable",
+                    "files"
+                  ],
+                  "properties": {
+                    "algorithm": {
+                      "const": "csv-md5-v1"
+                    },
+                    "captured_at": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/definitions/utcTimestamp"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "stable": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "path",
+                          "hash",
+                          "modified_at"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string",
+                            "pattern": "^inputs/[^/\\\\]+\\.csv$"
+                          },
+                          "hash": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$"
+                          },
+                          "modified_at": {
+                            "anyOf": [
+                              {
+                                "$ref": "#/definitions/utcTimestamp"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "scope": {
+              "properties": {
+                "type": {
+                  "const": "assessment"
+                },
+                "data_root": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "requested_assessment": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assessments": {
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "execution_error"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "error": {
+                "type": "null"
+              },
+              "validation": {
+                "properties": {
+                  "rows": {
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "inputs": {
+                    "properties": {
+                      "stable": {
+                        "const": true
+                      },
+                      "captured_at": {
+                        "$ref": "#/definitions/utcTimestamp"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "success"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "validation": {
+                "properties": {
+                  "rows": {
+                    "items": {
+                      "properties": {
+                        "status": {
+                          "const": "pass"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "stages": {
+                    "items": {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "completed",
+                            "not_applicable"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "invalid_data"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "validation": {
+                "properties": {
+                  "rows": {
+                    "contains": {
+                      "properties": {
+                        "status": {
+                          "const": "fail"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "stages": {
+                    "items": {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "completed",
+                            "skipped",
+                            "not_applicable"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "utcTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "validationRow": {
+      "type": "object",
+      "required": [
+        "assessment",
+        "stage",
+        "check_id",
+        "severity",
+        "status",
+        "message",
+        "file",
+        "details",
+        "extra_columns"
+      ],
+      "properties": {
+        "assessment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "schema",
+            "crossfile"
+          ]
+        },
+        "check_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "details": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extra_columns": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "validationStage": {
+      "type": "object",
+      "required": [
+        "assessment",
+        "stage",
+        "status",
+        "reason"
+      ],
+      "properties": {
+        "assessment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "schema",
+            "crossfile"
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "skipped",
+            "not_applicable",
+            "not_run",
+            "error"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "type": "null"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    }
+  }
+}
