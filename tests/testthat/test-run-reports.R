@@ -542,3 +542,72 @@ testthat::test_that("completed reports inherit context and keep warnings separat
   testthat::expect_identical(warning$severity, "warning")
   testthat::expect_identical(warning$status, "pass")
 })
+
+testthat::test_that("schema-invalid reports cannot be returned or written to any file", {
+  root <- validation_project()
+  directory <- tempfile("invalid-report-export-")
+  dir.create(directory)
+  on.exit(unlink(c(root, directory), recursive = TRUE), add = TRUE)
+  result <- validation_result(root)
+  result$validation$assessments[[1]]$validation$stages[[1]]$checks$severity <- "error"
+  destination <- file.path(directory, "invalid.json")
+  testthat::expect_error(
+    validator$write_run_report(result, destination),
+    class = "validation_error"
+  )
+  testthat::expect_length(list.files(directory, all.files = TRUE, no.. = TRUE), 0)
+
+  original <- validator$run_schema_validation
+  rlang::local_bindings(run_schema_validation = function(..., on_result = NULL) {
+    record <- function(fragment) {
+      fragment$severity <- "error"
+      on_result(fragment)
+    }
+    original(..., on_result = record)
+  }, .env = validator)
+  testthat::expect_error(withr::with_dir(report_repo, validator$run_assessment_validation(
+    normalizePath(root, winslash = "/"), "assessment", file.path(report_repo, "schema")
+  )), class = "validation_error")
+  # The project may return a valid execution-error envelope, but never the malformed child.
+  result <- validation_result(root)
+  testthat::expect_identical(result$outcome, "execution_error")
+  testthat::expect_identical(result$error$stage, "assessment_reporting")
+  testthat::expect_length(result$validation$assessments, 0)
+  testthat::expect_no_error(validator$validated_run_report_json(result))
+})
+
+testthat::test_that("parent report validation is enforced even without requesting JSON export", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  original <- validator$run_assessment_validation
+  rlang::local_bindings(run_assessment_validation = function(...) {
+    child <- original(...)
+    child$validation$stages[[1]]$checks$severity <- "error"
+    child
+  }, .env = validator)
+  testthat::expect_error(validation_result(root), class = "validation_error")
+  status <- NULL
+  testthat::expect_message(capture.output(status <- withr::with_dir(
+    report_repo,
+    validator$main(c("--data-root", root))
+  )), "validating json")
+  testthat::expect_identical(status, 2L)
+})
+
+testthat::test_that("export revalidates edited objects and refuses incompatible report versions", {
+  root <- validation_project()
+  directory <- tempfile("revalidate-report-")
+  dir.create(directory)
+  on.exit(unlink(c(root, directory), recursive = TRUE), add = TRUE)
+  result <- validation_result(root)
+  result$report_version <- "1.0"
+  testthat::expect_error(validator$write_run_report(result, file.path(directory, "old.json")),
+    class = "validation_error"
+  )
+  result$report_version <- "2.0"
+  result$validation$assessments[[1]]$validation$stages[[1]]$checks$check_id <- NULL
+  testthat::expect_error(validator$write_run_report(result, file.path(directory, "missing.json")),
+    class = "validation_error"
+  )
+  testthat::expect_length(list.files(directory, all.files = TRUE, no.. = TRUE), 0)
+})

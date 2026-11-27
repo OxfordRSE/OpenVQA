@@ -353,6 +353,7 @@ run_assessment_validation <- function(data_root, assessment, schema_root, verbos
     "success"
   }
   result$ended_at <- run_report_time()
+  validated_run_report_json(result)
   result
 }
 
@@ -400,6 +401,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
       load_project_config(data_root, required = FALSE)
       cat("Validating processed inputs with jsonvalidate (ajv engine)\n")
       cat(sprintf("Schema root: %s\nData root: %s\n\n", schema_root, data_root))
+      stage <- "assessment_reporting"
       for (name in assessments) {
         # Each child catches its own execution errors so later assessments still get checked.
         result$validation$assessments[[length(result$validation$assessments) + 1L]] <-
@@ -421,6 +423,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
     "success"
   }
   result$ended_at <- run_report_time()
+  validated_run_report_json(result)
   result
 }
 
