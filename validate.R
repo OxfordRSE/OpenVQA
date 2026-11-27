@@ -16,10 +16,10 @@ source(file.path("validation", "crossfile.R"), local = TRUE)
 
 parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   # optparse handles `-h/--help` for us and accepts both
-  # `--data-root /path` and `--data-root=/path`.
+  # `--project-root /path` and `--project-root=/path`.
   option_list <- list(
     make_option(
-      c("-d", "--data-root"),
+      c("-d", "--project-root"),
       type = "character",
       help = "Root data directory that contains the assessment folders."
     ),
@@ -63,7 +63,7 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     option_list = option_list,
     description = paste(
       "Validate processed CSV inputs against the modular JSON Schemas.",
-      "Use --data-root to point at a project data root.",
+      "Use --project-root to point at a project data root.",
       "By default, raw/ is excluded from assessment scanning.",
       "Exit codes: 0 success, 1 invalid data, 2 execution or report export error."
     )
@@ -82,7 +82,7 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     (is.null(options$assessment) || !nzchar(options$assessment))) {
     stop("--update-report requires --assessment NAME.", call. = FALSE)
   }
-  data_root <- parsed$options[["data-root"]]
+  data_root <- parsed$options[["project-root"]]
   exclude_dirs <- c("raw", parsed$options[["exclude-dirs"]], parsed$args)
   exclude_dirs <- unique(stats::na.omit(exclude_dirs))
 
@@ -421,7 +421,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
   execution_error <- tryCatch(
     {
       if (!valid_data_root) {
-        stop("Please provide --data-root pointing to the root of the data folder.", call. = FALSE)
+        stop("Please provide --project-root pointing to the project directory.", call. = FALSE)
       }
       if (!dir.exists(data_root)) stop("Data directory does not exist: ", data_root, call. = FALSE)
       data_root <- normalizePath(data_root, winslash = "/", mustWork = TRUE)

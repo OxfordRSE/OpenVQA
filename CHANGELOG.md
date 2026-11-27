@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Rename `--data-root` to `--project-root` in both supported CLIs, retaining `-d`.
+  Update commands and CI callers; the old long option is no longer accepted.
+
 - Add opt-in `validate.R --report PATH` JSON run reports with independent report
   version 2.1, explicit stage status, partial results and execution-error context.
   Existing destinations require explicit `--overwrite` or assessment-only

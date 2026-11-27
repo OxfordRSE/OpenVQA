@@ -10,7 +10,7 @@ testthat::test_that("subprocess arguments preserve spaces and inherit scoped lib
   previous <- Sys.getenv("R_LIBS_USER", unset = NA_character_)
   output <- run_refactor_command(script, root)
   testthat::expect_identical(output, c(
-    paste("--data-root", root, sep = "|"),
+    paste("--project-root", root, sep = "|"),
     paste(.libPaths(), collapse = .Platform$path.sep)
   ))
   testthat::expect_identical(Sys.getenv("R_LIBS_USER", unset = NA_character_), previous)

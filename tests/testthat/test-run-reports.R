@@ -43,7 +43,7 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
   dir.create(reports)
   on.exit(unlink(c(root, reports), recursive = TRUE), add = TRUE)
   success <- file.path(reports, "success.json")
-  command <- validation_command(c("--data-root", root, paste0("--report=", success)))
+  command <- validation_command(c("--project-root", root, paste0("--report=", success)))
   testthat::expect_identical(command$status, 0L, info = paste(command$output, collapse = "\n"))
   expect_report_schema(success)
   report <- jsonlite::fromJSON(success, simplifyVector = FALSE)
@@ -52,12 +52,12 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
   testthat::expect_null(
     report$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$details
   )
-  testthat::expect_identical(validation_command(c("--data-root", root))$status, 0L)
+  testthat::expect_identical(validation_command(c("--project-root", root))$status, 0L)
 
   unlink(file.path(root, "assessment", "inputs", "landCover.csv"))
   invalid <- file.path(reports, "invalid.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--report", invalid, "--verbose"
+    "--project-root", root, "--report", invalid, "--verbose"
   ))$status, 1L)
   expect_report_schema(invalid)
   report <- jsonlite::fromJSON(invalid, simplifyVector = FALSE)
@@ -68,12 +68,12 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
   testthat::expect_match(
     report$validation$assessments[[1]]$validation$stages[[1]]$checks[[1]]$message, "Missing input"
   )
-  testthat::expect_identical(validation_command(c("--data-root", root))$status, 1L)
+  testthat::expect_identical(validation_command(c("--project-root", root))$status, 1L)
 
   writeLines("invalid: [", file.path(root, "params.yaml"))
   error <- file.path(reports, "error.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--report", error
+    "--project-root", root, "--report", error
   ))$status, 2L)
   expect_report_schema(error)
   report <- jsonlite::fromJSON(error, simplifyVector = FALSE)
@@ -81,14 +81,14 @@ testthat::test_that("CLI exports success, invalid inputs and ordinary errors wit
   testthat::expect_length(report$validation$assessments, 0)
   testthat::expect_length(report$scope$assessments, 1)
   testthat::expect_identical(report$error$stage, "configuration")
-  testthat::expect_identical(validation_command(c("--data-root", root))$status, 2L)
+  testthat::expect_identical(validation_command(c("--project-root", root))$status, 2L)
 
   missing <- file.path(reports, "missing-root.json")
   testthat::expect_identical(validation_command(c("--report", missing))$status, 2L)
   expect_report_schema(missing)
   nonexistent <- file.path(reports, "nonexistent-root.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", file.path(root, "absent"), "--report", nonexistent
+    "--project-root", file.path(root, "absent"), "--report", nonexistent
   ))$status, 2L)
   expect_report_schema(nonexistent)
   testthat::expect_identical(validation_command("--help")$status, 0L)
@@ -264,7 +264,7 @@ testthat::test_that("exports never clobber existing files, symlinks or publicati
   destination <- file.path(directory, "existing.json")
   validator$write_run_report(result, destination)
   previous <- readBin(destination, "raw", n = file.info(destination)$size)
-  command <- validation_command(c("--data-root", root, "--report", destination))
+  command <- validation_command(c("--project-root", root, "--report", destination))
   testthat::expect_identical(command$status, 2L)
   testthat::expect_true(any(grepl("not this invocation", command$output, fixed = TRUE)))
   testthat::expect_identical(readBin(destination, "raw", n = file.info(destination)$size), previous)
@@ -272,7 +272,7 @@ testthat::test_that("exports never clobber existing files, symlinks or publicati
   testthat::expect_error(validator$write_run_report(result, ""), "new file")
   absent <- file.path(directory, "absent", "report.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--report", absent
+    "--project-root", root, "--report", absent
   ))$status, 2L)
   testthat::expect_false(file.exists(absent))
   if (.Platform$OS.type != "windows") {
@@ -302,7 +302,7 @@ testthat::test_that("write and publication failures exit 2 and remove temporary 
   destination <- file.path(directory, "report.json")
   status <- NULL
   testthat::expect_message(capture.output(status <- withr::with_dir(report_repo, validator$main(c(
-    "--data-root", root, "--report", destination
+    "--project-root", root, "--report", destination
   )))), "Could not publish")
   testthat::expect_identical(status, 2L)
   testthat::expect_false(file.exists(destination))
@@ -312,7 +312,7 @@ testthat::test_that("write and publication failures exit 2 and remove temporary 
     on.exit(Sys.chmod(directory, "0755"), add = TRUE, after = FALSE)
     if (file.access(directory, 2) != 0L) {
       testthat::expect_identical(validation_command(c(
-        "--data-root", root, "--report", destination
+        "--project-root", root, "--report", destination
       ))$status, 2L)
       testthat::expect_false(file.exists(destination))
     }
@@ -365,13 +365,13 @@ testthat::test_that("single-assessment selection uses overrides and ignores unre
   testthat::expect_identical(children[[2]]$error$stage, "configuration")
   path <- file.path(reports, "project.json")
   testthat::expect_identical(
-    validation_command(c("--data-root", root, "--report", path))$status, 2L
+    validation_command(c("--project-root", root, "--report", path))$status, 2L
   )
   expect_report_schema(path)
 
   path <- file.path(reports, "selected.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--assessment", "assessment", "--report", path
+    "--project-root", root, "--assessment", "assessment", "--report", path
   ))$status, 0L)
   expect_report_schema(path)
   selected <- jsonlite::fromJSON(path, simplifyVector = FALSE)
@@ -386,7 +386,9 @@ testthat::test_that("single-assessment selection uses overrides and ignores unre
   standalone <- file.path(reports, "standalone.json")
   validator$write_run_report(child, standalone)
   expect_report_schema(standalone)
-  testthat::expect_identical(validation_command(c("--data-root", root, "-a", "third"))$status, 0L)
+  testthat::expect_identical(
+    validation_command(c("--project-root", root, "-a", "third"))$status, 0L
+  )
   testthat::expect_identical(
     validation_result(root, assessment = "broken")$outcome, "execution_error"
   )
@@ -589,7 +591,7 @@ testthat::test_that("parent report validation is enforced even without requestin
   status <- NULL
   testthat::expect_message(capture.output(status <- withr::with_dir(
     report_repo,
-    validator$main(c("--data-root", root))
+    validator$main(c("--project-root", root))
   )), "validating json")
   testthat::expect_identical(status, 2L)
 })

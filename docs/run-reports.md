@@ -12,14 +12,14 @@ Analysis reporting is deferred to B2.
 
 ## Invocation and selection
 
-Run from the OpenVQA repository root, keeping `--data-root` at the project level:
+Run from the OpenVQA repository root, keeping `--project-root` at the project level:
 
 ```sh
 # Validate every included assessment.
-Rscript validate.R --data-root /work/project --report /work/project/report.json
+Rscript validate.R --project-root /work/project --report /work/project/report.json
 
 # Validate one assessment using its project settings and assessment overrides.
-Rscript validate.R --data-root /work/project --assessment baseline --report /work/reports/baseline-001.json
+Rscript validate.R --project-root /work/project --assessment baseline --report /work/reports/baseline-001.json
 ```
 
 `-a NAME` is equivalent to `--assessment NAME`. Omit the flag for project execution.
@@ -51,10 +51,10 @@ run. `--overwrite` also works for a new path. With `--assessment`, overwrite sav
 
 ```sh
 # Rerun one assessment, retaining other stored assessment reports.
-Rscript validate.R --data-root /work/project --assessment baseline --report /work/project/report.json --update-report
+Rscript validate.R --project-root /work/project --assessment baseline --report /work/project/report.json --update-report
 
 # Rerun the whole project and explicitly replace the previous report.
-Rscript validate.R --data-root /work/project --report /work/project/report.json --overwrite
+Rscript validate.R --project-root /work/project --report /work/project/report.json --overwrite
 ```
 
 ## Report structure

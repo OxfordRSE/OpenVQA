@@ -27,12 +27,12 @@ testthat::test_that("report modes require explicit destinations and assessment s
     "--overwrite",
     c("--report", path, "--assessment", "assessment", "--overwrite", "--update-report")
   )) {
-    testthat::expect_identical(validation_command(c("--data-root", root, args))$status, 2L)
+    testthat::expect_identical(validation_command(c("--project-root", root, args))$status, 2L)
     testthat::expect_identical(readBin(path, "raw", n = file.info(path)$size), previous)
   }
   missing <- file.path(root, "missing.json")
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--assessment", "assessment",
+    "--project-root", root, "--assessment", "assessment",
     "--report", missing, "--update-report"
   ))$status, 2L)
   testthat::expect_false(file.exists(missing))
@@ -48,7 +48,7 @@ testthat::test_that("assessment updates retain other outcomes, timestamps, ident
     min_plots = 7L
   ), file.path(root, "params.yaml"))
   command <- validation_command(c(
-    "--data-root", root, "--assessment", "assessment",
+    "--project-root", root, "--assessment", "assessment",
     "--report", path, "--update-report"
   ))
   testthat::expect_identical(command$status, 0L, info = paste(command$output, collapse = "\n"))
@@ -70,7 +70,7 @@ testthat::test_that("assessment updates retain other outcomes, timestamps, ident
   testthat::expect_true(any(grepl("Report warning", command$output, fixed = TRUE)))
 
   command <- validation_command(c(
-    "--data-root", root, "--assessment", "second",
+    "--project-root", root, "--assessment", "second",
     "--report", path, "--update-report"
   ))
   testthat::expect_identical(command$status, 0L)
@@ -88,7 +88,7 @@ testthat::test_that("updates append assessments and preserve retained outcomes",
   original <- read_report(path)$validation$assessments[[1]]
   dir.create(file.path(root, "second", "inputs"), recursive = TRUE)
   command <- validation_command(c(
-    "--data-root", root, "--assessment", "second",
+    "--project-root", root, "--assessment", "second",
     "--report", path, "--update-report"
   ))
   testthat::expect_identical(command$status, 1L)
@@ -98,7 +98,7 @@ testthat::test_that("updates append assessments and preserve retained outcomes",
   testthat::expect_identical(stored$validation$assessments[[2]]$outcome, "invalid_data")
   writeLines("invalid: [", file.path(root, "params.yaml"))
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--assessment", "second",
+    "--project-root", root, "--assessment", "second",
     "--report", path, "--update-report"
   ))$status, 2L)
   stored <- read_report(path)
@@ -115,19 +115,19 @@ testthat::test_that("overwrite replaces the complete report and never silently m
   path <- write_project_report(root)
   before <- read_report(path)
   testthat::expect_identical(validation_command(c(
-    "--data-root", root,
+    "--project-root", root,
     "--report", path
   ))$status, 2L)
   testthat::expect_identical(read_report(path), before)
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--assessment", "assessment",
+    "--project-root", root, "--assessment", "assessment",
     "--report", path, "--overwrite"
   ))$status, 0L)
   stored <- read_report(path)
   testthat::expect_identical(stored$report_type, "run")
   testthat::expect_length(stored$validation$assessments, 1)
   testthat::expect_identical(validation_command(c(
-    "--data-root", root, "--report", path,
+    "--project-root", root, "--report", path,
     "--overwrite"
   ))$status, 0L)
   testthat::expect_length(read_report(path)$validation$assessments, 2)
@@ -301,4 +301,14 @@ testthat::test_that("version-2.1 reports require valid settings evidence at publ
   invalid$settings <- NULL
   testthat::expect_error(validator$write_run_report(invalid, path), class = "validation_error")
   testthat::expect_false(file.exists(path))
+})
+
+testthat::test_that("the validation CLI uses the project-root long option", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  options <- validator$parse_cli_args(c(paste0("--project-root=", root)))
+  testthat::expect_identical(options$data_root, root)
+  testthat::expect_identical(validator$parse_cli_args(c("-d", root))$data_root, root)
+  # Keep the retired spelling here to prove it cannot silently select the wrong CLI option.
+  testthat::expect_identical(validation_command(c("--data-root", root))$status, 2L)
 })

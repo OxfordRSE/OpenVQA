@@ -9,10 +9,10 @@
 Install dependencies with `rv sync` from the repository root, then run:
 
 ```sh
-Rscript validate.R --data-root data/vqa-demo1-min
-Rscript validate.R --data-root data/vqa-demo2-min
-Rscript analyse.R --data-root data/vqa-demo1-min --assessment main_001_current --seed 20260810
-Rscript analyse.R --data-root data/vqa-demo2-min --assessment project_current --seed 20260810
+Rscript validate.R --project-root data/vqa-demo1-min
+Rscript validate.R --project-root data/vqa-demo2-min
+Rscript analyse.R --project-root data/vqa-demo1-min --assessment main_001_current --seed 20260810
+Rscript analyse.R --project-root data/vqa-demo2-min --assessment project_current --seed 20260810
 ```
 
 `analyse.R` is the supported analysis entry point. It validates and prepares inputs,
@@ -23,8 +23,8 @@ assessment. Add `--no-figures` for numerical output alone. Sourcing `analyse.R` 
 `validate.R` can also export a versioned JSON run report:
 
 ```sh
-Rscript validate.R --data-root /work/project --report /work/project/report.json
-Rscript validate.R --data-root /work/project --assessment baseline --report /work/project/report.json --update-report
+Rscript validate.R --project-root /work/project --report /work/project/report.json
+Rscript validate.R --project-root /work/project --assessment baseline --report /work/project/report.json --update-report
 ```
 
 Omit `--assessment` to validate the whole project. Reports contain independently
@@ -58,7 +58,7 @@ parameter-script interfaces and are outside the supported analysis workflow.
 
 ## Project data
 
-`--data-root` selects a project directory, which may be inside or outside this repository.
+`--project-root` selects a project directory, which may be inside or outside this repository.
 `--assessment` selects one assessment subdirectory. A project can contain a baseline,
 later assessments and offset assessments, each with its own inputs and outputs:
 
@@ -165,7 +165,7 @@ You can read more about VQA in detail in this open access [publication](https://
 
 <a name="results"></a>
 ### Results
-Results are saved as CSV files under `results/` in the assessment selected by `--data-root`
+Results are saved as CSV files under `results/` in the assessment selected by `--project-root`
 and `--assessment`. The analysis creates this directory automatically.
 
 * Each indicator script produces the following output files:

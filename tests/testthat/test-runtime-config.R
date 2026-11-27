@@ -135,12 +135,14 @@ testthat::test_that("CLI and function seeds reject fractions before preprocessin
   setwd(file.path("..", ".."))
   source("analyse.R", local = TRUE)
   cli <- parse_cli_args(c(
-    "--data-root", "data/vqa-demo2-min", "--assessment",
+    "--project-root", "data/vqa-demo2-min", "--assessment",
     "offset_baseline", "--seed", "7"
   ))
   testthat::expect_identical(cli$seed, 7L)
+  short <- parse_cli_args(c("-d", "data/vqa-demo2-min", "-a", "offset_baseline"))
+  testthat::expect_identical(short$data_root, cli$data_root)
   testthat::expect_error(parse_cli_args(c(
-    "--data-root", "data/vqa-demo2-min",
+    "--project-root", "data/vqa-demo2-min",
     "--assessment", "offset_baseline", "--seed", "1.5"
   )), "integer")
   testthat::expect_error(
