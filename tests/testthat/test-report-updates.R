@@ -98,3 +98,27 @@ testthat::test_that("version-2.1 reports require valid settings evidence at publ
   testthat::expect_error(validator$write_run_report(invalid, path), class = "validation_error")
   testthat::expect_false(file.exists(path))
 })
+testthat::test_that("overwrite replaces the complete report and never silently merges", {
+  root <- update_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  before <- read_report(path)
+  testthat::expect_identical(validation_command(c(
+    "--data-root", root,
+    "--report", path
+  ))$status, 2L)
+  testthat::expect_identical(read_report(path), before)
+  testthat::expect_identical(validation_command(c(
+    "--data-root", root, "--assessment", "assessment",
+    "--report", path, "--overwrite"
+  ))$status, 0L)
+  stored <- read_report(path)
+  testthat::expect_identical(stored$report_type, "run")
+  testthat::expect_length(stored$validation$assessments, 1)
+  testthat::expect_identical(validation_command(c(
+    "--data-root", root, "--report", path,
+    "--overwrite"
+  ))$status, 0L)
+  testthat::expect_length(read_report(path)$validation$assessments, 2)
+  expect_report_schema(path)
+})

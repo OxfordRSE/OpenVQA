@@ -39,7 +39,11 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     make_option(
       "--report",
       type = "character",
-      help = "Write a JSON run report to a new file in an existing directory."
+      help = "Write a JSON report to PATH (may be at the project data root)."
+    ),
+    make_option("--overwrite",
+      action = "store_true", default = FALSE,
+      help = "Replace the complete existing report at --report PATH."
     ),
     make_option(
       c("-v", "--verbose"),
@@ -61,6 +65,10 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
   )
 
   parsed <- parse_args(parser, args = args, positional_arguments = TRUE)
+  options <- parsed$options
+  if (isTRUE(options$overwrite) && (is.null(options$report) || !nzchar(options$report))) {
+    stop("--overwrite requires --report PATH.", call. = FALSE)
+  }
   data_root <- parsed$options[["data-root"]]
   exclude_dirs <- c("raw", parsed$options[["exclude-dirs"]], parsed$args)
   exclude_dirs <- unique(stats::na.omit(exclude_dirs))
@@ -69,6 +77,7 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     data_root = data_root,
     assessment = parsed$options$assessment,
     report = parsed$options$report,
+    overwrite = isTRUE(options$overwrite),
     exclude_dirs = exclude_dirs,
     verbose = isTRUE(parsed$options$verbose)
   )
@@ -493,7 +502,11 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
   tryCatch(
     {
       cli <- parse_cli_args(args)
-      destination <- if (!is.null(cli$report)) prepare_report_destination(cli$report) else NULL
+      destination <- if (!is.null(cli$report)) {
+        prepare_report_destination(cli$report, overwrite = cli$overwrite)
+      } else {
+        NULL
+      }
       result <- run_validation(cli$data_root, cli$exclude_dirs, cli$verbose, cli$assessment)
       print_validation_summary(result)
       if (!is.null(result$error)) message("Validation error: ", result$error$message)
@@ -502,7 +515,7 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
           message("Assessment ", child$scope$assessment, ": ", child$error$message)
         }
       }
-      if (!is.null(destination)) write_run_report(result, destination)
+      if (!is.null(destination)) write_run_report(result, destination, overwrite = cli$overwrite)
       run_report_exit_status(result)
     },
     error = function(e) {
