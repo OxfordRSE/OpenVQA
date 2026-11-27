@@ -59,14 +59,10 @@ Rscript validate.R --project-root /work/project --report /work/project/report.js
 
 ## Report structure
 
-Report version **2.1** is independent of the application version in `VERSION`.
-Version 2 groups checks under stages, removes repeated assessment context and
-clears error/info severity from ordinary passing checks. These are incompatible
-changes to the committed version-1 format, so the report major version increases.
-Existing version-1 files are historical evidence; regenerate a report at a fresh
-path, or use `--overwrite` for a full replacement, to consume the new shape.
-The current schema validates version 2 only. Version 2.1 adds settings-file identity
-and stored collections; version-2.0 children can be retained with unknown settings identity.
+Report version **0.1** is independent of the application version in `VERSION`.
+This is a new experimental reporting feature. The current schema accepts exactly
+version 0.1; regenerate earlier development drafts at a fresh path or use a full
+`--overwrite`. Their version numbers do not establish compatibility with this contract.
 
 [The schema](../schema/run-report.schema.json) uses draft-07 and local definitions
 only. Its root accepts `runReport`, `assessmentReport` or `collectionReport`; `assessmentReport`
@@ -101,7 +97,7 @@ Envelope fields (scope-specific fields are labelled below):
 
 | Field | Meaning |
 | --- | --- |
-| `report_version` | `major.minor`; currently `2.1`. |
+| `report_version` | `major.minor`; currently `0.1`. |
 | `report_type` | `run`, `assessment` or a stored `collection` (see below). |
 | `operation` | `validate`; analysis is not yet supported. |
 | `run_id` | Opaque execution identity, not an input fingerprint. |
@@ -118,10 +114,10 @@ Envelope fields (scope-specific fields are labelled below):
 | `error` | Null, or `{message, stage}`. Its enclosing report supplies assessment/project context. |
 
 Required unavailable scalars are explicit JSON `null`. Collections are arrays,
-including empty and singleton collections. Unknown optional fields may be added
-in a minor report version; readers must ignore unknown fields. Removing/renaming
-fields, changing types or changing meanings requires a new major version. Readers
-must check supported major version, operation and report type.
+including empty and singleton collections. Readers must check the supported full
+report version, operation and report type. While the report version is 0.x, the
+contract is experimental and may change incompatibly. Unknown additional fields
+can be ignored after the supported version has been checked.
 
 ## Checks, stages and outcomes
 
@@ -143,8 +139,8 @@ results are preserved; passing error/info labels are normalized:
 | `fail` | `error` | A blocking check failed. |
 
 The schema rejects contradictory combinations, including `pass` with `error`.
-Ordinary schema passes and `pass_result()` checks have null severity. Version 1
-used error severity on passing schema checks and info severity on ordinary passes;
+Ordinary schema passes and `pass_result()` checks have null severity. Earlier
+development drafts used error severity on passing schema checks and info severity on ordinary passes;
 these now become null. Existing warning classifications, messages and counts are
 preserved, including warning-labelled agreement diagnostics. A successful demo
 therefore still succeeds with its warnings; warnings are never promoted to failures.
@@ -232,7 +228,7 @@ A matching input inventory says nothing about changed settings, schemas, validat
 code or runtime. The separate project settings identity below covers `params.yaml`
 bytes only; resolved settings/code/environment fingerprints remain B3 work.
 
-Each version-2.1 child also contains `validation.settings`:
+Each child also contains `validation.settings`:
 
 | Field | Meaning |
 | --- | --- |
@@ -247,8 +243,8 @@ configuration resolution fails. Formatting/comments change its hash. A settings
 change during validation makes that attempt an execution error without discarding
 completed checks. This does not hash effective defaults, resolved overrides,
 schemas, validator code or runtime. A null hash with a captured time and `stable: true`
-means known absence, rather than unknown identity. A missing settings field in a
-retained version-2.0 child remains unknown; its historical hash cannot be reconstructed.
+means known absence, rather than unknown identity. Settings evidence is required
+in every version-0.1 child; unavailable snapshots use explicit nulls.
 
 ## Dashboard composition and history
 
@@ -272,8 +268,8 @@ status describes the new invocation/publication, not retained assessment failure
 
 `settings.hashes_match` compares only stored stable project settings identities:
 true for matching identities, false for different identities, null when consistency
-is unknown (including older children without hashes). A detected difference takes
-precedence over missing identities. `settings.warning` supplies a small non-blocking
+is unknown (including attempts without a stable snapshot). A detected difference
+takes precedence over missing identities. `settings.warning` supplies a small non-blocking
 message for differing or unavailable identities; it does not alter check warning
 counts or assessment outcomes. Normal runs also include this comparison.
 
@@ -288,8 +284,8 @@ historical outcomes.
 Updates require a matching normalized absolute project root, unique assessment
 names and compatible schema-valid evidence. Relocating a project requires a fresh
 full run/overwrite; absolute workspace paths are not durable project identifiers.
-Version-1 reports must be regenerated with a whole-project `--overwrite` or a fresh
-path. Version-2.0 children can be retained unchanged with unknown settings identity.
+Earlier development reports must be regenerated with a whole-project `--overwrite`
+or a fresh path; updates require a supported version-0.1 report.
 
 ## Publication and callable use
 
@@ -358,12 +354,13 @@ Examples: [project success](../tests/testthat/fixtures/run-reports/success.json)
 
 ## Verified implementation
 
-Verified on 27 November 2026 against report version **2.1** and input-manifest
-algorithm **csv-md5-v1**, using OpenVQA application version **0.1.0**, revision
-`34745f2` plus the uncommitted report-review changes. Runtime: R **4.5.2**,
+Verified on 27 November 2026 against report version **0.1** and input-manifest
+algorithm **csv-md5-v1**, using OpenVQA application version **0.1.0** at
+the reviewed CLI/version revision following `daec0ac`. Runtime: R **4.5.2**,
 jsonlite **2.0.0**, jsonvalidate **1.5.0** (AJV), Apple Silicon macOS.
 
-The standard suite passed **1,415 assertions** with no failures, warnings or skips.
+The final standard suite passed **1,418 assertions** with no failures, warnings or
+skips, including renamed CLI options and rejection of unsupported report versions.
 All six strict scientific output contracts passed, including the in-process
 isolation check in its designated shard. Disposable copies of both minimal demos
 passed project creation, selected-assessment update and full overwrite; all exports
@@ -378,7 +375,8 @@ Negative tests cover invalid severities, missing fields, unsupported versions,
 required settings evidence, malformed/foreign reports, invalid flag combinations,
 locked publication, external edits, failed replacement, and edited-object export
 rejection. A simulated intervening assessment update verifies reload-before-merge.
-Version-2.0 children are retained unchanged with unknown settings identity.
+Unsupported development report versions are rejected by update; explicit full
+overwrite can regenerate a recognizable older report.
 
 Changed R files passed formatting/lint. The full workflow selection retains one
 unrelated pre-existing line-length failure at

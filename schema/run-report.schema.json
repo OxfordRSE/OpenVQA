@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "OpenVQA validation run, assessment or collection report 2.x",
+  "title": "OpenVQA validation run, assessment or collection report 0.1",
   "oneOf": [
     {
       "$ref": "#/definitions/runReport"
@@ -30,7 +30,7 @@
       "properties": {
         "report_version": {
           "type": "string",
-          "pattern": "^2\\.[0-9]+$"
+          "const": "0.1"
         },
         "report_type": {
           "enum": [
@@ -118,7 +118,8 @@
           "required": [
             "report_type",
             "validation",
-            "scope"
+            "scope",
+            "settings"
           ],
           "properties": {
             "report_type": {
@@ -374,29 +375,6 @@
               }
             ]
           }
-        },
-        {
-          "if": {
-            "type": "object",
-            "properties": {
-              "report_version": {
-                "not": {
-                  "const": "2.0"
-                }
-              }
-            }
-          },
-          "then": {
-            "type": "object",
-            "required": [
-              "settings"
-            ],
-            "properties": {
-              "settings": {
-                "$ref": "#/definitions/settingsSummary"
-              }
-            }
-          }
         }
       ]
     },
@@ -437,7 +415,8 @@
               "type": "object",
               "required": [
                 "stages",
-                "inputs"
+                "inputs",
+                "settings"
               ],
               "properties": {
                 "stages": {
@@ -699,34 +678,6 @@
               }
             },
             "type": "object"
-          }
-        },
-        {
-          "if": {
-            "type": "object",
-            "properties": {
-              "report_version": {
-                "not": {
-                  "const": "2.0"
-                }
-              }
-            }
-          },
-          "then": {
-            "type": "object",
-            "properties": {
-              "validation": {
-                "type": "object",
-                "required": [
-                  "settings"
-                ],
-                "properties": {
-                  "settings": {
-                    "$ref": "#/definitions/projectSettings"
-                  }
-                }
-              }
-            }
           }
         }
       ]
@@ -1048,7 +999,7 @@
       "properties": {
         "report_version": {
           "type": "string",
-          "pattern": "^2\\.[1-9][0-9]*$"
+          "const": "0.1"
         },
         "report_type": {
           "const": "collection"

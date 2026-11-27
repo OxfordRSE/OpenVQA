@@ -519,7 +519,7 @@ testthat::test_that("completed reports inherit context and keep warnings separat
   on.exit(unlink(root, recursive = TRUE), add = TRUE)
   result <- validation_result(root)
   child <- result$validation$assessments[[1]]
-  testthat::expect_identical(result$report_version, "2.1")
+  testthat::expect_identical(result$report_version, "0.1")
   testthat::expect_named(child$scope, c("data_root", "assessment"))
   testthat::expect_named(child$validation, c("stages", "inputs", "settings"))
   for (stage in child$validation$stages) {
@@ -602,11 +602,13 @@ testthat::test_that("export revalidates edited objects and refuses incompatible 
   dir.create(directory)
   on.exit(unlink(c(root, directory), recursive = TRUE), add = TRUE)
   result <- validation_result(root)
-  result$report_version <- "1.0"
-  testthat::expect_error(validator$write_run_report(result, file.path(directory, "old.json")),
-    class = "validation_error"
-  )
-  result$report_version <- "2.1"
+  for (version in c("0.0", "0.2", "1.0", "2.0", "2.1")) {
+    result$report_version <- version
+    testthat::expect_error(validator$write_run_report(result, file.path(directory, "old.json")),
+      class = "validation_error"
+    )
+  }
+  result$report_version <- "0.1"
   result$validation$assessments[[1]]$validation$stages[[1]]$checks$check_id <- NULL
   testthat::expect_error(validator$write_run_report(result, file.path(directory, "missing.json")),
     class = "validation_error"

@@ -1,5 +1,5 @@
 {
-  "report_version": "2.1",
+  "report_version": "0.1",
   "operation": "validate",
   "run_id": "example-mixed",
   "scope": {
@@ -25,7 +25,7 @@
   "validation": {
     "assessments": [
       {
-        "report_version": "2.1",
+        "report_version": "0.1",
         "operation": "validate",
         "run_id": "example-assessment-success",
         "scope": {
@@ -88,7 +88,7 @@
         "report_type": "assessment"
       },
       {
-        "report_version": "2.1",
+        "report_version": "0.1",
         "operation": "validate",
         "run_id": "example-assessment-error",
         "scope": {

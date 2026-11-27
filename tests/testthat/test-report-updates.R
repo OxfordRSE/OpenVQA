@@ -187,28 +187,6 @@ testthat::test_that("updates reject foreign, incompatible and malformed reports"
   testthat::expect_error(validator$update_assessment_report(result, path), "duplicate")
 })
 
-testthat::test_that("older version-2 entries retain unknown settings identity", {
-  root <- update_project()
-  on.exit(unlink(root, recursive = TRUE), add = TRUE)
-  path <- write_project_report(root)
-  report <- read_report(path)
-  report$report_version <- "2.0"
-  report$settings <- NULL
-  for (i in seq_along(report$validation$assessments)) {
-    report$validation$assessments[[i]]$report_version <- "2.0"
-    report$validation$assessments[[i]]$validation$settings <- NULL
-  }
-  jsonlite::write_json(report, path, auto_unbox = TRUE, null = "null")
-  expect_report_schema(path)
-  preserved <- report$validation$assessments[[2]]
-  validator$update_assessment_report(validation_result(root, assessment = "assessment"), path)
-  stored <- read_report(path)
-  testthat::expect_identical(stored$validation$assessments[[2]], preserved)
-  testthat::expect_null(stored$settings$hashes_match)
-  testthat::expect_match(stored$settings$warning, "unavailable")
-  expect_report_schema(path)
-})
-
 testthat::test_that("params hashes use exact bytes and detect mid-run changes", {
   root <- validation_project()
   on.exit(unlink(root, recursive = TRUE), add = TRUE)
@@ -284,7 +262,7 @@ testthat::test_that("report replacement protects source CSVs and refuses externa
   testthat::expect_false(file.exists(paste0(path, ".lock")))
 })
 
-testthat::test_that("version-2.1 reports require valid settings evidence at publication", {
+testthat::test_that("version-0.1 reports require valid settings evidence at publication", {
   root <- validation_project()
   on.exit(unlink(root, recursive = TRUE), add = TRUE)
   result <- validation_result(root)

@@ -30,7 +30,7 @@ Rscript validate.R --project-root /work/project --assessment baseline --report /
 Omit `--assessment` to validate the whole project. Reports contain independently
 usable assessment reports, including check messages, stage states, timestamps and
 input CSV and project `params.yaml` hashes. Assessment-local errors do not stop the remaining assessments.
-Report version 2 groups checks by stage; ordinary passes have null severity and
+Report version 0.1 groups checks by stage; ordinary passes have null severity and
 only failed checks have error severity. Existing warnings remain visible and
 non-blocking. Completed return values and exports pass
 schema validation. Settings hashes identify exact project file bytes; resolved
