@@ -16,6 +16,99 @@ write_project_report <- function(root) {
   path
 }
 
+testthat::test_that("report modes require explicit destinations and assessment selection", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  previous <- readBin(path, "raw", n = file.info(path)$size)
+  for (args in list(
+    c("--report", path, "--update-report"),
+    c("--assessment", "assessment", "--update-report"),
+    "--overwrite",
+    c("--report", path, "--assessment", "assessment", "--overwrite", "--update-report")
+  )) {
+    testthat::expect_identical(validation_command(c("--data-root", root, args))$status, 2L)
+    testthat::expect_identical(readBin(path, "raw", n = file.info(path)$size), previous)
+  }
+  missing <- file.path(root, "missing.json")
+  testthat::expect_identical(validation_command(c(
+    "--data-root", root, "--assessment", "assessment",
+    "--report", missing, "--update-report"
+  ))$status, 2L)
+  testthat::expect_false(file.exists(missing))
+})
+
+testthat::test_that("assessment updates retain other outcomes, timestamps, identities and hashes", {
+  root <- update_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  before <- read_report(path)
+  yaml::write_yaml(list(
+    project = "test", qh_method = "assume.0", active_indicators = "SR",
+    min_plots = 7L
+  ), file.path(root, "params.yaml"))
+  command <- validation_command(c(
+    "--data-root", root, "--assessment", "assessment",
+    "--report", path, "--update-report"
+  ))
+  testthat::expect_identical(command$status, 0L, info = paste(command$output, collapse = "\n"))
+  stored <- read_report(path)
+  expect_report_schema(path)
+  testthat::expect_identical(stored$report_type, "collection")
+  testthat::expect_false(any(c("outcome", "run_id", "started_at", "ended_at") %in% names(stored)))
+  testthat::expect_match(stored$updated_at, "Z$")
+  testthat::expect_identical(stored$validation$assessments[[2]], before$validation$assessments[[2]])
+  latest <- stored$validation$assessments[[1]]
+  testthat::expect_false(identical(latest$run_id, before$validation$assessments[[1]]$run_id))
+  testthat::expect_identical(latest$outcome, "success")
+  testthat::expect_identical(
+    latest$validation$settings$hash,
+    unname(tools::md5sum(file.path(root, "params.yaml")))
+  )
+  testthat::expect_false(stored$settings$hashes_match)
+  testthat::expect_match(stored$settings$warning, "different")
+  testthat::expect_true(any(grepl("Report warning", command$output, fixed = TRUE)))
+
+  command <- validation_command(c(
+    "--data-root", root, "--assessment", "second",
+    "--report", path, "--update-report"
+  ))
+  testthat::expect_identical(command$status, 0L)
+  current <- read_report(path)
+  testthat::expect_true(current$settings$hashes_match)
+  testthat::expect_null(current$settings$warning)
+  testthat::expect_identical(current$validation$assessments[[1]], latest)
+  expect_report_schema(path)
+})
+
+testthat::test_that("updates append assessments and preserve retained outcomes", {
+  root <- validation_project()
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  path <- write_project_report(root)
+  original <- read_report(path)$validation$assessments[[1]]
+  dir.create(file.path(root, "second", "inputs"), recursive = TRUE)
+  command <- validation_command(c(
+    "--data-root", root, "--assessment", "second",
+    "--report", path, "--update-report"
+  ))
+  testthat::expect_identical(command$status, 1L)
+  stored <- read_report(path)
+  testthat::expect_length(stored$validation$assessments, 2)
+  testthat::expect_identical(stored$validation$assessments[[1]], original)
+  testthat::expect_identical(stored$validation$assessments[[2]]$outcome, "invalid_data")
+  writeLines("invalid: [", file.path(root, "params.yaml"))
+  testthat::expect_identical(validation_command(c(
+    "--data-root", root, "--assessment", "second",
+    "--report", path, "--update-report"
+  ))$status, 2L)
+  stored <- read_report(path)
+  testthat::expect_identical(stored$validation$assessments[[1]], original)
+  testthat::expect_identical(stored$validation$assessments[[2]]$outcome, "execution_error")
+  testthat::expect_match(stored$validation$assessments[[2]]$error$stage, "configuration")
+  testthat::expect_false(stored$settings$hashes_match)
+  expect_report_schema(path)
+})
+
 testthat::test_that("overwrite replaces the complete report and never silently merges", {
   root <- update_project()
   on.exit(unlink(root, recursive = TRUE), add = TRUE)

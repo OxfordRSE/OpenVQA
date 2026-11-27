@@ -46,6 +46,10 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
       action = "store_true", default = FALSE,
       help = "Replace the complete existing report at --report PATH."
     ),
+    make_option("--update-report",
+      action = "store_true", default = FALSE,
+      help = "With --assessment, replace/add only that assessment in an existing report."
+    ),
     make_option(
       c("-v", "--verbose"),
       action = "store_true",
@@ -67,8 +71,16 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
 
   parsed <- parse_args(parser, args = args, positional_arguments = TRUE)
   options <- parsed$options
-  if (isTRUE(options$overwrite) && (is.null(options$report) || !nzchar(options$report))) {
-    stop("--overwrite requires --report PATH.", call. = FALSE)
+  if (isTRUE(options$overwrite) && isTRUE(options$`update-report`)) {
+    stop("--overwrite and --update-report are mutually exclusive.", call. = FALSE)
+  }
+  if ((isTRUE(options$overwrite) || isTRUE(options$`update-report`)) &&
+    (is.null(options$report) || !nzchar(options$report))) {
+    stop("--overwrite and --update-report require --report PATH.", call. = FALSE)
+  }
+  if (isTRUE(options$`update-report`) &&
+    (is.null(options$assessment) || !nzchar(options$assessment))) {
+    stop("--update-report requires --assessment NAME.", call. = FALSE)
   }
   data_root <- parsed$options[["data-root"]]
   exclude_dirs <- c("raw", parsed$options[["exclude-dirs"]], parsed$args)
@@ -79,6 +91,7 @@ parse_cli_args <- function(args = commandArgs(trailingOnly = TRUE)) {
     assessment = parsed$options$assessment,
     report = parsed$options$report,
     overwrite = isTRUE(options$overwrite),
+    update_report = isTRUE(options$`update-report`),
     exclude_dirs = exclude_dirs,
     verbose = isTRUE(parsed$options$verbose)
   )
@@ -504,10 +517,11 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
     {
       cli <- parse_cli_args(args)
       destination <- if (!is.null(cli$report)) {
-        prepare_report_destination(cli$report, overwrite = cli$overwrite)
+        prepare_report_destination(cli$report, overwrite = cli$overwrite || cli$update_report)
       } else {
         NULL
       }
+      if (cli$update_report) read_validation_collection(destination, cli$data_root)
       result <- run_validation(cli$data_root, cli$exclude_dirs, cli$verbose, cli$assessment)
       print_validation_summary(result)
       if (!is.null(result$error)) message("Validation error: ", result$error$message)
@@ -516,7 +530,16 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
           message("Assessment ", child$scope$assessment, ": ", child$error$message)
         }
       }
-      if (!is.null(destination)) write_run_report(result, destination, overwrite = cli$overwrite)
+      if (!is.null(destination)) {
+        if (cli$update_report) {
+          stored <- update_assessment_report(result, destination)
+          if (!is.null(stored$settings$warning)) {
+            message("Report warning: ", stored$settings$warning)
+          }
+        } else {
+          write_run_report(result, destination, overwrite = cli$overwrite)
+        }
+      }
       run_report_exit_status(result)
     },
     error = function(e) {
