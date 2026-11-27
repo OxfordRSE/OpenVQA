@@ -10,6 +10,7 @@ source(file.path("pipeline", "params.R"), local = TRUE)
 source(file.path("pipeline", "run-report.R"), local = TRUE)
 source(file.path("validation", "requirements.R"), local = TRUE)
 source(file.path("validation", "snapshot.R"), local = TRUE)
+source(file.path("validation", "project-report.R"), local = TRUE)
 source(file.path("validation", "schema.R"), local = TRUE)
 source(file.path("validation", "crossfile.R"), local = TRUE)
 
@@ -430,7 +431,7 @@ run_validation <- function(data_root, exclude_dirs = "raw", verbose = FALSE, ass
       if (!length(assessments)) stop("No assessments found in the selected scope.", call. = FALSE)
       stage <- "configuration"
       # Catch shared YAML parse errors before assessment-local resolution and validation.
-      load_project_config(data_root, required = FALSE)
+      if (is.null(assessment)) load_project_config(data_root, required = FALSE)
       cat("Validating processed inputs with jsonvalidate (ajv engine)\n")
       cat(sprintf("Schema root: %s\nData root: %s\n\n", schema_root, data_root))
       stage <- "assessment_reporting"
