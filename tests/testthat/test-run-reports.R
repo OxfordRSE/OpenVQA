@@ -2,7 +2,7 @@ testthat::test_that("published examples agree with the report schema", {
   examples <- list.files(file.path(report_repo, "tests", "testthat", "fixtures", "run-reports"),
     full.names = TRUE
   )
-  testthat::expect_length(examples, 5)
+  testthat::expect_length(examples, 6)
   for (path in examples) expect_report_schema(path)
   report <- jsonlite::fromJSON(file.path(dirname(examples[1]), "error.json"),
     simplifyVector = FALSE

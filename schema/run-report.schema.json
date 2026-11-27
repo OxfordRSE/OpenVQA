@@ -1,12 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "OpenVQA validation run or assessment report 2.x",
+  "title": "OpenVQA validation run, assessment or collection report 2.x",
   "oneOf": [
     {
       "$ref": "#/definitions/runReport"
     },
     {
       "$ref": "#/definitions/assessmentReport"
+    },
+    {
+      "$ref": "#/definitions/collectionReport"
     }
   ],
   "definitions": {
@@ -1030,6 +1033,63 @@
           }
         }
       ]
+    },
+    "collectionReport": {
+      "type": "object",
+      "required": [
+        "report_version",
+        "report_type",
+        "operation",
+        "scope",
+        "updated_at",
+        "validation",
+        "settings"
+      ],
+      "properties": {
+        "report_version": {
+          "type": "string",
+          "pattern": "^2\\.[1-9][0-9]*$"
+        },
+        "report_type": {
+          "const": "collection"
+        },
+        "operation": {
+          "const": "validate"
+        },
+        "scope": {
+          "type": "object",
+          "required": [
+            "data_root"
+          ],
+          "properties": {
+            "data_root": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "updated_at": {
+          "$ref": "#/definitions/utcTimestamp"
+        },
+        "validation": {
+          "type": "object",
+          "required": [
+            "assessments"
+          ],
+          "properties": {
+            "assessments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/assessmentReport"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "settings": {
+          "$ref": "#/definitions/settingsSummary"
+        }
+      }
     }
   }
 }

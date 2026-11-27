@@ -1,0 +1,130 @@
+{
+  "report_version": "2.1",
+  "report_type": "collection",
+  "operation": "validate",
+  "scope": {
+    "data_root": "/work/project"
+  },
+  "updated_at": "2026-11-27T13:00:00.000Z",
+  "validation": {
+    "assessments": [
+      {
+        "report_version": "2.1",
+        "operation": "validate",
+        "run_id": "example-assessment-success",
+        "scope": {
+          "data_root": "/work/project",
+          "assessment": "assessment"
+        },
+        "backend": {
+          "version": "0.1.0",
+          "revision": null
+        },
+        "started_at": "2026-11-27T12:00:00.000Z",
+        "ended_at": "2026-11-27T12:00:01.000Z",
+        "outcome": "success",
+        "error": null,
+        "validation": {
+          "stages": [
+            {
+              "stage": "schema",
+              "status": "completed",
+              "reason": null,
+              "checks": [
+                {
+                  "check_id": "landCover.csv",
+                  "severity": null,
+                  "status": "pass",
+                  "message": "ok",
+                  "file": "landCover.csv",
+                  "details": null,
+                  "extra_columns": null
+                }
+              ]
+            },
+            {
+              "stage": "crossfile",
+              "status": "not_applicable",
+              "reason": "Assumed-zero assessment.",
+              "checks": []
+            }
+          ],
+          "inputs": {
+            "algorithm": "csv-md5-v1",
+            "captured_at": "2026-11-27T12:00:00.000Z",
+            "stable": true,
+            "files": [
+              {
+                "path": "inputs/landCover.csv",
+                "hash": "23e2ddded5b99988967f65103991b64e",
+                "modified_at": null
+              }
+            ]
+          },
+          "settings": {
+            "path": "params.yaml",
+            "algorithm": "md5",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "captured_at": "2026-11-27T12:00:00.000Z",
+            "stable": true
+          }
+        },
+        "report_type": "assessment"
+      },
+      {
+        "report_version": "2.1",
+        "operation": "validate",
+        "run_id": "example-assessment-error",
+        "scope": {
+          "data_root": "/work/project",
+          "assessment": "second"
+        },
+        "backend": {
+          "version": "0.1.0",
+          "revision": null
+        },
+        "started_at": "2026-11-27T12:00:00.000Z",
+        "ended_at": "2026-11-27T12:00:01.000Z",
+        "outcome": "execution_error",
+        "error": {
+          "message": "Invalid assessment configuration.",
+          "stage": "configuration"
+        },
+        "validation": {
+          "stages": [
+            {
+              "stage": "schema",
+              "status": "not_run",
+              "reason": "Validation stopped before this stage.",
+              "checks": []
+            },
+            {
+              "stage": "crossfile",
+              "status": "not_run",
+              "reason": "Validation stopped before this stage.",
+              "checks": []
+            }
+          ],
+          "inputs": {
+            "algorithm": "csv-md5-v1",
+            "captured_at": null,
+            "stable": null,
+            "files": []
+          },
+          "settings": {
+            "path": "params.yaml",
+            "algorithm": "md5",
+            "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "captured_at": "2026-11-27T12:00:00.000Z",
+            "stable": true
+          }
+        },
+        "report_type": "assessment"
+      }
+    ]
+  },
+  "settings": {
+    "hashes_match": false,
+    "warning": "Assessment reports contain different project params.yaml hashes; some results describe earlier settings."
+  }
+}
