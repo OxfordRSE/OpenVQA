@@ -23,17 +23,24 @@ assessment. Add `--no-figures` for numerical output alone. Sourcing `analyse.R` 
 `validate.R` can also export a versioned JSON run report:
 
 ```sh
-Rscript validate.R --data-root /work/project --report /work/reports/validation-001.json
-Rscript validate.R --data-root /work/project --assessment baseline --report /work/reports/baseline-001.json
+Rscript validate.R --data-root /work/project --report /work/project/report.json
+Rscript validate.R --data-root /work/project --assessment baseline --report /work/project/report.json --update-report
 ```
 
 Omit `--assessment` to validate the whole project. Reports contain independently
 usable assessment reports, including check messages, stage states, timestamps and
-input CSV hashes. Assessment-local errors do not stop the remaining assessments.
-Hashes track input bytes; settings/code freshness is not yet covered.
+input CSV and project `params.yaml` hashes. Assessment-local errors do not stop the remaining assessments.
+Report version 2 groups checks by stage; ordinary passes have null severity and
+only failed checks have error severity. Existing warnings remain visible and
+non-blocking. Completed return values and exports pass
+schema validation. Settings hashes identify exact project file bytes; resolved
+settings/code identity remains deferred.
 
-Use a fresh filename in an existing directory for each attempt; existing files are
-never replaced. Exit codes are **0** for successful validation, **1** for invalid
+Existing files require explicit `--overwrite` (replace the entire report) or
+`--assessment NAME --update-report` (replace/append only that assessment). Updates
+retain other outcomes/timestamps/hashes and produce a collection without a new
+project verdict; differing stored settings hashes trigger a non-blocking warning.
+The flags are mutually exclusive and require `--report`. Exit codes are **0** for successful validation, **1** for invalid
 inputs and **2** for execution/export errors. No assessments is an execution error.
 Without `--report`, console output remains available with the same exit rules.
 See the [run-report contract](docs/run-reports.md) for schema, examples, stage status,
