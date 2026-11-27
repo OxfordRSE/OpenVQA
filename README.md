@@ -20,6 +20,26 @@ calculates indicators, and writes CSV tables, the workbook, and figures under th
 assessment. Add `--no-figures` for numerical output alone. Sourcing `analyse.R` defines
 `run_analysis()` without executing it.
 
+`validate.R` can also export a versioned JSON run report:
+
+```sh
+Rscript validate.R --data-root /work/project --report /work/reports/validation-001.json
+Rscript validate.R --data-root /work/project --assessment baseline --report /work/reports/baseline-001.json
+```
+
+Omit `--assessment` to validate the whole project. Reports contain independently
+usable assessment reports, including check messages, stage states, timestamps and
+input CSV hashes. Assessment-local errors do not stop the remaining assessments.
+Hashes track input bytes; settings/code freshness is not yet covered.
+
+Use a fresh filename in an existing directory for each attempt; existing files are
+never replaced. Exit codes are **0** for successful validation, **1** for invalid
+inputs and **2** for execution/export errors. No assessments is an execution error.
+Without `--report`, console output remains available with the same exit rules.
+See the [run-report contract](docs/run-reports.md) for schema, examples, stage status,
+partial failures and callable `run_validation()` use. Analysis JSON reporting is
+not yet supported.
+
 Use a [tagged release](https://github.com/OxfordRSE/OpenVQA/releases) for a named
 software version. The root `VERSION` file records the application version;
 run `Rscript analyse.R --version` to display it. `rproject.toml` configures R and dependencies.

@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- Add opt-in `validate.R --report PATH` JSON run reports with independent report
+  version 1.0, explicit stage status, partial results and execution-error context.
+  Destinations must be new files in existing directories; reports never overwrite.
+- Add `validate.R --assessment NAME` using project/assessment overrides, while
+  omitting the option validates the project. Continue after assessment-local errors.
+- Define independently schema-valid assessment reports inside each run, with
+  per-assessment outcomes, partial checks, timestamps and CSV input hashes.
+  Detect changes to input inventories during validation; settings/code identity
+  remains deferred. This replaces the earlier unreleased flat report draft.
+- Expose callable `run_validation()` without terminating the caller's R process.
+- Validation now exits 0 for success, 1 for invalid inputs and 2 for ordinary
+  execution/export errors. Empty assessment scope and empty applicable stages
+  are execution errors. Scientific checks and non-blocking warnings are unchanged.
+
 ## 0.1.0 — 2026-11-09
 
 Initial versioned release of the callable assessment backend.

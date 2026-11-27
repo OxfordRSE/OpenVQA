@@ -54,7 +54,7 @@ separate user library or explicitly declare it if it belongs in the project envi
 | Location | Responsibility |
 | --- | --- |
 | `analyse.R`, `validate.R` | Analysis and validation entry points. |
-| `pipeline/` | File loading and resolved configuration. |
+| `pipeline/` | File loading, resolved configuration and shared run-report publication. |
 | `validation/` | Input schemas, required files and cross-file checks. |
 | `preprocessing/` | Input filtering, standardisation and land-cover summaries. |
 | `indicators/` | Callable calculations for individual ecological indicators. |
@@ -62,6 +62,14 @@ separate user library or explicitly declare it if it belongs in the project envi
 | `reporting/` | Summary tables and workbook generation. |
 | `includes/` | Focused mathematical, plotting and output helpers. |
 | `tests/testthat/`, `tests/refactor/` | Standard tests and assessment output contracts. |
+
+Validation JSON reports follow [the run-report contract](docs/run-reports.md) and
+`schema/run-report.schema.json`. `validate.R` owns validation orchestration and returns
+results before the CLI chooses its exit. `pipeline/run-report.R` owns the shared
+envelope and publication, while `reporting/` retains scientific summary generation.
+Each run contains independently valid assessment reports. `validation/snapshot.R`
+records the versioned CSV manifest; settings/code fingerprints remain deferred.
+Keep validation rules and row semantics separate from reporting changes.
 
 ## Tests and coverage
 
